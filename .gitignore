@@ -1,0 +1,12 @@
+# 除外するソース
+
+# work配下
+work/
+
+# classes配下
+WEB-INF/classes/
+
+# lib配下
+# TJSJavaFramework.jarは除外しない
+WEB-INF/lib
+!TJSJavaFramework.jar
