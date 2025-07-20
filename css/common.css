@@ -225,6 +225,17 @@ img {
 	border : 1px solid black;
 }
 
+.nom {
+	background-color			: #f5f5f5;	/* 画面背景色(初期状態)  */
+}
+.ins {
+	background-color			: #b0e0e6;	/* 画面背景色(登録モード)  */
+}
+.uod {
+	background-color			: #ffff99;	/* 画面背景色(更新モード)  */
+}
+
+
 .center { text-align : center; }
 .left { text-align : left; }
 .right { text-align	: right;}
