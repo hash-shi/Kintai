@@ -1,12 +1,19 @@
 # 除外するソース
 
-# work配下
-work/*.*
+# work 配下をすべて除外
+work/**
+# ただし work フォルダ自体は除外しない
+!work/
+!work/.gitkeep
 
-# classes配下
-WEB-INF/classes/*.*
+# classes 配下をすべて除外
+WEB-INF/classes/**
+# ただし classes フォルダ自体は除外しない
+!WEB-INF/classes/
+!WEB-INF/classes/.gitkeep
 
-# lib配下
-# TJSJavaFramework.jarは除外しない
-WEB-INF/lib/*.*
+# lib 配下をすべて除外
+WEB-INF/lib/**
+# ただし lib フォルダ自体と TJSJavaFramework.jar は除外しない
+!WEB-INF/lib/
 !WEB-INF/lib/TJSJavaFramework.jar
