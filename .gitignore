@@ -1,5 +1,8 @@
 # 除外するソース
 
+#.classpathを除外
+!.classpath
+
 # work 配下をすべて除外
 work/**
 # ただし work フォルダ自体は除外しない

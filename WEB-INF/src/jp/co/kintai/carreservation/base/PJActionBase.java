@@ -338,6 +338,8 @@ public abstract class PJActionBase extends ActionBase {
 
 		if (StringUtils.isNotBlank(taisyokuDate)) {
 			sql.append(" AND ( ");
+			sql.append(" 	S.TaisyokuDate is null ");
+			sql.append(" 	OR ");
 			sql.append(" 	S.TaisyokuDate = '' ");
 			sql.append(" 	OR ");
 			sql.append(" 	S.TaisyokuDate >= ? ");
