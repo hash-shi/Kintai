@@ -1,0 +1,148 @@
+/*
+*
+* 全体で共通するスタイルを記入
+* ボタンのレイアウト等
+*
+*/
+
+table, table td, table th {
+	border-collapse: collapse;
+}
+
+div.searchConditionArea {
+	margin-top			: 10px;
+	width						: 100%;
+	margin-bottom		: 10px;
+}
+
+div.searchConditionArea .title {
+	height					: 25px;
+/*	display					: inline-block;*/
+	font-size				: 14px;
+	border					: 1px solid #000000;
+	background-color: #dcdcdc;
+}
+
+div.searchConditionArea .value {
+	height					: 25px;
+/*	display					: inline-block;	*/
+	font-size				: 14px;
+	border					: 1px solid #000000;
+	background-color: #f5f5f5;
+}
+
+div.searchConditionArea .value input {
+	font-size				: 14px;
+	margin-left			: 2px;
+}
+
+div.searchButtonArea {
+	width						: 100%;	
+	text-align			: center;
+}
+
+div.searchResultArea {
+	border-top					: 2px solid #999999;
+	font-size					: 13px;	
+	width						: 100%;	
+}
+
+div.searchConditionArea ul {
+	
+}
+
+div.searchConditionArea ul li {
+	margin-top					: 5px;
+	margin-bottom				: 5px;
+}
+
+div.searchConditionArea ul li div.label {
+	display						: inline-block;
+	width						: 100px;
+	padding-left				: 5px;
+}
+
+div.searchConditionArea ul li div.value {
+	display						: inline-block;
+	
+}
+
+div.searchResultArea {
+	overflow-y: auto;
+}
+table.searchRecord {
+	width: 100%;
+	border-left: 1px solid #666666;
+	border-spacing: 0px;
+	border-collapse: separate;
+}
+table.searchRecord > tr {
+
+}
+table.searchRecord > thead > tr > th {
+    /* 縦スクロール時に固定する */
+    position: -webkit-sticky;
+    position: sticky;
+    top: 0;
+    /* tbody内のセルより手前に表示する */
+    z-index: 1;
+}
+table.searchRecord > tr > th {
+    border:1px solid #666666;
+    background-color: #eeeeee;
+}
+table.searchRecord > tr > td {
+    border:1px solid #666666;
+}
+table.searchRecord > thead > tr > th {
+    border-top: 1px solid #666666;
+    border-bottom: 1px solid #666666;
+    border-right: 1px solid #666666;
+    background-color: #eeeeee;
+}
+table.searchRecord > tbody > tr > td {
+    border-bottom: 1px solid #666666;
+    border-right: 1px solid #666666;
+}
+table.searchRecord > tbody > tr:nth-child(odd){
+	background-color			: #eeeeee;
+}
+
+table.searchRecord > tbody > tr:nth-child(even){
+	background-color			: #ffffff;
+}
+
+
+
+
+
+
+
+
+/*div.searchResultArea ul li {*/
+/*	position					: relative;*/
+/*	height						: 28px;*/
+/*	padding-left				: 5px;*/
+/*}*/
+
+/*div.searchResultArea ul li:nth-child(odd){*/
+/*	background-color			: #eeeeee;*/
+/*}*/
+
+/*div.searchResultArea ul li:nth-child(even){*/
+/*	background-color			: #ffffff;*/
+/*}*/
+
+/*div.searchResultArea ul li div.value {*/
+/*	display						: inline-block;*/
+/*	line-height					: 28px;*/
+/*}*/
+/*div.searchResultArea ul li div.button {*/
+/*	position					: absolute;*/
+/*	right						: 5px;*/
+/*	top							: 0px;*/
+/*}*/
+
+/*div.searchResultArea ul li div.button button {*/
+/*	height						: 25px;*/
+/*}*/

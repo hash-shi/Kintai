@@ -1,0 +1,542 @@
+package jp.co.kintai.carreservation.base;
+
+import java.sql.Connection;
+import java.sql.PreparedStatement;
+import java.sql.ResultSet;
+import java.sql.ResultSetMetaData;
+import java.text.SimpleDateFormat;
+import java.util.ArrayList;
+import java.util.Date;
+import java.util.HashMap;
+
+import jakarta.servlet.http.HttpServletRequest;
+import jakarta.servlet.http.HttpServletResponse;
+
+import org.apache.commons.lang3.StringUtils;
+
+import jp.co.tjs_net.java.framework.base.ActionBase;
+import jp.co.tjs_net.java.framework.database.PreparedStatementFactory;
+import jp.co.tjs_net.java.framework.information.IndexInformation;
+
+public abstract class PJActionBase extends ActionBase {
+	
+	SimpleDateFormat sdfDate_yyyyMMdd = new SimpleDateFormat("yyyy/MM/dd");
+	
+	public PJActionBase(HttpServletRequest req, HttpServletResponse res, IndexInformation info) {
+		super(req, res, info);
+	}
+	
+	/**
+	 * 現在日付の取得
+	 * 
+	 * @param con
+	 * @return
+	 * @throws Exception
+	 */
+	protected String getNowDate() throws Exception {
+		// 現在日付
+		Date date = new Date();
+		// フォーマットの形式の文字列にして返却
+		return sdfDate_yyyyMMdd.format(date);
+	}
+	
+	
+	/**
+	 * 営業所名取得
+	 * 
+	 * @param req
+	 * @param res
+	 * @throws Exception
+	 */
+	public void getEigyoshoName(HttpServletRequest req, HttpServletResponse res) throws Exception {
+		
+		// 検索条件取得
+		String eigyoshoCode	= this.getParameter("eigyoshoCode");
+		
+		// DB接続
+		Connection con		= this.getConnection("kintai", req);
+		
+		//=====================================================================
+		// 結果返却
+		//=====================================================================
+		this.addContent("result", this.getMstEigyoshos(con, eigyoshoCode, null));
+	}
+	
+	/**
+	 * 営業所の取得
+	 * 
+	 * @param con
+	 * @return
+	 * @throws Exception
+	 */
+	protected ArrayList<HashMap<String, String>> getMstEigyoshos(Connection con, String eigyoshoCode, String eigyoshoName) throws Exception {
+		
+		ArrayList<HashMap<String, String>> mstDatas = new ArrayList<>();
+		
+		// DB接続
+		StringBuffer sql				= new StringBuffer();
+		PreparedStatement pstmt			= null;
+		PreparedStatementFactory pstmtf	= new PreparedStatementFactory();
+		ResultSet rset					= null;
+		
+		sql.append(" SELECT ");
+		sql.append(" 	E.EigyoshoCode ");
+		sql.append(" 	,E.EigyoshoName ");
+		sql.append(" 	,E.SaishuKoshinShainNO ");
+		sql.append(" 	,U.ShainName SaishuKoshinShainName ");
+		sql.append(" 	,E.SaishuKoshinDate ");
+		sql.append(" 	,E.SaishuKoshinJikan ");
+		sql.append(" FROM ");
+		sql.append(" 	MST_EIGYOSHO E ");
+		sql.append(" LEFT JOIN MST_SHAIN U ");
+		sql.append(" 	ON E.SaishuKoshinShainNO = U.ShainNO ");
+		sql.append(" WHERE ");
+		sql.append(" 	1 = 1 ");
+
+		if (StringUtils.isNotBlank(eigyoshoCode)) {
+			sql.append(" AND E.EigyoshoCode = ? ");
+			pstmtf.addValue("String", eigyoshoCode);
+		}
+
+		if (StringUtils.isNotBlank(eigyoshoName)) {
+			sql.append(" AND E.EigyoshoName like ? ");
+			pstmtf.addValue("String", "%" + eigyoshoName + "%");
+		}
+		
+		sql.append(" ORDER BY ");
+		sql.append("     E.EigyoshoCode ");
+		
+		try {
+			// パラメータ付きSQL文の生成
+			pstmt = con.prepareStatement(sql.toString());
+			// パラメータの設定
+			pstmtf.setPreparedStatement(pstmt);
+			// 実行
+			rset = pstmt.executeQuery();
+			// 結果取得
+			ResultSetMetaData metaData = rset.getMetaData(); 
+			
+			// カラム数(列数)の取得
+			int colCount = metaData.getColumnCount(); 
+			
+			// レコード数分繰り返す
+			while (rset.next()){
+				// 1レコード分の配列を用意
+				HashMap<String, String> record = new HashMap<String, String>();
+				// カラム名をkeyとして値を格納
+				for (int i = 1; i <= colCount; i++) {
+					record.put(metaData.getColumnLabel(i), StringUtils.stripToEmpty(rset.getString(i)));
+				}
+				// 配列の格納
+				mstDatas.add(record);
+			}
+		} finally {
+			if (rset != null){ try { rset.close(); } catch (Exception exp){}}
+			if (pstmt != null){ try { pstmt.close(); } catch (Exception exp){}}
+		}
+		
+		return mstDatas;
+		
+	}
+	
+	/**
+	 * 部署の取得
+	 * 
+	 * @param con
+	 * @return
+	 * @throws Exception
+	 */
+	protected ArrayList<HashMap<String, String>> getMstBushos(Connection con, String bushoCode, String bushoName, String bushoKbn, String eigyoshoCode) throws Exception {
+		
+		ArrayList<HashMap<String, String>> mstDatas = new ArrayList<>();
+		
+		// DB接続
+		StringBuffer sql				= new StringBuffer();
+		PreparedStatement pstmt			= null;
+		PreparedStatementFactory pstmtf	= new PreparedStatementFactory();
+		ResultSet rset					= null;
+		
+		sql.append(" SELECT ");
+		sql.append(" 	B.BushoCode ");
+		sql.append(" 	,B.BushoName ");
+		sql.append(" 	,B.BushoKbn ");
+		sql.append(" 	,K0153.KbnName BushoName ");
+		sql.append(" 	,B.EigyoshoCode ");
+		sql.append(" 	,E.EigyoshoName ");
+		sql.append(" 	,B.SaishuKoshinShainNO ");
+		sql.append(" 	,U.ShainName SaishuKoshinShainName ");
+		sql.append(" 	,B.SaishuKoshinDate ");
+		sql.append(" 	,B.SaishuKoshinJikan ");
+		sql.append(" FROM ");
+		sql.append(" 	MST_BUSHO B ");
+		sql.append(" LEFT JOIN MST_KUBUN K0153 ");
+		sql.append(" 	ON K0153.KbnCode = '0153' ");
+		sql.append(" 	AND B.BushoKbn = K0153.Code ");
+		sql.append(" LEFT JOIN MST_EIGYOSHO E ");
+		sql.append(" 	ON B.EigyoshoCode = E.EigyoshoCode ");
+		sql.append(" LEFT JOIN MST_SHAIN U ");
+		sql.append(" 	ON B.SaishuKoshinShainNO = U.ShainNO ");
+		
+		sql.append(" WHERE ");
+		sql.append(" 	1 = 1 ");
+
+		if (StringUtils.isNotBlank(bushoCode)) {
+			sql.append(" AND B.BushoCode = ? ");
+			pstmtf.addValue("String", bushoCode);
+		}
+		
+		if (StringUtils.isNotBlank(bushoName)) {
+			sql.append(" AND B.BushoName like ? ");
+			pstmtf.addValue("String", "%" + bushoName + "%");
+		}
+		
+		if (StringUtils.isNotBlank(bushoKbn)) {
+			sql.append(" AND B.BushoKbn = ? ");
+			pstmtf.addValue("String", bushoKbn);
+		}
+		
+		if (StringUtils.isNotBlank(eigyoshoCode)) {
+			sql.append(" AND B.EigyoshoCode = ? ");
+			pstmtf.addValue("String", eigyoshoCode);
+		}
+
+		sql.append(" ORDER BY ");
+		sql.append("     B.BushoCode ");
+		
+		try {
+			// パラメータ付きSQL文の生成
+			pstmt = con.prepareStatement(sql.toString());
+			// パラメータの設定
+			pstmtf.setPreparedStatement(pstmt);
+			// 実行
+			rset = pstmt.executeQuery();
+			// 結果取得
+			ResultSetMetaData metaData = rset.getMetaData(); 
+			
+			// カラム数(列数)の取得
+			int colCount = metaData.getColumnCount(); 
+			
+			// レコード数分繰り返す
+			while (rset.next()){
+				// 1レコード分の配列を用意
+				HashMap<String, String> record = new HashMap<String, String>();
+				// カラム名をkeyとして値を格納
+				for (int i = 1; i <= colCount; i++) {
+					record.put(metaData.getColumnLabel(i), StringUtils.stripToEmpty(rset.getString(i)));
+				}
+				// 配列の格納
+				mstDatas.add(record);
+			}
+		} finally {
+			if (rset != null){ try { rset.close(); } catch (Exception exp){}}
+			if (pstmt != null){ try { pstmt.close(); } catch (Exception exp){}}
+		}
+		
+		return mstDatas;
+		
+	}
+	
+	/**
+	 * 社員の取得
+	 * 
+	 * @param con
+	 * @return
+	 * @throws Exception
+	 */
+	protected ArrayList<HashMap<String, String>> getMstShains(Connection con, String shainNo, String shainName,String password, String shainKbn, String userKbn, String eigyoshoCode, String bushoCode, String taisyokuDate) throws Exception {
+		
+		ArrayList<HashMap<String, String>> mstDatas = new ArrayList<>();
+		
+		// DB接続
+		StringBuffer sql				= new StringBuffer();
+		PreparedStatement pstmt			= null;
+		PreparedStatementFactory pstmtf	= new PreparedStatementFactory();
+		ResultSet rset					= null;
+		
+		sql.append(" SELECT ");
+		sql.append(" 	S.ShainNO ");
+		sql.append(" 	,S.ShainName ");
+		sql.append(" 	,S.Password ");
+		sql.append(" 	,S.ShainKbn ");
+		sql.append(" 	,S.UserKbn ");
+		sql.append(" 	,S.ShukinboKbn ");
+		sql.append(" 	,S.EigyoshoCode ");
+		sql.append(" 	,E.EigyoshoName ");
+		sql.append(" 	,S.BushoCode ");
+		sql.append(" 	,B.BushoName ");
+		sql.append(" 	,B.BushoKbn ");
+		sql.append(" 	,S.YukyuKyukaFuyoNissu ");
+		sql.append(" 	,S.JikyuNikkyuKbn ");
+		sql.append(" 	,S.KinmuKaishiJi ");
+		sql.append(" 	,S.KinmuKaishiFun ");
+		sql.append(" 	,S.KinmuShuryoJi ");
+		sql.append(" 	,S.KinmuShuryoFun ");
+		sql.append(" 	,S.KeiyakuJitsudoJikan ");
+		sql.append(" 	,S.ShinseiTanka01 ");
+		sql.append(" 	,S.ShinseiTanka02 ");
+		sql.append(" 	,S.ShinseiTanka03 ");
+		sql.append(" 	,S.ShinseiTanka04 ");
+		sql.append(" 	,S.ShinseiTanka05 ");
+		sql.append(" 	,S.ShinseiTanka06 ");
+		sql.append(" 	,S.ShinseiTanka07 ");
+		sql.append(" 	,S.ShinseiTanka08 ");
+		sql.append(" 	,S.ShinseiTanka09 ");
+		sql.append(" 	,S.ShinseiTanka10 ");
+		sql.append(" 	,S.ShinseiTanka11 ");
+		sql.append(" 	,S.TsukinHiKbn ");
+		sql.append(" 	,S.TaisyokuDate ");
+		sql.append(" 	,S.SaishuKoshinShainNO ");
+		sql.append(" 	,U.ShainName SaishuKoshinShainName ");
+		sql.append(" 	,S.SaishuKoshinDate ");
+		sql.append(" 	,S.SaishuKoshinJikan ");
+		sql.append(" FROM ");
+		sql.append(" 	MST_SHAIN S ");
+		sql.append(" LEFT JOIN MST_EIGYOSHO E ");
+		sql.append(" 	ON S.EigyoshoCode = E.EigyoshoCode ");
+		sql.append(" LEFT JOIN MST_BUSHO B ");
+		sql.append(" 	ON S.BushoCode = B.BushoCode ");
+		sql.append(" LEFT JOIN MST_SHAIN U ");
+		sql.append(" 	ON S.SaishuKoshinShainNO = U.ShainNO ");
+		
+		sql.append(" WHERE ");
+		sql.append(" 	1 = 1 ");
+		
+		if (StringUtils.isNotBlank(shainNo)) {
+			sql.append(" AND S.ShainNO = ? ");
+			pstmtf.addValue("String", shainNo);
+		}
+
+		if (StringUtils.isNotBlank(shainName)) {
+			sql.append(" AND S.ShainName LIKE ? ");
+			pstmtf.addValue("String", "%" + shainName + "%");
+		}
+		
+		if (StringUtils.isNotBlank(password)) {
+			sql.append(" AND S.Password = ? ");
+			pstmtf.addValue("String", password);
+		}
+		
+		if (StringUtils.isNotBlank(shainKbn)) {
+			sql.append(" AND S.ShainKbn = ? ");
+			pstmtf.addValue("String", shainKbn);
+		}
+		
+		if (StringUtils.isNotBlank(userKbn)) {
+			sql.append(" AND S.UserKbn = ? ");
+			pstmtf.addValue("String", userKbn);
+		}
+		
+		if (StringUtils.isNotBlank(eigyoshoCode)) {
+			sql.append(" AND S.EigyoshoCode = ? ");
+			pstmtf.addValue("String", eigyoshoCode);
+		}
+		
+		if (StringUtils.isNotBlank(bushoCode)) {
+			sql.append(" AND S.BushoCode = ? ");
+			pstmtf.addValue("String", bushoCode);
+		}
+
+		if (StringUtils.isNotBlank(taisyokuDate)) {
+			sql.append(" AND ( ");
+			sql.append(" 	S.TaisyokuDate = '' ");
+			sql.append(" 	OR ");
+			sql.append(" 	S.TaisyokuDate >= ? ");
+			sql.append(" ) ");
+			pstmtf.addValue("String", taisyokuDate);
+		}
+		
+		sql.append(" ORDER BY ");
+		sql.append("     S.ShainNO ");
+		
+		try {
+			// パラメータ付きSQL文の生成
+			pstmt = con.prepareStatement(sql.toString());
+			// パラメータの設定
+			pstmtf.setPreparedStatement(pstmt);
+			// 実行
+			rset = pstmt.executeQuery();
+			// 結果取得
+			ResultSetMetaData metaData = rset.getMetaData(); 
+			
+			// カラム数(列数)の取得
+			int colCount = metaData.getColumnCount(); 
+			
+			// レコード数分繰り返す
+			while (rset.next()){
+				// 1レコード分の配列を用意
+				HashMap<String, String> record = new HashMap<String, String>();
+				// カラム名をkeyとして値を格納
+				for (int i = 1; i <= colCount; i++) {
+					record.put(metaData.getColumnLabel(i), StringUtils.stripToEmpty(rset.getString(i)));
+				}
+				// 配列の格納
+				mstDatas.add(record);
+			}
+		} finally {
+			if (rset != null){ try { rset.close(); } catch (Exception exp){}}
+			if (pstmt != null){ try { pstmt.close(); } catch (Exception exp){}}
+		}
+		
+		return mstDatas;
+		
+	}
+	
+	/**
+	 * 社員処理可能営業所の取得
+	 * 
+	 * @param con
+	 * @return
+	 * @throws Exception
+	 */
+	protected ArrayList<HashMap<String, String>> getMstShainEigyoshos(Connection con, String shainNo) throws Exception {
+		
+		ArrayList<HashMap<String, String>> mstDatas = new ArrayList<>();
+		
+		// DB接続
+		StringBuffer sql				= new StringBuffer();
+		PreparedStatement pstmt			= null;
+		PreparedStatementFactory pstmtf	= new PreparedStatementFactory();
+		ResultSet rset					= null;
+		
+		sql.append(" SELECT ");
+		sql.append(" 	ShainNO ");
+		sql.append(" 	,EigyoshoCode ");
+		sql.append(" 	,SaishuKoshinShainNO ");
+		sql.append(" 	,SaishuKoshinDate ");
+		sql.append(" 	,SaishuKoshinJikan ");
+		sql.append(" FROM ");
+		sql.append(" 	MST_SHAIN_EIGYOSHO ");
+		sql.append(" WHERE ");
+		sql.append(" 	1 = 1 ");
+		
+		if (StringUtils.isNotBlank(shainNo)) {
+			sql.append(" AND ShainNO = ? ");
+			pstmtf.addValue("String", shainNo);
+		}
+		
+		sql.append(" ORDER BY ");
+		sql.append("     ShainNO ");
+		
+		try {
+			// パラメータ付きSQL文の生成
+			pstmt = con.prepareStatement(sql.toString());
+			// パラメータの設定
+			pstmtf.setPreparedStatement(pstmt);
+			// 実行
+			rset = pstmt.executeQuery();
+			// 結果取得
+			ResultSetMetaData metaData = rset.getMetaData(); 
+			
+			// カラム数(列数)の取得
+			int colCount = metaData.getColumnCount(); 
+			
+			// レコード数分繰り返す
+			while (rset.next()){
+				// 1レコード分の配列を用意
+				HashMap<String, String> record = new HashMap<String, String>();
+				// カラム名をkeyとして値を格納
+				for (int i = 1; i <= colCount; i++) {
+					record.put(metaData.getColumnLabel(i), StringUtils.stripToEmpty(rset.getString(i)));
+				}
+				// 配列の格納
+				mstDatas.add(record);
+			}
+		} finally {
+			if (rset != null){ try { rset.close(); } catch (Exception exp){}}
+			if (pstmt != null){ try { pstmt.close(); } catch (Exception exp){}}
+		}
+		
+		return mstDatas;
+		
+	}
+	
+	/**
+	 * 区分の取得
+	 * 
+	 * @param con
+	 * @return
+	 * @throws Exception
+	 */
+	protected ArrayList<HashMap<String, String>> getMstKubuns(Connection con, String kbnCode, String code, String kbnName) throws Exception {
+
+		ArrayList<HashMap<String, String>> mstUserIds = new ArrayList<>();
+		
+		// DB接続
+		StringBuffer sql				= new StringBuffer();
+		PreparedStatement pstmt			= null;
+		PreparedStatementFactory pstmtf	= new PreparedStatementFactory();
+		ResultSet rset					= null;
+		
+		sql.append(" SELECT ");
+		sql.append(" 	K.KbnCode ");
+		sql.append(" 	,K.Code ");
+		sql.append(" 	,K.KbnName ");
+		sql.append(" 	,K.KbnRyaku ");
+		sql.append(" 	,K.GroupCode1 ");
+		sql.append(" 	,K.GroupCode2 ");
+		sql.append(" 	,K.SaishuKoshinShainNO ");
+		sql.append(" 	,U.ShainName SaishuKoshinShainName ");
+		sql.append(" 	,K.SaishuKoshinDate ");
+		sql.append(" 	,K.SaishuKoshinJikan ");
+		sql.append(" FROM ");
+		sql.append(" 	MST_KUBUN K ");
+		sql.append(" LEFT JOIN MST_SHAIN U ");
+		sql.append(" 	ON K.SaishuKoshinShainNO = U.ShainNO ");
+
+		sql.append(" WHERE ");
+		sql.append(" 	1 = 1 ");
+
+		if (StringUtils.isNotBlank(kbnCode)) {
+			sql.append(" AND K.KbnCode = ? ");
+			pstmtf.addValue("String", kbnCode);
+		}
+		
+		if (StringUtils.isNotBlank(code)) {
+			sql.append(" AND K.Code = ? ");
+			pstmtf.addValue("String", code);
+		}
+		
+		if (StringUtils.isNotBlank(kbnName)) {
+			sql.append(" AND K.KbnName like ? ");
+			pstmtf.addValue("String", "%" + kbnName + "%");
+		}
+
+		sql.append(" ORDER BY ");
+		sql.append(" 	K.KbnCode ");
+		sql.append(" 	,K.Code ");
+		
+		try {
+			// パラメータ付きSQL文の生成
+			pstmt = con.prepareStatement(sql.toString());
+			// パラメータの設定
+			pstmtf.setPreparedStatement(pstmt);
+			// 実行
+			rset = pstmt.executeQuery();
+			// 結果取得
+			ResultSetMetaData metaData = rset.getMetaData(); 
+			
+			// カラム数(列数)の取得
+			int colCount = metaData.getColumnCount(); 
+			
+			// レコード数分繰り返す
+			while (rset.next()){
+				// 1レコード分の配列を用意
+				HashMap<String, String> record = new HashMap<String, String>();
+				// カラム名をkeyとして値を格納
+				for (int i = 1; i <= colCount; i++) {
+					record.put(metaData.getColumnLabel(i), StringUtils.stripToEmpty(rset.getString(i)));
+				}
+				// 配列の格納
+				mstUserIds.add(record);
+			}
+		} finally {
+			if (rset != null){ try { rset.close(); } catch (Exception exp){}}
+			if (pstmt != null){ try { pstmt.close(); } catch (Exception exp){}}
+		}
+		
+		return mstUserIds;
+		
+	}
+	
+	
+}

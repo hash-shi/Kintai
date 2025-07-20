@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<validate>
+	<proc func="login">
+		<variable name="txtShainNO" dispName="社員NO">
+			<check class="IsRequired" message="指定されたアカウントの社員NO、またはパスワードが違っているか指定されたアカウントが存在しないため、認証できませんでした。" itemName="{dispName}"></check>
+		</variable>
+		<variable name="txtPassword" dispName="パスワード">
+			<check class="IsRequired" message="指定されたアカウントの社員NO、またはパスワードが違っているか指定されたアカウントが存在しないため、認証できませんでした。" itemName="{dispName}"></check>
+		</variable>
+	</proc>
+</validate>

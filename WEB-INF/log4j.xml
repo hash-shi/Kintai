@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE log4j:configuration SYSTEM "log4j.dtd">
+<log4j:configuration xmlns:log4j="http://jakarta.apache.org/log4j/" >
+
+  <appender name="error" class="org.apache.log4j.DailyRollingFileAppender">
+	 <param name="File" value="C:/hane/logs/kintai-error.log" />
+     <param name="Append" value="true" />
+     <param name="Encoding" value="Shift_JIS" />
+     <param name="DatePattern" value="'.'yyyy-MM-dd" />
+     <param name="threshold" value="error"/>
+     <layout class="org.apache.log4j.PatternLayout">
+        <param name="ConversionPattern" value="[%-5p] [%d{yyyy/MM/dd HH:mm:ss.SSS}] [%t] - %m%n" />
+     </layout>
+  </appender>
+
+  <root>
+    <appender-ref ref="error"/>
+  </root>
+</log4j:configuration>

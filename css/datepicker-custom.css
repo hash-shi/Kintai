@@ -1,0 +1,8 @@
+/* “ú—j“ú‚ÌƒJƒ‰[İ’è */
+.ui-datepicker-calendar tr td:not(.ui-datepicker-other-month):first-child a{
+  color: #f00!important;
+}
+/* “y—j“ú‚ÌƒJƒ‰[İ’è */
+.ui-datepicker-calendar tr td:not(.ui-datepicker-other-month):last-child a{
+  color: #00f!important;
+}

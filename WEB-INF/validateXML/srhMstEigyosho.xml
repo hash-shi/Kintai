@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<validate>
+	<proc func="search">
+	
+<!--		<variable name="srhTxtEigyoshoCode" dispName="営業所コード">-->
+<!--			<check class="IsRequired" message="!#itemName#!は必ず入力してください" itemName="{dispName}"></check>-->
+<!--		</variable>-->
+<!--		<variable name="srhTxtEigyoshoName" dispName="営業所名">-->
+<!--			<check class="IsRequired" message="!#itemName#!は必ず入力してください" itemName="{dispName}"></check>-->
+<!--		</variable>-->
+		
+	</proc>
+</validate>

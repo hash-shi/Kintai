@@ -1,0 +1,63 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<controller>
+
+	<!-- 共通スタイル定義 -->
+	<common script="./script/jkl-calendar.js,./script/jquery-ui.min.js,./script/datepicker-ja.js,./script/bootstrap-datepicker.js,./script/jquery.timepicker.min.js,./script/common.js" style="./css/datepicker-custom.css,./css/jquery-ui.css,./css/bootstrap-datepicker.css,./css/jquery.timepicker.min.css,./css/common.css" authority="" header="" footer="" meta="" />
+	
+	<!-- ｸﾞﾙｰﾌﾟ共通スタイル定義 -->
+	<groups>
+		<!-- ログイン -->
+		<group id="login"	script="" style="" authority="" header="" footer="" meta="" />
+		<!-- メイン画面 -->
+		<group id="public"	script="./script/header.js,./script/side.js,./script/dialog/common.js" style="./css/header.css,./css/side.css,./css/dialog/common.css" authority="" header="header.jsp,side.jsp" footer="footer.jsp" meta="" />
+		<!-- ダイアログ -->
+		<group id="dialog"	script="" style="" authority="" 	header="dialog/header.jsp"	footer="dialog/footer.jsp"	meta="" />
+		
+	</groups>
+
+	<!-- 認証情報定義 -->
+	<authorities>
+		<authority id="user" class="authority.UserAuthority" viewPath="authorityError.jsp" messageAttrName="message" afterScript="" />
+	</authorities>
+
+	<!-- 画面定義 -->
+	<actions>
+	
+		<action id="index" group="Login" class="action.IndexAction" title="ログイン" header="" footer="" script="./script/Index.js" style="./css/Index.css" authority="" meta="" requiredParam="" >
+			<view return="success" path="Index.jsp" />
+		</action>
+	
+		<action id="menu" group="public" class="action.MenuAction" title="メニュー画面" header="" footer="" script="./script/menu.js" style="./css/menu.css" authority="" meta="" requiredParam="" >
+			<view return="success" path="menu.jsp" />
+		</action>
+		
+	</actions>
+
+	<!-- ダイアログ定義 -->
+	<dialogs>
+	
+		<dialog id="srhMstEigyosho" group="dialog" class="action.dialog.SrhMstEigyoshoAction" title="営業所検索ダイアログ" header="" footer="" script="./script/dialog/srhMstEigyosho.js" authority="user" >
+			<view return="success" path="dialog/srhMstEigyosho.jsp" />
+		</dialog>
+		
+	</dialogs>
+
+	<!-- ダウンロード定義 -->
+	<downloads>
+		<download id="downloadCsvFile" class="download.CsvFileDownload" />
+		<download id="downloadPdfFile" class="download.PdfFileDownload" />
+	</downloads>
+
+	<!-- サジェスト定義 -->
+	<suggests>
+	</suggests>
+
+	<!-- アップロード定義 -->
+	<uploads>
+	</uploads>
+
+	<!-- その他処理定義 -->
+	<others>
+	</others>
+
+</controller>

@@ -1,0 +1,74 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<config>
+
+	<htmlVersion>5</htmlVersion>
+	<charset>utf-8</charset>
+	<cipherKey>UZtFwML779c93Lhe</cipherKey>
+	
+	<project>
+		<name>株式会社羽根 勤怠システム</name>
+		<baseClass>jp.co.kintai.carreservation</baseClass>
+		<isDebug>false</isDebug>
+		<url></url>
+		<language>ja</language>
+		<ajaxAsync>false</ajaxAsync>
+	</project>
+	
+	<developer>
+		<name>株式会社ティージェイエス</name>
+		<mailaddress></mailaddress>
+	</developer>
+
+	<customer>
+		<name>株式会社 羽根</name>
+		<mailaddress></mailaddress>
+	</customer>
+
+	<administrator>
+		<name>株式会社 羽根</name>
+		<mailaddress></mailaddress>
+	</administrator>
+	
+	<messages reloadable="true" useJavaScript="true">
+		<!-- <messageClass>common.message.MessageDBAccess</messageClass> -->
+	</messages>
+	
+	<systemMessages>
+		<!-- <messageClass>message.systemMessageOverride</messageClass> -->	
+	</systemMessages>
+	
+	<controllers>
+		<path>/WEB-INF/controller.xml</path>
+	</controllers>
+
+	<databases>
+		<database>
+			<id>kintai</id>
+			<jndi>jdbc/kintai</jndi>
+			<connectionClassName>!#FRAMEWORK_PACKAGE#!.database.JDBCConnection</connectionClassName>
+		</database>
+	</databases>
+
+	<template>
+		<path>/WEB-INF/view/</path>
+	</template>
+	
+	<error>
+		<systemErrorjspPath>/WEB-INF/view/SystemError.jsp</systemErrorjspPath>		<!-- システムエラー発生時に表示する画面(認証エラー時等は認証クラスに担当させる) -->
+		<errorsAttrName>systemErrors</errorsAttrName>								<!-- エラー発生時に共通的にメッセージを格納しておくAttribute名 -->
+	</error>
+
+	<validate>
+		<baseClass>jp.co.kintai.carreservation.validate</baseClass>
+	</validate>
+
+	<validateXML>
+		<path>/WEB-INF/validateXML/</path>
+	</validateXML>
+
+	<exceptionView>
+		<path>/WEB-INF/exception/exception.html</path>
+	</exceptionView>
+	
+	<useTokenCheck>false</useTokenCheck>
+</config>
