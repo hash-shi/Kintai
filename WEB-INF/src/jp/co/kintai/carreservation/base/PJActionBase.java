@@ -50,6 +50,9 @@ public abstract class PJActionBase extends ActionBase {
 	 */
 	public void getEigyoshoName(HttpServletRequest req, HttpServletResponse res) throws Exception {
 		
+		//
+		String eigyoshoName = "";
+		
 		// 検索条件取得
 		String eigyoshoCode	= this.getParameter("eigyoshoCode");
 		
@@ -59,7 +62,13 @@ public abstract class PJActionBase extends ActionBase {
 		//=====================================================================
 		// 結果返却
 		//=====================================================================
-		this.addContent("result", this.getMstEigyoshos(con, eigyoshoCode, null));
+		// 取得
+		ArrayList<HashMap<String, String>> mstShains = PJActionBase.getMstEigyoshos(con, eigyoshoCode, null);
+		// 送信データを減らすため不要なカラムは削って名称のみ返す。
+		for (HashMap<String, String> hashMap : mstShains) {
+			eigyoshoName = hashMap.get("EigyoshoName");
+		}
+		this.addContent("result", eigyoshoName);
 	}
 	
 	/**
@@ -69,7 +78,7 @@ public abstract class PJActionBase extends ActionBase {
 	 * @return
 	 * @throws Exception
 	 */
-	protected ArrayList<HashMap<String, String>> getMstEigyoshos(Connection con, String eigyoshoCode, String eigyoshoName) throws Exception {
+	public static ArrayList<HashMap<String, String>> getMstEigyoshos(Connection con, String eigyoshoCode, String eigyoshoName) throws Exception {
 		
 		ArrayList<HashMap<String, String>> mstDatas = new ArrayList<>();
 		
@@ -146,7 +155,7 @@ public abstract class PJActionBase extends ActionBase {
 	 * @return
 	 * @throws Exception
 	 */
-	protected ArrayList<HashMap<String, String>> getMstBushos(Connection con, String bushoCode, String bushoName, String bushoKbn, String eigyoshoCode) throws Exception {
+	public static ArrayList<HashMap<String, String>> getMstBushos(Connection con, String bushoCode, String bushoName, String bushoKbn, String eigyoshoCode) throws Exception {
 		
 		ArrayList<HashMap<String, String>> mstDatas = new ArrayList<>();
 		
@@ -243,7 +252,7 @@ public abstract class PJActionBase extends ActionBase {
 	 * @return
 	 * @throws Exception
 	 */
-	protected ArrayList<HashMap<String, String>> getMstShains(Connection con, String shainNo, String shainName,String password, String shainKbn, String userKbn, String eigyoshoCode, String bushoCode, String taisyokuDate) throws Exception {
+	public static ArrayList<HashMap<String, String>> getMstShains(Connection con, String shainNo, String shainName,String password, String shainKbn, String userKbn, String eigyoshoCode, String bushoCode, String taisyokuDate) throws Exception {
 		
 		ArrayList<HashMap<String, String>> mstDatas = new ArrayList<>();
 		
@@ -390,7 +399,7 @@ public abstract class PJActionBase extends ActionBase {
 	 * @return
 	 * @throws Exception
 	 */
-	protected ArrayList<HashMap<String, String>> getMstShainEigyoshos(Connection con, String shainNo) throws Exception {
+	public static ArrayList<HashMap<String, String>> getMstShainEigyoshos(Connection con, String shainNo) throws Exception {
 		
 		ArrayList<HashMap<String, String>> mstDatas = new ArrayList<>();
 		
@@ -459,7 +468,7 @@ public abstract class PJActionBase extends ActionBase {
 	 * @return
 	 * @throws Exception
 	 */
-	protected ArrayList<HashMap<String, String>> getMstKubuns(Connection con, String kbnCode, String code, String kbnName) throws Exception {
+	public static ArrayList<HashMap<String, String>> getMstKubuns(Connection con, String kbnCode, String code, String kbnName) throws Exception {
 
 		ArrayList<HashMap<String, String>> mstUserIds = new ArrayList<>();
 		

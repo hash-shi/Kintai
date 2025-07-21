@@ -6,12 +6,12 @@
 //
 //****************************************************************************
 function onLogout(){
-	location.href				= "./login";
+	location.href				= "./index";
 }
 
 //****************************************************************************
 // getEigyoshoName
-//
+// 営業所名取得
 //
 //
 //
@@ -26,7 +26,13 @@ function getEigyoshoName(searchId, returnId) {
 	var value = $("#" + searchId).val();
 	console.log(value);
 	
+	// クリア
+	$("#" + returnId).val("");
+	// 空の場合はスキップ
+	if (value == "") { return; }
+	
 	proc("getEigyoshoName" ,{ 'eigyoshoCode': value }, function(data){
+		
 		if (data == undefined){ return; }
 		if (data["contents"] == undefined){ return; }
 		
@@ -35,12 +41,9 @@ function getEigyoshoName(searchId, returnId) {
 		
 		var result					= contents["result"];
 		
-		// クリア
-		$("#" + returnId).val("");
 		// 格納
-		if (result.length != 0){
-			$("#" + returnId).val(result[0]["EigyoshoName"]);
-		}
+		$("#" + returnId).val(result);
+		
 	});
 }
 

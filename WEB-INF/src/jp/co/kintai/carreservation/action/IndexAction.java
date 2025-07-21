@@ -50,11 +50,9 @@ public class IndexAction extends PJActionBase {
 		// 現在日付の取得
 		String nowDate	= this.getNowDate();
 		
-//		this.addContent("result", true);
-		
 		if (!"".equals(shainNo) && !"".equals(password)){
 		
-			ArrayList<HashMap<String, String>> mstShains = this.getMstShains(con, shainNo, null, password, null, null, null, null, nowDate);
+			ArrayList<HashMap<String, String>> mstShains = PJActionBase.getMstShains(con, shainNo, null, password, null, null, null, null, nowDate);
 			if (0 < mstShains.size()) {
 				HashMap<String, String> mstShain = mstShains.get(0);
 				
@@ -63,7 +61,7 @@ public class IndexAction extends PJActionBase {
 				shoriKanoEigyoshoCode.add(mstShain.get("EigyoshoCode"));
 				
 				// 処理可能営業所コードを取得
-				ArrayList<HashMap<String, String>> mstShainEigyoshos = this.getMstShainEigyoshos(con, shainNo);
+				ArrayList<HashMap<String, String>> mstShainEigyoshos = PJActionBase.getMstShainEigyoshos(con, shainNo);
 				for(HashMap<String, String> mstShainEigyosho : mstShainEigyoshos) {
 					shoriKanoEigyoshoCode.add(mstShainEigyosho.get("EigyoshoCode"));
 				}
