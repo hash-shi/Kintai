@@ -20,7 +20,7 @@ import jp.co.tjs_net.java.framework.information.IndexInformation;
 
 public abstract class PJActionBase extends ActionBase {
 	
-	SimpleDateFormat sdfDate_yyyyMMdd = new SimpleDateFormat("yyyy/MM/dd");
+	static SimpleDateFormat sdfDate_yyyyMMdd = new SimpleDateFormat("yyyy/MM/dd");
 	
 	public PJActionBase(HttpServletRequest req, HttpServletResponse res, IndexInformation info) {
 		super(req, res, info);
@@ -33,7 +33,7 @@ public abstract class PJActionBase extends ActionBase {
 	 * @return
 	 * @throws Exception
 	 */
-	protected String getNowDate() throws Exception {
+	public static String getNowDate() throws Exception {
 		// 現在日付
 		Date date = new Date();
 		// フォーマットの形式の文字列にして返却
@@ -103,7 +103,7 @@ public abstract class PJActionBase extends ActionBase {
 		sql.append(" 	1 = 1 ");
 
 		if (StringUtils.isNotBlank(eigyoshoCode)) {
-			sql.append(" AND E.EigyoshoCode = ? ");
+			sql.append(" AND CAST(E.EigyoshoCode AS int) = ? ");
 			pstmtf.addValue("String", eigyoshoCode);
 		}
 
@@ -190,7 +190,7 @@ public abstract class PJActionBase extends ActionBase {
 		sql.append(" 	1 = 1 ");
 
 		if (StringUtils.isNotBlank(bushoCode)) {
-			sql.append(" AND B.BushoCode = ? ");
+			sql.append(" AND CAST(B.BushoCode AS int) = ? ");
 			pstmtf.addValue("String", bushoCode);
 		}
 		
@@ -200,12 +200,12 @@ public abstract class PJActionBase extends ActionBase {
 		}
 		
 		if (StringUtils.isNotBlank(bushoKbn)) {
-			sql.append(" AND B.BushoKbn = ? ");
+			sql.append(" AND CAST(B.BushoKbn AS int) = ? ");
 			pstmtf.addValue("String", bushoKbn);
 		}
 		
 		if (StringUtils.isNotBlank(eigyoshoCode)) {
-			sql.append(" AND B.EigyoshoCode = ? ");
+			sql.append(" AND CAST(B.EigyoshoCode AS int) = ? ");
 			pstmtf.addValue("String", eigyoshoCode);
 		}
 
@@ -311,7 +311,7 @@ public abstract class PJActionBase extends ActionBase {
 		sql.append(" 	1 = 1 ");
 		
 		if (StringUtils.isNotBlank(shainNo)) {
-			sql.append(" AND S.ShainNO = ? ");
+			sql.append(" AND CAST(S.ShainNO AS int) = ? ");
 			pstmtf.addValue("String", shainNo);
 		}
 
@@ -326,22 +326,22 @@ public abstract class PJActionBase extends ActionBase {
 		}
 		
 		if (StringUtils.isNotBlank(shainKbn)) {
-			sql.append(" AND S.ShainKbn = ? ");
+			sql.append(" AND CAST(S.ShainKbn AS int) = ? ");
 			pstmtf.addValue("String", shainKbn);
 		}
 		
 		if (StringUtils.isNotBlank(userKbn)) {
-			sql.append(" AND S.UserKbn = ? ");
+			sql.append(" AND CAST(S.UserKbn AS int) = ? ");
 			pstmtf.addValue("String", userKbn);
 		}
 		
 		if (StringUtils.isNotBlank(eigyoshoCode)) {
-			sql.append(" AND S.EigyoshoCode = ? ");
+			sql.append(" AND CAST(S.EigyoshoCode AS int) = ? ");
 			pstmtf.addValue("String", eigyoshoCode);
 		}
 		
 		if (StringUtils.isNotBlank(bushoCode)) {
-			sql.append(" AND S.BushoCode = ? ");
+			sql.append(" AND CAST(S.BushoCode AS int) = ? ");
 			pstmtf.addValue("String", bushoCode);
 		}
 
@@ -421,7 +421,7 @@ public abstract class PJActionBase extends ActionBase {
 		sql.append(" 	1 = 1 ");
 		
 		if (StringUtils.isNotBlank(shainNo)) {
-			sql.append(" AND ShainNO = ? ");
+			sql.append(" AND CAST(ShainNO AS int) = ? ");
 			pstmtf.addValue("String", shainNo);
 		}
 		
@@ -498,12 +498,12 @@ public abstract class PJActionBase extends ActionBase {
 		sql.append(" 	1 = 1 ");
 
 		if (StringUtils.isNotBlank(kbnCode)) {
-			sql.append(" AND K.KbnCode = ? ");
+			sql.append(" AND CAST(K.KbnCode AS int) = ? ");
 			pstmtf.addValue("String", kbnCode);
 		}
 		
 		if (StringUtils.isNotBlank(code)) {
-			sql.append(" AND K.Code = ? ");
+			sql.append(" AND CAST(K.Code AS int) = ? ");
 			pstmtf.addValue("String", code);
 		}
 		
@@ -548,6 +548,5 @@ public abstract class PJActionBase extends ActionBase {
 		return mstUserIds;
 		
 	}
-	
 	
 }

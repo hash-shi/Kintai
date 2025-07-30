@@ -34,8 +34,10 @@
 				<li><a id="lnkKinShukkinBo"  href="#" onclick="movContents('KinShukkinBo'); return false;">出勤簿入力</a></li>
 				<li><a id="lnkChiChinginkeisansho"  href="#" onclick="movContents('ChiChinginkeisansho'); return false;">賃金計算書入力</a></li>
 				<li><a id="lnkKintaiList"  href="#" onclick="movContents('KintaiList'); return false;">勤怠リスト</a></li>
+				<% if (userKbn.equals("01") && bushoKbn.equals("00")) { %>
 				<li><a id="lnkKintaiKakutei"  href="#" onclick="movContents('KintaiKakutei'); return false;">月次確定入力</a></li>
 				<li><a id="lnkKintaiOutData"  href="#" onclick="movContents('KintaiOutData'); return false;">データ出力</a></li>
+				<% } %>
 			</ul>
 		</li>
 		<% if (userKbn.equals("01") && bushoKbn.equals("00")) { %>
