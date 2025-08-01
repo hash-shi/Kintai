@@ -48,7 +48,7 @@ public class IndexAction extends PJActionBase {
 		String password	= req.getParameter("txtPassword");
 		
 		// 現在日付の取得
-		String nowDate	= this.getNowDate();
+		String nowDate	= PJActionBase.getNowDate();
 		
 		if (!"".equals(shainNo) && !"".equals(password)){
 		

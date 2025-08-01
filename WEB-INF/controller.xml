@@ -2,14 +2,14 @@
 <controller>
 
 	<!-- 共通スタイル定義 -->
-	<common script="./script/jkl-calendar.js,./script/jquery-ui.min.js,./script/datepicker-ja.js,./script/bootstrap-datepicker.js,./script/jquery.timepicker.min.js,./script/common.js" style="./css/datepicker-custom.css,./css/jquery-ui.css,./css/bootstrap-datepicker.css,./css/jquery.timepicker.min.css,./css/common.css" authority="" header="" footer="" meta="" />
+	<common script="./script/jkl-calendar.js,./script/jquery-ui.min.js,./script/datepicker-ja.js,./script/bootstrap-datepicker.js,./script/jquery.timepicker.min.js,./script/common.js" style="./css/datepicker-custom.css,./css/jquery-ui.css,./css/bootstrap-datepicker.css,./css/jquery.timepicker.min.css,./css/common.css,./css/dialog/common.css" authority="" header="" footer="" meta="" />
 	
 	<!-- ｸﾞﾙｰﾌﾟ共通スタイル定義 -->
 	<groups>
 		<!-- ログイン -->
 		<group id="login"	script=""  style=""  authority=""  header=""  footer=""  meta="" />
 		<!-- メイン画面 -->
-		<group id="public"	 script="./script/header.js,./script/side.js,./script/dialog/common.js"  style="./css/header.css,./css/side.css,./css/dialog/common.css"  authority="error"  header="header.jsp,side.jsp"  footer="footer.jsp"  meta="" />
+		<group id="public"	 script="./script/header.js,./script/side.js"  style="./css/header.css,./css/side.css"  authority="error"  header="header.jsp,side.jsp"  footer="footer.jsp"  meta="" />
 		<!-- ダイアログ -->
 		<group id="dialog"	 script=""  style="error"  authority="" 	header="dialog/header.jsp"	footer="dialog/footer.jsp"	meta="" />
 		
@@ -31,15 +31,19 @@
 			<view return="success" path="menu.jsp" />
 		</action>
 		
+		<action id="chgPassword"  group="public"  class="action.ChgPasswordAction"  title="パスワード変更画面"  header=""  footer=""  script="./script/chgPassword.js"  style="./css/chgPassword.css"  authority=""  meta=""  requiredParam="" >
+			<view return="success" path="chgPassword.jsp" />
+		</action>
+		
 	</actions>
 
 	<!-- ダイアログ定義 -->
 	<dialogs>
 	
-		<dialog id="srhMstEigyosho"  group="dialog"  class="action.dialog.SrhMstEigyoshoAction"  title="営業所検索ダイアログ"  header=""  footer=""  script="./script/dialog/srhMstEigyosho.js"  authority="" >
+		<dialog id="srhMstEigyosho"  group="dialog"  class="action.dialog.SrhMstEigyoshoAction"  title="営業所検索ダイアログ"  header=""  footer=""  script=""  authority="" >
 			<view return="success"  path="dialog/srhMstEigyosho.jsp" />
 		</dialog>
-		
+
 	</dialogs>
 
 	<!-- ダウンロード定義 -->
