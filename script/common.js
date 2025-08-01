@@ -48,6 +48,77 @@ function getEigyoshoName(searchId, returnId) {
 }
 
 //****************************************************************************
+// getShainName
+// 社員名取得
+//
+//
+//
+//****************************************************************************
+function getShainName(searchId, returnId) {
+	
+	// 検索対象となるコード項目のid
+	console.log(searchId);
+	// 検索結果となる名称項目のid
+	console.log(returnId);
+	
+	var value = $("#" + searchId).val();
+	console.log(value);
+	
+	// クリア
+	$("#" + returnId).val("");
+	// 空の場合はスキップ
+	if (value == "") { return; }
+	
+	proc("getShainName" ,{ 'shainNo': value }, function(data){
+		
+		if (data == undefined){ return; }
+		if (data["contents"] == undefined){ return; }
+		
+		var contents				= data["contents"];
+		if (contents["result"] == undefined){ return; }
+		
+		var result					= contents["result"];
+		
+		// 格納
+		$("#" + returnId).val(result);
+		
+	});
+}
+
+
+//****************************************************************************
+// getKubunName
+// 区分名取得（区分コード＋コード → 名称）
+//
+//
+//
+//****************************************************************************
+function getKubunName(kbnCodeId, codeId, nameId) {
+	// 取得対象の値
+	var kbnCode = $("#" + kbnCodeId).val();
+	var code    = $("#" + codeId).val();
+
+	console.log("kbnCode =", kbnCode);
+	console.log("code    =", code);
+
+	// 名称欄の初期化
+	$("#" + nameId).val("");
+
+	// どちらかが空の場合はスキップ
+	if (!kbnCode || !code) return;
+
+	proc("getKubunName", { 'kbnCode': kbnCode, 'code': code }, function(data) {
+		if (!data || !data["contents"] || !data["contents"]["result"]) return;
+
+		var result = data["contents"]["result"];
+
+		// 名称セット
+		$("#" + nameId).val(result);
+	});
+}
+
+
+//****************************************************************************
 // opnDialog
 // 検索ダイアログの表示
 // 
@@ -135,26 +206,197 @@ function setDialogReturnValueEigyoshoName() {
 }
 
 //****************************************************************************
+// setDialogReturnValueShainName
+// 検索ダイアログの選択結果を返却した項目に対してgetNameを行う。
+// getShainName用
+//
+//
+//****************************************************************************
+function setDialogReturnValueShainName() {
+	
+	// setDialogReturnValueで返却値を設定した項目に対してgetNameをする。
+	
+	// 対象となる親画面の項目はヘッダの隠し項目に入れてある。
+	var searchIds = $("#hdnDialogSearchId").val();
+	
+	// 対象となる親画面の名前項目はヘッダの隠し項目に入れてある。
+	var returnIds = $("#hdnDialogReturnId").val();
+	
+	// ない場合はスキップ
+	console.log(searchIds);
+	if (!searchIds) { return; }
+	
+	// 複数項目ある場合に備えて,で分割
+	var searchId = searchIds.split(',');
+	var returnId = returnIds.split(',');
+	
+	// 名称取得を実行する。
+	for (var i = 0; i < searchId.length; i++) {
+		getShainName(searchId[i], returnId[i]);
+	}
+}
+
+//****************************************************************************
+// setDialogReturnValueKbnName
+// 検索ダイアログの選択結果を返却した項目に対してgetNameを行う。
+// getKbnName用
+//
+//
+//****************************************************************************
+
+
+function setDialogReturnValueKbnName() {
+	
+	// setDialogReturnValueで返却値を設定した項目に対してgetNameをする。
+	
+	// 対象となる親画面の項目はヘッダの隠し項目に入れてある。
+	var searchIds = $("#hdnDialogSearchId").val();
+	
+	// 対象となる親画面の名前項目はヘッダの隠し項目に入れてある。
+	var returnIds = $("#hdnDialogReturnId").val();
+	
+	// ない場合はスキップ
+	console.log(searchIds);
+	if (!searchIds) { return; }
+	
+	// 複数項目ある場合に備えて,で分割
+	var searchId = searchIds.split(',');
+	var returnId = returnIds.split(',');
+	
+	// 名称取得を実行する。
+	getKubunName(searchId[0], searchId[1], returnId[0]);
+
+}
+
+//****************************************************************************
 // 営業所マスタ検索ダイアログ用制御
+// searchDialog
+// getMstEigyoshos
+//
+//
+//
 //****************************************************************************
+function getMstEigyoshos(){
 
-
-//****************************************************************************
-// 部署マスタ検索ダイアログ用制御
-//****************************************************************************
+	proc("search", {}, function(data){
+		if (data == undefined){ return; }
+		if (data["contents"] == undefined){ return; }
+		
+		var contents		= data["contents"];
+		if (contents["result"] == undefined){ return; }
+		
+		var result			= contents["result"];
+		
+		// 検索結果エリアをクリアする。
+		$("#searchStaffResult").children().remove();
+		
+		for (var count = 0 ; count < result.length ; count++){
+			var record			= result[count];
+//			$("#searchStaffResult").append("<li><div class=\"name\">" + record["nmSyain"] + " " + "(" + record["kjTentanms"] + ")" + "</div><div class=\"button\"><button type=\"button\" onclick=\"$('#input_responsibleCdSyain').val('" + record["cdSyain"] + "');closeDialog();getStaffInformation();\">選択</button></div></li>");
+		}
+		
+	});
+	
+}
 
 
 //****************************************************************************
 // 社員マスタ検索ダイアログ用制御
+// searchDialog
+// getMstShains
+//
+//
+//
 //****************************************************************************
+		
+function getMstShains(){
+	
+	proc("search", {}, function(data){
+		if (data == undefined){ return; }
+		if (data["contents"] == undefined){ return; }
+		
+		var contents		= data["contents"];
+		if (contents["result"] == undefined){ return; }
+		
+		var result			= contents["result"];
+		
+		// 検索結果エリアをクリアする。
+		$("#searchShainResult").children().remove();		
+		
+		for (var count = 0 ; count < result.length ; count++){
+		    var record = result[count];
+			
+			
+			var shainNo = record["ShainNO"];
+			var shainName = record["ShainName"];
+			var eigyoshoCode = record["EigyoshoCode"];
+			var shainKbn = record["ShainKbn"];
+			
+			// onclickで呼ぶ関数を共通化
+			var onclickCode = "setDialogReturnValue('" + shainNo + "'); closeDialog(); setDialogReturnValueShainName(); return false;";
+
+			var rowHtml = "<tr>" +
+							  "<td><div class=\"shainNo\"><a href=\"#\" onclick=\"" + onclickCode + "\">" + shainNo + "</a></div></td>" +
+							  "<td><div class=\"shainName\"><a href=\"#\" onclick=\"" + onclickCode + "\">" + shainName + "</a></div></td>" +
+							  "<td><div class=\"eigyoshoCode\"><a href=\"#\" onclick=\"" + onclickCode + "\">" + eigyoshoCode + "</a></div></td>" +
+							  "<td><div class=\"shainKbn\"><a href=\"#\" onclick=\"" + onclickCode + "\">" + shainKbn + "</a></div></td>" +
+						  "</tr>";
+
+						$("#searchShainResult").append(rowHtml);
+			
+			}
+	});
+}
+
+
 
 
 //****************************************************************************
 // 区分マスタ検索ダイアログ用制御
+// searchDialog
+// getMstKubuns
+//
+//
+//
 //****************************************************************************
+function getMstKubuns(){
+	
+	proc("search", {}, function(data){
+		if (data == undefined){ return; }
+		if (data["contents"] == undefined){ return; }
+		
+		var contents		= data["contents"];
+		if (contents["result"] == undefined){ return; }
+		
+		var result			= contents["result"];
+		
+		// 検索結果エリアをクリアする。
+		$("#searchKubunResult").children().remove();		
+		
+		for (var count = 0 ; count < result.length ; count++){
+		    var record = result[count];
+			
+			
+			var kbnCode = record["KbnCode"];
+			var code = record["Code"];
+			var kbnName = record["KbnName"];
+			
+			// onclickで呼ぶ関数を共通化
+			var onclickCode = "setDialogReturnValue('" + kbnCode + "," + code + "'); closeDialog(); setDialogReturnValueKbnName('" + kbnCode + "," + code + "," + kbnName + "'); return false;";
 
+			var rowHtml = "<tr>" +
+							  "<td><div class=\"kbnCode\"><a href=\"#\" onclick=\"" + onclickCode + "\">" + kbnCode + "</a></div></td>" +
+							  "<td><div class=\"code\"><a href=\"#\" onclick=\"" + onclickCode + "\">" + code + "</a></div></td>" +
+							  "<td><div class=\"kbnName\"><a href=\"#\" onclick=\"" + onclickCode + "\">" + kbnName + "</a></div></td>" +
+						  "</tr>";
 
-//****************************************************************************
+						$("#searchKubunResult").append(rowHtml);
+			
+			}
+	});
+}
+
+//**********************************************
 // 検索ダイアログのドラッグ移動用制御
 //**********************************************
 //関数名		w2uiグリッド初期化関数
@@ -228,4 +470,5 @@ $(document).on("mousemove", function(e){
 		$("#dialog_" + _nowMoveDialogUUID).css("top" , mouseY + "px");
 	}
 });
+
 //****************************************************************************
