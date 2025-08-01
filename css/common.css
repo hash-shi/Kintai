@@ -225,6 +225,10 @@ img {
 	border : 1px solid black;
 }
 
+.bold {
+	font-weight						: bold;				/* 太字にする */
+}
+
 .nom {
 	background-color			: #f5f5f5;	/* 画面背景色(初期状態)  */
 }
@@ -233,6 +237,12 @@ img {
 }
 .uod {
 	background-color			: #ffff99;	/* 画面背景色(更新モード)  */
+}
+
+/* 必須項目表示 */
+.req {
+	color				: green;
+	font-weight	:bold;
 }
 
 
