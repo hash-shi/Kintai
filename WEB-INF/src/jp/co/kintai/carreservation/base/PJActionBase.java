@@ -72,6 +72,67 @@ public abstract class PJActionBase extends ActionBase {
 	}
 	
 	/**
+	 * 社員名取得
+	 * 
+	 * @param req
+	 * @param res
+	 * @throws Exception
+	 */
+	public void getShainName(HttpServletRequest req, HttpServletResponse res) throws Exception {
+		
+		//
+		String shainName = "";
+		
+		// 検索条件取得
+		String shainNo	= this.getParameter("shainNo");
+		
+		// DB接続
+		Connection con		= this.getConnection("kintai", req);
+		
+		//=====================================================================
+		// 結果返却
+		//=====================================================================
+		// 取得
+		ArrayList<HashMap<String, String>> mstShains = PJActionBase.getMstShains(con, shainNo, null, null, null, null, null,  null, null);
+		// 送信データを減らすため不要なカラムは削って名称のみ返す。
+		for (HashMap<String, String> hashMap : mstShains) {
+			shainName = hashMap.get("ShainName");
+		}
+		this.addContent("result", shainName);
+	}
+	
+	/**
+	 * 区分名取得
+	 * 
+	 * @param req
+	 * @param res
+	 * @throws Exception
+	 */
+	public void getKubunName(HttpServletRequest req, HttpServletResponse res) throws Exception {
+		
+		//
+		String kbnName = "";
+		
+		// 検索条件取得
+		String kbnCode	= this.getParameter("kbnCode");
+		String code		= this.getParameter("code");
+		
+		// DB接続
+		Connection con		= this.getConnection("kintai", req);
+		
+		//=====================================================================
+		// 結果返却
+		//=====================================================================
+		// 取得
+		ArrayList<HashMap<String, String>> mstShains = PJActionBase.getMstKubuns(con, kbnCode, code, null);
+		// 送信データを減らすため不要なカラムは削って名称のみ返す。
+		for (HashMap<String, String> hashMap : mstShains) {
+			kbnName = hashMap.get("KbnName");
+		}
+		this.addContent("result", kbnName);
+	}
+	
+	/**
 	 * 営業所の取得
 	 * 
 	 * @param con
