@@ -39,8 +39,8 @@ public class KinShukkinBoAction extends PJActionBase {
 		// 検索条件取得
 //		String taishoYM			= this.getParameter("srhTxtEigyoshoCode");
 //		String taishoShainNo	= this.getParameter("srhTxtEigyoshoName");
-		String taishoYM			= "2020/04";
-		String taishoShainNo	= "0898";
+		String taishoYM			= "2010/08";
+		String taishoShainNo	= "0001";
 		
 		// DB接続
 		Connection con		= this.getConnection("kintai", req);
@@ -69,7 +69,8 @@ public class KinShukkinBoAction extends PJActionBase {
 		ResultSet rset					= null;
 		
 		sql.append(" SELECT ");
-		sql.append(" 	M.TaishoNengappi ");
+		sql.append(" 	MONTH(CONVERT(DATETIME, M.TaishoNengappi, 111)) AS TaishoGetsu ");
+		sql.append(" 	,DAY(CONVERT(DATETIME, M.TaishoNengappi, 111)) AS TaishoBi ");
 		sql.append(" 	,M.YobiKbn ");
 		sql.append(" 	,M.ShukkinYoteiKbn ");
 		sql.append(" 	,M.KintaiKbn ");
@@ -86,6 +87,14 @@ public class KinShukkinBoAction extends PJActionBase {
 		sql.append(" 	,M.KintaiShinseiShuryoJi2 ");
 		sql.append(" 	,M.KintaiShinseiShuryoFun2 ");
 		sql.append(" 	,M.KintaiShinseiJikan2 ");
+		sql.append(" 	,'' AS KintaiShinseiKbn3 ");	//TODO
+		sql.append(" 	,'' AS KintaiShinseiKaishiJi3 ");
+		sql.append(" 	,'' AS KintaiShinseiKaishiFun3 ");
+		sql.append(" 	,'' AS KintaiShinseiShuryoJi3 ");
+		sql.append(" 	,'' AS KintaiShinseiShuryoFun3 ");
+		sql.append(" 	,'' AS KintaiShinseiJikan3 ");
+		sql.append(" 	,K.ShinseiKingaku01 ");
+		sql.append(" 	,K.ShinseiKingaku02 ");
 		sql.append(" FROM ");
 		sql.append(" 	KIN_SHUKKINBO_MEISAI M ");
 		sql.append(" LEFT OUTER JOIN ");
