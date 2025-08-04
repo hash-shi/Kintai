@@ -25,7 +25,7 @@
 						<input type="text" class=""  style="width: 120px"" name="txtEigyoshoName" id="txtEigyoshoName" value="" readonly>
 					</td>
 					<td class="value w50">
-						<button type="button" onclick="onUpdate();">検索</button>
+						<button type="button" onclick="onSearchKinShukkinBo();">検索</button>
 					</td>
 				</tr>
 			</table>
