@@ -21,6 +21,7 @@ import jp.co.tjs_net.java.framework.information.IndexInformation;
 public abstract class PJActionBase extends ActionBase {
 	
 	static SimpleDateFormat sdfDate_yyyyMMdd = new SimpleDateFormat("yyyy/MM/dd");
+	static SimpleDateFormat sdfDate_HHmmss = new SimpleDateFormat("HH:mm:ss");
 	
 	public PJActionBase(HttpServletRequest req, HttpServletResponse res, IndexInformation info) {
 		super(req, res, info);
@@ -40,6 +41,19 @@ public abstract class PJActionBase extends ActionBase {
 		return sdfDate_yyyyMMdd.format(date);
 	}
 	
+	/**
+	 * 現在時刻の取得
+	 * 
+	 * @param con
+	 * @return
+	 * @throws Exception
+	 */
+	public static String getNowTime() throws Exception {
+		// 現在日付
+		Date date = new Date();
+		// フォーマットの形式の文字列にして返却
+		return sdfDate_HHmmss.format(date);
+	}
 	
 	/**
 	 * 営業所名取得

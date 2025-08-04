@@ -19,7 +19,10 @@ public class UserInformation implements Serializable {
 	private String taisyokuDate;
 	private ArrayList<String> shoriKanoEigyoshoCode;
 	private String loginDate;
-
+	private String saishuKoshinShainNO;
+	private String saishuKoshinDate;
+	private String saishuKoshinJikan;
+	
 	public String getShainNO() { 
 		return shainNO;
 	}
@@ -109,5 +112,26 @@ public class UserInformation implements Serializable {
 	}
 	public void setLoginDate(String loginDate) {
 		this.loginDate = loginDate;
+	}
+	
+	public String getSaishuKoshinShainNO() {
+		return saishuKoshinShainNO;
+	}
+	public void setSaishuKoshinShainNO(String saishuKoshinShainNO) {
+		this.saishuKoshinShainNO = saishuKoshinShainNO;
+	}
+	
+	public String getSaishuKoshinDate() {
+		return saishuKoshinDate;
+	}
+	public void setSaishuKoshinDate(String saishuKoshinDate) {
+		this.saishuKoshinDate = saishuKoshinDate;
+	}
+	
+	public String getSaishuKoshinJikan() {
+		return saishuKoshinJikan;
+	}
+	public void setSaishuKoshinJikan(String saishuKoshinJikan) {
+		this.saishuKoshinJikan = saishuKoshinJikan;
 	}
 }

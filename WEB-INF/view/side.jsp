@@ -25,18 +25,18 @@
 		<li>
 			<div id="sideMenuUser"  class="sideMenuParent">ユーザ設定</div>
 			<ul class="sideMenuChild">
-				<li><a id="lnkChgPassword"  href="#" onclick="movContents('ChgPassword'); return false;">パスワード設定</a></li>
+				<li><a id="lnkChgPassword"  href="#" onclick="movContents('chgPassword'); return false;">パスワード設定</a></li>
 			</ul>
 		</li>
 		<li>
 			<div id="sideMenuKintai"  class="sideMenuParent">勤怠</div>
 			<ul class="sideMenuChild">
-				<li><a id="lnkKinShukkinBo"  href="#" onclick="movContents('KinShukkinBo'); return false;">出勤簿入力</a></li>
-				<li><a id="lnkChiChinginkeisansho"  href="#" onclick="movContents('ChiChinginkeisansho'); return false;">賃金計算書入力</a></li>
-				<li><a id="lnkKintaiList"  href="#" onclick="movContents('KintaiList'); return false;">勤怠リスト</a></li>
+				<li><a id="lnkKinShukkinBo"  href="#" onclick="movContents('kinShukkinBo'); return false;">出勤簿入力</a></li>
+				<li><a id="lnkChiChinginkeisansho"  href="#" onclick="movContents('chiChinginkeisansho'); return false;">賃金計算書入力</a></li>
+				<li><a id="lnkKintaiList"  href="#" onclick="movContents('kintaiList'); return false;">勤怠リスト</a></li>
 				<% if (userKbn.equals("01") && bushoKbn.equals("00")) { %>
-				<li><a id="lnkKintaiKakutei"  href="#" onclick="movContents('KintaiKakutei'); return false;">月次確定入力</a></li>
-				<li><a id="lnkKintaiOutData"  href="#" onclick="movContents('KintaiOutData'); return false;">データ出力</a></li>
+				<li><a id="lnkKintaiKakutei"  href="#" onclick="movContents('kintaiKakutei'); return false;">月次確定入力</a></li>
+				<li><a id="lnkKintaiOutData"  href="#" onclick="movContents('kintaiOutData'); return false;">データ出力</a></li>
 				<% } %>
 			</ul>
 		</li>
@@ -44,12 +44,12 @@
 		<li>
 			<div id="sideMenuMaster"  class="sideMenuParent">マスタメンテ</div>
 			<ul class="sideMenuChild">
-				<li><a id="lnkMstKanri"  href="#" onclick="movContents('MstKanri'); return false;">管理マスタ</a></li>
-				<li><a id="lnkMstEigyosho"  href="#" onclick="movContents('MstEigyosho'); return false;">営業所マスタ</a></li>
-				<li><a id="lnkMstBusho"  href="#" onclick="movContents('MstBusho'); return false;">部署マスタ</a></li>
-				<li><a id="lnkMstShain"  href="#" onclick="movContents('MstShain'); return false;">社員マスタ</a></li>
-				<li><a id="lnkMstKubun"  href="#" onclick="movContents('MstKubun'); return false;">区分名称マスタ</a></li>
-				<li><a id="lnkMstChohyoList"  href="#" onclick="movContents('MstChohyoList'); return false;">マスタ帳票リスト</a></li>
+				<li><a id="lnkMstKanri"  href="#" onclick="movContents('mstKanri'); return false;">管理マスタ</a></li>
+				<li><a id="lnkMstEigyosho"  href="#" onclick="movContents('mstEigyosho'); return false;">営業所マスタ</a></li>
+				<li><a id="lnkMstBusho"  href="#" onclick="movContents('mstBusho'); return false;">部署マスタ</a></li>
+				<li><a id="lnkMstShain"  href="#" onclick="movContents('mstShain'); return false;">社員マスタ</a></li>
+				<li><a id="lnkMstKubun"  href="#" onclick="movContents('mstKubun'); return false;">区分名称マスタ</a></li>
+				<li><a id="lnkMstChohyoList"  href="#" onclick="movContents('mstChohyoList'); return false;">マスタ帳票リスト</a></li>
 			</ul>
 		</li>
 		<% } %>

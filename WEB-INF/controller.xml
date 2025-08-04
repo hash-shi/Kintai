@@ -31,8 +31,8 @@
 			<view return="success" path="menu.jsp" />
 		</action>
 		
-		<action id="chgPassword"  group="public"  class="action.ChgPasswordAction"  title="パスワード変更画面"  header=""  footer=""  script="./script/chgPassword.js"  style="./css/chgPassword.css"  authority=""  meta=""  requiredParam="" >
-			<view return="success" path="chgPassword.jsp" />
+		<action id="chgPassword"  group="public"  class="action.user.ChgPasswordAction"  title="パスワード変更画面"  header=""  footer=""  script="./script/user/chgPassword.js"  style="./css/user/chgPassword.css"  authority=""  meta=""  requiredParam="" >
+			<view return="success" path="user/chgPassword.jsp" />
 		</action>
 		
 		<action id="kinShukkinBo"  group="public"  class="action.kintai.KinShukkinBoAction"  title="出勤簿入力"  header=""  footer=""  script="./script/kintai/kinShukkinBo.js"  style="./css/kintai/kinShukkinBo.css"  authority=""  meta=""  requiredParam="" >
