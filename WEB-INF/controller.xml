@@ -48,6 +48,10 @@
 			<view return="success"  path="dialog/srhMstEigyosho.jsp" />
 		</dialog>
 		
+		<dialog id="srhMstBusho"  group="dialog"  class="action.dialog.SrhMstBushoAction"  title="部署検索ダイアログ"  header=""  footer=""  script=""  authority="" >
+			<view return="success"  path="dialog/srhMstBusho.jsp" />
+		</dialog>
+		
 		<dialog id="srhMstShain"  group="dialog"  class="action.dialog.SrhMstShainAction"  title="社員検索ダイアログ"  header=""  footer=""  script=""  authority="" >
 			<view return="success"  path="dialog/srhMstShain.jsp" />
 		</dialog>

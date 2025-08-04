@@ -86,6 +86,37 @@ public abstract class PJActionBase extends ActionBase {
 	}
 	
 	/**
+	 * 部署名取得
+	 * 
+	 * @param req
+	 * @param res
+	 * @throws Exception
+	 */
+	public void getBushoName(HttpServletRequest req, HttpServletResponse res) throws Exception {
+			
+		//
+		String bushoName = "";
+			
+		// 検索条件取得
+		String bushoCode	= this.getParameter("bushoCode");
+		String eigyoshoCode	= this.getParameter("eigyoshoCode");
+			
+		// DB接続
+		Connection con		= this.getConnection("kintai", req);
+		
+		//=====================================================================
+		// 結果返却
+		//=====================================================================
+		// 取得
+		ArrayList<HashMap<String, String>> mstShains = PJActionBase.getMstBushos(con, bushoCode, null, eigyoshoCode);
+		// 送信データを減らすため不要なカラムは削って名称のみ返す。
+		for (HashMap<String, String> hashMap : mstShains) {
+				bushoName = hashMap.get("EigyoshoName");
+		}
+		this.addContent("result", bushoName);
+	}
+	
+	/**
 	 * 社員名取得
 	 * 
 	 * @param req
@@ -230,7 +261,7 @@ public abstract class PJActionBase extends ActionBase {
 	 * @return
 	 * @throws Exception
 	 */
-	public static ArrayList<HashMap<String, String>> getMstBushos(Connection con, String bushoCode, String bushoName, String bushoKbn, String eigyoshoCode) throws Exception {
+	public static ArrayList<HashMap<String, String>> getMstBushos(Connection con, String bushoCode, String bushoName, String eigyoshoCode) throws Exception {
 		
 		ArrayList<HashMap<String, String>> mstDatas = new ArrayList<>();
 		
@@ -272,11 +303,6 @@ public abstract class PJActionBase extends ActionBase {
 		if (StringUtils.isNotBlank(bushoName)) {
 			sql.append(" AND B.BushoName like ? ");
 			pstmtf.addValue("String", "%" + bushoName + "%");
-		}
-		
-		if (StringUtils.isNotBlank(bushoKbn)) {
-			sql.append(" AND CAST(B.BushoKbn AS int) = ? ");
-			pstmtf.addValue("String", bushoKbn);
 		}
 		
 		if (StringUtils.isNotBlank(eigyoshoCode)) {

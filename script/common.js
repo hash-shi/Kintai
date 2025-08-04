@@ -48,6 +48,44 @@ function getEigyoshoName(searchId, returnId) {
 }
 
 //****************************************************************************
+// getBushoName
+// 部署名取得
+//
+//
+//
+//****************************************************************************
+function getBushoName(searchId, returnId) {
+	
+	// 検索対象となるコード項目のid
+	console.log(searchId);
+	// 検索結果となる名称項目のid
+	console.log(returnId);
+	
+	var value = $("#" + searchId).val();
+	console.log(value);
+	
+	// クリア
+	$("#" + returnId).val("");
+	// 空の場合はスキップ
+	if (value == "") { return; }
+	
+	proc("getBushoName" ,{ 'bushoCode': value }, function(data){
+		
+		if (data == undefined){ return; }
+		if (data["contents"] == undefined){ return; }
+		
+		var contents				= data["contents"];
+		if (contents["result"] == undefined){ return; }
+		
+		var result					= contents["result"];
+		
+		// 格納
+		$("#" + returnId).val(result);
+		
+	});
+}
+
+//****************************************************************************
 // getShainName
 // 社員名取得
 //
@@ -206,6 +244,37 @@ function setDialogReturnValueEigyoshoName() {
 }
 
 //****************************************************************************
+// setDialogReturnValueBushoName
+// 検索ダイアログの選択結果を返却した項目に対してgetNameを行う。
+// getBushoName用
+//
+//
+//****************************************************************************
+function setDialogReturnValueBushoName() {
+	
+	// setDialogReturnValueで返却値を設定した項目に対してgetNameをする。
+	
+	// 対象となる親画面の項目はヘッダの隠し項目に入れてある。
+	var searchIds = $("#hdnDialogSearchId").val();
+	
+	// 対象となる親画面の名前項目はヘッダの隠し項目に入れてある。
+	var returnIds = $("#hdnDialogReturnId").val();
+	
+	// ない場合はスキップ
+	console.log(searchIds);
+	if (!searchIds) { return; }
+	
+	// 複数項目ある場合に備えて,で分割
+	var searchId = searchIds.split(',');
+	var returnId = returnIds.split(',');
+	
+	// 名称取得を実行する。
+	for (var i = 0; i < searchId.length; i++) {
+		getBushoName(searchId[i], returnId[i]);
+	}
+}
+
+//****************************************************************************
 // setDialogReturnValueShainName
 // 検索ダイアログの選択結果を返却した項目に対してgetNameを行う。
 // getShainName用
@@ -268,18 +337,67 @@ function setDialogReturnValueKbnName() {
 
 }
 
-//********************************************************************************************************************************************************
+//****************************************************************************
 // 営業所マスタ検索ダイアログ用制御
-//********************************************************************************************************************************************************
+//****************************************************************************
 
 //****************************************************************************
 // searchDialog
 // getMstEigyoshos
-//
+// 
 //
 //
 //****************************************************************************
+
 function getMstEigyoshos(){
+
+	proc("search", {}, function(data){
+		if (data == undefined){ return; }
+		if (data["contents"] == undefined){ return; }
+		
+		var contents		= data["contents"];
+		if (contents["result"] == undefined){ return; }
+		
+		var result			= contents["result"];
+		
+		// 検索結果エリアをクリアする。
+		$("#searchEigyoshoResult").children().remove();
+		
+		for (var count = 0 ; count < result.length ; count++){
+			var record			= result[count];
+
+			var	eigyoushoCode = record["EigyoshoCode"];
+			var eigyoushoName = record["EigyoshoName"];
+			
+			// onclickで呼ぶ関数を共通化
+			var onclickCode = "setDialogReturnValue('" + eigyoushoCode + "'); closeDialog(); setDialogReturnValueEigyoshoName(); return false;";
+			
+			var rowHtml = "<tr>" + 
+								"<td><div class=\"eigyoshoCode\"><a href=\"#\" onclick=\"" + onclickCode + "\">" + eigyoushoCode + "</a></div></td>" + 
+								"<td><div class=\"eigyoshoName\"><a href=\"#\" onclick=\"" + onclickCode + "\">" + eigyoushoName + "</a></div></td>" +  
+						  "</tr>";
+			
+			$("#searchEigyoshoResult").append(rowHtml);
+		
+		}
+		
+	});
+	
+}
+
+//****************************************************************************
+// 部署マスタ検索ダイアログ用制御
+//****************************************************************************
+
+//****************************************************************************
+// searchDialog
+// getMstBushos
+// 
+//
+//
+//****************************************************************************
+
+function getMstbushos(){
 
 	proc("search", {}, function(data){
 		if (data == undefined){ return; }
@@ -295,16 +413,27 @@ function getMstEigyoshos(){
 		
 		for (var count = 0 ; count < result.length ; count++){
 			var record			= result[count];
-//			$("#searchStaffResult").append("<li><div class=\"name\">" + record["nmSyain"] + " " + "(" + record["kjTentanms"] + ")" + "</div><div class=\"button\"><button type=\"button\" onclick=\"$('#input_responsibleCdSyain').val('" + record["cdSyain"] + "');closeDialog();getStaffInformation();\">選択</button></div></li>");
+			
+			var	eigyoushoCode = record["EigyoshoCode"];
+			var bushoCode	  = record["BushoCode"];
+			var bushoName	  = record["BuushoName"];
+			
+			// onclickで呼ぶ関数を共通化
+			var onclickCode = "setDialogReturnValue('" + bushoCode + "'); closeDialog(); setDialogReturnValueBushoName(); return false;";
+			
+			var rowHtml = "<tr>" + 
+								"<td><div class=\"eigyoshoCode\"><a href=\"#\" onclick=\"" + onclickCode + "\">" + eigyoshoCode + "</a></div></td>" +
+								"<td><div class=\"bushoCode\"><a href=\"#\" onclick=\"" + onclickCode + "\">" + bushoCode + "</a></div></td>" +
+								"<td><div class=\"bushoName\"><a href=\"#\" onclick=\"" + onclickCode + "\">" + bushoName + "</a></div></td>" +  
+						  "</tr>";
+			
+			$("#searchBushoResult").append(rowHtml);
+		
 		}
 		
 	});
 	
 }
-
-//********************************************************************************************************************************************************
-// 部署マスタ検索ダイアログ用制御
-//********************************************************************************************************************************************************
 
 
 //********************************************************************************************************************************************************
