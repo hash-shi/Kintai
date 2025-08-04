@@ -35,6 +35,10 @@
 			<view return="success" path="chgPassword.jsp" />
 		</action>
 		
+		<action id="kinShukkinBo"  group="public"  class="action.KinShukkinBoAction"  title="出勤簿入力"  header=""  footer=""  script="./script/kinShukkinBo.js"  style="./css/kinShukkinBo.css"  authority=""  meta=""  requiredParam="" >
+			<view return="success" path="kinShukkinBo.jsp" />
+		</action>
+		
 	</actions>
 
 	<!-- ダイアログ定義 -->
