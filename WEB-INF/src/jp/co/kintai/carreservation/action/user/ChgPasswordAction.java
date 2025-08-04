@@ -112,9 +112,17 @@ public class ChgPasswordAction extends PJActionBase {
 				userInformation.setTaisyokuDate(mstShain.get("TaisyokuDate"));
 				userInformation.setShoriKanoEigyoshoCode(shoriKanoEigyoshoCode);
 				userInformation.setLoginDate(nowDate);
-				
+				userInformation.setSaishuKoshinShainNO(mstShain.get("SaishuKoshinShainNO"));
+				userInformation.setSaishuKoshinDate(mstShain.get("SaishuKoshinDate"));
+				userInformation.setSaishuKoshinJikan(mstShain.get("SaishuKoshinJikan"));
 				// セッションに格納
 				req.getSession().setAttribute(Define.SESSION_ID, userInformation);
+				
+				// 返却値
+				this.addContent("password", mstShain.get("Password"));
+				this.addContent("saishuKoshinDate", mstShain.get("SaishuKoshinDate"));
+				this.addContent("saishuKoshinJikan", mstShain.get("SaishuKoshinJikan"));
+				// 結果
 				this.addContent("result", true);
 			}
 			

@@ -83,6 +83,9 @@ public class IndexAction extends PJActionBase {
 				userInformation.setTaisyokuDate(mstShain.get("TaisyokuDate"));
 				userInformation.setShoriKanoEigyoshoCode(shoriKanoEigyoshoCode);
 				userInformation.setLoginDate(nowDate);
+				userInformation.setSaishuKoshinShainNO(mstShain.get("SaishuKoshinShainNO"));
+				userInformation.setSaishuKoshinDate(mstShain.get("SaishuKoshinDate"));
+				userInformation.setSaishuKoshinJikan(mstShain.get("SaishuKoshinJikan"));
 				
 				// セッションに格納
 				req.getSession().setAttribute(Define.SESSION_ID, userInformation);
