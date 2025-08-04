@@ -20,6 +20,12 @@
 					<input type="text" class=""  style="width: 100px" name="srhDlgTxtCode" id="srhDlgTxtCode" value="">
 				</td>
 			</tr>
+			<tr>
+				<td class="title center w100">名称</td>
+				<td class="value w300">
+					<input type="text" class=""  style="width: 100px" name="srhDlgTxtKbnName" id="srhDlgTxtKbnName" value="">
+				</td>
+			</tr>
 		</table>
 	</div>
 	<div class="searchButtonArea">

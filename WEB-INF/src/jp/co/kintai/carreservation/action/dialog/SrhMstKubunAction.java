@@ -33,10 +33,7 @@ public class SrhMstKubunAction extends PJActionBase {
 		// 検索条件取得
 		String kbnCode		= this.getParameter("srhDlgTxtKbnCode");
 		String code			= this.getParameter("srhDlgTxtCode");
-		
-		//不使用
-		String kbnName		= null;
-		
+		String kbnName		= this.getParameter("srhDlgTxtKbnName");
 		
 		// DB接続
 		Connection con		= this.getConnection("kintai", req);
