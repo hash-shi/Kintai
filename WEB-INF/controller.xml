@@ -35,8 +35,8 @@
 			<view return="success" path="chgPassword.jsp" />
 		</action>
 		
-		<action id="kinShukkinBo"  group="public"  class="action.KinShukkinBoAction"  title="出勤簿入力"  header=""  footer=""  script="./script/kinShukkinBo.js"  style="./css/kinShukkinBo.css"  authority=""  meta=""  requiredParam="" >
-			<view return="success" path="kinShukkinBo.jsp" />
+		<action id="kinShukkinBo"  group="public"  class="action.kintai.KinShukkinBoAction"  title="出勤簿入力"  header=""  footer=""  script="./script/kintai/kinShukkinBo.js"  style="./css/kintai/kinShukkinBo.css"  authority=""  meta=""  requiredParam="" >
+			<view return="success" path="kintai/kinShukkinBo.jsp" />
 		</action>
 		
 	</actions>

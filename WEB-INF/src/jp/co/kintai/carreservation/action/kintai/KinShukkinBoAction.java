@@ -1,4 +1,4 @@
-package jp.co.kintai.carreservation.action;
+package jp.co.kintai.carreservation.action.kintai;
 
 import java.sql.Connection;
 import java.sql.PreparedStatement;
