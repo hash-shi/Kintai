@@ -312,8 +312,6 @@ function setDialogReturnValueShainName() {
 //
 //
 //****************************************************************************
-
-
 function setDialogReturnValueKbnName() {
 	
 	// setDialogReturnValueで返却値を設定した項目に対してgetNameをする。
