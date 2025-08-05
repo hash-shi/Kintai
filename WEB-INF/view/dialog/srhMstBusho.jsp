@@ -15,25 +15,32 @@
 				</td>
 			</tr>
 			<tr>
-				<td class="title center w100">営業所名</td>
+				<td class="title center w100">部署コード</td>
 				<td class="value w300">
-					<input type="text" class=""  style="width: 100px"" name="srhDlgTxtEigyoshoName" id="srhDlgTxtEigyoshoName" value="" >
+					<input type="text" class=""  style="width: 100px"" name="srhDlgTxtBushoCode" id="srhDlgTxtBushoCode" value="" >
+				</td>
+			</tr>
+			<tr>
+				<td class="title center w100">部署名</td>
+				<td class="value w300">
+					<input type="text" class=""  style="width: 100px"" name="srhDlgTxtBushoName" id="srhDlgTxtBushoName" value="" >
 				</td>
 			</tr>
 		</table>
 	</div>
 	<div class="searchButtonArea">
-		<button type="button" onclick="getMstEigyoshos();">検索</button>
+		<button type="button" onclick="getMstBushos();">検索</button>
 	</div>
 	<div class="searchResultArea" style="max-height: 465px">
 		<table class="searchRecord">
 			<thead>
 				<tr>
 					<th>営業所コード</th>
-					<th>営業所名</th>
+					<th>部署コード</th>
+					<th>部署名</th>
 				</tr>
 			</thead>
-			<tbody id = "searchEigyoushoResult">
+			<tbody id = "searchBushoResult">
 			</tbody>
 		</table>
 	</div>
