@@ -1,0 +1,19 @@
+/* テーブル全体を中央寄せ */
+.dialogBody table {
+	margin: 0 auto;
+}
+
+/* td内の要素（文字やinput）を中央揃え */
+.searchConditionArea table td {
+	text-align: center;
+}
+
+.searchResultArea tbody td{
+	text-align: left;
+}
+
+/* 入力欄に余白を入れて中央に見せる */
+.dialogBody input[type="text"] {
+	width: 150px;
+	margin-left: 10px;
+}
