@@ -37,10 +37,10 @@ public class KinShukkinBoAction extends PJActionBase {
 	public void search(HttpServletRequest req, HttpServletResponse res) throws Exception {
 		
 		// 検索条件取得
-//		String taishoYM			= this.getParameter("srhTxtEigyoshoCode");
-//		String taishoShainNo	= this.getParameter("srhTxtEigyoshoName");
-		String taishoYM			= "2010/08";
-		String taishoShainNo	= "0001";
+//		String taishoYM			= "2010/08";
+//		String taishoShainNo	= "0001";
+		String taishoYM			= this.getParameter("txtTaishoYM");
+		String taishoShainNo	= this.getParameter("txtShainCode");
 		
 		// DB接続
 		Connection con		= this.getConnection("kintai", req);

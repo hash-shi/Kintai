@@ -4,7 +4,19 @@
 *
 */
 let kinShukkinBoResultAll = [];
+let shinseiKingaku01 = 0;
+let shinseiKingaku02 = 0;
 window.onload = function(){
+	let defaultYM = "";
+	let today = new Date();
+	
+	if(today.getDate() > 15){
+		today.setDate(1);
+		today.setMonth(today.getMonth() + 1);
+	}
+	defaultYM = today.getFullYear() + "/" + (today.getMonth()+1).toString().padStart(2, '0');
+
+	$("#txtTaishoYM").val(defaultYM);
 }
 
 /*
@@ -14,6 +26,7 @@ window.onload = function(){
 */
 function onSearchKinShukkinBo(){
 
+
 	proc("search", {}, function(data){
 
 		if (data == undefined){ return; }
@@ -22,6 +35,9 @@ function onSearchKinShukkinBo(){
 		let contents		= data["contents"];
 		if (contents["result"] == undefined){ return; }
 		
+		//検索結果があれば入力項目表示
+		document.getElementById("nyuryokuArea").style.display = "";
+
 		let result			= contents["result"];
 		kinShukkinBoResultAll = result;
 
@@ -36,10 +52,11 @@ function onSearchKinShukkinBo(){
 *
 */
 function onDisplayNyuryokuArea(firstHalfFlg){
-	// 検索結果エリアをクリアする。
+	// 検索結果エリアをクリアする
 	$("#kihonNyuryokuArea").children().remove();
-	$("#tokubetsuNyuryokuArea").children().remove();
-
+	$("#txtShinseiKingaku01").val(0);
+	$("#txtShinseiKingaku02").val(0);
+	
 	for(let i = 0; i < kinShukkinBoResultAll.length; i++){
 		let record = kinShukkinBoResultAll[i];
 		if(
@@ -149,24 +166,17 @@ function onDisplayNyuryokuArea(firstHalfFlg){
 	}
 
 
-	let tokubetsuNyuryokuAreaHtml = "";
-	tokubetsuNyuryokuAreaHtml = 	"<tr>" +
-									"<td class=\"title center w100\">" +
-										"<a >特別作業金額</a>" +
-									"</td>" +
-									"<td class=\"value w100\">" +
-										"<a >" + kinShukkinBoResultAll[0]["ShinseiKingaku01"] + "</a>" +
-									"</td>" +
-									"<th class=\"w50\">" +
-									"</th>" +
-									"<td class=\"title center w100\">" +
-										"<a >営業日当手当</a>" +
-									"</td>" +
-									"<td class=\"value w100\">" +
-										"<a >" + kinShukkinBoResultAll[0]["ShinseiKingaku02"] + "</a>" +
-									"</td>" +
-								"</tr>";
-	$("#tokubetsuNyuryokuArea").append(tokubetsuNyuryokuAreaHtml);
+	if(firstHalfFlg == true){
+		document.getElementById("btnFirstHalf").disabled = true;
+		document.getElementById("btnSecondHalf").disabled = false;
+	}
+	else{
+		document.getElementById("btnFirstHalf").disabled = false;
+		document.getElementById("btnSecondHalf").disabled = true;
+	}
+
+	$("#txtShinseiKingaku01").val(kinShukkinBoResultAll[0]["ShinseiKingaku01"]);
+	$("#txtShinseiKingaku02").val(kinShukkinBoResultAll[0]["ShinseiKingaku02"]);
 }
 
 /*
@@ -175,5 +185,24 @@ function onDisplayNyuryokuArea(firstHalfFlg){
 *
 */
 function setShukkinBo(fieldName, nowRow){
-	kinShukkinBoResultAll[nowRow][fieldName] = document.getElementById(fieldName + nowRow).value;
+//	kinShukkinBoResultAll[nowRow][fieldName] = document.getElementById(fieldName + nowRow).value;
+	kinShukkinBoResultAll[nowRow][fieldName] = $("#" + fieldName + nowRow).val();
+}
+
+/*
+*
+* 入力した値を内部的な配列に取得
+*
+*/
+function setShinseiKingaku01(){
+	kinShukkinBoResultAll[0]["ShinseiKingaku01"] = $("#txtShinseiKingaku01").val();
+}
+
+/*
+*
+* 入力した値を内部的な配列に取得
+*
+*/
+function setShinseiKingaku02(){
+	kinShukkinBoResultAll[0]["ShinseiKingaku02"] = $("#txtShinseiKingaku02").val();
 }
