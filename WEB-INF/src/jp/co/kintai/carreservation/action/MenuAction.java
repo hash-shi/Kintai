@@ -1,5 +1,7 @@
 package jp.co.kintai.carreservation.action;
 
+import java.sql.Connection;
+
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 
@@ -13,6 +15,11 @@ public class MenuAction extends PJActionBase {
 	
 	@Override
 	public void doRun(HttpServletRequest req, HttpServletResponse res) throws Exception {
+		
+		// DB接続
+		Connection con = this.getConnection("kintai", req);
+		// 区分一覧
+		req.setAttribute("mstKubuns", PJActionBase.getMstKubuns(con, "0501", null, null));
 		// 画面表示
 		this.setView("success");
 	}
