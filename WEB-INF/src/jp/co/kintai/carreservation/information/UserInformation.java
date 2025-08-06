@@ -3,7 +3,6 @@ package jp.co.kintai.carreservation.information;
 import java.io.Serializable;
 import java.util.ArrayList;
 
-@SuppressWarnings("serial")
 public class UserInformation implements Serializable {
 	
 	private String shainNO;

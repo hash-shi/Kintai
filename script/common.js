@@ -5,7 +5,12 @@
 //
 //
 //****************************************************************************
-function onLogout(){
+function onLogout(){	
+	// サーバーサイドのセッションもクリアする。
+	proc("sessionInvalidate" ,{ }, function(){ });
+	// セッションストレージの削除
+	sessionStorage.clear()
+	// ログイン画面に遷移
 	location.href				= "./index";
 }
 

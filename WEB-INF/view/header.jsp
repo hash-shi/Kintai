@@ -49,7 +49,8 @@
 						<ul class="">
 							<li>
 								<img class="img border" src="./images/logout.png">
-								<a href="#" onclick="movContents('index'); return false;">LOGOUT</a>
+								<!-- <a href="#" onclick="movContents('index'); return false;">LOGOUT</a> -->
+								<a href="#" onclick="onLogout(); return false;">LOGOUT</a>
 							</li>
 						</ul>
 					</td>

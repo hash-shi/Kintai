@@ -28,6 +28,18 @@ public abstract class PJActionBase extends ActionBase {
 	}
 	
 	/**
+	 * セッション情報のクリア
+	 * 
+	 * @param req
+	 * @param res
+	 * @throws Exception
+	 */
+	public void sessionInvalidate(HttpServletRequest req, HttpServletResponse res) throws Exception {
+		// セッション情報のクリア
+		req.getSession().invalidate();
+	}
+	
+	/**
 	 * 現在日付の取得
 	 * 
 	 * @param con
