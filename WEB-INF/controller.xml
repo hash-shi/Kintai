@@ -39,8 +39,8 @@
 			<view return="success" path="kintai/kinShukkinBo.jsp" />
 		</action>
 		
-		<action id="mstChohyoList"  group="public"  class="action.MstChohyoListAction"  title="マスタ帳票リスト"  header=""  footer=""  script="./script/MstChohyoList.js"  style="./css/MstChohyoList.css"  authority=""  meta=""  requiredParam="" >
-			<view return="success" path="MstChohyoList.jsp" />
+		<action id="mstChohyoList"  group="public"  class="action.master.MstChohyoListAction"  title="マスタ帳票リスト"  header=""  footer=""  script="./script/master/mstChohyoList.js"  style="./css/master/mstChohyoList.css"  authority=""  meta=""  requiredParam="" >
+			<view return="success" path="master/mstChohyoList.jsp" />
 		</action>
 		
 	</actions>

@@ -1,4 +1,4 @@
-package jp.co.kintai.carreservation.action;
+package jp.co.kintai.carreservation.action.master;
 
 import java.sql.Connection;
 import java.sql.PreparedStatement;
@@ -22,6 +22,20 @@ public class MstChohyoListAction extends PJActionBase {
 	
 	@Override
 	public void doRun(HttpServletRequest req, HttpServletResponse res) throws Exception {
+		// 検索条件取得
+		String kbnCode	= "0501";
+				
+		// DB接続
+		Connection con		= this.getConnection("kintai", req);
+				
+		//=====================================================================
+		// 結果返却
+		//=====================================================================
+		// 取得
+		ArrayList<HashMap<String, String>> shoriSentaku = PJActionBase.getMstKubuns(con, kbnCode, "", "");
+		System.out.println("配列: " + shoriSentaku);
+		req.setAttribute("shoriSentaku", shoriSentaku);
+		//this.addContent("name", kbnName);
 		// 画面表示
 		this.setView("success");
 	}
@@ -71,12 +85,20 @@ public class MstChohyoListAction extends PJActionBase {
 		
 		// ドロップダウンの値を取得
         String selectedValue = req.getParameter("rdoShoriSentaku");
-        
+        // 処理選択名称を取得
+        String kbnName = "";
+        String kbnCode = "0501";
+        ArrayList<HashMap<String, String>> mstShains = PJActionBase.getMstKubuns(con, kbnCode, selectedValue, null);
+		// 送信データを減らすため不要なカラムは削って名称のみ返す。
+		for (HashMap<String, String> hashMap : mstShains) {
+			kbnName = hashMap.get("KbnName");
+		}
 		// 現在日付の取得
 		String nowDate	= PJActionBase.getNowDate();
 		
 		//取得値の格納
 		this.addContent("result",selectedValue);
+		this.addContent("kbnName", kbnName);
 		this.addContent("date",nowDate);
 		this.addContent("eigyosho",mstDatas);
 	}
