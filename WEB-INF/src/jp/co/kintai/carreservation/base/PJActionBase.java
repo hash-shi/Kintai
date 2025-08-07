@@ -112,7 +112,7 @@ public abstract class PJActionBase extends ActionBase {
 		// 検索条件取得
 		String bushoCode	= this.getParameter("bushoCode");
 		String eigyoshoCode	= this.getParameter("eigyoshoCode");
-			
+		
 		// DB接続
 		Connection con		= this.getConnection("kintai", req);
 		
@@ -120,10 +120,10 @@ public abstract class PJActionBase extends ActionBase {
 		// 結果返却
 		//=====================================================================
 		// 取得
-		ArrayList<HashMap<String, String>> mstShains = PJActionBase.getMstBushos(con, bushoCode, null, eigyoshoCode);
+		ArrayList<HashMap<String, String>> mstBushos = PJActionBase.getMstBushos(con, bushoCode, null, eigyoshoCode);
 		// 送信データを減らすため不要なカラムは削って名称のみ返す。
-		for (HashMap<String, String> hashMap : mstShains) {
-				bushoName = hashMap.get("EigyoshoName");
+		for (HashMap<String, String> hashMap : mstBushos) {
+				bushoName = hashMap.get("BushoName");
 		}
 		this.addContent("result", bushoName);
 	}
@@ -287,7 +287,7 @@ public abstract class PJActionBase extends ActionBase {
 		sql.append(" 	B.BushoCode ");
 		sql.append(" 	,B.BushoName ");
 		sql.append(" 	,B.BushoKbn ");
-		sql.append(" 	,K0153.KbnName BushoName ");
+		sql.append(" 	,K0153.KbnName BushoKbnName ");
 		sql.append(" 	,B.EigyoshoCode ");
 		sql.append(" 	,E.EigyoshoName ");
 		sql.append(" 	,B.SaishuKoshinShainNO ");
