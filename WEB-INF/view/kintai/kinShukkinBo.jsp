@@ -15,13 +15,14 @@
 					</td>
 					<td class="value w100">
 						<input type="text" class=""  style="width: 80px; text-align: right;"" name="txtTaishoYM" id="txtTaishoYM" value="">
+						<input type="hidden" name="hidgenzaishorinengetsudo" id="hidgenzaishorinengetsudo" value="">
 					</td>
 					<td class="title center w100">
-						<a href="#" onclick="opnDialog('srhMstShain','txtShainCode','txtShainName'); return false;">社員NO</a>
+						<a href="#" onclick="opnDialog('srhMstShain','txtShainNO','txtShainName'); return false;">社員NO</a>
 					</td>
 					<td class="value w300">
-						<input type="text" class=""  style="width: 80px"" name="txtShainCode" id="txtShainCode" value=""  onblur="getShainName('txtShainCode', 'txtShainName');" >
-						<img class="img border" src="./images/search.png"  onclick="opnDialog('srhMstShain','txtShainCode','txtShainName');">
+						<input type="text" class=""  style="width: 80px"" name="txtShainNO" id="txtShainNO" value=""  onblur="getShainName('txtShainNO', 'txtShainName');" >
+						<img class="img border" src="./images/search.png"  onclick="opnDialog('srhMstShain','txtShainNO','txtShainName');">
 						<input type="text" class=""  style="width: 120px"" name="txtShainName" id="txtShainName" value="" readonly>
 					</td>
 					<td class="value w50">
@@ -85,7 +86,7 @@
 				</table>
 			</div>
 			<div style="text-align: right;">
-				<button type="button" onclick="onUpdate();">削除 [ F2 ]</button>
+				<button type="button" onclick="onDelete();">削除 [ F2 ]</button>
 				<button type="button" onclick="onUpdate();">確定 [ F2 ]</button>
 			</div>
 		</div>

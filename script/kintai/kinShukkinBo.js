@@ -8,15 +8,22 @@ let shinseiKingaku01 = 0;
 let shinseiKingaku02 = 0;
 window.onload = function(){
 	let defaultYM = "";
-	let today = new Date();
-	
-	if(today.getDate() > 15){
-		today.setDate(1);
-		today.setMonth(today.getMonth() + 1);
-	}
-	defaultYM = today.getFullYear() + "/" + (today.getMonth()+1).toString().padStart(2, '0');
+	proc("getTaishoYM", {}, function(data){
 
-	$("#txtTaishoYM").val(defaultYM);
+		if (data == undefined){ return; }
+		if (data["contents"] == undefined){ return; }
+		
+		let contents		= data["contents"];
+		if (contents["result"] == undefined){ return; }
+		
+		//検索結果があれば入力項目表示
+		document.getElementById("nyuryokuArea").style.display = "";
+
+		let result			= contents["result"];
+		
+		$("#txtTaishoYM").val(result);
+		$("#hidgenzaishorinengetsudo").val(result);
+	});
 }
 
 /*
@@ -25,6 +32,25 @@ window.onload = function(){
 *
 */
 function onSearchKinShukkinBo(){
+
+	let honshaKakuteizumiFlg = false;
+
+	proc("honshaKakuteizumiCheck", {}, function(data){
+
+		if (data == undefined){ return; }
+		if (data["contents"] == undefined){ return; }
+		
+		let contents		= data["contents"];
+		if (contents["result"] == undefined){ return; }
+		
+		//検索結果があれば入力項目表示
+		document.getElementById("nyuryokuArea").style.display = "";
+
+		let result			= contents["result"];
+		if(result == "1"){
+			honshaKakuteizumiFlg = true;
+		}
+	});
 
 
 	proc("search", {}, function(data){
@@ -42,8 +68,15 @@ function onSearchKinShukkinBo(){
 		kinShukkinBoResultAll = result;
 
 		onDisplayNyuryokuArea(true);
+
+		if(kinShukkinBoResultAll[0]["KakuteiKbn"] == "03"){
+			honshaKakuteizumiFlg = true;
+		}
 	});
 
+	if(honshaKakuteizumiFlg){
+		alert("本社確定済みのため処理できません。");
+	}
 }
 
 /*
@@ -205,4 +238,17 @@ function setShinseiKingaku01(){
 */
 function setShinseiKingaku02(){
 	kinShukkinBoResultAll[0]["ShinseiKingaku02"] = $("#txtShinseiKingaku02").val();
+}
+
+
+
+
+
+
+
+function onDelete(){
+	alert("onDelete押下");
+}
+function onUpdate(){
+	alert("onUpdate押下");
 }

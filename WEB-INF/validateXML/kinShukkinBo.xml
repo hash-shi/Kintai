@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<validate>
+	<proc func="search">
+		<variable name="txtTaishoYM" dispName="対象年月">
+			<check class="IsRequired" message="!#itemName#!が入力されていません。" itemName="{dispName}"></check>
+			<check class="IsDate" message="!#itemName#!の指定が不正です。" itemName="{dispName}">
+				<param name="format">yyyy/MM</param>
+			</check>
+			<!-- 対象年月が、管理マスタ.現在処理年月度以前の場合-->
+		</variable>
+		<variable name="txtShainNO" dispName="社員NO">
+			<check class="IsRequired" message="!#itemName#!が入力されていません。" itemName="{dispName}"></check>
+			<check class="ShainExistValidate" message="該当する!#itemName#!が存在しません。" itemName="{dispName}"></check>
+			<check class="ShainTaisyokuValidate" message="該当する!#itemName#!は処理できません。" itemName="{dispName}"></check>
+			<check class="ShainKbnValidate" message="該当する!#itemName#!は出勤簿不要です。" itemName="{dispName}"></check>
+		</variable>
+	</proc>
+</validate>

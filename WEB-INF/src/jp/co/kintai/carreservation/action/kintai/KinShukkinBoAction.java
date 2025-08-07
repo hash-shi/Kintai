@@ -34,31 +34,187 @@ public class KinShukkinBoAction extends PJActionBase {
 	 * @param res
 	 * @throws Exception
 	 */
+	public void getTaishoYM(HttpServletRequest req, HttpServletResponse res) throws Exception {
+		
+		String result = "";
+
+		// 検索条件取得
+		String taishoYM			= this.getParameter("txtTaishoYM");
+		String taishoShainNo	= this.getParameter("txtShainNO");
+		
+		// DB接続
+		Connection con		= this.getConnection("kintai", req);
+		
+		ArrayList<HashMap<String, String>> mstDatas = new ArrayList<>();
+		
+		// DB接続
+		StringBuffer sql				= new StringBuffer();
+		PreparedStatement pstmt			= null;
+		PreparedStatementFactory pstmtf	= new PreparedStatementFactory();
+		ResultSet rset					= null;
+		
+		sql.append(" SELECT TOP 1 GenzaishoriNengetsudo FROM MST_KANRI");
+		
+		try {
+			// SQL文の生成
+			pstmt = con.prepareStatement(sql.toString());
+			// 実行
+			rset = pstmt.executeQuery();
+			// 結果取得
+			ResultSetMetaData metaData = rset.getMetaData(); 
+			rset.next();
+			result = StringUtils.stripToEmpty(rset.getString(1));
+		} finally {
+			if (rset != null){ try { rset.close(); } catch (Exception exp){}}
+			if (pstmt != null){ try { pstmt.close(); } catch (Exception exp){}}
+		}
+		
+		//=====================================================================
+		// 結果返却
+		//=====================================================================
+		this.addContent("result", result);
+	
+	
+	}
+	
+	/**
+	 * @param req
+	 * @param res
+	 * @throws Exception
+	 */
+	public void honshaKakuteizumiCheck(HttpServletRequest req, HttpServletResponse res) throws Exception {
+		System.out.println("honshaKakuteizumiCheck開始");
+		
+		// 検索条件取得
+		String taishoYM			= this.getParameter("txtTaishoYM");
+		String taishoShainNo	= this.getParameter("txtShainNO");
+		
+		// DB接続
+		Connection con		= this.getConnection("kintai", req);
+		
+		ArrayList<HashMap<String, String>> mstDatas = new ArrayList<>();
+		
+		// DB接続
+		StringBuffer sql1					= new StringBuffer();
+		PreparedStatement pstmt1			= null;
+		PreparedStatementFactory pstmtf1	= new PreparedStatementFactory();
+		ResultSet rset1						= null;
+		StringBuffer sql2					= new StringBuffer();
+		PreparedStatement pstmt2			= null;
+		PreparedStatementFactory pstmtf2	= new PreparedStatementFactory();
+		ResultSet rset2						= null;
+		
+		int sql1result = 0;
+		int sql2result = 0;
+
+		sql1.append("	SELECT ");
+		sql1.append("		TOP 1 KIN_SHUKKINBO_KIHON.KakuteiKbn ");
+		sql1.append("	FROM ");
+		sql1.append("		KIN_SHUKKINBO_KIHON WITH(NOLOCK) ");
+		sql1.append("	INNER JOIN ");
+		sql1.append("		MST_SHAIN WITH(NOLOCK) ");
+		sql1.append("	ON ");
+		sql1.append("		MST_SHAIN.ShainNO = KIN_SHUKKINBO_KIHON.ShainNO ");
+		sql1.append("	WHERE ");
+		sql1.append("		KIN_SHUKKINBO_KIHON.TaishoNenGetsudo = ? ");
+		sql1.append("	AND	KIN_SHUKKINBO_KIHON.KakuteiKbn = '03' ");
+		sql1.append("	AND	MST_SHAIN.EigyoshoCode = ( ");
+		sql1.append("		SELECT TOP 1 ");
+		sql1.append("			EigyoshoCode ");
+		sql1.append("		FROM ");
+		sql1.append("			MST_SHAIN ");
+		sql1.append("		WHERE ");
+		sql1.append("			ShainNO = ? ");
+		sql1.append("	) ");
+		
+		pstmtf1.addValue("String", taishoYM);
+		pstmtf1.addValue("String", taishoShainNo);
+		
+		try {
+			// SQL文の生成
+			pstmt1 = con.prepareStatement(sql1.toString());
+			// パラメータの設定
+			pstmtf1.setPreparedStatement(pstmt1);
+			// 実行
+			rset1 = pstmt1.executeQuery();
+			// 結果件数取得
+			while (rset1.next()){
+				sql1result++;
+			}
+		}
+		catch (Exception exp){
+			System.out.println(String.valueOf(exp));
+		}
+		finally {
+			if (rset1 != null){ try { rset1.close(); } catch (Exception exp){}}
+			if (pstmt1 != null){ try { pstmt1.close(); } catch (Exception exp){}}
+		}
+
+		
+		sql2.append("	SELECT ");
+		sql2.append("		TOP 1 KakuteiKbn ");
+		sql2.append("	FROM ");
+		sql2.append("		KIN_SHUKKINBO_KIHON WITH(NOLOCK) ");
+		sql2.append("	WHERE ");
+		sql2.append("		TaishoNenGetsudo = ? ");
+		sql2.append("	AND	ShainNO = ? ");
+		
+		pstmtf2.addValue("String", taishoYM);
+		pstmtf2.addValue("String", taishoShainNo);
+		
+		try {
+			// SQL文の生成
+			pstmt2 = con.prepareStatement(sql2.toString());
+			// パラメータの設定
+			pstmtf2.setPreparedStatement(pstmt2);
+			// 実行
+			rset2 = pstmt2.executeQuery();
+			// 結果件数取得
+			while (rset2.next()){
+				sql2result++;
+			}
+		}
+		catch (Exception exp){
+			System.out.println(String.valueOf(exp));
+		}
+		finally {
+			if (rset2 != null){ try { rset2.close(); } catch (Exception exp){}}
+			if (pstmt2 != null){ try { pstmt2.close(); } catch (Exception exp){}}
+		}
+		
+		
+		
+		//=====================================================================
+		// 結果返却
+		//=====================================================================
+		String result = "0";
+		System.out.println("sql1result : " + String.valueOf(sql1result));
+		System.out.println("sql2result : " + String.valueOf(sql2result));
+		if(sql1result > 0 && sql2result == 0){
+			result = "1";
+		}
+		this.addContent("result", result);
+	
+	
+	}
+	
+	/**
+	 * 出勤簿の取得
+	 * 
+	 * @param req
+	 * @param res
+	 * @throws Exception
+	 */
 	public void search(HttpServletRequest req, HttpServletResponse res) throws Exception {
 		
 		// 検索条件取得
 //		String taishoYM			= "2010/08";
 //		String taishoShainNo	= "0001";
 		String taishoYM			= this.getParameter("txtTaishoYM");
-		String taishoShainNo	= this.getParameter("txtShainCode");
+		String taishoShainNo	= this.getParameter("txtShainNO");
 		
 		// DB接続
 		Connection con		= this.getConnection("kintai", req);
-		
-		//=====================================================================
-		// 結果返却
-		//=====================================================================
-		this.addContent("result", this.getKinShukkinBo(con, taishoYM, taishoShainNo));
-	}
-	
-	/**
-	 * 出勤簿の取得
-	 * 
-	 * @param con
-	 * @return
-	 * @throws Exception
-	 */
-	public static ArrayList<HashMap<String, String>> getKinShukkinBo(Connection con, String taishoYM, String taishoShainNo) throws Exception {
 		
 		ArrayList<HashMap<String, String>> mstDatas = new ArrayList<>();
 		
@@ -95,6 +251,7 @@ public class KinShukkinBoAction extends PJActionBase {
 		sql.append(" 	,'' AS KintaiShinseiJikan3 ");
 		sql.append(" 	,K.ShinseiKingaku01 ");
 		sql.append(" 	,K.ShinseiKingaku02 ");
+		sql.append(" 	,K.KakuteiKbn ");
 		sql.append(" FROM ");
 		sql.append(" 	KIN_SHUKKINBO_MEISAI M ");
 		sql.append(" LEFT OUTER JOIN ");
@@ -140,7 +297,10 @@ public class KinShukkinBoAction extends PJActionBase {
 			if (pstmt != null){ try { pstmt.close(); } catch (Exception exp){}}
 		}
 		
-		return mstDatas;
+		//=====================================================================
+		// 結果返却
+		//=====================================================================
+		this.addContent("result", mstDatas);
 		
 	}
 	
