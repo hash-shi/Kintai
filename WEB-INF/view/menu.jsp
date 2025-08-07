@@ -10,8 +10,10 @@
 
 <main id="main-content">
 
-	<h2>ようこそ</h2>
-	<p>これはメインエリアです。</p>
+	<div class="inputArea">
+		<h2>ようこそ</h2>
+		<p>これはメインエリアです。</p>
+	</div>
   
 	<div class="inputArea">
 		<table>
@@ -25,6 +27,29 @@
 					<input type="text" class=""  style="width: 120px"" name="txtEigyoshoName" id="txtEigyoshoName" value="" readonly>
 				</td>
 			</tr>
+			
+			<tr>
+				<td class="title center w100">
+					<a href="#" onclick="opnDialog('srhMstBusho','txtBushoCode','txtBushoName'); return false;">部署</a>
+				</td>
+				<td class="value w500">
+					<input type="text" class=""  style="width: 80px"" name="txtBushoCode" id="txtBushoCode"  value=""  onblur="getBushoName('txtBushoCode', 'txtBushoName');" >
+					<img class="img border" src="./images/search.png"  onclick="opnDialog('srhMstBusho','txtBushoCode','txtBushoName');">
+					<input type="text" class=""  style="width: 120px"" name="txtBushoName" id="txtBushoName" value="" readonly>
+				</td>
+			</tr>
+			
+			<tr>
+				<td class="title center w100">
+					<a href="#" onclick="opnDialog('srhMstShain','txtShainNo','txtShainName'); return false;">社員</a>
+				</td>
+				<td class="value w500">
+					<input type="text" class=""  style="width: 80px"" name="txtShainNo" id="txtShainNo"  value=""  onblur="getShainName('txtShainNo', 'txtShainName');" >
+					<img class="img border" src="./images/search.png"  onclick="opnDialog('srhMstShain','txtShainNo','txtShainName');">
+					<input type="text" class=""  style="width: 120px"" name="txtShainName" id="txtShainName" value="" readonly>
+				</td>
+			</tr>
+			
 			<tr>
 				<td class="title center w100">マスタ</td>
 				<td class="value w500">

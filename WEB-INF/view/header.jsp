@@ -34,7 +34,7 @@
 	<div>
 		<input type="hidden" name="hdnDialogSearchId" id="hdnDialogSearchId" value="" />
 		<input type="hidden" name="hdnDialogReturnId" id="hdnDialogReturnId" value="" />
-		<div class="inputArea">
+		<div class="inputArea" style="margin-left:0px" >
 			<table style="border-collapse:separate;">
 				<tr>
 					<td class="w80">

@@ -35,8 +35,10 @@ table, table td, table th {
 
 div.inputArea {
 	margin-top			: 10px;
-	width						: 100%;
+	margin-left			: 20px;
 	margin-bottom		: 10px;
+	width						: calc(100% - 40px);
+/*	width						: 100%;*/
 /*	border					: 1px solid #000000;*/
 }
 
@@ -135,7 +137,8 @@ div.main {
 main {
 	height:100%;
   flex: 1;
-  padding: 20px;
+  /* padding: 20px; */
+	padding: 0px;
   background-color: #fff;
   box-sizing: border-box;
   overflow-y: auto;
