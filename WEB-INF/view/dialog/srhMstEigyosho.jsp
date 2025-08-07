@@ -10,13 +10,13 @@
 		<table>
 			<tr>
 				<td class="title center w100">営業所コード</td>
-				<td class="value w300">
+				<td class="value w120">
 					<input type="text" class=""  style="width: 100px"" name="srhDlgTxtEigyoshoCode" id="srhDlgTxtEigyoshoCode" value="" >
 				</td>
 			</tr>
 			<tr>
 				<td class="title center w100">営業所名</td>
-				<td class="value w300">
+				<td class="value w120">
 					<input type="text" class=""  style="width: 100px"" name="srhDlgTxtEigyoshoName" id="srhDlgTxtEigyoshoName" value="" >
 				</td>
 			</tr>
@@ -33,7 +33,7 @@
 					<th>営業所名</th>
 				</tr>
 			</thead>
-			<tbody id = "searchEigyoushoResult">
+			<tbody id="searchEigyoshoResult">
 			</tbody>
 		</table>
 	</div>

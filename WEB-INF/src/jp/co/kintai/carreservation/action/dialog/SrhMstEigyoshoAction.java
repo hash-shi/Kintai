@@ -30,8 +30,8 @@ public class SrhMstEigyoshoAction extends PJActionBase {
 	public void search(HttpServletRequest req, HttpServletResponse res) throws Exception {
 		
 		// 検索条件取得
-		String eigyoshoCode	= this.getParameter("srhTxtEigyoshoCode");
-		String eigyoshoName	= this.getParameter("srhTxtEigyoshoName");
+		String eigyoshoCode	= this.getParameter("srhDlgTxtEigyoshoCode");
+		String eigyoshoName	= this.getParameter("srhDlgTxtEigyoshoName");
 		
 		// DB接続
 		Connection con		= this.getConnection("kintai", req);
@@ -39,7 +39,7 @@ public class SrhMstEigyoshoAction extends PJActionBase {
 		//=====================================================================
 		// 結果返却
 		//=====================================================================
-		this.addContent("result", this.getMstEigyoshos(con, eigyoshoCode, eigyoshoName));
+		this.addContent("result", PJActionBase.getMstEigyoshos(con, eigyoshoCode, eigyoshoName));
 	}
 	
 }
