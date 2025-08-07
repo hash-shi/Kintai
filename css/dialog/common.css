@@ -9,6 +9,11 @@ table, table td, table th {
 	border-collapse: collapse;
 }
 
+/* テーブル全体を中央寄せ */
+.dialogBody table {
+	margin: 0px auto;
+}
+
 div.searchConditionArea {
 	margin-top			: 10px;
 	width						: 100%;
@@ -16,14 +21,17 @@ div.searchConditionArea {
 }
 
 div.searchConditionArea .title {
+	text-align				: left;
 	height					: 25px;
 /*	display					: inline-block;*/
 	font-size				: 14px;
+	font-weight				: bold;
 	border					: 1px solid #000000;
 	background-color: #dcdcdc;
 }
 
 div.searchConditionArea .value {
+	text-align				: center;
 	height					: 25px;
 /*	display					: inline-block;	*/
 	font-size				: 14px;
@@ -37,8 +45,9 @@ div.searchConditionArea .value input {
 }
 
 div.searchButtonArea {
-	width						: 100%;	
-	text-align			: center;
+	width					: 100%;	
+	text-align				: center;
+	margin-bottom			: 10px;
 }
 
 div.searchResultArea {
@@ -80,6 +89,7 @@ table.searchRecord > tr {
 
 }
 table.searchRecord > thead > tr > th {
+	text-align: left;
     /* 縦スクロール時に固定する */
     position: -webkit-sticky;
     position: sticky;
@@ -89,7 +99,7 @@ table.searchRecord > thead > tr > th {
 }
 table.searchRecord > tr > th {
     border:1px solid #666666;
-    background-color: #eeeeee;
+    background-color: #dcdcdc;
 }
 table.searchRecord > tr > td {
     border:1px solid #666666;
@@ -98,7 +108,7 @@ table.searchRecord > thead > tr > th {
     border-top: 1px solid #666666;
     border-bottom: 1px solid #666666;
     border-right: 1px solid #666666;
-    background-color: #eeeeee;
+    background-color: #dcdcdc;
 }
 table.searchRecord > tbody > tr > td {
     border-bottom: 1px solid #666666;
@@ -111,34 +121,6 @@ table.searchRecord > tbody > tr:nth-child(odd){
 table.searchRecord > tbody > tr:nth-child(even){
 	background-color			: #ffffff;
 }
-
-/* テーブル全体を中央寄せ */
-.dialogBody table {
-	margin: 0 auto;
-}
-
-/* td内の要素（文字やinput）を中央揃え */
-.searchConditionArea table td {
-	text-align: center;
-}
-
-.searchResultArea tbody td{
-	text-align: left;
-}
-
-/* 入力欄に余白を入れて中央に見せる */
-.dialogBody input[type="text"] {
-	width: 150px;
-	margin-left: 10px;
-}
-
-/* 検索ボタンと検索結果の間のスペースを空ける*/
-.searchButtonArea {
-	margin-bottom: 10px;
-}
-
-
-
 
 /*div.searchResultArea ul li {*/
 /*	position					: relative;*/

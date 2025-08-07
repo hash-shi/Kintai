@@ -10,14 +10,14 @@
 		<table>
 			<tr>
 				<td class="title center w100">営業所コード</td>
-				<td class="value w120">
-					<input type="text" class=""  style="width: 100px"" name="srhDlgTxtEigyoshoCode" id="srhDlgTxtEigyoshoCode" value="" >
+				<td class="value w170">
+					<input type="text" class=""  style="width: 150px"" name="srhDlgTxtEigyoshoCode" id="srhDlgTxtEigyoshoCode" value="" >
 				</td>
 			</tr>
 			<tr>
 				<td class="title center w100">営業所名</td>
-				<td class="value w120">
-					<input type="text" class=""  style="width: 100px"" name="srhDlgTxtEigyoshoName" id="srhDlgTxtEigyoshoName" value="" >
+				<td class="value w170">
+					<input type="text" class=""  style="width: 150px"" name="srhDlgTxtEigyoshoName" id="srhDlgTxtEigyoshoName" value="" >
 				</td>
 			</tr>
 		</table>
@@ -26,7 +26,7 @@
 		<button type="button" onclick="getMstEigyoshos();">検索</button>
 	</div>
 	<div class="searchResultArea" style="max-height: 465px">
-		<table class="searchRecord">
+		<table class="searchRecord" style="table-layout: fixed">
 			<thead>
 				<tr>
 					<th>営業所コード</th>

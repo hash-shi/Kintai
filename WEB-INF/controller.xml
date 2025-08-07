@@ -48,19 +48,19 @@
 	<!-- ダイアログ定義 -->
 	<dialogs>
 	
-		<dialog id="srhMstEigyosho"  group="dialog"  class="action.dialog.SrhMstEigyoshoAction"  title="営業所検索ダイアログ"  header=""  footer=""  script=""  style=""  authority="" >
+		<dialog id="srhMstEigyosho"  group="dialog"  class="action.dialog.SrhMstEigyoshoAction"  title="営業所検索"  header=""  footer=""  script=""  style=""  authority="" >
 			<view return="success"  path="dialog/srhMstEigyosho.jsp" />
 		</dialog>
 		
-		<dialog id="srhMstBusho"  group="dialog"  class="action.dialog.SrhMstBushoAction"  title="部署検索ダイアログ"  header=""  footer=""  script=""  style=""  authority="" >
+		<dialog id="srhMstBusho"  group="dialog"  class="action.dialog.SrhMstBushoAction"  title="部署検索"  header=""  footer=""  script=""  style=""  authority="" >
 			<view return="success"  path="dialog/srhMstBusho.jsp" />
 		</dialog>
 		
-		<dialog id="srhMstShain"  group="dialog"  class="action.dialog.SrhMstShainAction"  title="社員検索ダイアログ"  header=""  footer=""  script=""  style=""  authority="" >
+		<dialog id="srhMstShain"  group="dialog"  class="action.dialog.SrhMstShainAction"  title="社員検索"  header=""  footer=""  script=""  style=""  authority="" >
 			<view return="success"  path="dialog/srhMstShain.jsp" />
 		</dialog>
 		
-		<dialog id="srhMstKubun"  group="dialog"  class="action.dialog.SrhMstKubunAction"  title="区分検索ダイアログ"  header=""  footer=""  script=""  style=""  authority="" >
+		<dialog id="srhMstKubun"  group="dialog"  class="action.dialog.SrhMstKubunAction"  title="区分検索"  header=""  footer=""  script=""  style=""  authority="" >
 			<view return="success"  path="dialog/srhMstKubun.jsp" />
 		</dialog>
 
