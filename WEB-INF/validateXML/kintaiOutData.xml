@@ -2,14 +2,14 @@
 <validate>
 	<proc func="download">
 	
-		<variable name="txtTaishoNengetsuF" dispName="対象年月度(自)">
+		<variable name="srhTxtTaishoNengetsuF" dispName="対象年月度(自)">
 			<check class="IsRequired" message="!#itemName#!が入力されていません。" itemName="{dispName}"></check>
 			<check class="IsDate" message="!#itemName#!は日付フォーマットで入力してください。" itemName="{dispName}">
 				<param name="format">yyyy/MM</param>
 			</check>
 		</variable>
 		
-		<variable name="txtTaishoNengetsuT" dispName="対象年月度(至)">
+		<variable name="srhTxtTaishoNengetsuT" dispName="対象年月度(至)">
 			<check class="IsRequired" message="!#itemName#!が入力されていません。" itemName="{dispName}"></check>
 			<check class="IsDate" message="!#itemName#!は日付フォーマットで入力してください。" itemName="{dispName}">
 				<param name="format">yyyy/MM</param>
@@ -18,8 +18,8 @@
 		
 		<variable name="dummy" dispName="">
 			<check class="SizeComparison" message="対象年月度(自)(至)の大小が不正です。" itemName="{dispName}">
-				<param name="from">txtTaishoNengetsuF</param>
-				<param name="to">txtTaishoNengetsuT</param>
+				<param name="from">srhTxtTaishoNengetsuF</param>
+				<param name="to">srhTxtTaishoNengetsuT</param>
 				<param name="include">1</param>
 			</check>
 		</variable>

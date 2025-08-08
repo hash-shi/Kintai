@@ -38,8 +38,8 @@ function setShoriSentaku(){
 		date = new Date(dateTime.getFullYear(), (dateTime.getMonth() + 1), dateTime.getDate());
 	}
 	
-	$("#txtTaishoNengetsuF").val(formatDateYYYYMM(date, "/"));
-	$("#txtTaishoNengetsuT").val(formatDateYYYYMM(date, "/"));
+	$("#srhTxtTaishoNengetsuF").val(formatDateYYYYMM(date, "/"));
+	$("#srhTxtTaishoNengetsuT").val(formatDateYYYYMM(date, "/"));
 	
 }
 

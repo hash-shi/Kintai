@@ -24,8 +24,8 @@ public class CsvChinginkeisanshoDataDownload extends DownloadBase {
 		//=====================================================================
 		// パラメータ取得
 		//=====================================================================
-		String taishoNengetsuF	= req.getParameter("txtTaishoNengetsuF");
-		String taishoNengetsuT	= req.getParameter("txtTaishoNengetsuT");
+		String taishoNengetsuF	= req.getParameter("srhTxtTaishoNengetsuF");
+		String taishoNengetsuT	= req.getParameter("srhTxtTaishoNengetsuT");
 		
 		//=====================================================================
 		// DB接続
