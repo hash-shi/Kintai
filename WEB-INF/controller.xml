@@ -39,6 +39,10 @@
 			<view return="success" path="kintai/kinShukkinBo.jsp" />
 		</action>
 		
+		<action id="kintaiOutData"  group="public"  class="action.kintai.KintaiOutDataAction"  title="データ出力"  header=""  footer=""  script="./script/kintai/kintaiOutData.js"  style="./css/kintai/kintaiOutData.css"  authority=""  meta=""  requiredParam="" >
+			<view return="success" path="kintai/kintaiOutData.jsp" />
+		</action>
+
 		<action id="mstChohyoList"  group="public"  class="action.master.MstChohyoListAction"  title="マスタ帳票リスト"  header=""  footer=""  script="./script/master/mstChohyoList.js"  style="./css/master/mstChohyoList.css"  authority=""  meta=""  requiredParam="" >
 			<view return="success" path="master/mstChohyoList.jsp" />
 		</action>
@@ -68,6 +72,10 @@
 
 	<!-- ダウンロード定義 -->
 	<downloads>
+	
+		<download id="csvKyuyokeisanData"  class="download.CsvKyuyokeisanDataDownload" />
+		<download id="csvChinginkeisanshoData"  class="download.CsvChinginkeisanshoDataDownload" />
+	
 		<download id="downloadCsvFile"  class="download.CsvFileDownload" />
 		<download id="downloadPdfFile"  class="download.PdfFileDownload" />
 	</downloads>
