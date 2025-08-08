@@ -14,12 +14,14 @@
 					<td class="value w100">
 						<input type="text" class=""  style="width: 80px; text-align: right;"" name="txtTaishoYM" id="txtTaishoYM" value="">
 						<input type="hidden" name="hidgenzaishorinengetsudo" id="hidgenzaishorinengetsudo" value="">
+						<input type="hidden" name="txtSearchedTaishoYM" id="txtSearchedTaishoYM" value="">
 					</td>
 					<td class="title center w100">
 						<a href="#" onclick="opnDialog('srhMstShain','txtShainNO','txtShainName'); return false;">社員NO</a>
 					</td>
 					<td class="value w300">
 						<input type="text" class=""  style="width: 80px"" name="txtShainNO" id="txtShainNO" value=""  onblur="getShainName('txtShainNO', 'txtShainName');" >
+						<input type="hidden" name="txtSearchedShainNO" id="txtSearchedShainNO" value="">
 						<img class="img border" src="./images/search.png"  onclick="opnDialog('srhMstShain','txtShainNO','txtShainName');">
 						<input type="text" class=""  style="width: 120px"" name="txtShainName" id="txtShainName" value="" readonly>
 					</td>
@@ -41,8 +43,13 @@
 							<th class="title center w150" colspan="3">	<a >月日</a></th>
 							<th class="title center w50">				<a >予定</a></th>
 							<th class="title center w100">				<a >勤怠区分</a></th>
-							<th class="title center w100">				<a >備考</a></th>
-							<th class="w50"></th>
+
+							<th class="title center w100" colspan="2">	<a >出社</a></th>
+							<th class="title center w50">				<a >-</a></th>
+							<th class="title center w100" colspan="2">	<a >退社</a></th>
+							<th class="title center w70">				<a >通常勤務</a></th>
+
+							<th class="title center w180">				<a >備考</a></th>
 							<th class="title center w100">				<a >申請区分１</a></th>
 							<th class="title center w100" colspan="2">	<a >開始</a></th>
 							<th class="title center w100" colspan="2">	<a >終了</a></th>
@@ -69,7 +76,7 @@
 								<a >特別作業金額</a>
 							</td>
 							<td class="value w100">
-								<input type="text" class=""  style="width: 80px; text-align: right;"" name="txtShinseiKingaku01" id="txtShinseiKingaku01" value="" onblur="setShinseiKingaku01();">
+								<input type="text" class=""  style="width: 80px; text-align: right;" name="txtShinseiKingaku01" id="txtShinseiKingaku01" value="" onblur="setShinseiKingaku01();">
 							</td>
 							<th class="w50">
 							</th>
@@ -77,7 +84,7 @@
 								<a >営業日当手当</a>
 							</td>
 							<td class="value w100">
-								<input type="text" class=""  style="width: 80px; text-align: right;"" name="txtShinseiKingaku02" id="txtShinseiKingaku02" value="" onblur="setShinseiKingaku02();">
+								<input type="text" class=""  style="width: 80px; text-align: right;" name="txtShinseiKingaku02" id="txtShinseiKingaku02" value="" onblur="setShinseiKingaku02();">
 							</td>
 								</tr>
 					</tbody>

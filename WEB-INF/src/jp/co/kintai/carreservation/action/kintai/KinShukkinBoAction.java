@@ -293,8 +293,6 @@ public class KinShukkinBoAction extends PJActionBase {
 	public void search(HttpServletRequest req, HttpServletResponse res) throws Exception {
 		
 		// 検索条件取得
-//		String taishoYM			= "2010/08";
-//		String taishoShainNo	= "0001";
 		String taishoYM			= this.getParameter("txtTaishoYM");
 		String taishoShainNo	= this.getParameter("txtShainNO");
 		
@@ -315,6 +313,13 @@ public class KinShukkinBoAction extends PJActionBase {
 		sql.append(" 	,M.YobiKbn ");
 		sql.append(" 	,M.ShukkinYoteiKbn ");
 		sql.append(" 	,M.KintaiKbn ");
+
+		sql.append(" 	,M.ShusshaJi ");
+		sql.append(" 	,M.ShusshaFun ");
+		sql.append(" 	,M.TaishaJi ");
+		sql.append(" 	,M.TaishaFun ");
+		sql.append(" 	,M.JitsudoJikan ");
+
 		sql.append(" 	,M.KintaiShinseiBiko ");
 		sql.append(" 	,M.KintaiShinseiKbn1 ");
 		sql.append(" 	,M.KintaiShinseiKaishiJi1 ");
@@ -395,98 +400,116 @@ public class KinShukkinBoAction extends PJActionBase {
 	 * @throws Exception
 	 */
 	public void update(HttpServletRequest req, HttpServletResponse res) throws Exception {
-
-		//=====================================================================
-		// パラメータ取得
-		//=====================================================================
-		String shainNo	= req.getParameter("hdnShainNO");
-		String password	= req.getParameter("txtPasswordNew");
-		
-		//=====================================================================
-		// ユーザー情報の取得
-		//=====================================================================
-		UserInformation userInformation = (UserInformation)req.getSession().getAttribute(Define.SESSION_ID);
-		
-		//=====================================================================
-		// DB接続
-		//=====================================================================
-		Connection con = this.getConnection("kintai", req);		
-		PreparedStatement pstmt			= null;
-		StringBuffer sql				= new StringBuffer();
-		PreparedStatementFactory pstmtf	= new PreparedStatementFactory();
-		
-		//=====================================================================
-		// 更新
-		//=====================================================================
-		pstmtf.clear();
-		sql.setLength(0);
-		sql.append(" UPDATE MST_SHAIN SET ");
-		sql.append("  SaishuKoshinShainNO = ? ");
-		sql.append(" ,SaishuKoshinDate = ? ");
-		sql.append(" ,SaishuKoshinJikan = ? ");
-		sql.append(" ,Password = ? ");
-		sql.append(" WHERE ");
-		sql.append(" 1 = 1 ");
-		sql.append(" and ShainNO = ? ");
-		
-		// パラメータ設定
-		pstmtf.addValue("String", userInformation.getShainNO());
-		pstmtf.addValue("String", PJActionBase.getNowDate());
-		pstmtf.addValue("String", PJActionBase.getNowTime());
-		pstmtf.addValue("String", password);
-		pstmtf.addValue("String", shainNo);
-		
-		try {
-			pstmt = con.prepareStatement(sql.toString());
-			pstmtf.setPreparedStatement(pstmt);
-			pstmt.execute();
-			
-			// ユーザ情報を再取得、セッションの再設定
-			// 現在日付の取得
-			String nowDate	= PJActionBase.getNowDate();
-			
-			ArrayList<HashMap<String, String>> mstShains = PJActionBase.getMstShains(con, shainNo, null, password, null, null, null, null, nowDate);
-			if (0 < mstShains.size()) {
-				HashMap<String, String> mstShain = mstShains.get(0);
-				
-				// 処理可能営業所コードの配列
-				ArrayList<String> shoriKanoEigyoshoCode = new ArrayList<>();
-				shoriKanoEigyoshoCode.add(mstShain.get("EigyoshoCode"));
-				
-				// 処理可能営業所コードを取得
-				ArrayList<HashMap<String, String>> mstShainEigyoshos = PJActionBase.getMstShainEigyoshos(con, shainNo);
-				for(HashMap<String, String> mstShainEigyosho : mstShainEigyoshos) {
-					shoriKanoEigyoshoCode.add(mstShainEigyosho.get("EigyoshoCode"));
-				}
-
-				//// ユーザ情報の呼び出し
-				//UserInformation userInformation	= new UserInformation();
-				
-				// マスタから取得したデータを設定
-				userInformation.setShainNO(mstShain.get("ShainNO"));
-				userInformation.setShainName(mstShain.get("ShainName"));
-				userInformation.setPassword(mstShain.get("Password"));
-				userInformation.setUserKbn(mstShain.get("UserKbn"));
-				userInformation.setShainKbn(mstShain.get("ShainKbn"));
-				userInformation.setEigyoshoCode(mstShain.get("EigyoshoCode"));
-				userInformation.setEigyoshoName(mstShain.get("EigyoshoName"));
-				userInformation.setBushoCode(mstShain.get("BushoCode"));
-				userInformation.setBushoName(mstShain.get("BushoName"));
-				userInformation.setBushoKbn(mstShain.get("BushoKbn"));
-				userInformation.setTaisyokuDate(mstShain.get("TaisyokuDate"));
-				userInformation.setShoriKanoEigyoshoCode(shoriKanoEigyoshoCode);
-				userInformation.setLoginDate(nowDate);
-				
-				// セッションに格納
-				req.getSession().setAttribute(Define.SESSION_ID, userInformation);
 				this.addContent("result", true);
-			}
-			
-		} catch (Exception exp){
-			exp.printStackTrace();
-		} finally {
-			if (pstmt != null){ try { pstmt.close(); } catch (Exception exp){}}
-		}
+	}
+	
+	/**
+	 * @param req
+	 * @param res
+	 * @throws Exception
+	 */
+	public void delete(HttpServletRequest req, HttpServletResponse res) throws Exception {
+				this.addContent("result", true);
+	}
+	
+	/**
+	 * @param req
+	 * @param res
+	 * @throws Exception
+	 */
+	public void updateSankou(HttpServletRequest req, HttpServletResponse res) throws Exception {
+
+//		//=====================================================================
+//		// パラメータ取得
+//		//=====================================================================
+//		String shainNo	= req.getParameter("hdnShainNO");
+//		String password	= req.getParameter("txtPasswordNew");
+//		
+//		//=====================================================================
+//		// ユーザー情報の取得
+//		//=====================================================================
+//		UserInformation userInformation = (UserInformation)req.getSession().getAttribute(Define.SESSION_ID);
+//		
+//		//=====================================================================
+//		// DB接続
+//		//=====================================================================
+//		Connection con = this.getConnection("kintai", req);		
+//		PreparedStatement pstmt			= null;
+//		StringBuffer sql				= new StringBuffer();
+//		PreparedStatementFactory pstmtf	= new PreparedStatementFactory();
+//		
+//		//=====================================================================
+//		// 更新
+//		//=====================================================================
+//		pstmtf.clear();
+//		sql.setLength(0);
+//		sql.append(" UPDATE MST_SHAIN SET ");
+//		sql.append("  SaishuKoshinShainNO = ? ");
+//		sql.append(" ,SaishuKoshinDate = ? ");
+//		sql.append(" ,SaishuKoshinJikan = ? ");
+//		sql.append(" ,Password = ? ");
+//		sql.append(" WHERE ");
+//		sql.append(" 1 = 1 ");
+//		sql.append(" and ShainNO = ? ");
+//		
+//		// パラメータ設定
+//		pstmtf.addValue("String", userInformation.getShainNO());
+//		pstmtf.addValue("String", PJActionBase.getNowDate());
+//		pstmtf.addValue("String", PJActionBase.getNowTime());
+//		pstmtf.addValue("String", password);
+//		pstmtf.addValue("String", shainNo);
+//		
+//		try {
+//			pstmt = con.prepareStatement(sql.toString());
+//			pstmtf.setPreparedStatement(pstmt);
+//			pstmt.execute();
+//			
+//			// ユーザ情報を再取得、セッションの再設定
+//			// 現在日付の取得
+//			String nowDate	= PJActionBase.getNowDate();
+//			
+//			ArrayList<HashMap<String, String>> mstShains = PJActionBase.getMstShains(con, shainNo, null, password, null, null, null, null, nowDate);
+//			if (0 < mstShains.size()) {
+//				HashMap<String, String> mstShain = mstShains.get(0);
+//				
+//				// 処理可能営業所コードの配列
+//				ArrayList<String> shoriKanoEigyoshoCode = new ArrayList<>();
+//				shoriKanoEigyoshoCode.add(mstShain.get("EigyoshoCode"));
+//				
+//				// 処理可能営業所コードを取得
+//				ArrayList<HashMap<String, String>> mstShainEigyoshos = PJActionBase.getMstShainEigyoshos(con, shainNo);
+//				for(HashMap<String, String> mstShainEigyosho : mstShainEigyoshos) {
+//					shoriKanoEigyoshoCode.add(mstShainEigyosho.get("EigyoshoCode"));
+//				}
+//
+//				//// ユーザ情報の呼び出し
+//				//UserInformation userInformation	= new UserInformation();
+//				
+//				// マスタから取得したデータを設定
+//				userInformation.setShainNO(mstShain.get("ShainNO"));
+//				userInformation.setShainName(mstShain.get("ShainName"));
+//				userInformation.setPassword(mstShain.get("Password"));
+//				userInformation.setUserKbn(mstShain.get("UserKbn"));
+//				userInformation.setShainKbn(mstShain.get("ShainKbn"));
+//				userInformation.setEigyoshoCode(mstShain.get("EigyoshoCode"));
+//				userInformation.setEigyoshoName(mstShain.get("EigyoshoName"));
+//				userInformation.setBushoCode(mstShain.get("BushoCode"));
+//				userInformation.setBushoName(mstShain.get("BushoName"));
+//				userInformation.setBushoKbn(mstShain.get("BushoKbn"));
+//				userInformation.setTaisyokuDate(mstShain.get("TaisyokuDate"));
+//				userInformation.setShoriKanoEigyoshoCode(shoriKanoEigyoshoCode);
+//				userInformation.setLoginDate(nowDate);
+//				
+//				// セッションに格納
+//				req.getSession().setAttribute(Define.SESSION_ID, userInformation);
+//				this.addContent("result", true);
+//			}
+//			
+//		} catch (Exception exp){
+//			exp.printStackTrace();
+//		} finally {
+//			if (pstmt != null){ try { pstmt.close(); } catch (Exception exp){}}
+//		}
 	}
 	
 }

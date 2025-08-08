@@ -14,4 +14,39 @@
 			<check class="ShainKbnValidate" message="該当する!#itemName#!は出勤簿不要です。" itemName="{dispName}"></check>
 		</variable>
 	</proc>
+
+	<proc func="update">
+		<variable name="txtSearchedTaishoYM" dispName="対象年月">
+			<check class="IsRequired" message="!#itemName#!が入力されていません。" itemName="{dispName}"></check>
+			<check class="IsDate" message="!#itemName#!の指定が不正です。" itemName="{dispName}">
+				<param name="format">yyyy/MM</param>
+			</check>
+		</variable>
+		<variable name="txtSearchedShainNO" dispName="社員NO">
+			<check class="IsRequired" message="!#itemName#!が入力されていません。" itemName="{dispName}"></check>
+			<check class="ShainExistValidate" message="該当する!#itemName#!が存在しません。" itemName="{dispName}"></check>
+			<check class="ShainTaisyokuValidate" message="該当する!#itemName#!は処理できません。" itemName="{dispName}"></check>
+			<check class="ShainKbnValidate" message="該当する!#itemName#!は出勤簿不要です。" itemName="{dispName}"></check>
+		</variable>
+		
+		
+		<variable name="dummy" dispName="">
+			<check class="KinShukkinBoValidate" message="更新処理でエラーが発生しました。"></check>
+		</variable>
+	</proc>
+
+	<proc func="delete">
+		<variable name="txtSearchedTaishoYM" dispName="対象年月">
+			<check class="IsRequired" message="!#itemName#!が入力されていません。" itemName="{dispName}"></check>
+			<check class="IsDate" message="!#itemName#!の指定が不正です。" itemName="{dispName}">
+				<param name="format">yyyy/MM</param>
+			</check>
+		</variable>
+		<variable name="txtSearchedShainNO" dispName="社員NO">
+			<check class="IsRequired" message="!#itemName#!が入力されていません。" itemName="{dispName}"></check>
+			<check class="ShainExistValidate" message="該当する!#itemName#!が存在しません。" itemName="{dispName}"></check>
+			<check class="ShainTaisyokuValidate" message="該当する!#itemName#!は処理できません。" itemName="{dispName}"></check>
+			<check class="ShainKbnValidate" message="該当する!#itemName#!は出勤簿不要です。" itemName="{dispName}"></check>
+		</variable>
+	</proc>
 </validate>
