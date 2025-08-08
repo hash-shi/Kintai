@@ -33,10 +33,29 @@ table, table td, table th {
 	border-collapse: collapse;
 }
 
+div.headerArea {
+	height: 65px;
+	padding-top: 10px;
+	padding-bottom: 10px;
+}
+div.headerArea table {
+	margin-bottom: 5px;
+}
+
+div.mainArea {
+	height: calc(100% - 150px);
+  border-top-style: double;
+  border-bottom-style: double;
+	padding-top: 10px;
+}
+div.mainArea table {
+	margin-bottom: 5px;
+}
+
 div.inputArea {
-	margin-top			: 10px;
+/*	margin-top			: 10px;*/
 	margin-left			: 20px;
-	margin-bottom		: 10px;
+/*	margin-bottom		: 10px;*/
 	width						: calc(100% - 40px);
 /*	width						: 100%;*/
 /*	border					: 1px solid #000000;*/
@@ -66,9 +85,9 @@ div.inputArea .value input[readonly] {
 	background-color: gainsboro;
 }
 
-
 div.buttonArea {
-	text-align			: center;
+	margin-top			: 10px;
+	margin-bottom		: 10px;
 }
 
 button {
