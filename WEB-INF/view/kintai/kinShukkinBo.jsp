@@ -4,8 +4,6 @@
 
 <main id="main-content">
 	<h2>出勤簿入力</h2>
-	<p>これはメインエリアです。</p>
-  
 	<div class="inputArea">
 		<div>
 			<table>
@@ -41,7 +39,7 @@
 					<thead>
 						<tr>
 							<th class="title center w150" colspan="3">	<a >月日</a></th>
-							<th class="title center w100">				<a >予定</a></th>
+							<th class="title center w50">				<a >予定</a></th>
 							<th class="title center w100">				<a >勤怠区分</a></th>
 							<th class="title center w100">				<a >備考</a></th>
 							<th class="w50"></th>
@@ -86,8 +84,8 @@
 				</table>
 			</div>
 			<div style="text-align: right;">
-				<button type="button" onclick="onDelete();">削除 [ F2 ]</button>
-				<button type="button" onclick="onUpdate();">確定 [ F2 ]</button>
+				<button type="button" id="btnDelete" onclick="onDelete();">削除 [ F2 ]</button>
+				<button type="button" id="btnUpdate" onclick="onUpdate();">確定 [ F2 ]</button>
 			</div>
 		</div>
 	</div>

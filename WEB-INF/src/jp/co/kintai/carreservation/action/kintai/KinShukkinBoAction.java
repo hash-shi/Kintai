@@ -30,6 +30,8 @@ public class KinShukkinBoAction extends PJActionBase {
 	}
 	
 	/**
+	 * 対象年月の初期値の取得
+	 * 
 	 * @param req
 	 * @param res
 	 * @throws Exception
@@ -73,11 +75,96 @@ public class KinShukkinBoAction extends PJActionBase {
 		// 結果返却
 		//=====================================================================
 		this.addContent("result", result);
-	
-	
 	}
 	
 	/**
+	 * DDLの内容取得
+	 * 
+	 * @param req
+	 * @param res
+	 * @throws Exception
+	 */
+	public void getDDL(HttpServletRequest req, HttpServletResponse res) throws Exception {
+		
+		// DB接続
+		Connection con		= this.getConnection("kintai", req);
+		ArrayList<HashMap<String, String>> mstDatas = new ArrayList<>();
+		
+		//予定DDL検索
+		ArrayList<HashMap<String, String>> mstYoteiKubun = PJActionBase.getMstKubuns(con, "0051", null, null);
+
+		// 送信データを減らすため不要なカラムは削る
+		// レコード数分繰り返す
+		for (HashMap<String, String> searchRecord: mstYoteiKubun){
+			//区分名が空の場合スキップ
+			if(StringUtils.isEmpty(searchRecord.get("KbnName"))){
+				continue;
+			}
+			// 1レコード分の配列を用意
+			HashMap<String, String> returnRecord = new HashMap<String, String>();
+
+			//値を格納
+			returnRecord.put("DDLName", "yotei");
+			returnRecord.put("Code", searchRecord.get("Code"));
+			returnRecord.put("KbnName", searchRecord.get("KbnName"));
+
+			// 配列の格納
+			mstDatas.add(returnRecord);
+		}
+		
+		//勤怠区分DDL検索
+		ArrayList<HashMap<String, String>> mstKintaiKubun = PJActionBase.getMstKubuns(con, "0100", null, null);
+
+		// 送信データを減らすため不要なカラムは削る
+		// レコード数分繰り返す
+		for (HashMap<String, String> searchRecord: mstKintaiKubun){
+			//区分名が空の場合スキップ
+			if(StringUtils.isEmpty(searchRecord.get("KbnName"))){
+				continue;
+			}
+			// 1レコード分の配列を用意
+			HashMap<String, String> returnRecord = new HashMap<String, String>();
+
+			//値を格納
+			returnRecord.put("DDLName", "kintai");
+			returnRecord.put("Code", searchRecord.get("Code"));
+			returnRecord.put("KbnName", searchRecord.get("KbnName"));
+
+			// 配列の格納
+			mstDatas.add(returnRecord);
+		}
+		
+		//申請区分DDL検索
+		ArrayList<HashMap<String, String>> mstShinseiKubun = PJActionBase.getMstKubuns(con, "0101", null, null);
+
+		// 送信データを減らすため不要なカラムは削る
+		// レコード数分繰り返す
+		for (HashMap<String, String> searchRecord: mstShinseiKubun){
+			//区分名が空の場合スキップ
+			if(StringUtils.isEmpty(searchRecord.get("KbnName"))){
+				continue;
+			}
+			// 1レコード分の配列を用意
+			HashMap<String, String> returnRecord = new HashMap<String, String>();
+
+			//値を格納
+			returnRecord.put("DDLName", "shinsei");
+			returnRecord.put("Code", searchRecord.get("Code"));
+			returnRecord.put("KbnName", searchRecord.get("KbnName"));
+
+			// 配列の格納
+			mstDatas.add(returnRecord);
+		}
+		
+		//=====================================================================
+		// 結果返却
+		//=====================================================================
+		this.addContent("result", mstDatas);
+	}
+	
+	/**
+	 * 本社確定済みの確認
+	 * 
 	 * @param req
 	 * @param res
 	 * @throws Exception
@@ -91,8 +178,6 @@ public class KinShukkinBoAction extends PJActionBase {
 		
 		// DB接続
 		Connection con		= this.getConnection("kintai", req);
-		
-		ArrayList<HashMap<String, String>> mstDatas = new ArrayList<>();
 		
 		// DB接続
 		StringBuffer sql1					= new StringBuffer();

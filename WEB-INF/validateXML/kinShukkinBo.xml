@@ -6,7 +6,6 @@
 			<check class="IsDate" message="!#itemName#!の指定が不正です。" itemName="{dispName}">
 				<param name="format">yyyy/MM</param>
 			</check>
-			<!-- 対象年月が、管理マスタ.現在処理年月度以前の場合-->
 		</variable>
 		<variable name="txtShainNO" dispName="社員NO">
 			<check class="IsRequired" message="!#itemName#!が入力されていません。" itemName="{dispName}"></check>
