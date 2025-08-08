@@ -568,7 +568,7 @@ function formatDateYYYYMM(date, sep="") {
 // formatDateYYYY
 //
 //****************************************************************************
-function formatDateYYYY() {
+function formatDateYYYY(date) {
   const yyyy = date.getFullYear();
   return `${yyyy}`;
 }

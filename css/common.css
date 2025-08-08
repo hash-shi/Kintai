@@ -309,7 +309,10 @@ img {
 .w390 { min-width: 390px !important; max-width: 390px !important; }
 .w400 { min-width: 400px !important; max-width: 400px !important; }
 .w500 { min-width: 500px !important; max-width: 500px !important; }
+.w600 { min-width: 600px !important; max-width: 600px !important; }
+.w700 { min-width: 700px !important; max-width: 700px !important; }
 .w800 { min-width: 800px !important; max-width: 800px !important; }
+.w900 { min-width: 900px !important; max-width: 900px !important; }
 .w1000 { min-width: 1000px !important; max-width: 1000px !important; }
 
 .h10 { min-height: 10px !important; max-height: 10px !important; }
