@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <validate>
 	<proc func="search">
-		<variable name="srhTxtEigyoshoCode" dispName="営業所コード">
+		<variable name="srhDlgTxtEigyoshoCode" dispName="営業所コード">
 			<check class="IsRegex" message="!#itemName#!には数字を入力してください" itemName="{dispName}">
 				<param name="format">^$|^[0-9]{1,50}$</param>
 			</check>
