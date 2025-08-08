@@ -13,18 +13,33 @@ function toggleVisibility(){
 		var kbnName			= contents["kbnName"];
 		var date  			= contents["date"];
 		var eigyosho  			= contents["eigyosho"];
-		let eigyoshoCode = eigyosho[0];
-		let Saisho = eigyoshoCode["Saisho"];
-		let Saidai = eigyoshoCode["Saidai"];
+		let eigyoshoValue = eigyosho[0];
+		let Saisho = eigyoshoValue["Saisho"];
+		let Saidai = eigyoshoValue["Saidai"];
+		let SaishoName = eigyoshoValue["SaishoName"];
+		let SaidaiName = eigyoshoValue["SaidaiName"];
 		
 		document.getElementById("displayShoriArea").style.display = "";
+		$("#numSrhShorisentaku").val(result);
 		$("#txtShoriSentaku").val(kbnName);
+		$("#txtSrhBushoCodeF").val("");
+		$("#txtSrhBushoNameF").val("");
+	    $("#txtSrhBushoCodeT").val("");
+		$("#txtSrhBushoNameT").val("");
+		$("#txtSrhShainNOF").val("");
+		$("#txtSrhShainNameF").val("");
+		$("#txtSrhShainNOT").val("");
+		$("#txtSrhShainNameT").val("");
+		$("#txtSrhKbnCodeF").val("");
+	    $("#txtSrhKbnCodeT").val("");
 		
 		if(result == "01"||result == "02"||result == "03"){
 			document.getElementById("displayKbnArea").style.display = 'none';
 			document.getElementById("displayEigyoshoArea").style.display = "";
-			$("#txtFromEigyoshoCode").val(Saisho);
-			$("#txtToEigyoshoCode").val(Saidai);
+			$("#txtSrhEigyoshoCodeF").val(Saisho);
+			$("#txtSrhEigyoshoNameF").val(SaishoName);
+			$("#txtSrhEigyoshoCodeT").val(Saidai);
+			$("#txtSrhEigyoshoNameT").val(SaidaiName);
 		 if(result == "02"){
 			document.getElementById("displayBushoArea").style.display = "";
 			document.getElementById("displayShainArea").style.display = 'none';
@@ -40,11 +55,33 @@ function toggleVisibility(){
 			document.getElementById("displayKbnArea").style.display = "";
 			document.getElementById("displayBushoArea").style.display = 'none';
 			document.getElementById("displayShainArea").style.display = 'none';
+			$("#txtSrhEigyoshoCodeF").val("");
+			$("#txtSrhEigyoshoCodeT").val("");
 		}
 		document.getElementById("displayOutputArea").style.display = "";
 		document.getElementById("displayBottonArea").style.display = "";
-		$("#txtFromSaishuKoshinDate").val(date);
-		$("#txtToSaishuKoshinDate").val(date);
-		console.log(result);
+		$("#txtSrhSaishuKoshinDateF").val(date);
+		$("#txtSrhSaishuKoshinDateT").val(date);
 	});
+}
+
+function output(){
+	proc("check",{}, function(data){
+		if (data == undefined){ return; }
+		if (data["contents"] == undefined){ return; }
+
+		var contents		= data["contents"];
+		if (contents["from"] == undefined){ return; }
+		if (contents["to"] == undefined){ return; }
+		var from = contents["from"];
+		var to = contents["to"];
+		
+		if(contents["result"]){
+			console.log("データ:"+ from + "" + to);
+		} else {
+			if (contents["message"] == undefined){ return; }
+			alert(contents["message"]);
+		}
+	});
+	
 }
