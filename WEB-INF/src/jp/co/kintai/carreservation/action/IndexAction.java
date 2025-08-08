@@ -24,7 +24,7 @@ public class IndexAction extends PJActionBase {
 		req.getSession().invalidate();
 		
 		// 表示画面の制御
-		String returnView				= "success";
+		String returnView = "success";
 		
 		this.setView(returnView);
 	}
