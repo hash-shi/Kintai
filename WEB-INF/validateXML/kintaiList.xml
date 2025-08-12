@@ -1,0 +1,135 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<validate>
+	<proc func="kinShukkinBo,chiChinginkeisansho">
+	
+		<variable name="srhTxtTaishoNengetsuF" dispName="対象年月度(自)">
+			<check class="IsRequired" message="!#itemName#!が入力されていません。" itemName="{dispName}"></check>
+			<check class="IsDate" message="!#itemName#!の指定が不正です(YYYY/MM)" itemName="{dispName}">
+				<param name="format">yyyy/MM</param>
+			</check>
+		</variable>
+		<variable name="srhTxtTaishoNengetsuT" dispName="対象年月度(至)">
+			<check class="IsRequired" message="!#itemName#!が入力されていません。" itemName="{dispName}"></check>
+			<check class="IsDate" message="!#itemName#!の指定が不正です(YYYY/MM)" itemName="{dispName}">
+				<param name="format">yyyy/MM</param>
+			</check>
+		</variable>
+		<variable name="dummy" dispName="">
+			<check class="SizeComparison" message="対象年月度(自)(至)の大小が不正です。" itemName="{dispName}">
+				<param name="from">srhTxtTaishoNengetsuF</param>
+				<param name="to">srhTxtTaishoNengetsuT</param>
+				<param name="include">1</param>
+			</check>
+		</variable>
+		
+		<variable name="srhTxtEigyoshoCodeF" dispName="営業所コード(自)">
+			<check class="IsNumber" message="!#itemName#!には数字を入力してください。" itemName="{dispName}"></check>
+		</variable>
+		<variable name="srhTxtEigyoshoCodeT" dispName="営業所コード(至)">
+			<check class="IsNumber" message="!#itemName#!には数字を入力してください。" itemName="{dispName}"></check>
+		</variable>
+		<variable name="dummy" dispName="">
+			<check class="SizeComparison" message="営業所コード(自)(至)の大小が不正です。" itemName="{dispName}">
+				<param name="from">srhTxtEigyoshoCodeF</param>
+				<param name="to">srhTxtEigyoshoCodeT</param>
+				<param name="include">1</param>
+			</check>
+		</variable>
+		
+		<variable name="srhTxtBushoCodeF" dispName="部署コード(自)">
+			<check class="IsNumber" message="!#itemName#!には数字を入力してください。" itemName="{dispName}"></check>
+		</variable>
+		<variable name="srhTxtBushoCodeT" dispName="部署コード(至)">
+			<check class="IsNumber" message="!#itemName#!には数字を入力してください。" itemName="{dispName}"></check>
+		</variable>
+		<variable name="dummy" dispName="">
+			<check class="SizeComparison" message="部署コード(自)(至)の大小が不正です。" itemName="{dispName}">
+				<param name="from">srhTxtBushoCodeF</param>
+				<param name="to">srhTxtBushoCodeT</param>
+				<param name="include">1</param>
+			</check>
+		</variable>
+		
+		<variable name="srhTxtShainNoF" dispName="社員NO(自)">
+			<check class="IsNumber" message="!#itemName#!には数字を入力してください。" itemName="{dispName}"></check>
+		</variable>
+		<variable name="srhTxtShainNoT" dispName="社員NO(至)">
+			<check class="IsNumber" message="!#itemName#!には数字を入力してください。" itemName="{dispName}"></check>
+		</variable>
+		<variable name="dummy" dispName="">
+			<check class="SizeComparison" message="社員NO(自)(至)の大小が不正です。" itemName="{dispName}">
+				<param name="from">srhTxtShainNoF</param>
+				<param name="to">srhTxtShainNoT</param>
+				<param name="include">1</param>
+			</check>
+		</variable>
+		
+	</proc>
+	
+	<proc func="kinYukyuKyukaDaicho">
+	
+		<variable name="srhTxtTaishoNendoF" dispName="対象年度(自)">
+			<check class="IsRequired" message="!#itemName#!が入力されていません。" itemName="{dispName}"></check>
+			<check class="IsDate" message="!#itemName#!の指定が不正です(YYYY/MM)" itemName="{dispName}">
+				<param name="format">yyyy</param>
+			</check>
+		</variable>
+		<variable name="srhTxtTaishoNendoT" dispName="対象年度(至)">
+			<check class="IsRequired" message="!#itemName#!が入力されていません。" itemName="{dispName}"></check>
+			<check class="IsDate" message="!#itemName#!の指定が不正です(YYYY/MM)" itemName="{dispName}">
+				<param name="format">yyyy</param>
+			</check>
+		</variable>
+		<variable name="dummy" dispName="">
+			<check class="SizeComparison" message="対象年度(自)(至)の大小が不正です。" itemName="{dispName}">
+				<param name="from">srhTxtTaishoNendoF</param>
+				<param name="to">srhTxtTaishoNendoT</param>
+				<param name="include">1</param>
+			</check>
+		</variable>
+		
+		<variable name="srhTxtEigyoshoCodeF" dispName="営業所コード(自)">
+			<check class="IsNumber" message="!#itemName#!には数字を入力してください。" itemName="{dispName}"></check>
+		</variable>
+		<variable name="srhTxtEigyoshoCodeT" dispName="営業所コード(至)">
+			<check class="IsNumber" message="!#itemName#!には数字を入力してください。" itemName="{dispName}"></check>
+		</variable>
+		<variable name="dummy" dispName="">
+			<check class="SizeComparison" message="営業所コード(自)(至)の大小が不正です。" itemName="{dispName}">
+				<param name="from">srhTxtEigyoshoCodeF</param>
+				<param name="to">srhTxtEigyoshoCodeT</param>
+				<param name="include">1</param>
+			</check>
+		</variable>
+		
+		<variable name="srhTxtBushoCodeF" dispName="部署コード(自)">
+			<check class="IsNumber" message="!#itemName#!には数字を入力してください。" itemName="{dispName}"></check>
+		</variable>
+		<variable name="srhTxtBushoCodeT" dispName="部署コード(至)">
+			<check class="IsNumber" message="!#itemName#!には数字を入力してください。" itemName="{dispName}"></check>
+		</variable>
+		<variable name="dummy" dispName="">
+			<check class="SizeComparison" message="部署コード(自)(至)の大小が不正です。" itemName="{dispName}">
+				<param name="from">srhTxtBushoCodeF</param>
+				<param name="to">srhTxtBushoCodeT</param>
+				<param name="include">1</param>
+			</check>
+		</variable>
+		
+		<variable name="srhTxtShainNoF" dispName="社員NO(自)">
+			<check class="IsNumber" message="!#itemName#!には数字を入力してください。" itemName="{dispName}"></check>
+		</variable>
+		<variable name="srhTxtShainNoT" dispName="社員NO(至)">
+			<check class="IsNumber" message="!#itemName#!には数字を入力してください。" itemName="{dispName}"></check>
+		</variable>
+		<variable name="dummy" dispName="">
+			<check class="SizeComparison" message="社員NO(自)(至)の大小が不正です。" itemName="{dispName}">
+				<param name="from">srhTxtShainNoF</param>
+				<param name="to">srhTxtShainNoT</param>
+				<param name="include">1</param>
+			</check>
+		</variable>
+		
+	</proc>
+	
+</validate>

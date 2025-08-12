@@ -39,6 +39,10 @@
 			<view return="success" path="kintai/kinShukkinBo.jsp" />
 		</action>
 		
+		<action id="kintaiList"  group="public"  class="action.kintai.KintaiListAction"  title="勤怠リスト"  header=""  footer=""  script="./script/kintai/kintaiList.js"  style="./css/kintai/kintaiList.css"  authority=""  meta=""  requiredParam="" >
+			<view return="success" path="kintai/kintaiList.jsp" />
+		</action>
+		
 		<action id="kintaiOutData"  group="public"  class="action.kintai.KintaiOutDataAction"  title="データ出力"  header=""  footer=""  script="./script/kintai/kintaiOutData.js"  style="./css/kintai/kintaiOutData.css"  authority=""  meta=""  requiredParam="" >
 			<view return="success" path="kintai/kintaiOutData.jsp" />
 		</action>

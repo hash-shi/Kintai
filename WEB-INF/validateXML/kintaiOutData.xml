@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <validate>
-	<proc func="download">
+	<proc func="kyuyokeisanData,chinginkeisanshoData">
 	
 		<variable name="srhTxtTaishoNengetsuF" dispName="対象年月度(自)">
 			<check class="IsRequired" message="!#itemName#!が入力されていません。" itemName="{dispName}"></check>

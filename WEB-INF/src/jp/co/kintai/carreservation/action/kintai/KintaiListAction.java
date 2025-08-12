@@ -10,8 +10,8 @@ import jakarta.servlet.http.HttpServletResponse;
 import jp.co.kintai.carreservation.base.PJActionBase;
 import jp.co.tjs_net.java.framework.information.IndexInformation;
 
-public class KintaiOutDataAction extends PJActionBase {
-	public KintaiOutDataAction(HttpServletRequest req, HttpServletResponse res, IndexInformation info) {
+public class KintaiListAction extends PJActionBase {
+	public KintaiListAction(HttpServletRequest req, HttpServletResponse res, IndexInformation info) {
 		super(req, res, info);
 	}
 
@@ -24,9 +24,14 @@ public class KintaiOutDataAction extends PJActionBase {
 		//=====================================================================
 		// 結果返却
 		//=====================================================================
-		// 取得
-		ArrayList<HashMap<String, String>> mstKubun = PJActionBase.getMstKubuns(con, "0503", "", "");
-		req.setAttribute("mstKubun", mstKubun);
+		
+		// 処理選択
+		ArrayList<HashMap<String, String>> mstKubun0504 = PJActionBase.getMstKubuns(con, "0504", "", "");
+		req.setAttribute("mstKubun0504", mstKubun0504);
+		
+		// 出力条件
+		ArrayList<HashMap<String, String>> mstKubun0050 = PJActionBase.getMstKubuns(con, "0050", "", "");
+		req.setAttribute("mstKubun0050", mstKubun0050);
 		
 		this.setView("success");
 	}
@@ -36,7 +41,7 @@ public class KintaiOutDataAction extends PJActionBase {
 	 * @param res
 	 * @throws Exception
 	 */
-	public void kyuyokeisanData(HttpServletRequest req, HttpServletResponse res) throws Exception {
+	public void kinShukkinBo(HttpServletRequest req, HttpServletResponse res) throws Exception {
 		
 	}
 	
@@ -45,7 +50,16 @@ public class KintaiOutDataAction extends PJActionBase {
 	 * @param res
 	 * @throws Exception
 	 */
-	public void chinginkeisanshoData(HttpServletRequest req, HttpServletResponse res) throws Exception {
+	public void chiChinginkeisansho(HttpServletRequest req, HttpServletResponse res) throws Exception {
+		
+	}
+	
+	/**
+	 * @param req
+	 * @param res
+	 * @throws Exception
+	 */
+	public void kinYukyuKyukaDaicho(HttpServletRequest req, HttpServletResponse res) throws Exception {
 		
 	}
 }

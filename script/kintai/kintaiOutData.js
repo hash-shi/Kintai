@@ -57,12 +57,12 @@ function onCsvDownload(){
 	console.log(value);
 	
 	if (value == "01") {
-		proc("download",{}, function(data, dataType){
+		proc("kyuyokeisanData",{}, function(data, dataType){
 			onDownloadPost("csvKyuyokeisanData");
 		});
 	}
 	else if (value == "02") {
-		proc("download",{}, function(data, dataType){
+		proc("chinginkeisanshoData",{}, function(data, dataType){
 			onDownloadPost("csvChinginkeisanshoData");
 		});	
 	}
