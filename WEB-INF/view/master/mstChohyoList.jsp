@@ -56,11 +56,11 @@ ArrayList<HashMap<String, String>> shoriSentaku			= (ArrayList<HashMap<String, S
 					<a>営業所</a>
 				</td>
 				<td class="value w1000">
-					<input type="text" class=""  style="width: 80px"" name="txtSrhEigyoshoCodeF" id="txtSrhEigyoshoCodeF"  value=""  onblur="getEigyoshoName('txtSrhEigyoshoCodeF', 'txtSrhEigyoshoNameF');" >
+					<input type="text" class=""  style="width: 80px"" name="txtSrhEigyoshoCodeF" id="txtSrhEigyoshoCodeF" maxlength="3" value=""  onblur="getEigyoshoName('txtSrhEigyoshoCodeF', 'txtSrhEigyoshoNameF');" >
 					<img class="img border" src="./images/search.png"  onclick="opnDialog('srhMstEigyosho','txtSrhEigyoshoCodeF','txtSrhEigyoshoNameF');">
 					<input type="text" class=""  style="width: 120px"" name="txtSrhEigyoshoNameF" id="txtSrhEigyoshoNameF" value="" readonly>
 					<a>～</a>
-					<input type="text" class=""  style="width: 80px"" name="txtSrhEigyoshoCodeT" id="txtSrhEigyoshoCodeT"  value=""  onblur="getEigyoshoName('txtSrhEigyoshoCodeT', 'txtSrhEigyoshoNameT');" >
+					<input type="text" class=""  style="width: 80px"" name="txtSrhEigyoshoCodeT" id="txtSrhEigyoshoCodeT" maxlength="3" value=""  onblur="getEigyoshoName('txtSrhEigyoshoCodeT', 'txtSrhEigyoshoNameT');" >
 					<img class="img border" src="./images/search.png"  onclick="opnDialog('srhMstEigyosho','txtSrhEigyoshoCodeT','txtSrhEigyoshoNameT');">
 					<input type="text" class=""  style="width: 120px"" name="txtSrhEigyoshoNameT" id="txtSrhEigyoshoNameT" value="" readonly>
 				</td>
@@ -70,9 +70,9 @@ ArrayList<HashMap<String, String>> shoriSentaku			= (ArrayList<HashMap<String, S
 					<a>区分コード</a>
 				</td>
 				<td class="value w1000">
-					<input type="text" class=""  style="width: 80px"" name="txtSrhKbnCodeF" id="txtSrhKbnCodeF"  value="">
+					<input type="text" class=""  style="width: 80px"" name="txtSrhKbnCodeF" id="txtSrhKbnCodeF" maxlength="4"   value="">
 					<a>～</a>
-					<input type="text" class=""  style="width: 80px"" name="txtSrhKbnCodeT" id="txtSrhKbnCodeT"  value="" >
+					<input type="text" class=""  style="width: 80px"" name="txtSrhKbnCodeT" id="txtSrhKbnCodeT" maxlength="4"  value="" >
 				</td>
 			</tr>
 			<tr id="displayShainArea" class ="inputArea" style="display: none;">
@@ -80,11 +80,11 @@ ArrayList<HashMap<String, String>> shoriSentaku			= (ArrayList<HashMap<String, S
 					<a>社員NO</a>
 				</td>
 				<td class="value w1000">
-					<input type="text" class=""  style="width: 80px"" name="txtSrhShainNOF" id="txtSrhShainNOF"  value=""  onblur="getShainName('txtSrhShainNOF', 'txtSrhShainNameF');" >
+					<input type="text" class=""  style="width: 80px"" name="txtSrhShainNOF" id="txtSrhShainNOF" maxlength="4"  value=""  onblur="getShainName('txtSrhShainNOF', 'txtSrhShainNameF');" >
 					<img class="img border" src="./images/search.png"  onclick="opnDialog('srhMstShain','txtSrhShainNOF','txtSrhShainNameF');">
 					<input type="text" class=""  style="width: 120px"" name="txtSrhShainNameF" id="txtSrhShainNameF" value="" readonly>
 					<a>～</a>
-					<input type="text" class=""  style="width: 80px"" name="txtSrhShainNOT" id="txtSrhShainNOT"  value=""  onblur="getShainName('txtSrhShainNOT', 'txtSrhShainNameT');" >
+					<input type="text" class=""  style="width: 80px"" name="txtSrhShainNOT" id="txtSrhShainNOT" maxlength="4"  value=""  onblur="getShainName('txtSrhShainNOT', 'txtSrhShainNameT');" >
 					<img class="img border" src="./images/search.png"  onclick="opnDialog('srhMstShain','txtSrhShainNOT','txtSrhShainNameT');">
 					<input type="text" class=""  style="width: 120px"" name="txtSrhShainNameT" id="txtSrhShainNameT" value="" readonly>
 				</td>
@@ -94,11 +94,11 @@ ArrayList<HashMap<String, String>> shoriSentaku			= (ArrayList<HashMap<String, S
 					<a>部署</a>
 				</td>
 				<td class="value w1000">
-					<input type="text" class=""  style="width: 80px"" name="txtSrhBushoCodeF" id="txtSrhBushoCodeF"  value=""  onblur="getBushoName('txtSrhBushoCodeF', 'txtSrhBushoNameF');" >
+					<input type="text" class=""  style="width: 80px"" name="txtSrhBushoCodeF" id="txtSrhBushoCodeF" maxlength="4"  value=""  onblur="getBushoName('txtSrhBushoCodeF', 'txtSrhBushoNameF');" >
 					<img class="img border" src="./images/search.png"  onclick="opnDialog('srhMstBusho','txtSrhBushoCodeF','txtSrhBushoNameF');">
 					<input type="text" class=""  style="width: 120px"" name="txtSrhBushoNameF" id="txtSrhBushoNameF" value="" readonly>
 					<a>～</a>
-					<input type="text" class=""  style="width: 80px"" name="txtSrhBushoCodeT" id="txtSrhBushoCodeT"  value=""  onblur="getBushoName('txtSrhBushoCodeT', 'txtSrhBushoNameT');" >
+					<input type="text" class=""  style="width: 80px"" name="txtSrhBushoCodeT" id="txtSrhBushoCodeT" maxlength="4"  value=""  onblur="getBushoName('txtSrhBushoCodeT', 'txtSrhBushoNameT');" >
 					<img class="img border" src="./images/search.png"  onclick="opnDialog('srhMstBusho','txtSrhBushoCodeT','txtSrhBushoNameT');">
 					<input type="text" class=""  style="width: 120px"" name="txtSrhBushoNameT" id="txtSrhBushoNameT" value="" readonly>
 				</td>
@@ -108,9 +108,9 @@ ArrayList<HashMap<String, String>> shoriSentaku			= (ArrayList<HashMap<String, S
 					<a>最終更新日</a>
 				</td>
 				<td class="value w500">
-					<input type="text" class=""  style="width: 80px; text-align: right;"" name="txtSrhSaishuKoshinDateF" id="txtSrhSaishuKoshinDateF" value="">
+					<input type="text" class=""  style="width: 80px; text-align: right;"" name="txtSrhSaishuKoshinDateF" id="txtSrhSaishuKoshinDateF" maxlength="10" value="">
 					<a>～</a>
-					<input type="text" class=""  style="width: 80px; text-align: right;"" name="txtSrhSaishuKoshinDateT" id="txtSrhSaishuKoshinDateT" value="">
+					<input type="text" class=""  style="width: 80px; text-align: right;"" name="txtSrhSaishuKoshinDateT" id="txtSrhSaishuKoshinDateT" maxlength="10" value="">
 					<a>(YYYY/MM/DD)</a>
 				</td>
 			</tr>

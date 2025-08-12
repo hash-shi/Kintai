@@ -69,17 +69,17 @@ function output(){
 	proc("check",{}, function(data){
 		if (data == undefined){ return; }
 		if (data["contents"] == undefined){ return; }
-
 		var contents		= data["contents"];
-		if (contents["from"] == undefined){ return; }
-		if (contents["to"] == undefined){ return; }
-		var from = contents["from"];
-		var to = contents["to"];
+		if (contents["result"] == undefined){ return; }
+		var result			= contents["result"];
+		console.log("データ:"+ result);
 		
-		if(contents["result"]){
-			console.log("データ:"+ from + "" + to);
+		if(result){
+			console.log("成功");
+			onDownloadPost("csvMstchohyolistData");
 		} else {
-			if (contents["message"] == undefined){ return; }
+			if(contents["message"] == undefined){ return; }
+			console.log("失敗");
 			alert(contents["message"]);
 		}
 	});

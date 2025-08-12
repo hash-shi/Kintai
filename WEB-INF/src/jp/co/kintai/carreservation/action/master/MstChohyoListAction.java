@@ -13,6 +13,7 @@ import jakarta.servlet.http.HttpServletResponse;
 import org.apache.commons.lang3.StringUtils;
 
 import jp.co.kintai.carreservation.base.PJActionBase;
+import jp.co.kintai.carreservation.define.Define;
 import jp.co.tjs_net.java.framework.database.PreparedStatementFactory;
 import jp.co.tjs_net.java.framework.information.IndexInformation;
 
@@ -120,6 +121,7 @@ public class MstChohyoListAction extends PJActionBase {
 		String shorisentaku	= req.getParameter("numSrhShorisentaku");
 		String fromSaishuKoshinDate	= req.getParameter("txtSrhSaishuKoshinDateF");
 		String toSaishuKoshinDate	= req.getParameter("txtSrhSaishuKoshinDateT");
+		int count = 0;
 		
 		if(shorisentaku.equals("01")||shorisentaku.equals("02")||shorisentaku.equals("03")) {
 			String fromEigyoshoCode	= req.getParameter("txtSrhEigyoshoCodeF");
@@ -127,21 +129,40 @@ public class MstChohyoListAction extends PJActionBase {
 		  if(shorisentaku.equals("02")) {
 			String fromBushoCode	= req.getParameter("txtSrhBushoCodeF");
 			String toBushoCode	= req.getParameter("txtSrhBushoCodeT");
-			System.out.println("部署マスタデータ: " + fromEigyoshoCode + "　" + toEigyoshoCode + "　" + fromBushoCode + "　" + toBushoCode + "　" + fromSaishuKoshinDate + "　" + toSaishuKoshinDate);
+			ArrayList<HashMap<String, String>> bushoData = bushoMst(con,fromEigyoshoCode,toEigyoshoCode,fromBushoCode,toBushoCode,fromSaishuKoshinDate,toSaishuKoshinDate);
+            count = bushoData.size();
+            System.out.println("部署マスタデータ数:" + count);
+            req.getSession().setAttribute(Define. SESSION_ID_CSV, bushoData);
+		    
 		  } else if(shorisentaku.equals("03")) {
 			String fromShainNO	= req.getParameter("txtSrhShainNOF");
 		    String toShainNO	= req.getParameter("txtSrhShainNOT");
-		    System.out.println("社員マスタデータ: " + fromEigyoshoCode + "　" + toEigyoshoCode + "　" + fromShainNO + "　" + toShainNO + "　" + fromSaishuKoshinDate + "　" + toSaishuKoshinDate);
+		    ArrayList<HashMap<String, String>> shainData = shainMst(con,fromEigyoshoCode,toEigyoshoCode,fromShainNO,toShainNO,fromSaishuKoshinDate,toSaishuKoshinDate);
+		    count = shainData.size();
+		    System.out.println("社員マスタデータ数:" + count);
+		    req.getSession().setAttribute(Define. SESSION_ID_CSV, shainData);
 		  } else {
 			ArrayList<HashMap<String, String>> eigyoshoData = eigyoshoMst(con,fromEigyoshoCode,toEigyoshoCode,fromSaishuKoshinDate,toSaishuKoshinDate);
-			System.out.println("営業所マスタデータ数:" + eigyoshoData.size());
+            count = eigyoshoData.size();
+            System.out.println("営業所マスタデータ数:" + count);
+            req.getSession().setAttribute(Define. SESSION_ID_CSV, eigyoshoData);
 		  }
 		} else {
 			String fromKbnCode	= req.getParameter("txtSrhKbnCodeF");
 			String toKbnCode	= req.getParameter("txtSrhKbnCodeT");
-			System.out.println("区分名称マスタデータ: " + fromKbnCode + "　" + toKbnCode + "　" + fromSaishuKoshinDate + "　" + toSaishuKoshinDate);
+			ArrayList<HashMap<String, String>> kbnData = kbnMst(con,fromKbnCode,toKbnCode,fromSaishuKoshinDate,toSaishuKoshinDate);
+            count = kbnData.size();
+            System.out.println("区分名称マスタデータ数:" + count);
+            req.getSession().setAttribute(Define. SESSION_ID_CSV, kbnData);
 		}
-		this.addContent("result",true);
+		
+		
+		if(count == 0) {
+	    	this.addContent("result", false);
+			this.addContent("message","対象データが存在しません。");
+	    } else {
+	    	this.addContent("result", true);
+	    }
 	}
 	
 	private static ArrayList<HashMap<String, String>> eigyoshoMst(Connection con, String fromEigyoshoCode, String toEigyoshoCode, String fromSaishuKoshinDate, String toSaishuKoshinDate) throws Exception {
@@ -168,6 +189,230 @@ public class MstChohyoListAction extends PJActionBase {
 		if (StringUtils.isNotBlank(toEigyoshoCode)) {
 	     sql.append(" AND CAST(EigyoshoCode AS int) <= ? ");
 		 pstmtf.addValue("String", toEigyoshoCode);
+		}
+		
+		if(StringUtils.isNotBlank(fromSaishuKoshinDate)) {
+		 sql.append(" AND SaishuKoshinDate >= ?");
+		 pstmtf.addValue("String", fromSaishuKoshinDate);
+		}
+		
+		if(StringUtils.isNotBlank(toSaishuKoshinDate)) {
+		 sql.append(" AND SaishuKoshinDate <= ?");
+		 pstmtf.addValue("String", toSaishuKoshinDate);
+		}
+		
+		try {
+			// パラメータ付きSQL文の生成
+			pstmt = con.prepareStatement(sql.toString());
+			// パラメータの設定
+			pstmtf.setPreparedStatement(pstmt);
+			// 実行
+			rset = pstmt.executeQuery();
+			// 結果取得
+			ResultSetMetaData metaData = rset.getMetaData(); 
+			
+			// カラム数(列数)の取得
+			int colCount = metaData.getColumnCount(); 
+			
+			// レコード数分繰り返す
+			while (rset.next()){
+				// 1レコード分の配列を用意
+				HashMap<String, String> record = new HashMap<String, String>();
+				// カラム名をkeyとして値を格納
+				for (int i = 1; i <= colCount; i++) {
+					record.put(metaData.getColumnLabel(i), StringUtils.stripToEmpty(rset.getString(i)));
+				}
+				// 配列の格納
+				mstDatas.add(record);
+			}
+		} finally {
+			if (rset != null){ try { rset.close(); } catch (Exception exp){}}
+			if (pstmt != null){ try { pstmt.close(); } catch (Exception exp){}}
+		}
+		
+		return mstDatas;
+	}
+
+	private static ArrayList<HashMap<String, String>> bushoMst(Connection con, String fromEigyoshoCode, String toEigyoshoCode, String fromBushoCode,String toBushoCode,String fromSaishuKoshinDate, String toSaishuKoshinDate) throws Exception {
+		ArrayList<HashMap<String, String>> mstDatas = new ArrayList<>();
+		
+		// DB接続
+		StringBuffer sql				= new StringBuffer();
+		PreparedStatement pstmt			= null;
+		PreparedStatementFactory pstmtf	= new PreparedStatementFactory();
+		ResultSet rset					= null;
+		
+		sql.append(" SELECT ");
+		sql.append(" 	* ");
+		sql.append(" FROM ");
+		sql.append(" 	MST_BUSHO ");
+		sql.append(" WHERE ");
+		sql.append(" 	1 = 1 ");
+
+		if (StringUtils.isNotBlank(fromEigyoshoCode)) {
+		 sql.append(" AND CAST(EigyoshoCode AS int) >= ? ");
+	     pstmtf.addValue("String", fromEigyoshoCode);
+		}
+		
+		if (StringUtils.isNotBlank(toEigyoshoCode)) {
+	     sql.append(" AND CAST(EigyoshoCode AS int) <= ? ");
+		 pstmtf.addValue("String", toEigyoshoCode);
+		}
+		
+		if (StringUtils.isNotBlank(fromBushoCode)) {
+	     sql.append(" AND CAST(BushoCode AS int) >= ? ");
+		 pstmtf.addValue("String", fromBushoCode);
+		}
+			
+		if (StringUtils.isNotBlank(toBushoCode)) {
+		 sql.append(" AND CAST(BushoCode AS int) <= ? ");
+		 pstmtf.addValue("String", toBushoCode);
+		}
+		
+		if(StringUtils.isNotBlank(fromSaishuKoshinDate)) {
+		 sql.append(" AND SaishuKoshinDate >= ?");
+		 pstmtf.addValue("String", fromSaishuKoshinDate);
+		}
+		
+		if(StringUtils.isNotBlank(toSaishuKoshinDate)) {
+		 sql.append(" AND SaishuKoshinDate <= ?");
+		 pstmtf.addValue("String", toSaishuKoshinDate);
+		}
+		
+		try {
+			// パラメータ付きSQL文の生成
+			pstmt = con.prepareStatement(sql.toString());
+			// パラメータの設定
+			pstmtf.setPreparedStatement(pstmt);
+			// 実行
+			rset = pstmt.executeQuery();
+			// 結果取得
+			ResultSetMetaData metaData = rset.getMetaData(); 
+			
+			// カラム数(列数)の取得
+			int colCount = metaData.getColumnCount(); 
+			
+			// レコード数分繰り返す
+			while (rset.next()){
+				// 1レコード分の配列を用意
+				HashMap<String, String> record = new HashMap<String, String>();
+				// カラム名をkeyとして値を格納
+				for (int i = 1; i <= colCount; i++) {
+					record.put(metaData.getColumnLabel(i), StringUtils.stripToEmpty(rset.getString(i)));
+				}
+				// 配列の格納
+				mstDatas.add(record);
+			}
+		} finally {
+			if (rset != null){ try { rset.close(); } catch (Exception exp){}}
+			if (pstmt != null){ try { pstmt.close(); } catch (Exception exp){}}
+		}
+		
+		return mstDatas;
+	}
+	
+	private static ArrayList<HashMap<String, String>> shainMst(Connection con, String fromEigyoshoCode, String toEigyoshoCode, String fromShainNO,String toShainNO,String fromSaishuKoshinDate, String toSaishuKoshinDate) throws Exception {
+		ArrayList<HashMap<String, String>> mstDatas = new ArrayList<>();
+		
+		// DB接続
+		StringBuffer sql				= new StringBuffer();
+		PreparedStatement pstmt			= null;
+		PreparedStatementFactory pstmtf	= new PreparedStatementFactory();
+		ResultSet rset					= null;
+		
+		sql.append(" SELECT ");
+		sql.append(" 	* ");
+		sql.append(" FROM ");
+		sql.append(" 	MST_SHAIN ");
+		sql.append(" WHERE ");
+		sql.append(" 	1 = 1 ");
+
+		if (StringUtils.isNotBlank(fromEigyoshoCode)) {
+		 sql.append(" AND CAST(EigyoshoCode AS int) >= ? ");
+	     pstmtf.addValue("String", fromEigyoshoCode);
+		}
+		
+		if (StringUtils.isNotBlank(toEigyoshoCode)) {
+	     sql.append(" AND CAST(EigyoshoCode AS int) <= ? ");
+		 pstmtf.addValue("String", toEigyoshoCode);
+		}
+		
+		if (StringUtils.isNotBlank(fromShainNO)) {
+	     sql.append(" AND CAST(ShainNO AS int) >= ? ");
+		 pstmtf.addValue("String", fromShainNO);
+		}
+			
+		if (StringUtils.isNotBlank(toShainNO)) {
+		 sql.append(" AND CAST(ShainNO AS int) <= ? ");
+		 pstmtf.addValue("String", toShainNO);
+		}
+		
+		if(StringUtils.isNotBlank(fromSaishuKoshinDate)) {
+		 sql.append(" AND SaishuKoshinDate >= ?");
+		 pstmtf.addValue("String", fromSaishuKoshinDate);
+		}
+		
+		if(StringUtils.isNotBlank(toSaishuKoshinDate)) {
+		 sql.append(" AND SaishuKoshinDate <= ?");
+		 pstmtf.addValue("String", toSaishuKoshinDate);
+		}
+		
+		try {
+			// パラメータ付きSQL文の生成
+			pstmt = con.prepareStatement(sql.toString());
+			// パラメータの設定
+			pstmtf.setPreparedStatement(pstmt);
+			// 実行
+			rset = pstmt.executeQuery();
+			// 結果取得
+			ResultSetMetaData metaData = rset.getMetaData(); 
+			
+			// カラム数(列数)の取得
+			int colCount = metaData.getColumnCount(); 
+			
+			// レコード数分繰り返す
+			while (rset.next()){
+				// 1レコード分の配列を用意
+				HashMap<String, String> record = new HashMap<String, String>();
+				// カラム名をkeyとして値を格納
+				for (int i = 1; i <= colCount; i++) {
+					record.put(metaData.getColumnLabel(i), StringUtils.stripToEmpty(rset.getString(i)));
+				}
+				// 配列の格納
+				mstDatas.add(record);
+			}
+		} finally {
+			if (rset != null){ try { rset.close(); } catch (Exception exp){}}
+			if (pstmt != null){ try { pstmt.close(); } catch (Exception exp){}}
+		}
+		
+		return mstDatas;
+	}
+	
+	private static ArrayList<HashMap<String, String>> kbnMst(Connection con, String fromKbnCode, String toKbnCode, String fromSaishuKoshinDate, String toSaishuKoshinDate) throws Exception {
+		ArrayList<HashMap<String, String>> mstDatas = new ArrayList<>();
+		
+		// DB接続
+		StringBuffer sql				= new StringBuffer();
+		PreparedStatement pstmt			= null;
+		PreparedStatementFactory pstmtf	= new PreparedStatementFactory();
+		ResultSet rset					= null;
+		
+		sql.append(" SELECT ");
+		sql.append(" 	* ");
+		sql.append(" FROM ");
+		sql.append(" 	MST_KUBUN ");
+		sql.append(" WHERE ");
+		sql.append(" 	1 = 1 ");
+
+		if (StringUtils.isNotBlank(fromKbnCode)) {
+		 sql.append(" AND CAST(KbnCode AS int) >= ? ");
+	     pstmtf.addValue("String", fromKbnCode);
+		}
+		
+		if (StringUtils.isNotBlank(toKbnCode)) {
+	     sql.append(" AND CAST(KbnCode AS int) <= ? ");
+		 pstmtf.addValue("String", toKbnCode);
 		}
 		
 		if(StringUtils.isNotBlank(fromSaishuKoshinDate)) {

@@ -79,6 +79,7 @@
 	
 		<download id="csvKyuyokeisanData"  class="download.CsvKyuyokeisanDataDownload" />
 		<download id="csvChinginkeisanshoData"  class="download.CsvChinginkeisanshoDataDownload" />
+		<download id="csvMstchohyolistData"  class="download.CsvMstchohyolistDataDownload" />
 	
 		<download id="downloadCsvFile"  class="download.CsvFileDownload" />
 		<download id="downloadPdfFile"  class="download.PdfFileDownload" />
