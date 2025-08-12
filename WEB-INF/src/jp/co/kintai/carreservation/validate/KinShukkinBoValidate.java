@@ -1,25 +1,22 @@
 package jp.co.kintai.carreservation.validate;
 
+import java.math.BigDecimal;
+import java.nio.charset.Charset;
 import java.sql.Connection;
+import java.sql.PreparedStatement;
+import java.sql.ResultSet;
+import java.sql.ResultSetMetaData;
 import java.util.ArrayList;
 import java.util.HashMap;
 
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 
-import jp.co.kintai.carreservation.base.PJActionBase;
-import jp.co.kintai.carreservation.define.Define;
-import jp.co.kintai.carreservation.information.UserInformation;
-import jp.co.tjs_net.java.framework.base.ValidateBase;
-import jp.co.tjs_net.java.framework.information.IndexInformation;
-
-import java.time.LocalDate;
-import java.time.LocalDateTime;
-import java.time.format.DateTimeFormatter;
 import org.apache.commons.lang3.StringUtils;
 
-import java.math.BigDecimal;
-import java.nio.charset.Charset;
+import jp.co.tjs_net.java.framework.base.ValidateBase;
+import jp.co.tjs_net.java.framework.database.PreparedStatementFactory;
+import jp.co.tjs_net.java.framework.information.IndexInformation;
 
 public class KinShukkinBoValidate extends ValidateBase {
 
@@ -38,13 +35,18 @@ public class KinShukkinBoValidate extends ValidateBase {
 		//=====================================================================
 		// パラメータ取得
 		//=====================================================================
-		// チェック対象の社員NO
-		String shainNo					= this.getParameter("txtSearchedShainNO");
-		// チェック対象の日付
-		String taishoYM					= this.getParameter("txtSearchedTaishoYM");
 		
 		//1か月分入力項目があるので1か月分ループ
 		for(int i = 0;i < 31;i++){
+			StringBuilder taishoNengappiKeySb	= new StringBuilder();
+			taishoNengappiKeySb	.append("TaishoNengappi")	.append(String.valueOf(i));
+			String taishoNengappi		= this.getParameter(taishoNengappiKeySb.toString());
+			
+			if(StringUtils.isEmpty(taishoNengappi)) {
+				System.out.println("データが終わったので終了");
+				break;
+			}
+
 			StringBuilder shusshaJiKeySb	= new StringBuilder();
 			StringBuilder shusshaFunKeySb	= new StringBuilder();
 			StringBuilder taishaJiKeySb		= new StringBuilder();
@@ -208,12 +210,6 @@ public class KinShukkinBoValidate extends ValidateBase {
 				BigDecimal dcmJikan	= BigDecimal.ZERO;
 				
 				try {
-					intKaishiJi = Integer.parseInt(kaishiJi);
-				} catch (Exception e) {
-					this.addValidateMessage("");
-				}
-				
-				try {
 					if("".equals(kaishiJi) == false){
 						intKaishiJi = Integer.parseInt(kaishiJi);
 					}
@@ -331,7 +327,7 @@ public class KinShukkinBoValidate extends ValidateBase {
 			}
 			
 			
-			//TODO 賃金申請諸入力区分(""01""固定)、勤怠区分、勤怠申請区分1、勤怠申請区分2、勤怠申請区分3の組み合わせが、申請パターンマスタ(MST_SHINSEI_PATTERN)に登録されていない場合
+			// 賃金申請書入力区分("01"固定)、勤怠区分、勤怠申請区分1、勤怠申請区分2、勤怠申請区分3の組み合わせが、申請パターンマスタ(MST_SHINSEI_PATTERN)に登録されていない場合
 			StringBuilder kintaiKbnKeySb	= new StringBuilder();
 			StringBuilder kintaiShinseiKbn1KeySb	= new StringBuilder();
 			StringBuilder kintaiShinseiKbn2KeySb	= new StringBuilder();
@@ -357,12 +353,60 @@ public class KinShukkinBoValidate extends ValidateBase {
 			bikoKeySb	.append("KintaiShinseiBiko")	.append(String.valueOf(i));
 			String biko		= this.getParameter(bikoKeySb.toString());
 
-			if(biko.getBytes(charsetMS932) > 40){
+			if(biko.getBytes(charsetMS932).length > 40){
 				this.addValidateMessage("備考が40バイトを超えています。");
 				return false;
 			}
 
 		}
+
+		
+		String shinseiKingaku01 = this.getParameter("txtShinseiKingaku01");
+		if(StringUtils.isEmpty(shinseiKingaku01)) {
+			shinseiKingaku01 = "0";
+		}
+		BigDecimal dcmDhinseiKingaku01 = BigDecimal.ZERO;
+		try {
+			dcmDhinseiKingaku01 = new BigDecimal(shinseiKingaku01);
+		} catch (Exception e) {
+			this.addValidateMessage("特別作業金額には数値を入力してください。");
+			return false;
+		}
+		if(
+			(dcmDhinseiKingaku01.precision() - dcmDhinseiKingaku01.scale() > 7) ||
+			(dcmDhinseiKingaku01.scale() > 0)
+		){
+			this.addValidateMessage("特別作業金額の桁数が不正です。");
+			return false;
+		}
+		if(dcmDhinseiKingaku01.compareTo(BigDecimal.ZERO) < 0){
+			this.addValidateMessage("特別作業金額にはマイナスは設定できません。");
+			return false;
+		}
+
+		String shinseiKingaku02 = this.getParameter("txtShinseiKingaku02");
+		if(StringUtils.isEmpty(shinseiKingaku02)) {
+			shinseiKingaku02 = "0";
+		}
+		BigDecimal dcmDhinseiKingaku02 = BigDecimal.ZERO;
+		try {
+			dcmDhinseiKingaku02 = new BigDecimal(shinseiKingaku02);
+		} catch (Exception e) {
+			this.addValidateMessage("営業日当手当には数値を入力してください。");
+			return false;
+		}
+		if(
+			(dcmDhinseiKingaku02.precision() - dcmDhinseiKingaku02.scale() > 7) ||
+			(dcmDhinseiKingaku02.scale() > 0)
+		){
+			this.addValidateMessage("営業日当手当の桁数が不正です。");
+			return false;
+		}
+		if(dcmDhinseiKingaku02.compareTo(BigDecimal.ZERO) < 0){
+			this.addValidateMessage("営業日当手当にはマイナスは設定できません。");
+			return false;
+		}
+
 		return true;
 	}
 
@@ -387,7 +431,17 @@ public class KinShukkinBoValidate extends ValidateBase {
 		ResultSet rset					= null;
 		
 		sql.append(" SELECT ");
-		sql.append(" 	SyukinboNyuryokuKbn ");
+		sql.append(" 	KintaiKbn, ");
+		sql.append(" 	ShinseiKbn1, ");
+		sql.append(" 	ShinseiKbn2, ");
+		sql.append(" 	Nissuu, ");
+		sql.append(" 	CASE WHEN KihonSagyoJikanKbn = '01' THEN ");
+		sql.append(" 		(SELECT KintaiKihonSagyoJikan FROM MST_KANRI) ");
+		sql.append(" 		ELSE 0 END AS KintaiKihonSagyoJikan, ");
+		sql.append(" 	KihonSagyoJikanKbn, ");
+		sql.append(" 	KyukeiJikanKbn, ");
+		sql.append(" 	KaGenZanKbn1, ");
+		sql.append(" 	KaGenZanKbn2 ");
 		sql.append(" FROM ");
 		sql.append(" 	MST_SHINSEI_PATTERN ");
 		sql.append(" WHERE ");
@@ -405,6 +459,8 @@ public class KinShukkinBoValidate extends ValidateBase {
 		try {
 			// SQL文の生成
 			pstmt = con.prepareStatement(sql.toString());
+			// パラメータの設定
+			pstmtf.setPreparedStatement(pstmt);
 			// 実行
 			rset = pstmt.executeQuery();
 			// 結果取得
@@ -413,6 +469,9 @@ public class KinShukkinBoValidate extends ValidateBase {
 			if(rset.next()){
 				result = true;
 			}
+		}
+		catch(Exception e) {
+			System.out.println(String.valueOf(e));
 		} finally {
 			if (rset != null){ try { rset.close(); } catch (Exception exp){}}
 			if (pstmt != null){ try { pstmt.close(); } catch (Exception exp){}}
