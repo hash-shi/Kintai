@@ -30,9 +30,9 @@ public class SrhMstBushoAction extends PJActionBase {
 	public void search(HttpServletRequest req, HttpServletResponse res) throws Exception {
 		
 		// 検索条件取得
-		String bushoCode	= this.getParameter("srhTxtBushoCode");
-		String bushoName	= this.getParameter("srhTxtBushoName");
-		String eigyoshoCode	= this.getParameter("srhTxtEigyoshoCode");
+		String bushoCode	= this.getParameter("srhDlgTxtBushoCode");
+		String bushoName	= this.getParameter("srhDlgTxtBushoName");
+		String eigyoshoCode	= this.getParameter("srhDlgTxtEigyoshoCode");
 		
 		// DB接続
 		Connection con		= this.getConnection("kintai", req);
@@ -40,7 +40,7 @@ public class SrhMstBushoAction extends PJActionBase {
 		//=====================================================================
 		// 結果返却
 		//=====================================================================
-		this.addContent("result", this.getMstBushos(con, bushoCode, bushoName, eigyoshoCode));
+		this.addContent("result", PJActionBase.getMstBushos(con, bushoCode, bushoName, eigyoshoCode));
 	}
 	
 }

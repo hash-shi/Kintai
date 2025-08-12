@@ -120,9 +120,9 @@ public abstract class PJActionBase extends ActionBase {
 		// 結果返却
 		//=====================================================================
 		// 取得
-		ArrayList<HashMap<String, String>> mstBushos = PJActionBase.getMstBushos(con, bushoCode, null, eigyoshoCode);
+		ArrayList<HashMap<String, String>> mstShains = PJActionBase.getMstBushos(con, bushoCode, null, eigyoshoCode);
 		// 送信データを減らすため不要なカラムは削って名称のみ返す。
-		for (HashMap<String, String> hashMap : mstBushos) {
+		for (HashMap<String, String> hashMap : mstShains) {
 				bushoName = hashMap.get("BushoName");
 		}
 		this.addContent("result", bushoName);

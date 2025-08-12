@@ -400,7 +400,7 @@ function getMstEigyoshos(){
 //
 //****************************************************************************
 
-function getMstbushos(){
+function getMstBushos(){
 
 	proc("search", {}, function(data){
 		if (data == undefined){ return; }
@@ -412,14 +412,14 @@ function getMstbushos(){
 		var result			= contents["result"];
 		
 		// 検索結果エリアをクリアする。
-		$("#searchStaffResult").children().remove();
+		$("#searchBushoResult").children().remove();
 		
 		for (var count = 0 ; count < result.length ; count++){
 			var record			= result[count];
 			
-			var	eigyoushoCode = record["EigyoshoCode"];
+			var	eigyoshoCode = record["EigyoshoCode"];
 			var bushoCode	  = record["BushoCode"];
-			var bushoName	  = record["BuushoName"];
+			var bushoName	  = record["BushoName"];
 			
 			// onclickで呼ぶ関数を共通化
 			var onclickCode = "setDialogReturnValue('" + bushoCode + "'); closeDialog(); setDialogReturnValueBushoName(); return false;";

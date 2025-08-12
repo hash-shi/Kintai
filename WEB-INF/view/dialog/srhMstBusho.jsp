@@ -10,20 +10,20 @@
 		<table>
 			<tr>
 				<td class="title center w100">営業所コード</td>
-				<td class="value w300">
-					<input type="text" class=""  style="width: 100px"" name="srhDlgTxtEigyoshoCode" id="srhDlgTxtEigyoshoCode" value="" >
+				<td class="value w170">
+					<input type="text" class=""  style="width: 150px"" name="srhDlgTxtEigyoshoCode" id="srhDlgTxtEigyoshoCode" value="" >
 				</td>
 			</tr>
 			<tr>
 				<td class="title center w100">部署コード</td>
-				<td class="value w300">
-					<input type="text" class=""  style="width: 100px"" name="srhDlgTxtBushoCode" id="srhDlgTxtBushoCode" value="" >
+				<td class="value w170">
+					<input type="text" class=""  style="width: 150px"" name="srhDlgTxtBushoCode" id="srhDlgTxtBushoCode" value="" >
 				</td>
 			</tr>
 			<tr>
 				<td class="title center w100">部署名</td>
-				<td class="value w300">
-					<input type="text" class=""  style="width: 100px"" name="srhDlgTxtBushoName" id="srhDlgTxtBushoName" value="" >
+				<td class="value w170">
+					<input type="text" class=""  style="width: 150px"" name="srhDlgTxtBushoName" id="srhDlgTxtBushoName" value="" >
 				</td>
 			</tr>
 		</table>
@@ -32,7 +32,7 @@
 		<button type="button" onclick="getMstBushos();">検索</button>
 	</div>
 	<div class="searchResultArea" style="max-height: 465px">
-		<table class="searchRecord">
+		<table class="searchRecord" style="table-layout: fixed">
 			<thead>
 				<tr>
 					<th>営業所コード</th>
@@ -40,7 +40,7 @@
 					<th>部署名</th>
 				</tr>
 			</thead>
-			<tbody id = "searchBushoResult">
+			<tbody id="searchBushoResult">
 			</tbody>
 		</table>
 	</div>
