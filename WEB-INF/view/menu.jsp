@@ -51,6 +51,18 @@
 			</tr>
 			
 			<tr>
+				<td class="title center w100">
+					<a href="#" onclick="opnDialog('srhMstKubun','txtKbnCode,txtCode','txtKbnName'); return false;">区分</a>
+				</td>
+				<td class="value w500">
+					<input type="text" class=""  style="width: 80px" name="txtKbnCode" id="txtKbnCode"  value=""  onblur="getKubunName('txtKbnCode','txtCode','txtKbnName');" >
+					<input type="text" class=""  style="width: 50px" name="txtCode" id="txtCode"  value=""  onblur="getKubunName('txtKbnCode','txtCode','txtKbnName');" >
+					<img class="img border" src="./images/search.png"  onclick="opnDialog('srhMstKubun','txtKbnCode,txtCode','txtKbnName');">
+					<input type="text" class=""  style="width: 120px" name="txtKbnName" id="txtKbnName" value="" readonly>
+				</td>
+			</tr>
+			
+			<tr>
 				<td class="title center w100">マスタ</td>
 				<td class="value w500">
 					<select name="" id="">
