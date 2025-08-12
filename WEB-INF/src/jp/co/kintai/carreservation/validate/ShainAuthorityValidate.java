@@ -54,7 +54,7 @@ public class ShainAuthorityValidate extends ValidateBase {
 		ArrayList<String> shoriKanoEigyoshoCode = userInformation.getShoriKanoEigyoshoCode();
 		
 		// チェック対象の社員NO
-		String _shainNo					= this.getParameter("shainNo");
+		String _shainNo	= req.getParameter(this.params.get("shainNo").toString());
 		
 		
 		//=====================================================================
