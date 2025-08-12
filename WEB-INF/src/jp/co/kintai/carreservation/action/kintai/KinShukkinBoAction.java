@@ -510,7 +510,8 @@ public class KinShukkinBoAction extends PJActionBase {
 		String loginShainNo = userInformation.getShainNO();
 		
 		boolean result = false;
-		//TODO トランザクション開始
+		//トランザクション開始
+		con.setAutoCommit(false);
 		//1か月分入力項目があるので1か月分ループ
 		for(int i = 0;i < 31;i++){
 			StringBuilder taishoNengappiKeySb	= new StringBuilder();
@@ -527,10 +528,8 @@ public class KinShukkinBoAction extends PJActionBase {
 			}
 			else {
 				result = insertMeisaiRow(con, taishoYM, taishoShainNo, taishoNengappi, loginShainNo, i);
-				System.out.println("INSERT実行");
 			}
 			if(result == false) {
-				//TODO ロールバック
 				break;
 			}
 		}
@@ -541,10 +540,16 @@ public class KinShukkinBoAction extends PJActionBase {
 			}
 			else {
 				result = insertKihonRow(con, taishoYM, taishoShainNo, loginShainNo);
-				System.out.println("INSERT実行");
 			}
 		}
-		//TODO コミット
+		if(result == false) {
+			//ロールバック
+			con.rollback();
+		}
+		else {
+			//コミット
+			con.commit();
+		}
 		this.addContent("result", result);
 	}
 	
