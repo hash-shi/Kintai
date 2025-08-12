@@ -58,10 +58,13 @@ function toggleVisibility(){
 			$("#txtSrhEigyoshoCodeF").val("");
 			$("#txtSrhEigyoshoCodeT").val("");
 		}
-		document.getElementById("displayOutputArea").style.display = "";
 		document.getElementById("displayBottonArea").style.display = "";
 		$("#txtSrhSaishuKoshinDateF").val(date);
 		$("#txtSrhSaishuKoshinDateT").val(date);
+		// mainAreaの背景色を変更
+		if (!$("#displayShoriArea").hasClass("ins")) {
+			$("#displayShoriArea").addClass("ins");
+		}
 	});
 }
 

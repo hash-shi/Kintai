@@ -8,10 +8,14 @@
 ArrayList<HashMap<String, String>> shoriSentaku			= (ArrayList<HashMap<String, String>>)request.getAttribute("shoriSentaku");
 %>
 
-<main id="main-content">
-	<h2>マスタリスト</h2>
-  
-	<div class="inputArea">
+<main id="main-content" class="nom">
+    <div class="headerArea"　id="headerArea">
+	  <div class="inputArea">
+		<table>
+		    <tr>
+				<td class="title center w300">マスタリスト</td>
+			</tr>
+		</table>
 		<table>
 			<tr>
 				<td class="title center w100">
@@ -27,11 +31,11 @@ ArrayList<HashMap<String, String>> shoriSentaku			= (ArrayList<HashMap<String, S
 				</td>
 			</tr>
 		</table>
+	  </div>
 	</div>
 	
-	<p></p>
-	
-	<div id="displayShoriArea" class ="inputArea" style="display: none;">
+	<div id="displayShoriArea"  class="mainArea" style="display: none;">
+	  <div class="inputArea">
 		<table>
 		    <tr>
 				<td class="title center w100">
@@ -42,15 +46,9 @@ ArrayList<HashMap<String, String>> shoriSentaku			= (ArrayList<HashMap<String, S
 				</td>
 			</tr>
 		</table>
-	</div>
-	<div>
-	    <input type="hidden" name="numSrhShorisentaku" id = "numSrhShorisentaku" value="">
-	</div>
-	<div>
-	<p></p>
-	</div>
-	<div id="displayOutputArea"  class ="inputArea" style="display: none;">
-		<table>
+	  </div>
+	  <div class="inputArea">
+	    <table>
 		    <tr id="displayEigyoshoArea" class ="inputArea" style="display: none;" >
 				<td class="title center w100">
 					<a>営業所</a>
@@ -115,9 +113,13 @@ ArrayList<HashMap<String, String>> shoriSentaku			= (ArrayList<HashMap<String, S
 				</td>
 			</tr>
 		</table>
+	  </div>
 	</div>
-	<div id="displayBottonArea" style="text-align: right; display: none;">
-			<button type="button" onclick="output();">作表[F12]</button>
+	<div>
+	    <input type="hidden" name="numSrhShorisentaku" id = "numSrhShorisentaku" value="">
+	</div>
+	<div class="buttonArea right" id="displayBottonArea" style="display: none;">
+			<button type="button" onclick="output()">作表[F12]</button>
 	</div>
 	
 </main>
