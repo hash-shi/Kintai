@@ -3,13 +3,13 @@
 <validate>
 	<proc func="search">
 		<variable name="srhDlgTxtKbnCode" dispName="区分コード">
-			<check class="IsRegex" message="!#itemName#!は数字で入力してください。" itemName="{dispName}">
+			<check class="IsRegex" message="!#itemName#!には数字で入力してください。" itemName="{dispName}">
 				<param name="format">^$|^[0-9]{1,50}$</param>
 			</check>
 		</variable>
 		
 		<variable name="srhDlgTxtCode" dispName="コード">
-			<check class="IsRegex" message="!#itemName#!は数字で入力してください。" itemName="{dispName}">
+			<check class="IsRegex" message="!#itemName#!には数字で入力してください。" itemName="{dispName}">
 				<param name="format">^$|^[0-9]{1,50}$</param>
 			</check>
 		</variable>

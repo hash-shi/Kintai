@@ -10,26 +10,26 @@
 			<table>
 				<tr>
 					<td class="title center w100">社員NO</td>
-					<td class="value w300">
-						<input type="text" class=""  style="width: 100px" name="srhDlgTxtShainNO" id="srhDlgTxtShainNO" value="" >
+					<td class="value w170">
+						<input type="text" class=""  style="width: 150px" name="srhDlgTxtShainNO" id="srhDlgTxtShainNO" value="" >
 					</td>
 				</tr>
 				<tr>
 					<td class="title center w100">社員名</td>
-					<td class="value w300">
-						<input type="text" class=""  style="width: 100px" name="srhDlgTxtShainName" id="srhDlgTxtShainName" value="" >
+					<td class="value w170">
+						<input type="text" class=""  style="width: 150px" name="srhDlgTxtShainName" id="srhDlgTxtShainName" value="" >
 					</td>
 				</tr>
 				<tr>
 					<td class="title center w100">営業所コード</td>
-					<td class="value w300">
-						<input type="text" class=""  style="width: 100px" name="srhDlgTxtEigyoshoCode" id="srhDlgTxtEigyoshoCode" value="" >
+					<td class="value w170">
+						<input type="text" class=""  style="width: 150px" name="srhDlgTxtEigyoshoCode" id="srhDlgTxtEigyoshoCode" value="" >
 					</td>
 				</tr>
 				<tr>
 					<td class="title center w100">社員区分</td>
-					<td class="value w300">
-						<input type="text" class=""  style="width: 100px" name="srhDlgTxtShainKbn" id="srhDlgTxtShainKbn" value="" >
+					<td class="value w170">
+						<input type="text" class=""  style="width: 150px" name="srhDlgTxtShainKbn" id="srhDlgTxtShainKbn" value="" >
 					</td>
 				</tr>
 			</table>

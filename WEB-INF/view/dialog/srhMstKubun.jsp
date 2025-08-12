@@ -10,20 +10,20 @@
 		<table>
 			<tr>
 				<td class="title center w100">区分コード</td>
-				<td class="value w300">
-					<input type="text" class=""  style="width: 100px" name="srhDlgTxtKbnCode" id="srhDlgTxtKbnCode" value="" >
+				<td class="value w170">
+					<input type="text" class=""  style="width: 150px" name="srhDlgTxtKbnCode" id="srhDlgTxtKbnCode" value="" >
 				</td>
 			</tr>
 			<tr>
 				<td class="title center w100">コード</td>
-				<td class="value w300">
-					<input type="text" class=""  style="width: 100px" name="srhDlgTxtCode" id="srhDlgTxtCode" value="">
+				<td class="value w170">
+					<input type="text" class=""  style="width: 150px" name="srhDlgTxtCode" id="srhDlgTxtCode" value="">
 				</td>
 			</tr>
 			<tr>
 				<td class="title center w100">名称</td>
-				<td class="value w300">
-					<input type="text" class=""  style="width: 100px" name="srhDlgTxtKbnName" id="srhDlgTxtKbnName" value="">
+				<td class="value w170">
+					<input type="text" class=""  style="width: 150px" name="srhDlgTxtKbnName" id="srhDlgTxtKbnName" value="">
 				</td>
 			</tr>
 		</table>
