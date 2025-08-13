@@ -523,10 +523,13 @@ public class KinShukkinBoAction extends PJActionBase {
 			record.put("KintaiShinseiShuryoJi3","");
 			record.put("KintaiShinseiShuryoFun3","");
 			record.put("KintaiShinseiJikan3","");
+			record.put("MeisaiSaishuKoshinDate","");
+			record.put("MeisaiSaishuKoshinJikan","");
 			record.put("ShinseiKingaku01","");
 			record.put("ShinseiKingaku02","");
 			record.put("KakuteiKbn","");
-			
+			record.put("KihonSaishuKoshinDate","");
+			record.put("KihonSaishuKoshinJikan","");
 			// 配列の格納
 			ResultDatas.add(record);
 			
