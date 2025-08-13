@@ -32,7 +32,7 @@
 		<button type="button" onclick="getMstKubuns();">検索</button>
 	</div>
 	<div class="searchResultArea" style="max-height: 465px">
-		<table class="searchRecord">
+		<table class="searchRecord" style="table-layout: fixed">
 			<thead>
 				<tr>
 					<th>区分コード</th>
