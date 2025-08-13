@@ -29,28 +29,12 @@ public class MstChohyoListAction extends PJActionBase {
 				
 		// DB接続
 		Connection con		= this.getConnection("kintai", req);
-				
-		//=====================================================================
-		// 結果返却
-		//=====================================================================
-		// 取得
-		ArrayList<HashMap<String, String>> shoriSentaku = PJActionBase.getMstKubuns(con, kbnCode, "", "");
-		req.setAttribute("shoriSentaku", shoriSentaku);
-		//this.addContent("name", kbnName);
-		// 画面表示
-		this.setView("success");
-	}
-	
-	public void change(HttpServletRequest req, HttpServletResponse res) throws Exception {
-		ArrayList<HashMap<String, String>> mstDatas = new ArrayList<>();
-		
-		// DB接続
-		Connection con		= this.getConnection("kintai", req);
 		StringBuffer sql				= new StringBuffer();
 		PreparedStatement pstmt			= null;
 		ResultSet rset					= null;
 		
 		//営業所初期値取得
+		ArrayList<HashMap<String, String>> mstDatas = new ArrayList<>();
 		sql.append(" SELECT");
 		sql.append(" E1.Saisho AS Saisho ,");
 		sql.append(" E2.EigyoshoName AS SaishoName,");
@@ -94,24 +78,21 @@ public class MstChohyoListAction extends PJActionBase {
 			if (pstmt != null){ try { pstmt.close(); } catch (Exception exp){}}
 		}
 		
-		// ドロップダウンの値を取得
-        String selectedValue = req.getParameter("rdoShoriSentaku");
-        // 処理選択名称を取得
-        String kbnName = "";
-        String kbnCode = "0501";
-        ArrayList<HashMap<String, String>> mstShains = PJActionBase.getMstKubuns(con, kbnCode, selectedValue, null);
-		// 送信データを減らすため不要なカラムは削って名称のみ返す。
-		for (HashMap<String, String> hashMap : mstShains) {
-			kbnName = hashMap.get("KbnName");
-		}
-		// 現在日付の取得
-		String nowDate	= PJActionBase.getNowDate();
+		// 処理選択取得
+		ArrayList<HashMap<String, String>> shoriSentaku = PJActionBase.getMstKubuns(con, kbnCode, "", "");
+				
+		//=====================================================================
+		// 結果返却
+		//=====================================================================
+		req.setAttribute("shoriSentaku", shoriSentaku);
+		req.setAttribute("eigyosho", mstDatas);
+		//this.addContent("name", kbnName);
+		// 画面表示
+		this.setView("success");
+	}
+	
+	public void change(HttpServletRequest req, HttpServletResponse res) throws Exception {
 		
-		//取得値の格納
-		this.addContent("result",selectedValue);
-		this.addContent("kbnName", kbnName);
-		this.addContent("date",nowDate);
-		this.addContent("eigyosho",mstDatas);
 	}
 	
 	public void check(HttpServletRequest req, HttpServletResponse res) throws Exception {

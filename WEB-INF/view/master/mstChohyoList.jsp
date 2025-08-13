@@ -6,6 +6,8 @@
 <%
 //処理区分の取得
 ArrayList<HashMap<String, String>> shoriSentaku			= (ArrayList<HashMap<String, String>>)request.getAttribute("shoriSentaku");
+//営業所初期値の取得
+ArrayList<HashMap<String, String>> eigyosho			= (ArrayList<HashMap<String, String>>)request.getAttribute("eigyosho");
 %>
 
 <main id="main-content" class="nom">
@@ -22,7 +24,7 @@ ArrayList<HashMap<String, String>> shoriSentaku			= (ArrayList<HashMap<String, S
 					<a>処理選択</a>
 				</td>
 				<td class="value w170">
-					<select name = "rdoShoriSentaku" >
+					<select name = "rdoShoriSentaku"  id="rdoShoriSentaku">
 				      <% for (int count = 0 ; count < shoriSentaku.size() ; count++){ HashMap<String, String> record = shoriSentaku.get(count);%>
 					   <option value="<%=UtilEscape.htmlspecialchars(record.get("Code")) %>"><%=UtilEscape.htmlspecialchars(record.get("KbnName")) %></option>
 				      <% } %>
@@ -54,13 +56,16 @@ ArrayList<HashMap<String, String>> shoriSentaku			= (ArrayList<HashMap<String, S
 					<a>営業所</a>
 				</td>
 				<td class="value w1000">
-					<input type="text" class=""  style="width: 80px"" name="txtSrhEigyoshoCodeF" id="txtSrhEigyoshoCodeF" maxlength="3" value=""  onblur="getEigyoshoName('txtSrhEigyoshoCodeF', 'txtSrhEigyoshoNameF');" >
+				<% 
+				HashMap<String, String> record = eigyosho.get(0);
+				%>
+					<input type="text" class=""  style="width: 80px"" name="txtSrhEigyoshoCodeF" id="txtSrhEigyoshoCodeF" maxlength="3" value="<%=UtilEscape.htmlspecialchars(record.get("Saisho")) %>"  onblur="getEigyoshoName('txtSrhEigyoshoCodeF', 'txtSrhEigyoshoNameF');" >
 					<img class="img border" src="./images/search.png"  onclick="opnDialog('srhMstEigyosho','txtSrhEigyoshoCodeF','txtSrhEigyoshoNameF');">
-					<input type="text" class=""  style="width: 120px"" name="txtSrhEigyoshoNameF" id="txtSrhEigyoshoNameF" value="" readonly>
+					<input type="text" class=""  style="width: 120px"" name="txtSrhEigyoshoNameF" id="txtSrhEigyoshoNameF" value="<%=UtilEscape.htmlspecialchars(record.get("SaishoName")) %>" readonly>
 					<a>～</a>
-					<input type="text" class=""  style="width: 80px"" name="txtSrhEigyoshoCodeT" id="txtSrhEigyoshoCodeT" maxlength="3" value=""  onblur="getEigyoshoName('txtSrhEigyoshoCodeT', 'txtSrhEigyoshoNameT');" >
+					<input type="text" class=""  style="width: 80px"" name="txtSrhEigyoshoCodeT" id="txtSrhEigyoshoCodeT" maxlength="3" value="<%=UtilEscape.htmlspecialchars(record.get("Saidai")) %>"  onblur="getEigyoshoName('txtSrhEigyoshoCodeT', 'txtSrhEigyoshoNameT');" >
 					<img class="img border" src="./images/search.png"  onclick="opnDialog('srhMstEigyosho','txtSrhEigyoshoCodeT','txtSrhEigyoshoNameT');">
-					<input type="text" class=""  style="width: 120px"" name="txtSrhEigyoshoNameT" id="txtSrhEigyoshoNameT" value="" readonly>
+					<input type="text" class=""  style="width: 120px"" name="txtSrhEigyoshoNameT" id="txtSrhEigyoshoNameT" value="<%=UtilEscape.htmlspecialchars(record.get("SaidaiName")) %>" readonly>
 				</td>
 			</tr>
 			<tr id="displayKbnArea" class ="inputArea" style="display: none;">
@@ -117,6 +122,10 @@ ArrayList<HashMap<String, String>> shoriSentaku			= (ArrayList<HashMap<String, S
 	</div>
 	<div>
 	    <input type="hidden" name="numSrhShorisentaku" id = "numSrhShorisentaku" value="">
+	    <input type="hidden" name="hidSrhEigyoshoCodeF" id="hidSrhEigyoshoCodeF" value="<%=UtilEscape.htmlspecialchars(record.get("Saisho")) %>" >
+		<input type="hidden" name="hidSrhEigyoshoNameF" id="hidSrhEigyoshoNameF" value="<%=UtilEscape.htmlspecialchars(record.get("SaishoName")) %>">
+		<input type="hidden" name="hidSrhEigyoshoCodeT" id="hidSrhEigyoshoCodeT" value="<%=UtilEscape.htmlspecialchars(record.get("Saidai")) %>" >
+		<input type="hidden" name="hidSrhEigyoshoNameT" id="hidSrhEigyoshoNameT" value="<%=UtilEscape.htmlspecialchars(record.get("SaidaiName")) %>">
 	</div>
 	<div class="buttonArea right" id="displayBottonArea" style="display: none;">
 			<button type="button" onclick="output()">作表[F12]</button>
