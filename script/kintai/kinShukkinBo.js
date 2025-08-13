@@ -12,7 +12,6 @@ let SinseiKubunList = [];
 *
 */
 window.onload = function(){
-	let defaultYM = "";
 	proc("getTaishoYM", {}, function(data){
 
 		if (data == undefined){ return; }
@@ -24,7 +23,31 @@ window.onload = function(){
 		let result			= contents["result"];
 		
 		$("#txtTaishoYM").val(result);
-		$("#hidgenzaishorinengetsudo").val(result);
+		$("#txtSearchedTaishoYM").val(result);
+	});
+	
+	proc("getShainNO", {}, function(data){
+
+		if (data == undefined){ return; }
+		if (data["contents"] == undefined){ return; }
+		
+		let contents		= data["contents"];
+		if (contents["result"] == undefined){ return; }
+		
+		let result			= contents["result"];
+		
+		$("#txtShainNO").val(result);
+		$("#txtSearchedShainNO").val(result);
+		
+		getShainName('txtShainNO', 'txtShainName');
+		
+		if(result != ""){
+			document.getElementById("txtShainNO").readOnly = true;
+			document.getElementById("txtShainNO").disabled = true;
+		document.getElementById("linkShainSearch").onclick = "";
+		document.getElementById("linkShainSearch").tabIndex = "-1";
+	document.getElementById("btnShainSearch").onclick = "";
+		}
 	});
 
 	proc("getDDL", {}, function(data){
@@ -51,8 +74,6 @@ window.onload = function(){
 			}
 		}
 	});
-
-
 }
 
 /*
@@ -557,8 +578,14 @@ function onDelete(){
 		let result			= contents["result"];
 
 		if(result == true){
-			alert("削除処理を呼び出しました");
+			alert("正常に削除しました。");
 		}
+		else{
+			alert("このデータはすでに、別のユーザーに更新されています。\r\nもう一度データを確認してください。");
+		}
+		document.getElementById("txtTaishoYM").focus();
+		//画面表示を初期状態に戻す
+		document.getElementById("nyuryokuArea").style.display = "none";
 	});
 }
 function onUpdate(){

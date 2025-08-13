@@ -73,6 +73,55 @@ public class KinShukkinBoAction extends PJActionBase {
 	}
 	
 	/**
+	 * 社員NOの初期値の取得　ログインユーザーの社員NOがMST_SHAINに存在すれば、それを初期値とする
+	 * 
+	 * @param req
+	 * @param res
+	 * @throws Exception
+	 */
+	public void getShainNO(HttpServletRequest req, HttpServletResponse res) throws Exception {
+		
+		String result = "";
+
+		//=====================================================================
+		// ユーザー情報の取得
+		//=====================================================================
+		UserInformation userInformation = (UserInformation)req.getSession().getAttribute(Define.SESSION_ID);
+		String loginShainNo = userInformation.getShainNO();
+		
+		// DB接続
+		Connection con		= this.getConnection("kintai", req);
+		StringBuffer sql				= new StringBuffer();
+		PreparedStatement pstmt			= null;
+		PreparedStatementFactory pstmtf	= new PreparedStatementFactory();
+		ResultSet rset					= null;
+		
+		sql.append(" SELECT ShainNO AS code, ShainName AS code_name FROM MST_SHAIN WHERE ShukinboKbn = '00' AND ShainNO = ? ORDER BY ShainNO");
+		pstmtf.addValue("String", loginShainNo);
+		
+		try {
+			// SQL文の生成
+			pstmt = con.prepareStatement(sql.toString());
+			// パラメータの設定
+			pstmtf.setPreparedStatement(pstmt);
+			// 実行
+			rset = pstmt.executeQuery();
+			// 結果取得
+			if(rset.next()) {
+				result = StringUtils.stripToEmpty(rset.getString("code"));
+			}
+		} finally {
+			if (rset != null){ try { rset.close(); } catch (Exception exp){}}
+			if (pstmt != null){ try { pstmt.close(); } catch (Exception exp){}}
+		}
+		
+		//=====================================================================
+		// 結果返却
+		//=====================================================================
+		this.addContent("result", result);
+	}
+	
+	/**
 	 * DDLの内容取得
 	 * 
 	 * @param req
@@ -165,8 +214,6 @@ public class KinShukkinBoAction extends PJActionBase {
 	 * @throws Exception
 	 */
 	public void honshaKakuteizumiCheck(HttpServletRequest req, HttpServletResponse res) throws Exception {
-		System.out.println("honshaKakuteizumiCheck開始");
-		
 		// 検索条件取得
 		String taishoYM			= this.getParameter("txtSearchedTaishoYM");
 		String taishoShainNo	= this.getParameter("txtSearchedShainNO");
@@ -268,8 +315,6 @@ public class KinShukkinBoAction extends PJActionBase {
 		// 結果返却
 		//=====================================================================
 		String result = "0";
-		System.out.println("sql1result : " + String.valueOf(sql1result));
-		System.out.println("sql2result : " + String.valueOf(sql2result));
 		if(sql1result > 0 && sql2result == 0){
 			result = "1";
 		}
@@ -2094,7 +2139,135 @@ public class KinShukkinBoAction extends PJActionBase {
 	 * @throws Exception
 	 */
 	public void delete(HttpServletRequest req, HttpServletResponse res) throws Exception {
-				this.addContent("result", true);
+		// DB接続
+		Connection con		= this.getConnection("kintai", req);
+
+		//=====================================================================
+		// パラメータ取得
+		//=====================================================================
+		String taishoYM			= this.getParameter("txtSearchedTaishoYM");
+		String taishoShainNo	= this.getParameter("txtSearchedShainNO");
+		
+		boolean result = false;
+		//トランザクション開始
+		con.setAutoCommit(false);
+
+		//出勤簿明細の削除
+		result = deleteMeisaiRow(con, taishoYM, taishoShainNo);
+
+		if(result) {
+			//出勤簿基本の削除
+			result = deleteKihonRow(con, taishoYM, taishoShainNo);
+		}
+		if(result == false) {
+			//ロールバック
+			con.rollback();
+		}
+		else {
+			//コミット
+			con.commit();
+		}
+		this.addContent("result", result);
+	}
+	
+	/**
+	 * 出勤簿明細のレコード削除
+	 * 
+	 * @param req
+	 * @param res
+	 * @throws Exception
+	 */
+	private boolean deleteMeisaiRow(Connection con, String taishoYM, String taishoShainNo) throws Exception {
+		boolean result = false;
+
+		// DB接続
+		StringBuffer sql				= new StringBuffer();
+		PreparedStatement pstmt			= null;
+		PreparedStatementFactory pstmtf	= new PreparedStatementFactory();
+		ResultSet rset					= null;
+		
+		//=====================================================================
+		// 削除
+		//=====================================================================
+		pstmtf.clear();
+		sql.setLength(0);
+		sql.append(" DELETE FROM ");
+		sql.append(" 	KIN_SHUKKINBO_MEISAI ");
+		sql.append(" WHERE ");
+		sql.append(" 	TaishoNenGetsudo = ? AND ");
+		sql.append(" 	ShainNO = ? ");
+		pstmtf.addValue("String", taishoYM);
+		pstmtf.addValue("String", taishoShainNo);
+
+		try {
+			// パラメータ付きSQL文の生成
+			pstmt = con.prepareStatement(sql.toString());
+			// パラメータの設定
+			pstmtf.setPreparedStatement(pstmt);
+			// 実行
+			pstmt.execute();
+			result = true;
+		} 
+		catch(Exception e) {
+			System.out.println(String.valueOf(e));
+		}
+		finally {
+			if (rset != null){ try { rset.close(); } catch (Exception exp){}}
+			if (pstmt != null){ try { pstmt.close(); } catch (Exception exp){}}
+		}
+		
+		return result;
+
+	}
+	
+	/**
+	 * 出勤簿明細のレコード削除
+	 * 
+	 * @param req
+	 * @param res
+	 * @throws Exception
+	 */
+	private boolean deleteKihonRow(Connection con, String taishoYM, String taishoShainNo) throws Exception {
+		boolean result = false;
+
+		// DB接続
+		StringBuffer sql				= new StringBuffer();
+		PreparedStatement pstmt			= null;
+		PreparedStatementFactory pstmtf	= new PreparedStatementFactory();
+		ResultSet rset					= null;
+		
+		//=====================================================================
+		// 削除
+		//=====================================================================
+		pstmtf.clear();
+		sql.setLength(0);
+		sql.append(" DELETE FROM ");
+		sql.append(" 	KIN_SHUKKINBO_KIHON ");
+		sql.append(" WHERE ");
+		sql.append(" 	TaishoNenGetsudo = ? AND ");
+		sql.append(" 	ShainNO = ? ");
+		pstmtf.addValue("String", taishoYM);
+		pstmtf.addValue("String", taishoShainNo);
+
+		try {
+			// パラメータ付きSQL文の生成
+			pstmt = con.prepareStatement(sql.toString());
+			// パラメータの設定
+			pstmtf.setPreparedStatement(pstmt);
+			// 実行
+			pstmt.execute();
+			result = true;
+		} 
+		catch(Exception e) {
+			System.out.println(String.valueOf(e));
+		}
+		finally {
+			if (rset != null){ try { rset.close(); } catch (Exception exp){}}
+			if (pstmt != null){ try { pstmt.close(); } catch (Exception exp){}}
+		}
+		
+		return result;
+
 	}
 	
 }
