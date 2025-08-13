@@ -1,10 +1,47 @@
+window.addEventListener('load', () => {
+	    var value = $("#hidSrhEigyoshoCodeF").val();
+		console.log(value);
+		
+		proc("getEigyoshoName" ,{ 'eigyoshoCode': value }, function(data){
+				
+				if (data == undefined){ return; }
+				if (data["contents"] == undefined){ return; }
+				
+				var contents				= data["contents"];
+				if (contents["result"] == undefined){ return; }
+				
+				var result					= contents["result"];
+				
+				// 格納
+				$("#hidSrhEigyoshoNameF").val(result);
+				
+		});
+})
+ 
+window.addEventListener('load', () => {
+	    var value = $("#hidSrhEigyoshoCodeT").val();
+		console.log(value);
+			
+		proc("getEigyoshoName" ,{ 'eigyoshoCode': value }, function(data){
+					
+				if (data == undefined){ return; }
+				if (data["contents"] == undefined){ return; }
+					
+				var contents				= data["contents"];
+				if (contents["result"] == undefined){ return; }
+					
+				var result					= contents["result"];
+					
+				// 格納
+				$("#hidSrhEigyoshoNameT").val(result);
+					
+		});
+})
+
 function toggleVisibility(){
-	proc("change",{}, function(data){
 		// 選択した処理内容を格納
 		// 値を取得する方法
 		var value = $("#rdoShoriSentaku").val();
-		if (data == undefined){ return; }
-		if (data["contents"] == undefined){ return; }
 		// 対象年月にシステム日付を格納する
 		var dateTime = new Date();
 		var date = new Date();
@@ -59,7 +96,6 @@ function toggleVisibility(){
 		if (!$("#displayShoriArea").hasClass("ins")) {
 			$("#displayShoriArea").addClass("ins");
 		}
-	});
 }
 
 function output(){
@@ -81,4 +117,23 @@ function output(){
 		}
 	});
 	
+}
+
+//****************************************************************************
+// ファンクションキーF12
+//
+//
+//
+//
+//****************************************************************************
+function onKeyEventF12() {
+	
+	// mainAreaの表示状態を取得
+	var display = $("#displayBottonArea").css("display");
+	
+	// mainAreaが非表示(初期表示時)はスキップする。
+	if (display == "block") {
+		// 該当の処理を呼び出す。
+		output();
+	}
 }

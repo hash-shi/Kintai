@@ -35,21 +35,11 @@ public class MstChohyoListAction extends PJActionBase {
 		
 		//営業所初期値取得
 		ArrayList<HashMap<String, String>> mstDatas = new ArrayList<>();
-		sql.append(" SELECT");
-		sql.append(" E1.Saisho AS Saisho ,");
-		sql.append(" E2.EigyoshoName AS SaishoName,");
-		sql.append(" E1.Saidai AS Saidai,");
-		sql.append(" E3.EigyoshoName AS SaidaiName");
-		sql.append(" FROM");
-		sql.append("( SELECT ");
+		sql.append(" SELECT ");
 		sql.append(" 	 MIN(EigyoshoCode) AS Saisho ");
 		sql.append(" 	,MAX(EigyoshoCode) AS Saidai ");
 		sql.append(" FROM");
-		sql.append("   MST_EIGYOSHO ) E1");
-		sql.append(" LEFT JOIN MST_EIGYOSHO E2");
-		sql.append(" ON E2.EigyoshoCode = E1.Saisho");
-		sql.append(" LEFT JOIN MST_EIGYOSHO E3");
-		sql.append(" ON E3.EigyoshoCode = E1.Saidai");
+		sql.append("   MST_EIGYOSHO");
 		
 		try {
 			// パラメータ付きSQL文の生成
@@ -91,10 +81,6 @@ public class MstChohyoListAction extends PJActionBase {
 		this.setView("success");
 	}
 	
-	public void change(HttpServletRequest req, HttpServletResponse res) throws Exception {
-		
-	}
-	
 	public void check(HttpServletRequest req, HttpServletResponse res) throws Exception {
 		// DB接続
 		Connection con		= this.getConnection("kintai", req);
@@ -103,6 +89,7 @@ public class MstChohyoListAction extends PJActionBase {
 		String fromSaishuKoshinDate	= req.getParameter("txtSrhSaishuKoshinDateF");
 		String toSaishuKoshinDate	= req.getParameter("txtSrhSaishuKoshinDateT");
 		int count = 0;
+		ArrayList<HashMap<String, String>> mstDatas = new ArrayList<>();
 		
 		if(shorisentaku.equals("01")||shorisentaku.equals("02")||shorisentaku.equals("03")) {
 			String fromEigyoshoCode	= req.getParameter("txtSrhEigyoshoCodeF");
@@ -110,39 +97,28 @@ public class MstChohyoListAction extends PJActionBase {
 		  if(shorisentaku.equals("02")) {
 			String fromBushoCode	= req.getParameter("txtSrhBushoCodeF");
 			String toBushoCode	= req.getParameter("txtSrhBushoCodeT");
-			ArrayList<HashMap<String, String>> bushoData = bushoMst(con,fromEigyoshoCode,toEigyoshoCode,fromBushoCode,toBushoCode,fromSaishuKoshinDate,toSaishuKoshinDate);
-            count = bushoData.size();
-            System.out.println("部署マスタデータ数:" + count);
-            req.getSession().setAttribute(Define. SESSION_ID_CSV, bushoData);
-		    
+			mstDatas = bushoMst(con,fromEigyoshoCode,toEigyoshoCode,fromBushoCode,toBushoCode,fromSaishuKoshinDate,toSaishuKoshinDate);
 		  } else if(shorisentaku.equals("03")) {
 			String fromShainNO	= req.getParameter("txtSrhShainNOF");
 		    String toShainNO	= req.getParameter("txtSrhShainNOT");
-		    ArrayList<HashMap<String, String>> shainData = shainMst(con,fromEigyoshoCode,toEigyoshoCode,fromShainNO,toShainNO,fromSaishuKoshinDate,toSaishuKoshinDate);
-		    count = shainData.size();
-		    System.out.println("社員マスタデータ数:" + count);
-		    req.getSession().setAttribute(Define. SESSION_ID_CSV, shainData);
+		    mstDatas = shainMst(con,fromEigyoshoCode,toEigyoshoCode,fromShainNO,toShainNO,fromSaishuKoshinDate,toSaishuKoshinDate);
 		  } else {
-			ArrayList<HashMap<String, String>> eigyoshoData = eigyoshoMst(con,fromEigyoshoCode,toEigyoshoCode,fromSaishuKoshinDate,toSaishuKoshinDate);
-            count = eigyoshoData.size();
-            System.out.println("営業所マスタデータ数:" + count);
-            req.getSession().setAttribute(Define. SESSION_ID_CSV, eigyoshoData);
+			mstDatas = eigyoshoMst(con,fromEigyoshoCode,toEigyoshoCode,fromSaishuKoshinDate,toSaishuKoshinDate);
 		  }
 		} else {
 			String fromKbnCode	= req.getParameter("txtSrhKbnCodeF");
 			String toKbnCode	= req.getParameter("txtSrhKbnCodeT");
-			ArrayList<HashMap<String, String>> kbnData = kbnMst(con,fromKbnCode,toKbnCode,fromSaishuKoshinDate,toSaishuKoshinDate);
-            count = kbnData.size();
-            System.out.println("区分名称マスタデータ数:" + count);
-            req.getSession().setAttribute(Define. SESSION_ID_CSV, kbnData);
+			mstDatas = kbnMst(con,fromKbnCode,toKbnCode,fromSaishuKoshinDate,toSaishuKoshinDate);
 		}
 		
-		
+		count = mstDatas.size();
+		System.out.println("マスタデータ数:" + count);
 		if(count == 0) {
 	    	this.addContent("result", false);
 			this.addContent("message","対象データが存在しません。");
 	    } else {
 	    	this.addContent("result", true);
+	    	req.getSession().setAttribute(Define. SESSION_ID_CSV, mstDatas);
 	    }
 	}
 	

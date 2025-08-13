@@ -59,6 +59,10 @@ public class CsvMstchohyolistDataDownload extends DownloadBase {
 		    csvStringTitle.addItem( "部署区分");
 		    csvStringTitle.addItem( "営業所コード");
 		  } else if(sentaku.equals("03")) {
+			csvStringTitle.addItem( "社員NO");
+		    csvStringTitle.addItem( "社員名");
+		    csvStringTitle.addItem( "パスワード");
+		    csvStringTitle.addItem( "ユーザ区分");
 			csvStringTitle.addItem( "社員区分");
 			csvStringTitle.addItem( "出勤簿入力区分");
 			csvStringTitle.addItem( "営業所コード");
