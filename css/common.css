@@ -47,6 +47,7 @@ div.mainArea {
   border-top-style: double;
   border-bottom-style: double;
 	padding-top: 10px;
+	overflow-y: auto;
 }
 div.mainArea table {
 	margin-bottom: 5px;
