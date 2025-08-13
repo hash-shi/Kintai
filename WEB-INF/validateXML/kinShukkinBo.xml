@@ -40,6 +40,16 @@
 			<check class="ShainAuthorityValidate" message="ログインしたユーザIDでは処理できません。">
 				<param name="shainNo">txtSearchedShainNO</param>
 			</check>
+
+			<check class="KinShukkinBoExclusiveValidate" message="この出勤簿明細データはすでに、別のユーザーに更新されています。もう一度データを確認してください。"></check>
+			<check class="ExclusiveValidate" message="この出勤簿基本データはすでに、別のユーザーに更新されています。もう一度データを確認してください。">
+				<param name="tableName">KIN_SHUKKINBO_KIHON</param>
+				<param name="keyName">TaishoNenGetsudo,ShainNO</param>
+				<param name="keyValue">txtSearchedTaishoYM,txtSearchedShainNO</param>
+				<param name="saishuKoshinDate">hdnKihonSaishuKoshinDate</param>
+				<param name="saishuKoshinJikan">hdnKihonSaishuKoshinJikan</param>
+			</check>
+
 			<check class="KinShukkinBoValidate" message="更新処理でエラーが発生しました。"></check>
 		</variable>
 	</proc>
@@ -60,6 +70,15 @@
 		<variable name="dummy" dispName="">
 			<check class="ShainAuthorityValidate" message="ログインしたユーザIDでは処理できません。">
 				<param name="shainNo">txtSearchedShainNO</param>
+			</check>
+
+			<check class="KinShukkinBoExclusiveValidate" message="この出勤簿明細データはすでに、別のユーザーに更新されています。もう一度データを確認してください。"></check>
+			<check class="ExclusiveValidate" message="この出勤簿基本データはすでに、別のユーザーに更新されています。もう一度データを確認してください。">
+				<param name="tableName">KIN_SHUKKINBO_KIHON</param>
+				<param name="keyName">TaishoNenGetsudo,ShainNO</param>
+				<param name="keyValue">txtSearchedTaishoYM,txtSearchedShainNO</param>
+				<param name="saishuKoshinDate">hdnKihonSaishuKoshinDate</param>
+				<param name="saishuKoshinJikan">hdnKihonSaishuKoshinJikan</param>
 			</check>
 		</variable>
 	</proc>

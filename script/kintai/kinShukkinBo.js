@@ -182,6 +182,9 @@ function onDisplayNyuryokuArea(firstHalfFlg){
 		let kintaiShinseiShuryoFun3 = record["KintaiShinseiShuryoFun3"];
 		let kintaiShinseiJikan3 = record["KintaiShinseiJikan3"];
 		
+		let meisaiSaishuKoshinDate = record["MeisaiSaishuKoshinDate"];
+		let meisaiSaishuKoshinJikan = record["MeisaiSaishuKoshinJikan"];
+		
 		//曜日項目の表示色変更
 		let yobiColorClass = "";
 		if(yobiKbn == "土"){
@@ -300,7 +303,10 @@ function onDisplayNyuryokuArea(firstHalfFlg){
 
 		let	kihonNyuryokuAreaHtml =
 			"<tr" + trDisplay + ">" +
-			"<input type=\"hidden\" name=\"TaishoNengappi" + i + "\" id=\"TaishoNengappi" + i + "\" value=\"" + taishoNengappi + "\">" +
+				"<input type=\"hidden\" name=\"TaishoNengappi" + i + "\" id=\"TaishoNengappi" + i + "\" value=\"" + taishoNengappi + "\">" +
+				"<input type=\"hidden\" name=\"MeisaiSaishuKoshinDate" + i + "\" id=\"MeisaiSaishuKoshinDate" + i + "\" value=\"" + meisaiSaishuKoshinDate + "\">" +
+				"<input type=\"hidden\" name=\"MeisaiSaishuKoshinJikan" + i + "\" id=\"MeisaiSaishuKoshinJikan" + i + "\" value=\"" + meisaiSaishuKoshinJikan + "\">" +
+				
 				"<td class=\"value center w50\"><a >" + taishoGetsu + "</a></td>" +
 				"<input type=\"hidden\" name=\"TaishoGetsu" + i + "\" id=\"TaishoGetsu" + i + "\" value=\"" + taishoGetsu + "\">" +
 				"<td class=\"value center w50\"><a >" + taishoBi + "</a></td>" +
@@ -403,6 +409,8 @@ function onDisplayNyuryokuArea(firstHalfFlg){
 
 	$("#txtShinseiKingaku01").val(kinShukkinBoResultAll[0]["ShinseiKingaku01"]);
 	$("#txtShinseiKingaku02").val(kinShukkinBoResultAll[0]["ShinseiKingaku02"]);
+	$("#hdnKihonSaishuKoshinDate").val(kinShukkinBoResultAll[0]["KihonSaishuKoshinDate"]);
+	$("#hdnKihonSaishuKoshinJikan").val(kinShukkinBoResultAll[0]["KihonSaishuKoshinJikan"]);
 }
 
 /*

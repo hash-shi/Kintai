@@ -85,7 +85,9 @@
 							<td class="value w100">
 								<input type="text" class=""  style="width: 80px; text-align: right;" name="txtShinseiKingaku02" id="txtShinseiKingaku02" value="" onblur="setShinseiKingaku02();">
 							</td>
-								</tr>
+							<input type="hidden" name="hdnKihonSaishuKoshinDate" id="hdnKihonSaishuKoshinDate" value="">
+							<input type="hidden" name="hdnKihonSaishuKoshinJikan" id="hdnKihonSaishuKoshinJikan" value="">
+						</tr>
 					</tbody>
 				</table>
 			</div>

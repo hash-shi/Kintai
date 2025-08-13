@@ -383,9 +383,13 @@ public class KinShukkinBoAction extends PJActionBase {
 		sql.append(" 	,M.KintaiShinseiShuryoJi3 ");
 		sql.append(" 	,M.KintaiShinseiShuryoFun3 ");
 		sql.append(" 	,M.KintaiShinseiJikan3 ");
+		sql.append(" 	,M.SaishuKoshinDate AS MeisaiSaishuKoshinDate ");
+		sql.append(" 	,M.SaishuKoshinJikan AS MeisaiSaishuKoshinJikan ");
 		sql.append(" 	,K.ShinseiKingaku01 ");
 		sql.append(" 	,K.ShinseiKingaku02 ");
 		sql.append(" 	,K.KakuteiKbn ");
+		sql.append(" 	,K.SaishuKoshinDate AS KihonSaishuKoshinDate ");
+		sql.append(" 	,K.SaishuKoshinJikan AS KihonSaishuKoshinJikan ");
 		sql.append(" FROM ");
 		sql.append(" 	KIN_SHUKKINBO_MEISAI M ");
 		sql.append(" LEFT OUTER JOIN ");
