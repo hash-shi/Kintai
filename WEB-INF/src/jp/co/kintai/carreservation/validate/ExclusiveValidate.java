@@ -80,8 +80,8 @@ public class ExclusiveValidate extends ValidateBase {
 		sql.append(" 1 = 1 ");
 		
 		for(int i = 0; i < keyNames.length; i++) {
-			sql.append(" AND " + keyNames[0] + " = ? ");
-			pstmtf.addValue("String", req.getParameter(keyValues[0]));
+			sql.append(" AND " + keyNames[i] + " = ? ");
+			pstmtf.addValue("String", req.getParameter(keyValues[i]));
 		}
 		
 		try {
