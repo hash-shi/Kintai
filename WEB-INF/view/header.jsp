@@ -81,7 +81,7 @@
 					<td class="value center w100">
 						<%=UtilEscape.htmlspecialchars(loginDate) %>　
 					</td>
-					<td class="value right w150" style="border:none; background-color: transparent;">
+					<td class="value right w200" style="border:none; background-color: transparent;">
 						<img class="img border" src="./images/user.png">
 						<%=UtilEscape.htmlspecialchars(shainName) %>
 					</td>
