@@ -58,7 +58,7 @@
 					<input type="text" class=""  style="width: 80px" name="txtKbnCode" id="txtKbnCode"  value=""  onblur="getKubunName('txtKbnCode','txtCode','txtKbnName');" >
 					<input type="text" class=""  style="width: 50px" name="txtCode" id="txtCode"  value=""  onblur="getKubunName('txtKbnCode','txtCode','txtKbnName');" >
 					<img class="img border" src="./images/search.png"  onclick="opnDialog('srhMstKubun','txtKbnCode,txtCode','txtKbnName');">
-					<input type="text" class=""  style="width: 120px" name="txtKbnName" id="txtKbnName" value="" readonly>
+					<input type="text" class=""  style="width: 145px" name="txtKbnName" id="txtKbnName" value="" readonly>
 				</td>
 			</tr>
 			
