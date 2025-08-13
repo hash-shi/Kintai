@@ -35,7 +35,7 @@ ArrayList<HashMap<String, String>> mstKubun0050 = (ArrayList<HashMap<String, Str
 		<div class="inputArea">
 			<table>
 				<tr>
-					<td class="title center w600">勤怠リスト</td>
+					<td class="title center w300">勤怠リスト</td>
 					<input type="hidden" class="" name="hdnShainNo" id="hdnShainNo"  value="<%=UtilEscape.htmlspecialchars(shainNo) %>" >
 					<input type="hidden" class="" name="hdnEigyoshoCode" id="hdnEigyoshoCode"  value="<%=UtilEscape.htmlspecialchars(eigyoshoCode) %>" >
 					<input type="hidden" class="" name="hdnBushoCode" id="hdnBushoCode"  value="<%=UtilEscape.htmlspecialchars(bushoCode) %>" >
@@ -78,9 +78,9 @@ ArrayList<HashMap<String, String>> mstKubun0050 = (ArrayList<HashMap<String, Str
 				<tr id="taishoNengetsu" style="display: none">
 					<td class="title center w70 req">対象年月</td>
 					<td class="value w600">
-						<input type="text" class="w60 right"  name="srhTxtTaishoNengetsuF" id="srhTxtTaishoNengetsuF" value="">
+						<input type="text" class="w60 right" maxlength="7" name="srhTxtTaishoNengetsuF" id="srhTxtTaishoNengetsuF" value="">
 						-
-						<input type="text" class="w60 right"  name="srhTxtTaishoNengetsuT" id="srhTxtTaishoNengetsuT" value="">
+						<input type="text" class="w60 right" maxlength="7" name="srhTxtTaishoNengetsuT" id="srhTxtTaishoNengetsuT" value="">
 						(YYYY/MM)
 					</td>
 				</tr>
@@ -88,9 +88,9 @@ ArrayList<HashMap<String, String>> mstKubun0050 = (ArrayList<HashMap<String, Str
 				<tr id="taishoNendo" style="display: none;">
 					<td class="title center w70 req">対象年度</td>
 					<td class="value w600">
-						<input type="text" class="w60 right"  name="srhTxtTaishoNendoF" id="srhTxtTaishoNendoF" value="">
+						<input type="text" class="w60 right" maxlength="4" name="srhTxtTaishoNendoF" id="srhTxtTaishoNendoF" value="">
 						-
-						<input type="text" class="w60 right"  name="srhTxtTaishoNendoT" id="srhTxtTaishoNendoT" value="">
+						<input type="text" class="w60 right" maxlength="4" name="srhTxtTaishoNendoT" id="srhTxtTaishoNendoT" value="">
 						(YYYY)
 					</td>
 				</tr>
@@ -98,39 +98,39 @@ ArrayList<HashMap<String, String>> mstKubun0050 = (ArrayList<HashMap<String, Str
 				<tr id="eigyosho" style="display: none;">
 					<td class="title center w70">営業所</td>
 					<td class="value w600">
-						<input type="text" class=""  style="width: 80px"" name="srhTxtEigyoshoCodeF" id="srhTxtEigyoshoCodeF"  value=""  onblur="getEigyoshoName('srhTxtEigyoshoCodeF', 'srhTxtEigyoshoNameF');" >
-						<img class="img border" src="./images/search.png"  onclick="opnDialog('srhMstEigyosho','srhTxtEigyoshoCodeF','srhTxtEigyoshoNameF');">
-						<input type="text" class=""  style="width: 120px"" name="srhTxtEigyoshoNameF" id="srhTxtEigyoshoNameF" value="" readonly>
+						<input type="text" class=""  style="width: 80px"  maxlength="3" name="srhTxtEigyoshoCodeF" id="srhTxtEigyoshoCodeF"  value=""  onblur="getEigyoshoName('srhTxtEigyoshoCodeF', 'srhTxtEigyoshoNameF');" >
+						<img class="img border" src="./images/search.png" onclick="opnDialog('srhMstEigyosho','srhTxtEigyoshoCodeF','srhTxtEigyoshoNameF');">
+						<input type="text" class=""  style="width: 120px" name="srhTxtEigyoshoNameF" id="srhTxtEigyoshoNameF" value="" readonly>
 						～
-						<input type="text" class=""  style="width: 80px"" name="srhTxtEigyoshoCodeT" id="srhTxtEigyoshoCodeT"  value=""  onblur="getEigyoshoName('srhTxtEigyoshoCodeT', 'srhTxtEigyoshoNameT');" >
-						<img class="img border" src="./images/search.png"  onclick="opnDialog('srhMstEigyosho','srhTxtEigyoshoCodeT','srhTxtEigyoshoNameT');">
-						<input type="text" class=""  style="width: 120px"" name="srhTxtEigyoshoNameT" id="srhTxtEigyoshoNameT" value="" readonly>
+						<input type="text" class=""  style="width: 80px"  maxlength="3" name="srhTxtEigyoshoCodeT" id="srhTxtEigyoshoCodeT"  value=""  onblur="getEigyoshoName('srhTxtEigyoshoCodeT', 'srhTxtEigyoshoNameT');" >
+						<img class="img border" src="./images/search.png" onclick="opnDialog('srhMstEigyosho','srhTxtEigyoshoCodeT','srhTxtEigyoshoNameT');">
+						<input type="text" class=""  style="width: 120px" name="srhTxtEigyoshoNameT" id="srhTxtEigyoshoNameT" value="" readonly>
 					</td>
 				</tr>
 				
 				<tr id="busho" style="display: none;">
 					<td class="title center w70">部署</td>
 					<td class="value w600">
-						<input type="text" class=""  style="width: 80px"" name="srhTxtBushoCodeF" id="srhTxtBushoCodeF"  value=""  onblur="getBushoName('srhTxtBushoCodeF', 'srhTxtBushoNameF');" >
-						<img class="img border" src="./images/search.png"  onclick="opnDialog('srhMstBusho','srhTxtBushoCodeF','srhTxtBushoNameF');">
-						<input type="text" class=""  style="width: 120px"" name="srhTxtBushoNameF" id="srhTxtBushoNameF" value="" readonly>
+						<input type="text" class=""  style="width: 80px"  maxlength="4" name="srhTxtBushoCodeF" id="srhTxtBushoCodeF"  value=""  onblur="getBushoName('srhTxtBushoCodeF', 'srhTxtBushoNameF');" >
+						<img class="img border" src="./images/search.png" onclick="opnDialog('srhMstBusho','srhTxtBushoCodeF','srhTxtBushoNameF');">
+						<input type="text" class=""  style="width: 120px" name="srhTxtBushoNameF" id="srhTxtBushoNameF" value="" readonly>
 						～
-						<input type="text" class=""  style="width: 80px"" name="srhTxtBushoCodeT" id="srhTxtBushoCodeT"  value=""  onblur="getBushoName('srhTxtBushoCodeT', 'srhTxtBushoNameT');" >
-						<img class="img border" src="./images/search.png"  onclick="opnDialog('srhMstBusho','srhTxtBushoCodeT','srhTxtBushoNameT');">
-						<input type="text" class=""  style="width: 120px"" name="srhTxtBushoNameT" id="srhTxtBushoNameT" value="" readonly>
+						<input type="text" class=""  style="width: 80px"  maxlength="4" name="srhTxtBushoCodeT" id="srhTxtBushoCodeT"  value=""  onblur="getBushoName('srhTxtBushoCodeT', 'srhTxtBushoNameT');" >
+						<img class="img border" src="./images/search.png" onclick="opnDialog('srhMstBusho','srhTxtBushoCodeT','srhTxtBushoNameT');">
+						<input type="text" class=""  style="width: 120px" name="srhTxtBushoNameT" id="srhTxtBushoNameT" value="" readonly>
 					</td>
 				</tr>
 				
 				<tr id="shain" style="display: none;">
 					<td class="title center w70">社員NO</td>
 					<td class="value w600">
-						<input type="text" class=""  style="width: 80px"" name="srhTxtShainNoF" id="srhTxtShainNoF"  value=""  onblur="getShainName('srhTxtShainNoF', 'srhTxtShainNameF');" >
-						<img class="img border" src="./images/search.png"  onclick="opnDialog('srhMstShain','srhTxtShainNoF','srhTxtShainNameF');">
-						<input type="text" class=""  style="width: 120px"" name="srhTxtShainNameF" id="srhTxtShainNameF" value="" readonly>
+						<input type="text" class=""  style="width: 80px"  maxlength="4" name="srhTxtShainNoF" id="srhTxtShainNoF"  value=""  onblur="getShainName('srhTxtShainNoF', 'srhTxtShainNameF');" >
+						<img class="img border" src="./images/search.png" onclick="opnDialog('srhMstShain','srhTxtShainNoF','srhTxtShainNameF');">
+						<input type="text" class=""  style="width: 120px" name="srhTxtShainNameF" id="srhTxtShainNameF" value="" readonly>
 						～
-						<input type="text" class=""  style="width: 80px"" name="srhTxtShainNoT" id="srhTxtShainNoT"  value=""  onblur="getShainName('srhTxtShainNoT', 'srhTxtShainNameT');" >
-						<img class="img border" src="./images/search.png"  onclick="opnDialog('srhMstShain','srhTxtShainNoT','srhTxtShainNameT');">
-						<input type="text" class=""  style="width: 120px"" name="srhTxtShainNameT" id="srhTxtShainNameT" value="" readonly>
+						<input type="text" class=""  style="width: 80px"  maxlength="4" name="srhTxtShainNoT" id="srhTxtShainNoT"  value=""  onblur="getShainName('srhTxtShainNoT', 'srhTxtShainNameT');" >
+						<img class="img border" src="./images/search.png" onclick="opnDialog('srhMstShain','srhTxtShainNoT','srhTxtShainNameT');">
+						<input type="text" class=""  style="width: 120px" name="srhTxtShainNameT" id="srhTxtShainNameT" value="" readonly>
 					</td>
 				</tr>
 				
