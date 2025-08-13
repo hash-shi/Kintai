@@ -1,4 +1,118 @@
 //****************************************************************************
+// 初期処理
+//
+//
+//
+//
+//****************************************************************************
+$(document).ready(function(){
+	// onkeydownイベントハンドラに、key_event関数を登録
+	document.onkeydown = onFunctionKeyEvent;
+});
+
+//****************************************************************************
+// ファンクションキー押下制御
+//
+//
+//
+//
+//****************************************************************************
+function onFunctionKeyEvent(event) {
+	
+	// 発生したイベントのキーコードを取得
+	var keyCode = event.keyCode;
+	console.log("keyCode:" + keyCode);
+	
+	// F1-F12キー以外はスキップ
+	if(keyCode < 112 && 123 < keyCode) { return ; }
+	
+	// F1-F12キーであれば、無効化する(F1キー：112,... F12キー:123)
+	if(112 <= keyCode && keyCode <= 123) {
+	    event.keyCode = null;
+	    event.returnValue = false;
+	}
+	
+	// 該当するキーコードで分岐。それぞれのcase内に、実行したい独自の処理を記述する。
+	switch(keyCode) {
+		// F1キー
+		case 112:
+			if (typeof onKeyEventF01 == 'function') {
+				onKeyEventF01();
+			}
+			break;
+		// F2キー
+		case 113:
+			if (typeof onKeyEventF02 == 'function') {
+				onKeyEventF02();
+			}
+			break;
+		// F3キー
+		case 114:
+			if (typeof onKeyEventF03 == 'function') {
+				onKeyEventF03();
+			}
+			break;
+		// F4キー
+		case 115:
+			if (typeof onKeyEventF04 == 'function') {
+				onKeyEventF04();
+			}
+			break;
+		// F5キー
+		case 116:
+			if (typeof onKeyEventF05 == 'function') {
+				onKeyEventF05();
+			}
+			break;
+		// F6キー
+		case 117:
+			if (typeof onKeyEventF06 == 'function') {
+				onKeyEventF06();
+			}
+			break;
+		// F7キー
+		case 118:
+			if (typeof onKeyEventF07 == 'function') {
+				onKeyEventF07();
+			}
+			break;
+		// F8キー
+		case 119:
+			if (typeof onKeyEventF08 == 'function') {
+				onKeyEventF08();
+			}
+			break;
+		// F9キー
+		case 120:
+			if (typeof onKeyEventF09 == 'function') {
+				onKeyEventF09();
+			}
+			break;
+		// F10キー
+		case 121:
+			if (typeof onKeyEventF10 == 'function') {
+				onKeyEventF10();
+			}
+			break;
+		// F11キー
+		case 122:
+			if (typeof onKeyEventF11 == 'function') {
+				onKeyEventF11();
+			}
+			break;
+		// F12キー
+		case 123:
+			if (typeof onKeyEventF12 == 'function') {
+				onKeyEventF12();
+			}
+			break;
+		default:
+			break;
+	}
+	return;
+}
+
+//****************************************************************************
 // onLogout
 //
 //
