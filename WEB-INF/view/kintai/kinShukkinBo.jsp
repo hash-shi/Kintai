@@ -91,7 +91,7 @@
 			</div>
 			<div style="text-align: right;">
 				<button type="button" id="btnDelete" onclick="onDelete();">削除 [ F2 ]</button>
-				<button type="button" id="btnUpdate" onclick="onUpdate();">確定 [ F2 ]</button>
+				<button type="button" id="btnUpdate" onclick="onUpdate();">確定 [ F9 ]</button>
 			</div>
 		</div>
 	</div>

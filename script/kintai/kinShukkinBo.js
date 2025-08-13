@@ -4,7 +4,7 @@ let shinseiKingaku02 = 0;
 
 let yoteiList = [];
 let kintaiKubunList = [];
-let SinseiKubunList = [];
+let sinseiKubunList = [];
 
 /*
 *
@@ -44,9 +44,9 @@ window.onload = function(){
 		if(result != ""){
 			document.getElementById("txtShainNO").readOnly = true;
 			document.getElementById("txtShainNO").disabled = true;
-		document.getElementById("linkShainSearch").onclick = "";
-		document.getElementById("linkShainSearch").tabIndex = "-1";
-	document.getElementById("btnShainSearch").onclick = "";
+			document.getElementById("linkShainSearch").onclick = "";
+			document.getElementById("linkShainSearch").tabIndex = "-1";
+			document.getElementById("btnShainSearch").onclick = "";
 		}
 	});
 
@@ -70,7 +70,7 @@ window.onload = function(){
 				kintaiKubunList.push(record);
 			}
 			if(record["DDLName"] == "shinsei"){
-				SinseiKubunList.push(record);
+				sinseiKubunList.push(record);
 			}
 		}
 	});
@@ -254,7 +254,7 @@ function onDisplayNyuryokuArea(firstHalfFlg){
 		let sinsei1SelectBox = "";
 		sinsei1SelectBox += 	"<select name=\"KintaiShinseiKbn1" + i + "\" id=\"KintaiShinseiKbn1" + i + "\" value=\"" + kintaiShinseiKbn1 + "\"  onchange=\"setShukkinBo('KintaiShinseiKbn1', " + i + ");\" >" ;
 
-		for(let sinseiKubunRecord of SinseiKubunList){
+		for(let sinseiKubunRecord of sinseiKubunList){
 			sinsei1SelectBox += 		"<option value=\"" + sinseiKubunRecord["Code"] + "\" ";
 			if(kintaiShinseiKbn1 == sinseiKubunRecord["Code"]){
 				sinsei1SelectBox += 		"selected";
@@ -266,7 +266,7 @@ function onDisplayNyuryokuArea(firstHalfFlg){
 		let sinsei2SelectBox = "";
 		sinsei2SelectBox += 	"<select name=\"KintaiShinseiKbn2" + i + "\" id=\"KintaiShinseiKbn2" + i + "\" value=\"" + kintaiShinseiKbn2 + "\"  onchange=\"setShukkinBo('KintaiShinseiKbn2', " + i + ");\" >" ;
 
-		for(let sinseiKubunRecord of SinseiKubunList){
+		for(let sinseiKubunRecord of sinseiKubunList){
 			sinsei2SelectBox += 		"<option value=\"" + sinseiKubunRecord["Code"] + "\" ";
 			if(kintaiShinseiKbn2 == sinseiKubunRecord["Code"]){
 				sinsei2SelectBox += 		"selected";
@@ -278,7 +278,7 @@ function onDisplayNyuryokuArea(firstHalfFlg){
 		let sinsei3SelectBox = "";
 		sinsei3SelectBox += 	"<select name=\"KintaiShinseiKbn3" + i + "\" id=\"KintaiShinseiKbn3" + i + "\" value=\"" + kintaiShinseiKbn3 + "\"  onchange=\"setShukkinBo('KintaiShinseiKbn3', " + i + ");\" >" ;
 
-		for(let sinseiKubunRecord of SinseiKubunList){
+		for(let sinseiKubunRecord of sinseiKubunList){
 			sinsei3SelectBox += 		"<option value=\"" + sinseiKubunRecord["Code"] + "\" ";
 			if(kintaiShinseiKbn3 == sinseiKubunRecord["Code"]){
 				sinsei3SelectBox += 		"selected";
@@ -564,7 +564,16 @@ function calcShinseiJikan(nowCol, nowRow){
 	}
 }
 
-
+/*
+*
+* 削除処理呼び出し
+*
+*/
+function onKeyEventF02(){
+	if(document.getElementById("nyuryokuArea").style.display == ""){
+		onDelete();
+	}
+}
 function onDelete(){
 	//削除処理呼び出し
 	proc("delete", {}, function(data){
@@ -587,6 +596,17 @@ function onDelete(){
 		//画面表示を初期状態に戻す
 		document.getElementById("nyuryokuArea").style.display = "none";
 	});
+}
+
+/*
+*
+* 登録更新処理呼び出し
+*
+*/
+function onKeyEventF09(){
+	if(document.getElementById("nyuryokuArea").style.display == ""){
+		onUpdate();
+	}
 }
 function onUpdate(){
 	//更新処理呼び出し
