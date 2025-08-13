@@ -61,12 +61,11 @@ window.onload = function(){
 *
 */
 function onSearchKinShukkinBo(){
-
-	let honshaKakuteizumiFlg = false;
-
 	//更新処理に備え、検索条件を保持
 	$("#txtSearchedTaishoYM").val($("#txtTaishoYM").val());
 	$("#txtSearchedShainNO").val($("#txtShainNO").val());
+
+	let honshaKakuteizumiFlg = false;
 
 	//検索結果表示
 	proc("search", {}, function(data){
@@ -574,8 +573,17 @@ function onUpdate(){
 		
 		let result			= contents["result"];
 
-		if(result == true){
-			alert("更新処理を呼び出しました");
+		if(result == 1){
+			alert("正常に登録しました。");
 		}
+		else if(result == 2){
+			alert("正常に更新しました。");
+		}
+		else{
+			alert("このデータはすでに、別のユーザーに更新されています。\r\nもう一度データを確認してください。");
+		}
+		document.getElementById("txtTaishoYM").focus();
+		//画面表示を初期状態に戻す
+		document.getElementById("nyuryokuArea").style.display = "none";
 	});
 }

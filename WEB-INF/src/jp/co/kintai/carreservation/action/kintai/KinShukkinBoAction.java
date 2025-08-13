@@ -332,12 +332,12 @@ public class KinShukkinBoAction extends PJActionBase {
 		sql.append(" 	,M.KintaiShinseiShuryoJi2 ");
 		sql.append(" 	,M.KintaiShinseiShuryoFun2 ");
 		sql.append(" 	,M.KintaiShinseiJikan2 ");
-		sql.append(" 	,'' AS KintaiShinseiKbn3 ");	//TODO
-		sql.append(" 	,'' AS KintaiShinseiKaishiJi3 ");
-		sql.append(" 	,'' AS KintaiShinseiKaishiFun3 ");
-		sql.append(" 	,'' AS KintaiShinseiShuryoJi3 ");
-		sql.append(" 	,'' AS KintaiShinseiShuryoFun3 ");
-		sql.append(" 	,'' AS KintaiShinseiJikan3 ");
+		sql.append(" 	,M.KintaiShinseiKbn3 ");
+		sql.append(" 	,M.KintaiShinseiKaishiJi3 ");
+		sql.append(" 	,M.KintaiShinseiKaishiFun3 ");
+		sql.append(" 	,M.KintaiShinseiShuryoJi3 ");
+		sql.append(" 	,M.KintaiShinseiShuryoFun3 ");
+		sql.append(" 	,M.KintaiShinseiJikan3 ");
 		sql.append(" 	,K.ShinseiKingaku01 ");
 		sql.append(" 	,K.ShinseiKingaku02 ");
 		sql.append(" 	,K.KakuteiKbn ");
@@ -510,6 +510,7 @@ public class KinShukkinBoAction extends PJActionBase {
 		String loginShainNo = userInformation.getShainNO();
 		
 		boolean result = false;
+		int returnval = 0;
 		//トランザクション開始
 		con.setAutoCommit(false);
 		//1か月分入力項目があるので1か月分ループ
@@ -519,7 +520,7 @@ public class KinShukkinBoAction extends PJActionBase {
 			String taishoNengappi		= this.getParameter(taishoNengappiKeySb.toString());
 			
 			if(StringUtils.isEmpty(taishoNengappi)) {
-				System.out.println("データが終わったので終了");
+				//データが終わったので終了
 				break;
 			}
 			
@@ -536,13 +537,16 @@ public class KinShukkinBoAction extends PJActionBase {
 		if(result) {
 			//出勤簿基本の更新
 			if(getShukkinboKihonCount(con, taishoYM, taishoShainNo) > 0) {
+				returnval = 2;
 				result = updateKihonRow(con, taishoYM, taishoShainNo, loginShainNo);
 			}
 			else {
+				returnval = 1;
 				result = insertKihonRow(con, taishoYM, taishoShainNo, loginShainNo);
 			}
 		}
 		if(result == false) {
+			returnval = 0;
 			//ロールバック
 			con.rollback();
 		}
@@ -550,7 +554,7 @@ public class KinShukkinBoAction extends PJActionBase {
 			//コミット
 			con.commit();
 		}
-		this.addContent("result", result);
+		this.addContent("result", returnval);
 	}
 	
 	/**
@@ -896,10 +900,7 @@ public class KinShukkinBoAction extends PJActionBase {
 		sql.append(" 	ShinseiKingaku05 =			0, ");
 		sql.append(" 	ShinseiKihonGokeiJikan =	?, ");
 		pstmtf.addValue("String", jikanRecord.get("JikanGoukei"));
-		sql.append(" 	ZenkaiKoshinUserId =		SaishuKoshinUserId, ");
-		sql.append(" 	ZenkaiKoshinDate =			SaishuKoshinDate, ");
-		sql.append(" 	ZenkaiKoshinJikan =			SaishuKoshinJikan, ");
-		sql.append(" 	SaishuKoshinUserId =		?, ");
+		sql.append(" 	SaishuKoshinShainNO =		?, ");
 		pstmtf.addValue("String", loginShainNo);
 		sql.append(" 	SaishuKoshinDate =			?, ");
 		pstmtf.addValue("String", PJActionBase.getNowDate());
@@ -917,7 +918,8 @@ public class KinShukkinBoAction extends PJActionBase {
 			// パラメータの設定
 			pstmtf.setPreparedStatement(pstmt);
 			// 実行
-			result = pstmt.execute();
+			pstmt.execute();
+			result = true;
 		} 
 		catch(Exception e) {
 			System.out.println(String.valueOf(e));
@@ -1000,10 +1002,7 @@ public class KinShukkinBoAction extends PJActionBase {
 		sql.append(" 	ShinseiKingaku04, ");
 		sql.append(" 	ShinseiKingaku05, ");
 		sql.append(" 	ShinseiKihonGokeiJikan, ");
-		sql.append(" 	ZenkaiKoshinUserId, ");
-		sql.append(" 	ZenkaiKoshinDate, ");
-		sql.append(" 	ZenkaiKoshinJikan, ");
-		sql.append(" 	SaishuKoshinUserId, ");
+		sql.append(" 	SaishuKoshinShainNO, ");
 		sql.append(" 	SaishuKoshinDate, ");
 		sql.append(" 	SaishuKoshinJikan ");
 		sql.append(" ) ");
@@ -1073,9 +1072,9 @@ public class KinShukkinBoAction extends PJActionBase {
 		sql.append(" 	0, ");
 		sql.append(" 	?, ");
 		pstmtf.addValue("String", jikanRecord.get("JikanGoukei"));
-		sql.append(" 	'', ");
-		sql.append(" 	'', ");
-		sql.append(" 	'', ");
+//		sql.append(" 	'', ");
+//		sql.append(" 	'', ");
+//		sql.append(" 	'', ");
 		sql.append(" 	?, ");
 		pstmtf.addValue("String", loginShainNo);
 		sql.append(" 	?, ");
@@ -1090,7 +1089,8 @@ public class KinShukkinBoAction extends PJActionBase {
 			// パラメータの設定
 			pstmtf.setPreparedStatement(pstmt);
 			// 実行
-			result = pstmt.execute();
+			pstmt.execute();
+			result = true;
 		} 
 		catch(Exception e) {
 			System.out.println(String.valueOf(e));
@@ -1275,6 +1275,19 @@ public class KinShukkinBoAction extends PJActionBase {
 		String shuryoFun3			= this.getParameter(shuryoFun3KeySb.toString());
 		String jikan3				= this.getParameter(jikan3KeySb.toString());
 
+		if(StringUtils.isEmpty(jikan1)) {
+			jikan1 = "0";
+		}
+		if(StringUtils.isEmpty(jikan2)) {
+			jikan2 = "0";
+		}
+		if(StringUtils.isEmpty(jikan3)) {
+			jikan3 = "0";
+		}
+		if(StringUtils.isEmpty(jitsudoJikan)) {
+			jitsudoJikan = "0";
+		}
+
 		HashMap<String, String> shinseiPatternRecord = getShinseiPattern(con, kintaiKbn, kintaiShinseiKbn1, kintaiShinseiKbn2, kintaiShinseiKbn3);
 		String jikanKeisan1 = "0";
 		String jikanKeisan2 = "0";
@@ -1352,12 +1365,36 @@ public class KinShukkinBoAction extends PJActionBase {
 		pstmtf.addValue("String", kintaiKbn);
 
 		sql.append(" 	ShusshaJi					=	?, ");
+		if(StringUtils.isEmpty(shusshaJi) == false) {
+			shusshaJi = StringUtils.leftPad(shusshaJi, 2, '0');
+			if("00".equals(kintaiKbn)) {
+				shusshaJi = "";
+			}
+		}
 		pstmtf.addValue("String", shusshaJi);
 		sql.append(" 	ShusshaFun					=	?, ");
+		if(StringUtils.isEmpty(shusshaFun) == false) {
+			shusshaFun = StringUtils.leftPad(shusshaFun, 2, '0');
+			if("00".equals(kintaiKbn)) {
+				shusshaFun = "";
+			}
+		}
 		pstmtf.addValue("String", shusshaFun);
 		sql.append(" 	TaishaJi					=	?, ");
+		if(StringUtils.isEmpty(taishaJi) == false) {
+			taishaJi = StringUtils.leftPad(taishaJi, 2, '0');
+			if("00".equals(kintaiKbn)) {
+				taishaJi = "";
+			}
+		}
 		pstmtf.addValue("String", taishaJi);
 		sql.append(" 	TaishaFun					=	?, ");
+		if(StringUtils.isEmpty(taishaFun) == false) {
+			taishaFun = StringUtils.leftPad(taishaFun, 2, '0');
+			if("00".equals(kintaiKbn)) {
+				taishaFun = "";
+			}
+		}
 		pstmtf.addValue("String", taishaFun);
 		sql.append(" 	JitsudoJikan				=	?, ");
 		pstmtf.addValue("String", jitsudoJikan);
@@ -1365,27 +1402,35 @@ public class KinShukkinBoAction extends PJActionBase {
 		sql.append(" 	KintaiShinseiKbn1			=	?, ");
 		pstmtf.addValue("String", kintaiShinseiKbn1);
 		sql.append(" 	KintaiShinseiKaishiJi1		=	?, ");
-		kaishiJi1 = StringUtils.leftPad(kaishiJi1, 2, '0');
-		if("00".equals(kintaiKbn) || "00".equals(kaishiJi1)) {
-			kaishiJi1 = "";
+		if(StringUtils.isEmpty(kaishiJi1) == false) {
+			kaishiJi1 = StringUtils.leftPad(kaishiJi1, 2, '0');
+			if("00".equals(kintaiKbn)) {
+				kaishiJi1 = "";
+			}
 		}
 		pstmtf.addValue("String", kaishiJi1);
 		sql.append(" 	KintaiShinseiKaishiFun1		=	?, ");
-		kaishiFun1 = StringUtils.leftPad(kaishiFun1, 2, '0');
-		if("00".equals(kaishiFun1)) {
-			kaishiFun1 = "";
+		if(StringUtils.isEmpty(kaishiFun1) == false) {
+			kaishiFun1 = StringUtils.leftPad(kaishiFun1, 2, '0');
+			if("00".equals(kintaiKbn)) {
+				kaishiFun1 = "";
+			}
 		}
 		pstmtf.addValue("String", kaishiFun1);
 		sql.append(" 	KintaiShinseiShuryoJi1		=	?, ");
-		shuryoJi1 = StringUtils.leftPad(shuryoJi1, 2, '0');
-		if("00".equals(kintaiKbn) || "00".equals(shuryoJi1)) {
-			shuryoJi1 = "";
+		if(StringUtils.isEmpty(shuryoJi1) == false) {
+			shuryoJi1 = StringUtils.leftPad(shuryoJi1, 2, '0');
+			if("00".equals(kintaiKbn)) {
+				shuryoJi1 = "";
+			}
 		}
 		pstmtf.addValue("String", shuryoJi1);
 		sql.append(" 	KintaiShinseiShuryoFun1		=	?, ");
-		shuryoFun1 = StringUtils.leftPad(shuryoFun1, 2, '0');
-		if("00".equals(shuryoFun1)) {
-			shuryoFun1 = "";
+		if(StringUtils.isEmpty(shuryoFun1) == false) {
+			shuryoFun1 = StringUtils.leftPad(shuryoFun1, 2, '0');
+			if("00".equals(kintaiKbn)) {
+				shuryoFun1 = "";
+			}
 		}
 		pstmtf.addValue("String", shuryoFun1);
 		sql.append(" 	KintaiShinseiJikan1			=	?, ");
@@ -1397,27 +1442,35 @@ public class KinShukkinBoAction extends PJActionBase {
 		sql.append(" 	KintaiShinseiKbn2			=	?, ");
 		pstmtf.addValue("String", kintaiShinseiKbn2);
 		sql.append(" 	KintaiShinseiKaishiJi2		=	?, ");
-		kaishiJi2 = StringUtils.leftPad(kaishiJi2, 2, '0');
-		if("00".equals(kintaiKbn) || "00".equals(kaishiJi2)) {
-			kaishiJi2 = "";
+		if(StringUtils.isEmpty(kaishiJi2) == false) {
+			kaishiJi2 = StringUtils.leftPad(kaishiJi2, 2, '0');
+			if("00".equals(kintaiKbn)) {
+				kaishiJi2 = "";
+			}
 		}
 		pstmtf.addValue("String", kaishiJi2);
 		sql.append(" 	KintaiShinseiKaishiFun2		=	?, ");
-		kaishiFun2 = StringUtils.leftPad(kaishiFun2, 2, '0');
-		if("00".equals(kaishiFun2)) {
-			kaishiFun2 = "";
+		if(StringUtils.isEmpty(kaishiFun2) == false) {
+			kaishiFun2 = StringUtils.leftPad(kaishiFun2, 2, '0');
+			if("00".equals(kintaiKbn)) {
+				kaishiFun2 = "";
+			}
 		}
 		pstmtf.addValue("String", kaishiFun2);
 		sql.append(" 	KintaiShinseiShuryoJi2		=	?, ");
-		shuryoJi2 = StringUtils.leftPad(shuryoJi2, 2, '0');
-		if("00".equals(kintaiKbn) || "00".equals(shuryoJi2)) {
-			shuryoJi2 = "";
+		if(StringUtils.isEmpty(shuryoJi2) == false) {
+			shuryoJi2 = StringUtils.leftPad(shuryoJi2, 2, '0');
+			if("00".equals(kintaiKbn)) {
+				shuryoJi2 = "";
+			}
 		}
 		pstmtf.addValue("String", shuryoJi2);
 		sql.append(" 	KintaiShinseiShuryoFun2		=	?, ");
-		shuryoFun2 = StringUtils.leftPad(shuryoFun2, 2, '0');
-		if("00".equals(shuryoFun2)) {
-			shuryoFun2 = "";
+		if(StringUtils.isEmpty(shuryoFun2) == false) {
+			shuryoFun2 = StringUtils.leftPad(shuryoFun2, 2, '0');
+			if("00".equals(kintaiKbn)) {
+				shuryoFun2 = "";
+			}
 		}
 		pstmtf.addValue("String", shuryoFun2);
 		sql.append(" 	KintaiShinseiJikan2			=	?, ");
@@ -1429,27 +1482,35 @@ public class KinShukkinBoAction extends PJActionBase {
 		sql.append(" 	KintaiShinseiKbn3			=	?, ");
 		pstmtf.addValue("String", kintaiShinseiKbn3);
 		sql.append(" 	KintaiShinseiKaishiJi3		=	?, ");
-		kaishiJi3 = StringUtils.leftPad(kaishiJi3, 2, '0');
-		if("00".equals(kintaiKbn) || "00".equals(kaishiJi3)) {
-			kaishiJi3 = "";
+		if(StringUtils.isEmpty(kaishiJi3) == false) {
+			kaishiJi3 = StringUtils.leftPad(kaishiJi3, 2, '0');
+			if("00".equals(kintaiKbn)) {
+				kaishiJi3 = "";
+			}
 		}
 		pstmtf.addValue("String", kaishiJi3);
 		sql.append(" 	KintaiShinseiKaishiFun3		=	?, ");
-		kaishiFun3 = StringUtils.leftPad(kaishiFun3, 2, '0');
-		if("00".equals(kaishiFun3)) {
-			kaishiFun3 = "";
+		if(StringUtils.isEmpty(kaishiFun3) == false) {
+			kaishiFun3 = StringUtils.leftPad(kaishiFun3, 2, '0');
+			if("00".equals(kintaiKbn)) {
+				kaishiFun3 = "";
+			}
 		}
 		pstmtf.addValue("String", kaishiFun3);
 		sql.append(" 	KintaiShinseiShuryoJi3		=	?, ");
-		shuryoJi3 = StringUtils.leftPad(shuryoJi3, 2, '0');
-		if("00".equals(kintaiKbn) || "00".equals(shuryoJi3)) {
-			shuryoJi3 = "";
+		if(StringUtils.isEmpty(shuryoJi3) == false) {
+			shuryoJi3 = StringUtils.leftPad(shuryoJi3, 2, '0');
+			if("00".equals(kintaiKbn)) {
+				shuryoJi3 = "";
+			}
 		}
 		pstmtf.addValue("String", shuryoJi3);
 		sql.append(" 	KintaiShinseiShuryoFun3		=	?, ");
-		shuryoFun3 = StringUtils.leftPad(shuryoFun3, 2, '0');
-		if("00".equals(shuryoFun3)) {
-			shuryoFun3 = "";
+		if(StringUtils.isEmpty(shuryoFun3) == false) {
+			shuryoFun3 = StringUtils.leftPad(shuryoFun3, 2, '0');
+			if("00".equals(kintaiKbn)) {
+				shuryoFun3 = "";
+			}
 		}
 		pstmtf.addValue("String", shuryoFun3);
 		sql.append(" 	KintaiShinseiJikan3			=	?, ");
@@ -1464,10 +1525,8 @@ public class KinShukkinBoAction extends PJActionBase {
 		pstmtf.addValue("String", nissu);
 		sql.append(" 	KintaiShinseiKihonJikan		=	?, ");
 		pstmtf.addValue("String", kihonJikan);
-		sql.append(" 	ZenkaiKoshinUserId			=	SaishuKoshinUserId, ");
-		sql.append(" 	ZenkaiKoshinDate			=	SaishuKoshinDate, ");
-		sql.append(" 	ZenkaiKoshinJikan			=	SaishuKoshinJikan, ");
-		sql.append(" 	SaishuKoshinUserId			=	?, ");
+
+		sql.append(" 	SaishuKoshinShainNO			=	?, ");
 		pstmtf.addValue("String", loginShainNo);
 		sql.append(" 	SaishuKoshinDate			=	?, ");
 		pstmtf.addValue("String", PJActionBase.getNowDate());
@@ -1488,7 +1547,8 @@ public class KinShukkinBoAction extends PJActionBase {
 			// パラメータの設定
 			pstmtf.setPreparedStatement(pstmt);
 			// 実行
-			result = pstmt.execute();
+			pstmt.execute();
+			result = true;
 		} 
 		catch(Exception e) {
 			System.out.println(String.valueOf(e));
@@ -1622,6 +1682,19 @@ public class KinShukkinBoAction extends PJActionBase {
 		String shuryoFun3			= this.getParameter(shuryoFun3KeySb.toString());
 		String jikan3				= this.getParameter(jikan3KeySb.toString());
 
+		if(StringUtils.isEmpty(jikan1)) {
+			jikan1 = "0";
+		}
+		if(StringUtils.isEmpty(jikan2)) {
+			jikan2 = "0";
+		}
+		if(StringUtils.isEmpty(jikan3)) {
+			jikan3 = "0";
+		}
+		if(StringUtils.isEmpty(jitsudoJikan)) {
+			jitsudoJikan = "0";
+		}
+
 		HashMap<String, String> shinseiPatternRecord = getShinseiPattern(con, kintaiKbn, kintaiShinseiKbn1, kintaiShinseiKbn2, kintaiShinseiKbn3);
 		String jikanKeisan1 = "0";
 		String jikanKeisan2 = "0";
@@ -1722,10 +1795,8 @@ public class KinShukkinBoAction extends PJActionBase {
 		sql.append(" 	KintaiShinseiBiko, ");
 		sql.append(" 	KintaiShinseiNisuu, ");
 		sql.append(" 	KintaiShinseiKihonJikan, ");
-		sql.append(" 	ZenkaiKoshinUserId, ");
-		sql.append(" 	ZenkaiKoshinDate, ");
-		sql.append(" 	ZenkaiKoshinJikan, ");
-		sql.append(" 	SaishuKoshinUserId, ");
+
+		sql.append(" 	SaishuKoshinShainNO, ");
 		sql.append(" 	SaishuKoshinDate, ");
 		sql.append(" 	SaishuKoshinJikan ");
 		sql.append(" ) ");
@@ -1751,12 +1822,36 @@ public class KinShukkinBoAction extends PJActionBase {
 		pstmtf.addValue("String", kintaiKbn);
 
 		sql.append(" 	?, ");
+		if(StringUtils.isEmpty(shusshaJi) == false) {
+			shusshaJi = StringUtils.leftPad(shusshaJi, 2, '0');
+			if("00".equals(kintaiKbn)) {
+				shusshaJi = "";
+			}
+		}
 		pstmtf.addValue("String", shusshaJi);
 		sql.append(" 	?, ");
+		if(StringUtils.isEmpty(shusshaFun) == false) {
+			shusshaFun = StringUtils.leftPad(shusshaFun, 2, '0');
+			if("00".equals(kintaiKbn)) {
+				shusshaFun = "";
+			}
+		}
 		pstmtf.addValue("String", shusshaFun);
 		sql.append(" 	?, ");
+		if(StringUtils.isEmpty(taishaJi) == false) {
+			taishaJi = StringUtils.leftPad(taishaJi, 2, '0');
+			if("00".equals(kintaiKbn)) {
+				taishaJi = "";
+			}
+		}
 		pstmtf.addValue("String", taishaJi);
 		sql.append(" 	?, ");
+		if(StringUtils.isEmpty(taishaFun) == false) {
+			taishaFun = StringUtils.leftPad(taishaFun, 2, '0');
+			if("00".equals(kintaiKbn)) {
+				taishaFun = "";
+			}
+		}
 		pstmtf.addValue("String", taishaFun);
 		sql.append(" 	?, ");
 		pstmtf.addValue("String", jitsudoJikan);
@@ -1764,27 +1859,35 @@ public class KinShukkinBoAction extends PJActionBase {
 		sql.append(" 	?, ");
 		pstmtf.addValue("String", kintaiShinseiKbn1);
 		sql.append(" 	?, ");
-		kaishiJi1 = StringUtils.leftPad(kaishiJi1, 2, '0');
-		if("00".equals(kintaiKbn) || "00".equals(kaishiJi1)) {
-			kaishiJi1 = "";
+		if(StringUtils.isEmpty(kaishiJi1) == false) {
+			kaishiJi1 = StringUtils.leftPad(kaishiJi1, 2, '0');
+			if("00".equals(kintaiKbn)) {
+				kaishiJi1 = "";
+			}
 		}
 		pstmtf.addValue("String", kaishiJi1);
 		sql.append(" 	?, ");
-		kaishiFun1 = StringUtils.leftPad(kaishiFun1, 2, '0');
-		if("00".equals(kaishiFun1)) {
-			kaishiFun1 = "";
+		if(StringUtils.isEmpty(kaishiFun1) == false) {
+			kaishiFun1 = StringUtils.leftPad(kaishiFun1, 2, '0');
+			if("00".equals(kintaiKbn)) {
+				kaishiFun1 = "";
+			}
 		}
 		pstmtf.addValue("String", kaishiFun1);
 		sql.append(" 	?, ");
-		shuryoJi1 = StringUtils.leftPad(shuryoJi1, 2, '0');
-		if("00".equals(kintaiKbn) || "00".equals(shuryoJi1)) {
-			shuryoJi1 = "";
+		if(StringUtils.isEmpty(shuryoJi1) == false) {
+			shuryoJi1 = StringUtils.leftPad(shuryoJi1, 2, '0');
+			if("00".equals(kintaiKbn)) {
+				shuryoJi1 = "";
+			}
 		}
 		pstmtf.addValue("String", shuryoJi1);
 		sql.append(" 	?, ");
-		shuryoFun1 = StringUtils.leftPad(shuryoFun1, 2, '0');
-		if("00".equals(shuryoFun1)) {
-			shuryoFun1 = "";
+		if(StringUtils.isEmpty(shuryoFun1) == false) {
+			shuryoFun1 = StringUtils.leftPad(shuryoFun1, 2, '0');
+			if("00".equals(kintaiKbn)) {
+				shuryoFun1 = "";
+			}
 		}
 		pstmtf.addValue("String", shuryoFun1);
 		sql.append(" 	?, ");
@@ -1796,27 +1899,35 @@ public class KinShukkinBoAction extends PJActionBase {
 		sql.append(" 	?, ");
 		pstmtf.addValue("String", kintaiShinseiKbn2);
 		sql.append(" 	?, ");
-		kaishiJi2 = StringUtils.leftPad(kaishiJi2, 2, '0');
-		if("00".equals(kintaiKbn) || "00".equals(kaishiJi2)) {
-			kaishiJi2 = "";
+		if(StringUtils.isEmpty(kaishiJi2) == false) {
+			kaishiJi2 = StringUtils.leftPad(kaishiJi2, 2, '0');
+			if("00".equals(kintaiKbn)) {
+				kaishiJi2 = "";
+			}
 		}
 		pstmtf.addValue("String", kaishiJi2);
 		sql.append(" 	?, ");
-		kaishiFun2 = StringUtils.leftPad(kaishiFun2, 2, '0');
-		if("00".equals(kaishiFun2)) {
-			kaishiFun2 = "";
+		if(StringUtils.isEmpty(kaishiFun2) == false) {
+			kaishiFun2 = StringUtils.leftPad(kaishiFun2, 2, '0');
+			if("00".equals(kintaiKbn)) {
+				kaishiFun2 = "";
+			}
 		}
 		pstmtf.addValue("String", kaishiFun2);
 		sql.append(" 	?, ");
-		shuryoJi2 = StringUtils.leftPad(shuryoJi2, 2, '0');
-		if("00".equals(kintaiKbn) || "00".equals(shuryoJi2)) {
-			shuryoJi2 = "";
+		if(StringUtils.isEmpty(shuryoJi2) == false) {
+			shuryoJi2 = StringUtils.leftPad(shuryoJi2, 2, '0');
+			if("00".equals(kintaiKbn)) {
+				shuryoJi2 = "";
+			}
 		}
 		pstmtf.addValue("String", shuryoJi2);
 		sql.append(" 	?, ");
-		shuryoFun2 = StringUtils.leftPad(shuryoFun2, 2, '0');
-		if("00".equals(shuryoFun2)) {
-			shuryoFun2 = "";
+		if(StringUtils.isEmpty(shuryoFun2) == false) {
+			shuryoFun2 = StringUtils.leftPad(shuryoFun2, 2, '0');
+			if("00".equals(kintaiKbn)) {
+				shuryoFun2 = "";
+			}
 		}
 		pstmtf.addValue("String", shuryoFun2);
 		sql.append(" 	?, ");
@@ -1828,27 +1939,35 @@ public class KinShukkinBoAction extends PJActionBase {
 		sql.append(" 	?, ");
 		pstmtf.addValue("String", kintaiShinseiKbn3);
 		sql.append(" 	?, ");
-		kaishiJi3 = StringUtils.leftPad(kaishiJi3, 2, '0');
-		if("00".equals(kintaiKbn) || "00".equals(kaishiJi3)) {
-			kaishiJi3 = "";
+		if(StringUtils.isEmpty(kaishiJi3) == false) {
+			kaishiJi3 = StringUtils.leftPad(kaishiJi3, 2, '0');
+			if("00".equals(kintaiKbn)) {
+				kaishiJi3 = "";
+			}
 		}
 		pstmtf.addValue("String", kaishiJi3);
 		sql.append(" 	?, ");
-		kaishiFun3 = StringUtils.leftPad(kaishiFun3, 2, '0');
-		if("00".equals(kaishiFun3)) {
-			kaishiFun3 = "";
+		if(StringUtils.isEmpty(kaishiFun3) == false) {
+			kaishiFun3 = StringUtils.leftPad(kaishiFun3, 2, '0');
+			if("00".equals(kintaiKbn)) {
+				kaishiFun3 = "";
+			}
 		}
 		pstmtf.addValue("String", kaishiFun3);
 		sql.append(" 	?, ");
-		shuryoJi3 = StringUtils.leftPad(shuryoJi3, 2, '0');
-		if("00".equals(kintaiKbn) || "00".equals(shuryoJi3)) {
-			shuryoJi3 = "";
+		if(StringUtils.isEmpty(shuryoJi3) == false) {
+			shuryoJi3 = StringUtils.leftPad(shuryoJi3, 2, '0');
+			if("00".equals(kintaiKbn)) {
+				shuryoJi3 = "";
+			}
 		}
 		pstmtf.addValue("String", shuryoJi3);
 		sql.append(" 	?, ");
-		shuryoFun3 = StringUtils.leftPad(shuryoFun3, 2, '0');
-		if("00".equals(shuryoFun3)) {
-			shuryoFun3 = "";
+		if(StringUtils.isEmpty(shuryoFun3) == false) {
+			shuryoFun3 = StringUtils.leftPad(shuryoFun3, 2, '0');
+			if("00".equals(kintaiKbn)) {
+				shuryoFun3 = "";
+			}
 		}
 		pstmtf.addValue("String", shuryoFun3);
 		sql.append(" 	?, ");
@@ -1863,9 +1982,7 @@ public class KinShukkinBoAction extends PJActionBase {
 		pstmtf.addValue("String", nissu);
 		sql.append(" 	?, ");
 		pstmtf.addValue("String", kihonJikan);
-		sql.append(" 	'', ");
-		sql.append(" 	'', ");
-		sql.append(" 	'', ");
+
 		sql.append(" 	?, ");
 		pstmtf.addValue("String", loginShainNo);
 		sql.append(" 	?, ");
@@ -1880,7 +1997,8 @@ public class KinShukkinBoAction extends PJActionBase {
 			// パラメータの設定
 			pstmtf.setPreparedStatement(pstmt);
 			// 実行
-			result = pstmt.execute();
+			pstmt.execute();
+			result = true;
 		} 
 		catch(Exception e) {
 			System.out.println(String.valueOf(e));
@@ -1915,7 +2033,7 @@ public class KinShukkinBoAction extends PJActionBase {
 		sql.append(" 	KintaiKbn, ");
 		sql.append(" 	ShinseiKbn1, ");
 		sql.append(" 	ShinseiKbn2, ");
-//		sql.append(" 	ShinseiKbn3, ");
+		sql.append(" 	ShinseiKbn3, ");
 		sql.append(" 	Nissuu, ");
 		sql.append(" 	CASE WHEN KihonSagyoJikanKbn = '01' THEN ");
 		sql.append(" 		(SELECT KintaiKihonSagyoJikan FROM MST_KANRI) ");
@@ -1923,8 +2041,8 @@ public class KinShukkinBoAction extends PJActionBase {
 		sql.append(" 	KihonSagyoJikanKbn, ");
 		sql.append(" 	KyukeiJikanKbn, ");
 		sql.append(" 	KaGenZanKbn1, ");
-		sql.append(" 	KaGenZanKbn2 ");
-//		sql.append(" 	KaGenZanKbn3 ");
+		sql.append(" 	KaGenZanKbn2, ");
+		sql.append(" 	KaGenZanKbn3 ");
 		sql.append(" FROM ");
 		sql.append(" 	MST_SHINSEI_PATTERN ");
 		sql.append(" WHERE ");
@@ -1932,12 +2050,12 @@ public class KinShukkinBoAction extends PJActionBase {
 		sql.append(" AND KintaiKbn = ? ");
 		sql.append(" AND ShinseiKbn1 = ? ");
 		sql.append(" AND ShinseiKbn2 = ? ");
-//		sql.append(" AND ShinseiKbn3 = ? ");	//TODO
+		sql.append(" AND ShinseiKbn3 = ? ");
 
 		pstmtf.addValue("String", kintaiKbn);
 		pstmtf.addValue("String", kintaiShinseiKbn1);
 		pstmtf.addValue("String", kintaiShinseiKbn2);
-//		pstmtf.addValue("String", kintaiShinseiKbn3);
+		pstmtf.addValue("String", kintaiShinseiKbn3);
 
 		try {
 			// SQL文の生成
@@ -1977,106 +2095,6 @@ public class KinShukkinBoAction extends PJActionBase {
 	 */
 	public void delete(HttpServletRequest req, HttpServletResponse res) throws Exception {
 				this.addContent("result", true);
-	}
-	
-	/**
-	 * @param req
-	 * @param res
-	 * @throws Exception
-	 */
-	public void updateSankou(HttpServletRequest req, HttpServletResponse res) throws Exception {
-
-//		//=====================================================================
-//		// パラメータ取得
-//		//=====================================================================
-//		String shainNo	= req.getParameter("hdnShainNO");
-//		String password	= req.getParameter("txtPasswordNew");
-//		
-//		//=====================================================================
-//		// ユーザー情報の取得
-//		//=====================================================================
-//		UserInformation userInformation = (UserInformation)req.getSession().getAttribute(Define.SESSION_ID);
-//		
-//		//=====================================================================
-//		// DB接続
-//		//=====================================================================
-//		Connection con = this.getConnection("kintai", req);		
-//		PreparedStatement pstmt			= null;
-//		StringBuffer sql				= new StringBuffer();
-//		PreparedStatementFactory pstmtf	= new PreparedStatementFactory();
-//		
-//		//=====================================================================
-//		// 更新
-//		//=====================================================================
-//		pstmtf.clear();
-//		sql.setLength(0);
-//		sql.append(" UPDATE MST_SHAIN SET ");
-//		sql.append("  SaishuKoshinShainNO = ? ");
-//		sql.append(" ,SaishuKoshinDate = ? ");
-//		sql.append(" ,SaishuKoshinJikan = ? ");
-//		sql.append(" ,Password = ? ");
-//		sql.append(" WHERE ");
-//		sql.append(" 1 = 1 ");
-//		sql.append(" and ShainNO = ? ");
-//		
-//		// パラメータ設定
-//		pstmtf.addValue("String", userInformation.getShainNO());
-//		pstmtf.addValue("String", PJActionBase.getNowDate());
-//		pstmtf.addValue("String", PJActionBase.getNowTime());
-//		pstmtf.addValue("String", password);
-//		pstmtf.addValue("String", shainNo);
-//		
-//		try {
-//			pstmt = con.prepareStatement(sql.toString());
-//			pstmtf.setPreparedStatement(pstmt);
-//			pstmt.execute();
-//			
-//			// ユーザ情報を再取得、セッションの再設定
-//			// 現在日付の取得
-//			String nowDate	= PJActionBase.getNowDate();
-//			
-//			ArrayList<HashMap<String, String>> mstShains = PJActionBase.getMstShains(con, shainNo, null, password, null, null, null, null, nowDate);
-//			if (0 < mstShains.size()) {
-//				HashMap<String, String> mstShain = mstShains.get(0);
-//				
-//				// 処理可能営業所コードの配列
-//				ArrayList<String> shoriKanoEigyoshoCode = new ArrayList<>();
-//				shoriKanoEigyoshoCode.add(mstShain.get("EigyoshoCode"));
-//				
-//				// 処理可能営業所コードを取得
-//				ArrayList<HashMap<String, String>> mstShainEigyoshos = PJActionBase.getMstShainEigyoshos(con, shainNo);
-//				for(HashMap<String, String> mstShainEigyosho : mstShainEigyoshos) {
-//					shoriKanoEigyoshoCode.add(mstShainEigyosho.get("EigyoshoCode"));
-//				}
-//
-//				//// ユーザ情報の呼び出し
-//				//UserInformation userInformation	= new UserInformation();
-//				
-//				// マスタから取得したデータを設定
-//				userInformation.setShainNO(mstShain.get("ShainNO"));
-//				userInformation.setShainName(mstShain.get("ShainName"));
-//				userInformation.setPassword(mstShain.get("Password"));
-//				userInformation.setUserKbn(mstShain.get("UserKbn"));
-//				userInformation.setShainKbn(mstShain.get("ShainKbn"));
-//				userInformation.setEigyoshoCode(mstShain.get("EigyoshoCode"));
-//				userInformation.setEigyoshoName(mstShain.get("EigyoshoName"));
-//				userInformation.setBushoCode(mstShain.get("BushoCode"));
-//				userInformation.setBushoName(mstShain.get("BushoName"));
-//				userInformation.setBushoKbn(mstShain.get("BushoKbn"));
-//				userInformation.setTaisyokuDate(mstShain.get("TaisyokuDate"));
-//				userInformation.setShoriKanoEigyoshoCode(shoriKanoEigyoshoCode);
-//				userInformation.setLoginDate(nowDate);
-//				
-//				// セッションに格納
-//				req.getSession().setAttribute(Define.SESSION_ID, userInformation);
-//				this.addContent("result", true);
-//			}
-//			
-//		} catch (Exception exp){
-//			exp.printStackTrace();
-//		} finally {
-//			if (pstmt != null){ try { pstmt.close(); } catch (Exception exp){}}
-//		}
 	}
 	
 }

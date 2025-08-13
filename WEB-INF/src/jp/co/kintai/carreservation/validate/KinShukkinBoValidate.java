@@ -43,10 +43,17 @@ public class KinShukkinBoValidate extends ValidateBase {
 			String taishoNengappi		= this.getParameter(taishoNengappiKeySb.toString());
 			
 			if(StringUtils.isEmpty(taishoNengappi)) {
-				System.out.println("データが終わったので終了");
+				//データが終わったので終了
 				break;
 			}
-
+			StringBuilder kintaiKbnKeySb	= new StringBuilder();
+			kintaiKbnKeySb	.append("KintaiKbn")	.append(String.valueOf(i));
+			String kintaiKbn		= this.getParameter(kintaiKbnKeySb.toString());
+			if(StringUtils.isEmpty(kintaiKbn) || "00".equals(kintaiKbn)) {
+				//勤怠区分が空の場合、その行の入力チェックをしない
+				continue;
+			}
+			
 			StringBuilder shusshaJiKeySb	= new StringBuilder();
 			StringBuilder shusshaFunKeySb	= new StringBuilder();
 			StringBuilder taishaJiKeySb		= new StringBuilder();
@@ -328,15 +335,12 @@ public class KinShukkinBoValidate extends ValidateBase {
 			
 			
 			// 賃金申請書入力区分("01"固定)、勤怠区分、勤怠申請区分1、勤怠申請区分2、勤怠申請区分3の組み合わせが、申請パターンマスタ(MST_SHINSEI_PATTERN)に登録されていない場合
-			StringBuilder kintaiKbnKeySb	= new StringBuilder();
 			StringBuilder kintaiShinseiKbn1KeySb	= new StringBuilder();
 			StringBuilder kintaiShinseiKbn2KeySb	= new StringBuilder();
 			StringBuilder kintaiShinseiKbn3KeySb	= new StringBuilder();
-			kintaiKbnKeySb	.append("KintaiKbn")	.append(String.valueOf(i));
 			kintaiShinseiKbn1KeySb	.append("KintaiShinseiKbn1")	.append(String.valueOf(i));
 			kintaiShinseiKbn2KeySb	.append("KintaiShinseiKbn2")	.append(String.valueOf(i));
 			kintaiShinseiKbn3KeySb	.append("KintaiShinseiKbn3")	.append(String.valueOf(i));
-			String kintaiKbn		= this.getParameter(kintaiKbnKeySb.toString());
 			String kintaiShinseiKbn1		= this.getParameter(kintaiShinseiKbn1KeySb.toString());
 			String kintaiShinseiKbn2		= this.getParameter(kintaiShinseiKbn2KeySb.toString());
 			String kintaiShinseiKbn3		= this.getParameter(kintaiShinseiKbn3KeySb.toString());
