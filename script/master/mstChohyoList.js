@@ -1,43 +1,3 @@
-window.addEventListener('load', () => {
-	    var value = $("#hidSrhEigyoshoCodeF").val();
-		console.log(value);
-		
-		proc("getEigyoshoName" ,{ 'eigyoshoCode': value }, function(data){
-				
-				if (data == undefined){ return; }
-				if (data["contents"] == undefined){ return; }
-				
-				var contents				= data["contents"];
-				if (contents["result"] == undefined){ return; }
-				
-				var result					= contents["result"];
-				
-				// 格納
-				$("#hidSrhEigyoshoNameF").val(result);
-				
-		});
-})
- 
-window.addEventListener('load', () => {
-	    var value = $("#hidSrhEigyoshoCodeT").val();
-		console.log(value);
-			
-		proc("getEigyoshoName" ,{ 'eigyoshoCode': value }, function(data){
-					
-				if (data == undefined){ return; }
-				if (data["contents"] == undefined){ return; }
-					
-				var contents				= data["contents"];
-				if (contents["result"] == undefined){ return; }
-					
-				var result					= contents["result"];
-					
-				// 格納
-				$("#hidSrhEigyoshoNameT").val(result);
-					
-		});
-})
-
 function toggleVisibility(){
 		// 選択した処理内容を格納
 		// 値を取得する方法
@@ -49,16 +9,14 @@ function toggleVisibility(){
 		var kbnName = $("#rdoShoriSentaku option:selected").text();
 		let Saisho = $("#hidSrhEigyoshoCodeF").val();
 		let Saidai = $("#hidSrhEigyoshoCodeT").val();
-		let SaishoName = $("#hidSrhEigyoshoNameF").val();
-		let SaidaiName = $("#hidSrhEigyoshoNameT").val();
 		
 		document.getElementById("displayShoriArea").style.display = "";
 		$("#txtShoriSentaku").val(kbnName);
 		$("#numSrhShorisentaku").val(value);
 		$("#txtSrhEigyoshoCodeF").val(Saisho);
 		$("#txtSrhEigyoshoCodeT").val(Saidai);
-		$("#txtSrhEigyoshoNameF").val(SaishoName);
-		$("#txtSrhEigyoshoNameT").val(SaidaiName);
+		getEigyoshoName('txtSrhEigyoshoCodeF', 'txtSrhEigyoshoNameF');
+		getEigyoshoName('txtSrhEigyoshoCodeT', 'txtSrhEigyoshoNameT');
 		$("#txtSrhBushoCodeF").val("");
 		$("#txtSrhBushoNameF").val("");
 	    $("#txtSrhBushoCodeT").val("");

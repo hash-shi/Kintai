@@ -121,9 +121,7 @@ HashMap<String, String> eigyoshoCnt = eigyosho.get(0);
 	<div>
 	    <input type="hidden" name="numSrhShorisentaku" id = "numSrhShorisentaku" value="">
 	    <input type="hidden" name="hidSrhEigyoshoCodeF" id="hidSrhEigyoshoCodeF" value="<%=UtilEscape.htmlspecialchars(eigyoshoCnt.get("Saisho")) %>">
-	    <input type="hidden" name="hidSrhEigyoshoNameF" id="hidSrhEigyoshoNameF" value="">
 		<input type="hidden" name="hidSrhEigyoshoCodeT" id="hidSrhEigyoshoCodeT" value="<%=UtilEscape.htmlspecialchars(eigyoshoCnt.get("Saidai")) %>">
-		<input type="hidden" name="hidSrhEigyoshoNameT" id="hidSrhEigyoshoNameT" value="">
 	</div>
 	<div class="buttonArea right" id="displayBottonArea" style="display: none;">
 			<button type="button" onclick="output()">作表[F12]</button>
