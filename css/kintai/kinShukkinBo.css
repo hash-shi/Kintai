@@ -24,3 +24,12 @@
 .sun{
 	color: #ff0000;
 }
+
+/*
+*
+* 画面内の表で横スクロールできるよう設定
+*
+*/
+.shukkinboArea{
+	overflow: auto;
+}

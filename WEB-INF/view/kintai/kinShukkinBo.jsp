@@ -3,39 +3,47 @@
 <%@ page import="jp.co.tjs_net.java.framework.common.UtilEscape" %>
 
 <main id="main-content">
-	<h2>出勤簿入力</h2>
-	<div class="inputArea">
-		<div class="box">
+    <div class="headerArea" id="headerArea">
+		<div class="inputArea">
 			<table>
-				<tr>
-					<td class="title center w100 req">
-						<a >対象年月</a>
-					</td>
-					<td class="value w100">
-						<input type="text" class=""  style="width: 80px; text-align: right;" name="txtTaishoYM" id="txtTaishoYM" value="" maxlength="7" onblur="getTaishoYMFormat();" >
-						<input type="hidden" name="txtSearchedTaishoYM" id="txtSearchedTaishoYM" value="">
-					</td>
-					<td class="title center w100 req">
-						<a name="lnkShainSearch" id="linkShainSearch" href="#" onclick="opnDialog('srhMstShain','txtShainNO','txtShainName'); return false;">社員NO</a>
-					</td>
-					<td class="value w300">
-						<input type="text" class=""  style="width: 80px" name="txtShainNO" id="txtShainNO" value="" maxlength="4" onblur="getShainName('txtShainNO', 'txtShainName');" >
-						<input type="hidden" name="txtSearchedShainNO" id="txtSearchedShainNO" value="">
-						<img class="img border" name="btnShainSearch" id="btnShainSearch" src="./images/search.png"  onclick="opnDialog('srhMstShain','txtShainNO','txtShainName');">
-						<input type="text" class=""  style="width: 120px" name="txtShainName" id="txtShainName" value="" disabled readonly>
-					</td>
-					<td class="value w50">
-						<button type="button" onclick="onSearchKinShukkinBo();">検索</button>
-					</td>
+			    <tr>
+					<td class="title center w300">出勤簿入力</td>
 				</tr>
 			</table>
+			<div class="box">
+				<table>
+					<tr>
+						<td class="title center w100 req">
+							<a >対象年月</a>
+						</td>
+						<td class="value w100">
+							<input type="text" class=""  style="width: 80px; text-align: right;" name="txtTaishoYM" id="txtTaishoYM" value="" maxlength="7" onblur="getTaishoYMFormat();" autofocus>
+							<input type="hidden" name="txtSearchedTaishoYM" id="txtSearchedTaishoYM" value="">
+						</td>
+						<td class="title center w100 req">
+							<a name="lnkShainSearch" id="linkShainSearch" href="#" onclick="opnDialog('srhMstShain','txtShainNO','txtShainName'); return false;">社員NO</a>
+						</td>
+						<td class="value w300">
+							<input type="text" class=""  style="width: 80px" name="txtShainNO" id="txtShainNO" value="" maxlength="4" onblur="getShainName('txtShainNO', 'txtShainName');" >
+							<input type="hidden" name="txtSearchedShainNO" id="txtSearchedShainNO" value="">
+							<img class="img border" name="btnShainSearch" id="btnShainSearch" src="./images/search.png"  onclick="opnDialog('srhMstShain','txtShainNO','txtShainName');">
+							<input type="text" class=""  style="width: 120px" name="txtShainName" id="txtShainName" value="" disabled readonly>
+						</td>
+						<td class="value w50">
+							<button type="button" onclick="onSearchKinShukkinBo();">検索</button>
+						</td>
+					</tr>
+				</table>
+			</div>
 		</div>
-		<div id = "nyuryokuArea" style="display: none;">
+	</div>
+	<div id = "nyuryokuArea" class="mainArea" style="display: none;">
+		<div class="inputArea">
 			<div class="box">
 				<button type="button" id="btnFirstHalf" onclick="onDisplayNyuryokuArea(true);" disabled>◀前一覧</button>
 				<button type="button" id="btnSecondHalf" onclick="onDisplayNyuryokuArea(false);" disabled>次一覧▶</button>
 			</div>
-			<div class="box">
+			<div class="box shukkinboArea">
 				<table class="kinShukkinBoSearchRecord">
 					<thead>
 						<tr>

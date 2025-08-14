@@ -76,6 +76,11 @@ window.onload = function(){
 	});
 }
 
+/*
+*
+* 対象年月フォーカスアウト時のフォーマット編集処理
+*
+*/
 function getTaishoYMFormat(){
 	let strReplacing = $("#txtTaishoYM").val();
 	let strReplaced = "";
@@ -156,6 +161,24 @@ function onSearchKinShukkinBo(){
 			honshaKakuteizumiFlg = true;
 		}
 	});
+
+	//取得した更新日付・時間が空の時、新規登録として背景色を変更する
+	if($("#hdnKihonSaishuKoshinDate").val() == "" && $("#hdnKihonSaishuKoshinJikan").val() == ""){
+		if (!$("#nyuryokuArea").hasClass("ins")) {
+			$("#nyuryokuArea").addClass("ins");
+		}
+		if ($("#nyuryokuArea").hasClass("uod")) {
+			$("#nyuryokuArea").removeClass("uod");
+		}
+	}
+	else{
+		if (!$("#nyuryokuArea").hasClass("uod")) {
+			$("#nyuryokuArea").addClass("uod");
+		}
+		if ($("#nyuryokuArea").hasClass("ins")) {
+			$("#nyuryokuArea").removeClass("ins");
+		}
+	}
 
 	if(honshaKakuteizumiFlg){
 		alert("本社確定済みのため処理できません。");
@@ -428,21 +451,26 @@ function onDisplayNyuryokuArea(firstHalfFlg){
 			"</tr>";
 		$("#kihonNyuryokuArea").append(kihonNyuryokuAreaHtml);
 	}
-
-
-	if(firstHalfFlg == true){
-		document.getElementById("btnFirstHalf").disabled = true;
-		document.getElementById("btnSecondHalf").disabled = false;
-	}
-	else{
-		document.getElementById("btnFirstHalf").disabled = false;
-		document.getElementById("btnSecondHalf").disabled = true;
-	}
-
 	$("#txtShinseiKingaku01").val(kinShukkinBoResultAll[0]["ShinseiKingaku01"]);
 	$("#txtShinseiKingaku02").val(kinShukkinBoResultAll[0]["ShinseiKingaku02"]);
 	$("#hdnKihonSaishuKoshinDate").val(kinShukkinBoResultAll[0]["KihonSaishuKoshinDate"]);
 	$("#hdnKihonSaishuKoshinJikan").val(kinShukkinBoResultAll[0]["KihonSaishuKoshinJikan"]);
+
+
+	//前・次一覧ボタンの活性変更
+	if(firstHalfFlg == true){
+		document.getElementById("btnFirstHalf").disabled = true;
+		document.getElementById("btnSecondHalf").disabled = false;
+		//前一覧表示時、最初の予定をフォーカス
+		$("#ShukkinYoteiKbn0").focus();
+	}
+	else{
+		document.getElementById("btnFirstHalf").disabled = false;
+		document.getElementById("btnSecondHalf").disabled = true;
+		//次一覧表示時、最後の予定をフォーカス
+		$("#ShukkinYoteiKbn" + (kinShukkinBoResultAll.length - 1)).focus();
+	}
+
 }
 
 /*
