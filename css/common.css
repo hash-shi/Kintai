@@ -48,6 +48,8 @@ div.mainArea {
   border-bottom-style: double;
 	padding-top: 10px;
 	overflow-y: auto;
+	display: flex;
+	flex-flow: column;
 }
 div.mainArea table {
 	margin-bottom: 5px;
@@ -61,6 +63,13 @@ div.inputArea {
 /*	width						: 100%;*/
 /*	border					: 1px solid #000000;*/
 }
+
+.lastEdit {
+	margin-top: auto !important;
+	margin-left: auto !important;
+	width: fit-content  !important;
+}
+
 
 div.inputArea .title {
 	height					: 25px;
@@ -266,7 +275,7 @@ img {
 .ins {
 	background-color			: #b0e0e6;	/* 画面背景色(登録モード)  */
 }
-.uod {
+.upd {
 	background-color			: #ffff99;	/* 画面背景色(更新モード)  */
 }
 

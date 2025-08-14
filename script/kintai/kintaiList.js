@@ -19,13 +19,13 @@ function setShoriSentaku(){
 	$("#txtShoriSentaku").val(name);
 	
 	// mainAreaを表示する。
-	$("#mainArea").css("display", "block");
-	$("#buttonArea").css("display", "block");
+	$("#mainArea").css("visibility", "visible");
+	$("#buttonArea").css("visibility", "visible");
 	
-	// mainAreaの背景色を変更
-	if (!$("#mainArea").hasClass("ins")) {
-		$("#mainArea").addClass("ins");
-	}
+	// 既に背景色が設定されている場合は一旦削除
+	$("#mainArea").removeClass('ins');
+	// 背景色を設定
+	$("#mainArea").addClass("ins");
 	
 	// 処理選択によって表示する内容が変わる。
 	if (value == "01" || value == "02") {

@@ -59,7 +59,7 @@ ArrayList<HashMap<String, String>> mstKubun0050 = (ArrayList<HashMap<String, Str
 		</div>
 	</div>
 	
-	<div class="mainArea" id="mainArea" style="display: none;">
+	<div class="mainArea" id="mainArea" style="visibility:hidden;">
 	
 		<div class="inputArea">
 			<table>
@@ -164,9 +164,10 @@ ArrayList<HashMap<String, String>> mstKubun0050 = (ArrayList<HashMap<String, Str
 				
 			</table>
 		</div>
+		
 	</div>
 	
-	<div class="buttonArea right" id="buttonArea" style="display: none;">
+	<div class="buttonArea right" id="buttonArea" style="visibility:hidden;">
 		<button type="button" onclick="onPdfCsvDownload()">作表[F12]</button>
 	</div>
 	
