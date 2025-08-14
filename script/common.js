@@ -139,14 +139,21 @@ function getEigyoshoName(searchId, returnId) {
 	
 	// 検索対象となるコード項目のid
 	console.log(searchId);
+	if (!searchId) { return; }
+	if(!($("#" + searchId).length)){ return; }
+	
 	// 検索結果となる名称項目のid
 	console.log(returnId);
-	
-	var value = $("#" + searchId).val();
-	console.log(value);
+	if (!returnId) { return; }
+	if(!($("#" + returnId).length)){ return; }
 	
 	// クリア
 	$("#" + returnId).val("");
+	
+	// コードを取得
+	var value = $("#" + searchId).val();
+	console.log(value);
+
 	// 空の場合はスキップ
 	if (value == "") { return; }
 	
@@ -177,14 +184,21 @@ function getBushoName(searchId, returnId) {
 	
 	// 検索対象となるコード項目のid
 	console.log(searchId);
+	if (!searchId) { return; }
+	if(!($("#" + searchId).length)){ return; }
+
 	// 検索結果となる名称項目のid
 	console.log(returnId);
-	
-	var value = $("#" + searchId).val();
-	console.log(value);
-	
+	if (!returnId) { return; }
+	if(!($("#" + returnId).length)){ return; }
+
 	// クリア
 	$("#" + returnId).val("");
+
+	// コードを取得
+	var value = $("#" + searchId).val();
+	console.log(value);
+
 	// 空の場合はスキップ
 	if (value == "") { return; }
 	
@@ -215,14 +229,21 @@ function getShainName(searchId, returnId) {
 	
 	// 検索対象となるコード項目のid
 	console.log(searchId);
+	if (!searchId) { return; }
+	if(!($("#" + searchId).length)){ return; }
+
 	// 検索結果となる名称項目のid
 	console.log(returnId);
-	
-	var value = $("#" + searchId).val();
-	console.log(value);
-	
+	if (!returnId) { return; }
+	if(!($("#" + returnId).length)){ return; }
+
 	// クリア
 	$("#" + returnId).val("");
+
+	// コードを取得
+	var value = $("#" + searchId).val();
+	console.log(value);
+
 	// 空の場合はスキップ
 	if (value == "") { return; }
 	
@@ -250,27 +271,42 @@ function getShainName(searchId, returnId) {
 //
 //
 //****************************************************************************
-function getKubunName(kbnCodeId, codeId, nameId) {
-	// 取得対象の値
-	var kbnCode = $("#" + kbnCodeId).val();
-	var code    = $("#" + codeId).val();
+function getKubunName(searchId1, searchId2, returnId) {
+	
+	// 検索対象となるコード項目のid
+	console.log(searchId1);
+	if (!searchId1) { return; }
+	if(!($("#" + searchId1).length)){ return; }
 
-	console.log("kbnCode =", kbnCode);
-	console.log("code    =", code);
-
-	// 名称欄の初期化
-	$("#" + nameId).val("");
-
-	// どちらかが空の場合はスキップ
-	if (!kbnCode || !code) return;
-
+	// 検索結果となるコード項目のid
+	console.log(searchId2);
+	if (!searchId2) { return; }
+	if(!($("#" + searchId2).length)){ return; }
+	
+	// 検索結果となる名称項目のid
+	console.log(returnId);
+	if (!returnId) { return; }
+	if(!($("#" + returnId).length)){ return; }
+	
+	// クリア
+	$("#" + returnId).val("");
+	
+	// コードを取得
+	var kbnCode = $("#" + searchId1).val();
+	console.log(kbnCode);
+	var code = $("#" + searchId2).val();
+	console.log(code);
+	
+	// 空の場合はスキップ
+	if (kbnCode == "" || code == "") { return; }
+	
 	proc("getKubunName", { 'kbnCode': kbnCode, 'code': code }, function(data) {
 		if (!data || !data["contents"] || !data["contents"]["result"]) return;
 
 		var result = data["contents"]["result"];
 
 		// 名称セット
-		$("#" + nameId).val(result);
+		$("#" + returnId).val(result);
 	});
 }
 
@@ -313,13 +349,13 @@ function setDialogReturnValue(values) {
 	// 検索結果となるコードを親画面の項目に格納する。
 	console.log(values);
 	
-	
 	// 対象となる親画面の項目はヘッダの隠し項目に入れてある。
 	var searchIds = $("#hdnDialogSearchId").val();
 	
-	// ない場合はスキップ
+	// 返却項目がない場合はスキップ
 	console.log(searchIds);
 	if (!searchIds) { return; }
+	if(!($("#" + searchIds).length)){ return; }
 	
 	// 複数項目ある場合に備えて,で分割
 	var value = values.split(',');
@@ -348,9 +384,13 @@ function setDialogReturnValueEigyoshoName() {
 	// 対象となる親画面の名前項目はヘッダの隠し項目に入れてある。
 	var returnIds = $("#hdnDialogReturnId").val();
 	
-	// ない場合はスキップ
+	// 返却項目がない場合はスキップ
 	console.log(searchIds);
 	if (!searchIds) { return; }
+	
+	// 返却項目がない場合はスキップ
+	console.log(returnIds);
+	if (!returnIds) { return; }	
 	
 	// 複数項目ある場合に備えて,で分割
 	var searchId = searchIds.split(',');
@@ -379,9 +419,13 @@ function setDialogReturnValueBushoName() {
 	// 対象となる親画面の名前項目はヘッダの隠し項目に入れてある。
 	var returnIds = $("#hdnDialogReturnId").val();
 	
-	// ない場合はスキップ
+	// 返却項目がない場合はスキップ
 	console.log(searchIds);
 	if (!searchIds) { return; }
+
+	// 返却項目がない場合はスキップ
+	console.log(returnIds);
+	if (!returnIds) { return; }	
 	
 	// 複数項目ある場合に備えて,で分割
 	var searchId = searchIds.split(',');
@@ -410,9 +454,13 @@ function setDialogReturnValueShainName() {
 	// 対象となる親画面の名前項目はヘッダの隠し項目に入れてある。
 	var returnIds = $("#hdnDialogReturnId").val();
 	
-	// ない場合はスキップ
+	// 返却項目がない場合はスキップ
 	console.log(searchIds);
 	if (!searchIds) { return; }
+
+	// 返却項目がない場合はスキップ
+	console.log(returnIds);
+	if (!returnIds) { return; }	
 	
 	// 複数項目ある場合に備えて,で分割
 	var searchId = searchIds.split(',');
@@ -441,9 +489,13 @@ function setDialogReturnValueKbnName() {
 	// 対象となる親画面の名前項目はヘッダの隠し項目に入れてある。
 	var returnIds = $("#hdnDialogReturnId").val();
 	
-	// ない場合はスキップ
+	// 返却項目がない場合はスキップ
 	console.log(searchIds);
 	if (!searchIds) { return; }
+
+	// 返却項目がない場合はスキップ
+	console.log(returnIds);
+	if (!returnIds) { return; }	
 	
 	// 複数項目ある場合に備えて,で分割
 	var searchId = searchIds.split(',');
