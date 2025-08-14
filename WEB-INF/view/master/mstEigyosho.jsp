@@ -40,7 +40,7 @@
 				<tr>
 					<td class="title center w100 req">営業所コード</td>
 					<td class="value w500">
-						<input type="text" class="w80" maxlength="4" name="txtEigyoshoCode" id="txtEigyoshoCode" value="" >
+						<input type="text" class="w80" maxlength="3" name="txtEigyoshoCode" id="txtEigyoshoCode" value="" >
 					</td>
 				</tr>
 				<tr>
