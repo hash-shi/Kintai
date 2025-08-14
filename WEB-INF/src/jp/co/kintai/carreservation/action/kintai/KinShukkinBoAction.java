@@ -59,8 +59,9 @@ public class KinShukkinBoAction extends PJActionBase {
 			// 実行
 			rset = pstmt.executeQuery();
 			// 結果取得
-			rset.next();
-			result = StringUtils.stripToEmpty(rset.getString(1));
+			if(rset.next()) {
+				result = StringUtils.stripToEmpty(rset.getString("GenzaishoriNengetsudo"));
+			}
 		} finally {
 			if (rset != null){ try { rset.close(); } catch (Exception exp){}}
 			if (pstmt != null){ try { pstmt.close(); } catch (Exception exp){}}
@@ -265,7 +266,7 @@ public class KinShukkinBoAction extends PJActionBase {
 			// 実行
 			rset1 = pstmt1.executeQuery();
 			// 結果件数取得
-			while (rset1.next()){
+			if (rset1.next()){
 				sql1result++;
 			}
 		}
@@ -297,7 +298,7 @@ public class KinShukkinBoAction extends PJActionBase {
 			// 実行
 			rset2 = pstmt2.executeQuery();
 			// 結果件数取得
-			while (rset2.next()){
+			if (rset2.next()){
 				sql2result++;
 			}
 		}
@@ -646,7 +647,7 @@ public class KinShukkinBoAction extends PJActionBase {
 			// 実行
 			rset = pstmt.executeQuery();
 			// 結果取得
-			while (rset.next()){
+			if (rset.next()){
 				result = rset.getInt("CNT");
 			}
 		} finally {
@@ -1195,7 +1196,7 @@ public class KinShukkinBoAction extends PJActionBase {
 			// 実行
 			rset = pstmt.executeQuery();
 			// 結果取得
-			while (rset.next()){
+			if (rset.next()){
 				result = rset.getInt("CNT");
 			}
 		} finally {
@@ -2089,7 +2090,7 @@ public class KinShukkinBoAction extends PJActionBase {
 	 * @param res
 	 * @throws Exception
 	 */
-	private HashMap<String, String> getShinseiPattern(Connection con, String kintaiKbn, String kintaiShinseiKbn1, String kintaiShinseiKbn2, String kintaiShinseiKbn3){
+	public HashMap<String, String> getShinseiPattern(Connection con, String kintaiKbn, String kintaiShinseiKbn1, String kintaiShinseiKbn2, String kintaiShinseiKbn3){
 		
 		HashMap<String, String> result = new HashMap<String, String>();
 				

@@ -5,9 +5,6 @@ import java.nio.charset.Charset;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
-import java.sql.ResultSetMetaData;
-import java.util.ArrayList;
-import java.util.HashMap;
 
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
@@ -35,6 +32,9 @@ public class KinShukkinBoValidate extends ValidateBase {
 	 */
 	@Override
 	public boolean doValidate(HttpServletRequest req, HttpServletResponse res, String value, IndexInformation info) throws Exception {
+		// DB接続
+		Connection con		= this.getConnection("kintai", req);
+
 		IsNumber isNumberValidate = new IsNumber(req, res, info);
 		Length lengthValidate = new Length(req, res, info);
 		MinNumberLimit minNumberLimitValidate = new MinNumberLimit(req, res, info);
@@ -466,7 +466,7 @@ public class KinShukkinBoValidate extends ValidateBase {
 			String kintaiShinseiKbn2		= this.getParameter(kintaiShinseiKbn2KeySb.toString());
 			String kintaiShinseiKbn3		= this.getParameter(kintaiShinseiKbn3KeySb.toString());
 
-			if(shinseiPatternCheck(kintaiKbn,kintaiShinseiKbn1,kintaiShinseiKbn2,kintaiShinseiKbn3) == false){
+			if(shinseiPatternCheck(con,kintaiKbn,kintaiShinseiKbn1,kintaiShinseiKbn2,kintaiShinseiKbn3) == false){
 				this.addValidateMessage("申請区分の組み合わせが正しくありません。");
 				return false;
 			}
@@ -493,14 +493,9 @@ public class KinShukkinBoValidate extends ValidateBase {
 	 * 
 	 * 申請パターンマスタ確認
 	 */
-	private boolean shinseiPatternCheck(String kintaiKbn, String shinseiKbn1, String shinseiKbn2, String shinseiKbn3) throws Exception {
+	private boolean shinseiPatternCheck(Connection con, String kintaiKbn, String shinseiKbn1, String shinseiKbn2, String shinseiKbn3) throws Exception {
 		
 		boolean result = false;
-		
-		// DB接続
-		Connection con		= this.getConnection("kintai", req);
-		
-		ArrayList<HashMap<String, String>> mstDatas = new ArrayList<>();
 		
 		// DB接続
 		StringBuffer sql				= new StringBuffer();
@@ -509,17 +504,7 @@ public class KinShukkinBoValidate extends ValidateBase {
 		ResultSet rset					= null;
 		
 		sql.append(" SELECT ");
-		sql.append(" 	KintaiKbn, ");
-		sql.append(" 	ShinseiKbn1, ");
-		sql.append(" 	ShinseiKbn2, ");
-		sql.append(" 	Nissuu, ");
-		sql.append(" 	CASE WHEN KihonSagyoJikanKbn = '01' THEN ");
-		sql.append(" 		(SELECT KintaiKihonSagyoJikan FROM MST_KANRI) ");
-		sql.append(" 		ELSE 0 END AS KintaiKihonSagyoJikan, ");
-		sql.append(" 	KihonSagyoJikanKbn, ");
-		sql.append(" 	KyukeiJikanKbn, ");
-		sql.append(" 	KaGenZanKbn1, ");
-		sql.append(" 	KaGenZanKbn2 ");
+		sql.append(" 	COUNT(*) AS CNT ");
 		sql.append(" FROM ");
 		sql.append(" 	MST_SHINSEI_PATTERN ");
 		sql.append(" WHERE ");
@@ -527,12 +512,12 @@ public class KinShukkinBoValidate extends ValidateBase {
 		sql.append(" AND KintaiKbn = ? ");
 		sql.append(" AND ShinseiKbn1 = ? ");
 		sql.append(" AND ShinseiKbn2 = ? ");
-//		sql.append(" AND ShinseiKbn3 = ? ");	//TODO
+		sql.append(" AND ShinseiKbn3 = ? ");
 
 		pstmtf.addValue("String", kintaiKbn);
 		pstmtf.addValue("String", shinseiKbn1);
 		pstmtf.addValue("String", shinseiKbn2);
-//		pstmtf.addValue("String", shinseiKbn3);
+		pstmtf.addValue("String", shinseiKbn3);
 
 		try {
 			// SQL文の生成
@@ -542,10 +527,10 @@ public class KinShukkinBoValidate extends ValidateBase {
 			// 実行
 			rset = pstmt.executeQuery();
 			// 結果取得
-			ResultSetMetaData metaData = rset.getMetaData(); 
-			
 			if(rset.next()){
-				result = true;
+				if(rset.getInt("CNT") > 0) {
+					result = true;
+				}
 			}
 		}
 		catch(Exception e) {
