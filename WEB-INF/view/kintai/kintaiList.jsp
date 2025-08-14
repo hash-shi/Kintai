@@ -168,7 +168,7 @@ ArrayList<HashMap<String, String>> mstKubun0050 = (ArrayList<HashMap<String, Str
 	</div>
 	
 	<div class="buttonArea right" id="buttonArea" style="visibility:hidden;">
-		<button type="button" onclick="onPdfCsvDownload()">作表[F12]</button>
+		<button type="button" onclick="onPdfCsvDownload()">作表 [ F12 ] </button>
 	</div>
 	
 </main>

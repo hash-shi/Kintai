@@ -62,7 +62,7 @@ ArrayList<HashMap<String, String>> mstKubun			= (ArrayList<HashMap<String, Strin
 	</div>
 	
 	<div class="buttonArea right" id="buttonArea" style="visibility:hidden;">
-		<button type="button" onclick="onCsvDownload()">作表[F12]</button>
+		<button type="button" onclick="onCsvDownload()">作表 [ F12 ] </button>
 	</div>
 	
 </main>
