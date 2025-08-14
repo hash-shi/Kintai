@@ -30,6 +30,7 @@ function toggleVisibility(){
 		if(value == "01"||value == "02"||value == "03"){
 			document.getElementById("displayKbnArea").style.display = 'none';
 			document.getElementById("displayEigyoshoArea").style.display = "";
+			$("#txtSrhEigyoshoCodeF").focus();
 		 if(value == "02"){
 			document.getElementById("displayBushoArea").style.display = "";
 			document.getElementById("displayShainArea").style.display = 'none';
@@ -45,6 +46,7 @@ function toggleVisibility(){
 			document.getElementById("displayKbnArea").style.display = "";
 			document.getElementById("displayBushoArea").style.display = 'none';
 			document.getElementById("displayShainArea").style.display = 'none';
+			$("#txtSrhKbnCodeF").focus();
 		}
 		document.getElementById("displayBottonArea").style.display = "";
 		$("#txtSrhSaishuKoshinDateF").val(formatDateYYYYMMDD(date, "/"));

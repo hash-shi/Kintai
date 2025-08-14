@@ -25,7 +25,7 @@ HashMap<String, String> eigyoshoCnt = eigyosho.get(0);
 					<a>処理選択</a>
 				</td>
 				<td class="value w170">
-					<select name = "rdoShoriSentaku"  id="rdoShoriSentaku">
+					<select name = "rdoShoriSentaku"  id="rdoShoriSentaku"  autofocus>
 				      <% for (int count = 0 ; count < shoriSentaku.size() ; count++){ HashMap<String, String> record = shoriSentaku.get(count);%>
 					   <option value="<%=UtilEscape.htmlspecialchars(record.get("Code")) %>"><%=UtilEscape.htmlspecialchars(record.get("KbnName")) %></option>
 				      <% } %>
@@ -45,7 +45,7 @@ HashMap<String, String> eigyoshoCnt = eigyosho.get(0);
 					<a>処理選択</a>
 				</td>
 				<td class="value w170">
-					<input type="text" class=""  style="width: 120px"" name="txtShoriSentaku" id="txtShoriSentaku" value="" readonly>
+					<input type="text" class=""  style="width: 160px"" name="txtShoriSentaku" id="txtShoriSentaku" value="" readonly>
 				</td>
 			</tr>
 		</table>
@@ -56,7 +56,7 @@ HashMap<String, String> eigyoshoCnt = eigyosho.get(0);
 				<td class="title center w100">
 					<a>営業所</a>
 				</td>
-				<td class="value w1000">
+				<td class="value w600">
 					<input type="text" class=""  style="width: 80px"" name="txtSrhEigyoshoCodeF" id="txtSrhEigyoshoCodeF" maxlength="3" value=""  onblur="getEigyoshoName('txtSrhEigyoshoCodeF', 'txtSrhEigyoshoNameF');" >
 					<img class="img border" src="./images/search.png"  onclick="opnDialog('srhMstEigyosho','txtSrhEigyoshoCodeF','txtSrhEigyoshoNameF');">
 					<input type="text" class=""  style="width: 120px"" name="txtSrhEigyoshoNameF" id="txtSrhEigyoshoNameF" value="" readonly>
@@ -70,7 +70,7 @@ HashMap<String, String> eigyoshoCnt = eigyosho.get(0);
 				<td class="title center w100">
 					<a>区分コード</a>
 				</td>
-				<td class="value w1000">
+				<td class="value w310">
 					<input type="text" class=""  style="width: 80px"" name="txtSrhKbnCodeF" id="txtSrhKbnCodeF" maxlength="4"   value="">
 					<a>～</a>
 					<input type="text" class=""  style="width: 80px"" name="txtSrhKbnCodeT" id="txtSrhKbnCodeT" maxlength="4"  value="" >
@@ -80,7 +80,7 @@ HashMap<String, String> eigyoshoCnt = eigyosho.get(0);
 				<td class="title center w100">
 					<a>社員NO</a>
 				</td>
-				<td class="value w1000">
+				<td class="value w600">
 					<input type="text" class=""  style="width: 80px"" name="txtSrhShainNOF" id="txtSrhShainNOF" maxlength="4"  value=""  onblur="getShainName('txtSrhShainNOF', 'txtSrhShainNameF');" >
 					<img class="img border" src="./images/search.png"  onclick="opnDialog('srhMstShain','txtSrhShainNOF','txtSrhShainNameF');">
 					<input type="text" class=""  style="width: 120px"" name="txtSrhShainNameF" id="txtSrhShainNameF" value="" readonly>
@@ -94,7 +94,7 @@ HashMap<String, String> eigyoshoCnt = eigyosho.get(0);
 				<td class="title center w100">
 					<a>部署</a>
 				</td>
-				<td class="value w1000">
+				<td class="value w600">
 					<input type="text" class=""  style="width: 80px"" name="txtSrhBushoCodeF" id="txtSrhBushoCodeF" maxlength="4"  value=""  onblur="getBushoName('txtSrhBushoCodeF', 'txtSrhBushoNameF');" >
 					<img class="img border" src="./images/search.png"  onclick="opnDialog('srhMstBusho','txtSrhBushoCodeF','txtSrhBushoNameF');">
 					<input type="text" class=""  style="width: 120px"" name="txtSrhBushoNameF" id="txtSrhBushoNameF" value="" readonly>
@@ -108,7 +108,7 @@ HashMap<String, String> eigyoshoCnt = eigyosho.get(0);
 				<td class="title center w100">
 					<a>最終更新日</a>
 				</td>
-				<td class="value w500">
+				<td class="value w310">
 					<input type="text" class=""  style="width: 80px; text-align: right;"" name="txtSrhSaishuKoshinDateF" id="txtSrhSaishuKoshinDateF" maxlength="10" value="">
 					<a>～</a>
 					<input type="text" class=""  style="width: 80px; text-align: right;"" name="txtSrhSaishuKoshinDateT" id="txtSrhSaishuKoshinDateT" maxlength="10" value="">
