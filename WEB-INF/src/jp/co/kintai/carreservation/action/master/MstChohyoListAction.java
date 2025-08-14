@@ -51,17 +51,15 @@ public class MstChohyoListAction extends PJActionBase {
 			// カラム数(列数)の取得
 			int colCount = metaData.getColumnCount(); 
 			
-			// レコード数分繰り返す
-			while (rset.next()){
-				// 1レコード分の配列を用意
-				HashMap<String, String> record = new HashMap<String, String>();
-				// カラム名をkeyとして値を格納
-				for (int i = 1; i <= colCount; i++) {
-					record.put(metaData.getColumnLabel(i), StringUtils.stripToEmpty(rset.getString(i)));
-				}
-				// 配列の格納
-				mstDatas.add(record);
+			rset.next();
+			// 1レコード分の配列を用意
+			HashMap<String, String> record = new HashMap<String, String>();
+			// カラム名をkeyとして値を格納
+			for (int i = 1; i <= colCount; i++) {
+				record.put(metaData.getColumnLabel(i), StringUtils.stripToEmpty(rset.getString(i)));
 			}
+			// 配列の格納
+			mstDatas.add(record);
 		} finally {
 			if (rset != null){ try { rset.close(); } catch (Exception exp){}}
 			if (pstmt != null){ try { pstmt.close(); } catch (Exception exp){}}
@@ -128,9 +126,8 @@ public class MstChohyoListAction extends PJActionBase {
 			// 実行
 			rset = pstmt.executeQuery();
 			// 結果取得
-			while (rset.next()){
-				count = rset.getInt("CNT");
-			}
+			rset.next();
+			count = rset.getInt("CNT");
 		} finally {
 			if (rset != null){ try { rset.close(); } catch (Exception exp){}}
 			if (pstmt != null){ try { pstmt.close(); } catch (Exception exp){}}
@@ -204,9 +201,8 @@ public class MstChohyoListAction extends PJActionBase {
 			// 実行
 			rset = pstmt.executeQuery();
 			// 結果取得
-			while (rset.next()){
-				count = rset.getInt("CNT");
-			}
+			rset.next();
+			count = rset.getInt("CNT");
 		} finally {
 			if (rset != null){ try { rset.close(); } catch (Exception exp){}}
 			if (pstmt != null){ try { pstmt.close(); } catch (Exception exp){}}
@@ -280,9 +276,8 @@ public class MstChohyoListAction extends PJActionBase {
 			// 実行
 			rset = pstmt.executeQuery();
 			// 結果取得
-			while (rset.next()){
-				count = rset.getInt("CNT");
-			}
+			rset.next();
+			count = rset.getInt("CNT");
 		} finally {
 			if (rset != null){ try { rset.close(); } catch (Exception exp){}}
 			if (pstmt != null){ try { pstmt.close(); } catch (Exception exp){}}
@@ -344,9 +339,8 @@ public class MstChohyoListAction extends PJActionBase {
 			// 実行
 			rset = pstmt.executeQuery();
 			// 結果取得
-			while (rset.next()){
-				count = rset.getInt("CNT");
-			}
+			rset.next();
+			count = rset.getInt("CNT");
 		} finally {
 			if (rset != null){ try { rset.close(); } catch (Exception exp){}}
 			if (pstmt != null){ try { pstmt.close(); } catch (Exception exp){}}
