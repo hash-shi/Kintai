@@ -47,6 +47,10 @@
 			<view return="success" path="kintai/kintaiOutData.jsp" />
 		</action>
 
+		<action id="mstShain"  group="public"  class="action.master.MstShainAction"  title="社員マスタメンテ"  header=""  footer=""  script="./script/master/mstShain.js"  style="./css/master/mstShain.css"  authority=""  meta=""  requiredParam="" >
+			<view return="success" path="master/mstShain.jsp" />
+		</action>
+
 		<action id="mstChohyoList"  group="public"  class="action.master.MstChohyoListAction"  title="マスタ帳票リスト"  header=""  footer=""  script="./script/master/mstChohyoList.js"  style="./css/master/mstChohyoList.css"  authority=""  meta=""  requiredParam="" >
 			<view return="success" path="master/mstChohyoList.jsp" />
 		</action>
