@@ -56,11 +56,14 @@
 			<table>
 				<tr>
 					<td class="title center w100 rep">最終更新社員</td>
-					<!-- <td class="value w100" id="lblSaishuKoshinShainNO"></td>  -->
-					<td class="value w120 center" id="lblSaishuKoshinShainName"></td>
+					<td class="label w200" id="lblSaishuKoshinShainName"></td>
 					<td class="title center w100 rep">最終更新日時</td>
-					<td class="value w80 center" id="lblSaishuKoshinDate"></td>
-					<td class="value w80 center" id="lblSaishuKoshinJikan"></td>
+					<td class="label w80 center" id="lblSaishuKoshinDate"></td>
+					<td class="label w80 center" id="lblSaishuKoshinJikan"></td>
+					<input type="hidden" class="" name="hdnSaishuKoshinShainNO" id="hdnSaishuKoshinShainNO"  value="" >
+					<input type="hidden" class="" name="hdnSaishuKoshinShainName" id="hdnSaishuKoshinShainName"  value="" >
+					<input type="hidden" class="" name="hdnSaishuKoshinDate" id="hdnSaishuKoshinDate"  value="" >
+					<input type="hidden" class="" name="hdnSaishuKoshinJikan" id="hdnSaishuKoshinJikan"  value="" >
 				</tr>
 			</table>
 		</div>

@@ -66,8 +66,8 @@ div.inputArea {
 
 .lastEdit {
 	margin-top: auto !important;
-	margin-left: auto !important;
-	width: fit-content  !important;
+/*	margin-left: auto !important;*/
+/*	width: fit-content  !important;*/
 }
 
 
@@ -85,6 +85,15 @@ div.inputArea .value {
 	font-size				: 14px;
 	border					: 1px solid #000000;
 	background-color: #f5f5f5;
+}
+
+div.inputArea .label {
+	height					: 25px;
+/*	display					: inline-block;	*/
+	font-size				: 14px;
+	border					: 1px solid #000000;
+	background-color: #f5f5f5;
+	padding-left		: 5px;
 }
 
 div.inputArea .value input {

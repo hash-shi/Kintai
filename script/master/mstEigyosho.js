@@ -34,6 +34,11 @@ function getMstEigyosho() {
 		for (var i = 0; i < mstDatas.length; i++) {
 			$("#txtEigyoshoCode").val(mstDatas[i]["EigyoshoCode"]);
 			$("#txtEigyoshoName").val(mstDatas[i]["EigyoshoName"]);
+			$("#hdnSaishuKoshinShainNO").val(mstDatas[i]["SaishuKoshinShainNO"]);
+			$("#hdnSaishuKoshinShainName").val(mstDatas[i]["SaishuKoshinShainName"]);
+			$("#hdnSaishuKoshinDate").val(mstDatas[i]["SaishuKoshinDate"]);
+			$("#hdnSaishuKoshinJikan").val(mstDatas[i]["SaishuKoshinJikan"]);
+			
 			// $("#lblSaishuKoshinShainNO").html(mstDatas[i]["SaishuKoshinShainNO"]);
 			$("#lblSaishuKoshinShainName").html(mstDatas[i]["SaishuKoshinShainName"]);
 			$("#lblSaishuKoshinDate").html(mstDatas[i]["SaishuKoshinDate"]);

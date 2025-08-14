@@ -71,17 +71,17 @@
 			<table>
 				<tr>
 					<td class="title center w80">営業所</td>
-					<td class="value w200">
+					<td class="label w200">
 						<%=UtilEscape.htmlspecialchars(eigyoshoCode) %>　<%=UtilEscape.htmlspecialchars(eigyoshoName) %>
 					</td>
 					<td class="title center w80">部署</td>
-					<td class="value w200">
+					<td class="label w200">
 						<%=UtilEscape.htmlspecialchars(bushoCode) %>　<%=UtilEscape.htmlspecialchars(bushoName) %>
 					</td>
-					<td class="value center w100">
+					<td class="label center w100">
 						<%=UtilEscape.htmlspecialchars(loginDate) %>　
 					</td>
-					<td class="value right w200" style="border:none; background-color: transparent;">
+					<td class="label right w200" style="border:none; background-color: transparent;">
 						<img class="img border" src="./images/user.png">
 						<%=UtilEscape.htmlspecialchars(shainName) %>
 					</td>

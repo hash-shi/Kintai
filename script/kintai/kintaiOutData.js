@@ -78,10 +78,10 @@ function onCsvDownload(){
 function onKeyEventF12() {
 	
 	// mainAreaの表示状態を取得
-	var display = $("#mainArea").css("display");
+	var display = $("#mainArea").css("visibility");
 	
 	// mainAreaが非表示(初期表示時)はスキップする。
-	if (display == "block") {
+	if (display == "visible") {
 		// 該当の処理を呼び出す。
 		onCsvDownload();
 	}
