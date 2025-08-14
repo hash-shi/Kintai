@@ -12,14 +12,14 @@
 						<a >対象年月</a>
 					</td>
 					<td class="value w100">
-						<input type="text" class=""  style="width: 80px; text-align: right;" name="txtTaishoYM" id="txtTaishoYM" value="">
+						<input type="text" class=""  style="width: 80px; text-align: right;" name="txtTaishoYM" id="txtTaishoYM" value="" maxlength="7" onblur="getTaishoYMFormat();" >
 						<input type="hidden" name="txtSearchedTaishoYM" id="txtSearchedTaishoYM" value="">
 					</td>
 					<td class="title center w100 req">
 						<a name="lnkShainSearch" id="linkShainSearch" href="#" onclick="opnDialog('srhMstShain','txtShainNO','txtShainName'); return false;">社員NO</a>
 					</td>
 					<td class="value w300">
-						<input type="text" class=""  style="width: 80px" name="txtShainNO" id="txtShainNO" value=""  onblur="getShainName('txtShainNO', 'txtShainName');" >
+						<input type="text" class=""  style="width: 80px" name="txtShainNO" id="txtShainNO" value="" maxlength="4" onblur="getShainName('txtShainNO', 'txtShainName');" >
 						<input type="hidden" name="txtSearchedShainNO" id="txtSearchedShainNO" value="">
 						<img class="img border" name="btnShainSearch" id="btnShainSearch" src="./images/search.png"  onclick="opnDialog('srhMstShain','txtShainNO','txtShainName');">
 						<input type="text" class=""  style="width: 120px" name="txtShainName" id="txtShainName" value="" disabled readonly>
@@ -75,7 +75,7 @@
 								<a >特別作業金額</a>
 							</td>
 							<td class="value w100">
-								<input type="text" class=""  style="width: 80px; text-align: right;" name="txtShinseiKingaku01" id="txtShinseiKingaku01" value="" onblur="setShinseiKingaku01();">
+								<input type="text" class="" maxlength="7" style="width: 80px; text-align: right;" name="txtShinseiKingaku01" id="txtShinseiKingaku01" value="" onblur="setShinseiKingaku01();">
 							</td>
 							<th class="w50">
 							</th>
@@ -83,7 +83,7 @@
 								<a >営業日当手当</a>
 							</td>
 							<td class="value w100">
-								<input type="text" class=""  style="width: 80px; text-align: right;" name="txtShinseiKingaku02" id="txtShinseiKingaku02" value="" onblur="setShinseiKingaku02();">
+								<input type="text" class="" maxlength="7" style="width: 80px; text-align: right;" name="txtShinseiKingaku02" id="txtShinseiKingaku02" value="" onblur="setShinseiKingaku02();">
 							</td>
 							<input type="hidden" name="hdnKihonSaishuKoshinDate" id="hdnKihonSaishuKoshinDate" value="">
 							<input type="hidden" name="hdnKihonSaishuKoshinJikan" id="hdnKihonSaishuKoshinJikan" value="">

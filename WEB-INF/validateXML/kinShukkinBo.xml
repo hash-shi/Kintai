@@ -1,14 +1,14 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <validate>
 	<proc func="search">
-		<variable name="txtTaishoYM" dispName="対象年月">
+		<variable name="txtSearchedTaishoYM" dispName="対象年月">
 			<check class="IsRequired" message="!#itemName#!が入力されていません。" itemName="{dispName}"></check>
-			<check class="IsLength" message="!#itemName#!の指定が不正です。" itemName="{dispName}">
+			<check class="IsLength" message="!#itemName#!の指定が不正です。(YYYY/MM)" itemName="{dispName}">
 				<param name="type">half</param>
 				<param name="comparisonoperator">=</param>
 				<param name="length">7</param>
 			</check>
-			<check class="IsDate" message="!#itemName#!の指定が不正です。" itemName="{dispName}">
+			<check class="IsDate" message="!#itemName#!の指定が不正です。(YYYY/MM)" itemName="{dispName}">
 				<param name="format">yyyy/MM</param>
 			</check>
 		</variable>
@@ -29,7 +29,12 @@
 	<proc func="update">
 		<variable name="txtSearchedTaishoYM" dispName="対象年月">
 			<check class="IsRequired" message="!#itemName#!が入力されていません。" itemName="{dispName}"></check>
-			<check class="IsDate" message="!#itemName#!の指定が不正です。" itemName="{dispName}">
+			<check class="IsLength" message="!#itemName#!の指定が不正です。(YYYY/MM)" itemName="{dispName}">
+				<param name="type">half</param>
+				<param name="comparisonoperator">=</param>
+				<param name="length">7</param>
+			</check>
+			<check class="IsDate" message="!#itemName#!の指定が不正です。(YYYY/MM)" itemName="{dispName}">
 				<param name="format">yyyy/MM</param>
 			</check>
 		</variable>
@@ -85,7 +90,12 @@
 	<proc func="delete">
 		<variable name="txtSearchedTaishoYM" dispName="対象年月">
 			<check class="IsRequired" message="!#itemName#!が入力されていません。" itemName="{dispName}"></check>
-			<check class="IsDate" message="!#itemName#!の指定が不正です。" itemName="{dispName}">
+			<check class="IsLength" message="!#itemName#!の指定が不正です。(YYYY/MM)" itemName="{dispName}">
+				<param name="type">half</param>
+				<param name="comparisonoperator">=</param>
+				<param name="length">7</param>
+			</check>
+			<check class="IsDate" message="!#itemName#!の指定が不正です。(YYYY/MM)" itemName="{dispName}">
 				<param name="format">yyyy/MM</param>
 			</check>
 		</variable>
@@ -95,6 +105,7 @@
 			<check class="ShainTaisyokuValidate" message="該当する!#itemName#!は処理できません。" itemName="{dispName}"></check>
 			<check class="ShainKbnValidate" message="該当する!#itemName#!は出勤簿不要です。" itemName="{dispName}"></check>
 		</variable>
+
 		<variable name="dummy" dispName="">
 			<check class="ShainAuthorityValidate" message="ログインしたユーザIDでは処理できません。">
 				<param name="shainNo">txtSearchedShainNO</param>
