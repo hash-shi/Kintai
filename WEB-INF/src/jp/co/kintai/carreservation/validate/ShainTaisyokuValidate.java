@@ -39,9 +39,9 @@ public class ShainTaisyokuValidate extends ValidateBase {
 		// パラメータ取得
 		//=====================================================================
 		// チェック対象の社員NO
-		String shainNo					= this.getParameter("txtShainNO");
+		String shainNo					= this.getParameter("txtSearchedShainNO");
 		// チェック対象の日付
-		String taishoYM					= this.getParameter("txtTaishoYM");
+		String taishoYM					= this.getParameter("txtSearchedTaishoYM");
 		
 		//=====================================================================
 		// 処理
