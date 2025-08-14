@@ -12,7 +12,6 @@ function toggleVisibility(){
 		
 		document.getElementById("displayShoriArea").style.display = "";
 		$("#txtShoriSentaku").val(kbnName);
-		$("#numSrhShorisentaku").val(value);
 		$("#txtSrhEigyoshoCodeF").val(Saisho);
 		$("#txtSrhEigyoshoCodeT").val(Saidai);
 		getEigyoshoName('txtSrhEigyoshoCodeF', 'txtSrhEigyoshoNameF');
@@ -58,7 +57,7 @@ function toggleVisibility(){
 
 function output(){
 	// 処理選択を取得
-	var value = $("#numSrhShorisentaku").val();
+	var value = $("#rdoShoriSentaku").val();
 	if (value == "01") {
 	 proc("eigyosho",{}, function(data){
 		if (data == undefined){ return; }

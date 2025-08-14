@@ -119,7 +119,6 @@ HashMap<String, String> eigyoshoCnt = eigyosho.get(0);
 	  </div>
 	</div>
 	<div>
-	    <input type="hidden" name="numSrhShorisentaku" id = "numSrhShorisentaku" value="">
 	    <input type="hidden" name="hidSrhEigyoshoCodeF" id="hidSrhEigyoshoCodeF" value="<%=UtilEscape.htmlspecialchars(eigyoshoCnt.get("Saisho")) %>">
 		<input type="hidden" name="hidSrhEigyoshoCodeT" id="hidSrhEigyoshoCodeT" value="<%=UtilEscape.htmlspecialchars(eigyoshoCnt.get("Saidai")) %>">
 	</div>
