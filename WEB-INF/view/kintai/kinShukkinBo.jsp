@@ -2,7 +2,7 @@
 <%@ page import="java.util.ArrayList"%>
 <%@ page import="jp.co.tjs_net.java.framework.common.UtilEscape" %>
 
-<main id="main-content">
+<main id="main-content" class="nom">
     <div class="headerArea" id="headerArea">
 		<div class="inputArea">
 			<table>
