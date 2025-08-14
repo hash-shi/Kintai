@@ -3,6 +3,11 @@
 	<proc func="search">
 		<variable name="txtTaishoYM" dispName="対象年月">
 			<check class="IsRequired" message="!#itemName#!が入力されていません。" itemName="{dispName}"></check>
+			<check class="IsLength" message="!#itemName#!の指定が不正です。" itemName="{dispName}">
+				<param name="type">half</param>
+				<param name="comparisonoperator">=</param>
+				<param name="length">7</param>
+			</check>
 			<check class="IsDate" message="!#itemName#!の指定が不正です。" itemName="{dispName}">
 				<param name="format">yyyy/MM</param>
 			</check>
