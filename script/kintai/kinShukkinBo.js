@@ -162,30 +162,45 @@ function onSearchKinShukkinBo(){
 		}
 	});
 
-	//取得した更新日付・時間が空の時、新規登録として背景色を変更する
-	if($("#hdnKihonSaishuKoshinDate").val() == "" && $("#hdnKihonSaishuKoshinJikan").val() == ""){
-		if (!$("#nyuryokuArea").hasClass("ins")) {
-			$("#nyuryokuArea").addClass("ins");
-		}
-		if ($("#nyuryokuArea").hasClass("uod")) {
-			$("#nyuryokuArea").removeClass("uod");
-		}
-	}
-	else{
-		if (!$("#nyuryokuArea").hasClass("uod")) {
-			$("#nyuryokuArea").addClass("uod");
+
+	if(honshaKakuteizumiFlg){
+		alert("本社確定済みのため処理できません。");
+		if (!$("#nyuryokuArea").hasClass("nom")) {
+			$("#nyuryokuArea").addClass("nom");
 		}
 		if ($("#nyuryokuArea").hasClass("ins")) {
 			$("#nyuryokuArea").removeClass("ins");
 		}
-	}
-
-	if(honshaKakuteizumiFlg){
-		alert("本社確定済みのため処理できません。");
+		if ($("#nyuryokuArea").hasClass("uod")) {
+			$("#nyuryokuArea").removeClass("uod");
+		}
 		document.getElementById("btnDelete").disabled = true;
 		document.getElementById("btnUpdate").disabled = true;
 	}
 	else{
+		//取得した更新日付・時間が空の時、新規登録として背景色を変更する
+		if($("#hdnKihonSaishuKoshinDate").val() == "" && $("#hdnKihonSaishuKoshinJikan").val() == ""){
+			if (!$("#nyuryokuArea").hasClass("ins")) {
+				$("#nyuryokuArea").addClass("ins");
+			}
+			if ($("#nyuryokuArea").hasClass("uod")) {
+				$("#nyuryokuArea").removeClass("uod");
+			}
+			if ($("#nyuryokuArea").hasClass("nom")) {
+				$("#nyuryokuArea").removeClass("nom");
+			}
+		}
+		else{
+			if (!$("#nyuryokuArea").hasClass("uod")) {
+				$("#nyuryokuArea").addClass("uod");
+			}
+			if ($("#nyuryokuArea").hasClass("ins")) {
+				$("#nyuryokuArea").removeClass("ins");
+			}
+			if ($("#nyuryokuArea").hasClass("nom")) {
+				$("#nyuryokuArea").removeClass("nom");
+			}
+		}
 		document.getElementById("btnDelete").disabled = false;
 		document.getElementById("btnUpdate").disabled = false;
 	}
