@@ -79,7 +79,11 @@
 	
 		<download id="csvKyuyokeisanData"  class="download.CsvKyuyokeisanDataDownload" />
 		<download id="csvChinginkeisanshoData"  class="download.CsvChinginkeisanshoDataDownload" />
-		<download id="csvMstchohyolistData"  class="download.CsvMstchohyolistDataDownload" />
+		
+		<download id="csvMstEigyosho"  class="download.CsvMstEigyoshoDownload" />
+		<download id="csvMstBusho"  class="download.CsvMstBushoDownload" />
+		<download id="csvMstShain"  class="download.CsvMstShainDownload" />
+		<download id="csvMstKubun"  class="download.CsvMstKubunDownload" />
 	
 		<download id="downloadCsvFile"  class="download.CsvFileDownload" />
 		<download id="downloadPdfFile"  class="download.PdfFileDownload" />

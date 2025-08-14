@@ -57,23 +57,69 @@ function toggleVisibility(){
 }
 
 function output(){
-	proc("check",{}, function(data){
+	// 処理選択を取得
+	var value = $("#numSrhShorisentaku").val();
+	if (value == "01") {
+	 proc("eigyosho",{}, function(data){
 		if (data == undefined){ return; }
 		if (data["contents"] == undefined){ return; }
 		var contents		= data["contents"];
 		if (contents["result"] == undefined){ return; }
-		var result			= contents["result"];
-		console.log("データ:"+ result);
+		var result   = contents["result"];
 		
 		if(result){
-			console.log("成功");
-			onDownloadPost("csvMstchohyolistData");
+			onDownloadPost("csvMstEigyosho");
 		} else {
 			if(contents["message"] == undefined){ return; }
-			console.log("失敗");
 			alert(contents["message"]);
 		}
-	});
+	 });
+	}else if (value == "02") {
+	 proc("busho",{}, function(data){
+		if (data == undefined){ return; }
+		if (data["contents"] == undefined){ return; }
+		var contents		= data["contents"];
+		if (contents["result"] == undefined){ return; }
+		var result   = contents["result"];
+				
+		if(result){
+			onDownloadPost("csvMstBusho");
+		} else {
+			if(contents["message"] == undefined){ return; }
+			alert(contents["message"]);
+		}
+	 });
+	} else if (value == "03") {
+ 	 proc("shain",{}, function(data){
+ 		if (data == undefined){ return; }
+ 		if (data["contents"] == undefined){ return; }
+ 		var contents		= data["contents"];
+ 		if (contents["result"] == undefined){ return; }
+		var result   = contents["result"];
+ 				
+ 		if(result){
+ 			onDownloadPost("csvMstShain");
+ 		} else {
+ 			if(contents["message"] == undefined){ return; }
+ 			alert(contents["message"]);
+ 		}
+ 	 });
+ 	} else {
+	proc("kbn",{}, function(data){
+		if (data == undefined){ return; }
+		if (data["contents"] == undefined){ return; }
+		var contents		= data["contents"];
+		if (contents["result"] == undefined){ return; }
+		var result   = contents["result"];
+		 				
+		if(result){
+		 	onDownloadPost("csvMstKubun");
+		} else {
+		    if(contents["message"] == undefined){ return; }
+		 	alert(contents["message"]);
+		}
+	 });
+	}
 	
 }
 

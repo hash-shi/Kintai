@@ -13,7 +13,6 @@ import jakarta.servlet.http.HttpServletResponse;
 import org.apache.commons.lang3.StringUtils;
 
 import jp.co.kintai.carreservation.base.PJActionBase;
-import jp.co.kintai.carreservation.define.Define;
 import jp.co.tjs_net.java.framework.database.PreparedStatementFactory;
 import jp.co.tjs_net.java.framework.information.IndexInformation;
 
@@ -81,58 +80,21 @@ public class MstChohyoListAction extends PJActionBase {
 		this.setView("success");
 	}
 	
-	public void check(HttpServletRequest req, HttpServletResponse res) throws Exception {
+	public void eigyosho(HttpServletRequest req, HttpServletResponse res) throws Exception {
 		// DB接続
 		Connection con		= this.getConnection("kintai", req);
-		// 画面パラメータの取得
-		String shorisentaku	= req.getParameter("numSrhShorisentaku");
-		String fromSaishuKoshinDate	= req.getParameter("txtSrhSaishuKoshinDateF");
-		String toSaishuKoshinDate	= req.getParameter("txtSrhSaishuKoshinDateT");
-		int count = 0;
-		ArrayList<HashMap<String, String>> mstDatas = new ArrayList<>();
-		
-		if(shorisentaku.equals("01")||shorisentaku.equals("02")||shorisentaku.equals("03")) {
-			String fromEigyoshoCode	= req.getParameter("txtSrhEigyoshoCodeF");
-			String toEigyoshoCode	= req.getParameter("txtSrhEigyoshoCodeT");
-		  if(shorisentaku.equals("02")) {
-			String fromBushoCode	= req.getParameter("txtSrhBushoCodeF");
-			String toBushoCode	= req.getParameter("txtSrhBushoCodeT");
-			mstDatas = bushoMst(con,fromEigyoshoCode,toEigyoshoCode,fromBushoCode,toBushoCode,fromSaishuKoshinDate,toSaishuKoshinDate);
-		  } else if(shorisentaku.equals("03")) {
-			String fromShainNO	= req.getParameter("txtSrhShainNOF");
-		    String toShainNO	= req.getParameter("txtSrhShainNOT");
-		    mstDatas = shainMst(con,fromEigyoshoCode,toEigyoshoCode,fromShainNO,toShainNO,fromSaishuKoshinDate,toSaishuKoshinDate);
-		  } else {
-			mstDatas = eigyoshoMst(con,fromEigyoshoCode,toEigyoshoCode,fromSaishuKoshinDate,toSaishuKoshinDate);
-		  }
-		} else {
-			String fromKbnCode	= req.getParameter("txtSrhKbnCodeF");
-			String toKbnCode	= req.getParameter("txtSrhKbnCodeT");
-			mstDatas = kbnMst(con,fromKbnCode,toKbnCode,fromSaishuKoshinDate,toSaishuKoshinDate);
-		}
-		
-		count = mstDatas.size();
-		System.out.println("マスタデータ数:" + count);
-		if(count == 0) {
-	    	this.addContent("result", false);
-			this.addContent("message","対象データが存在しません。");
-	    } else {
-	    	this.addContent("result", true);
-	    	req.getSession().setAttribute(Define. SESSION_ID_CSV, mstDatas);
-	    }
-	}
-	
-	private static ArrayList<HashMap<String, String>> eigyoshoMst(Connection con, String fromEigyoshoCode, String toEigyoshoCode, String fromSaishuKoshinDate, String toSaishuKoshinDate) throws Exception {
-		ArrayList<HashMap<String, String>> mstDatas = new ArrayList<>();
-		
-		// DB接続
 		StringBuffer sql				= new StringBuffer();
 		PreparedStatement pstmt			= null;
 		PreparedStatementFactory pstmtf	= new PreparedStatementFactory();
 		ResultSet rset					= null;
-		
+		// 画面パラメータの取得
+		int count = 0;
+		String fromEigyoshoCode	= req.getParameter("txtSrhEigyoshoCodeF");
+		String toEigyoshoCode	= req.getParameter("txtSrhEigyoshoCodeT");
+		String fromSaishuKoshinDate	= req.getParameter("txtSrhSaishuKoshinDateF");
+		String toSaishuKoshinDate	= req.getParameter("txtSrhSaishuKoshinDateT");
 		sql.append(" SELECT ");
-		sql.append(" 	* ");
+		sql.append(" 	COUNT(*) AS CNT ");
 		sql.append(" FROM ");
 		sql.append(" 	MST_EIGYOSHO ");
 		sql.append(" WHERE ");
@@ -166,41 +128,39 @@ public class MstChohyoListAction extends PJActionBase {
 			// 実行
 			rset = pstmt.executeQuery();
 			// 結果取得
-			ResultSetMetaData metaData = rset.getMetaData(); 
-			
-			// カラム数(列数)の取得
-			int colCount = metaData.getColumnCount(); 
-			
-			// レコード数分繰り返す
 			while (rset.next()){
-				// 1レコード分の配列を用意
-				HashMap<String, String> record = new HashMap<String, String>();
-				// カラム名をkeyとして値を格納
-				for (int i = 1; i <= colCount; i++) {
-					record.put(metaData.getColumnLabel(i), StringUtils.stripToEmpty(rset.getString(i)));
-				}
-				// 配列の格納
-				mstDatas.add(record);
+				count = rset.getInt("CNT");
 			}
 		} finally {
 			if (rset != null){ try { rset.close(); } catch (Exception exp){}}
 			if (pstmt != null){ try { pstmt.close(); } catch (Exception exp){}}
 		}
 		
-		return mstDatas;
+		if(count == 0) {
+	    	this.addContent("result", false);
+			this.addContent("message","対象データが存在しません。");
+	    } else {
+	    	this.addContent("result", true);
+	    }
 	}
-
-	private static ArrayList<HashMap<String, String>> bushoMst(Connection con, String fromEigyoshoCode, String toEigyoshoCode, String fromBushoCode,String toBushoCode,String fromSaishuKoshinDate, String toSaishuKoshinDate) throws Exception {
-		ArrayList<HashMap<String, String>> mstDatas = new ArrayList<>();
-		
+	
+	public void busho(HttpServletRequest req, HttpServletResponse res) throws Exception {
 		// DB接続
+		Connection con		= this.getConnection("kintai", req);
 		StringBuffer sql				= new StringBuffer();
 		PreparedStatement pstmt			= null;
 		PreparedStatementFactory pstmtf	= new PreparedStatementFactory();
 		ResultSet rset					= null;
-		
+		// 画面パラメータの取得
+		int count = 0;
+		String fromEigyoshoCode	= req.getParameter("txtSrhEigyoshoCodeF");
+		String toEigyoshoCode	= req.getParameter("txtSrhEigyoshoCodeT");
+		String fromBushoCode	= req.getParameter("txtSrhBushoCodeF");
+		String toBushoCode	= req.getParameter("txtSrhBushoCodeT");
+		String fromSaishuKoshinDate	= req.getParameter("txtSrhSaishuKoshinDateF");
+		String toSaishuKoshinDate	= req.getParameter("txtSrhSaishuKoshinDateT");
 		sql.append(" SELECT ");
-		sql.append(" 	* ");
+		sql.append(" 	COUNT(*) AS CNT ");
 		sql.append(" FROM ");
 		sql.append(" 	MST_BUSHO ");
 		sql.append(" WHERE ");
@@ -244,41 +204,39 @@ public class MstChohyoListAction extends PJActionBase {
 			// 実行
 			rset = pstmt.executeQuery();
 			// 結果取得
-			ResultSetMetaData metaData = rset.getMetaData(); 
-			
-			// カラム数(列数)の取得
-			int colCount = metaData.getColumnCount(); 
-			
-			// レコード数分繰り返す
 			while (rset.next()){
-				// 1レコード分の配列を用意
-				HashMap<String, String> record = new HashMap<String, String>();
-				// カラム名をkeyとして値を格納
-				for (int i = 1; i <= colCount; i++) {
-					record.put(metaData.getColumnLabel(i), StringUtils.stripToEmpty(rset.getString(i)));
-				}
-				// 配列の格納
-				mstDatas.add(record);
+				count = rset.getInt("CNT");
 			}
 		} finally {
 			if (rset != null){ try { rset.close(); } catch (Exception exp){}}
 			if (pstmt != null){ try { pstmt.close(); } catch (Exception exp){}}
 		}
 		
-		return mstDatas;
+		if(count == 0) {
+	    	this.addContent("result", false);
+			this.addContent("message","対象データが存在しません。");
+	    } else {
+	    	this.addContent("result", true);
+	    }
 	}
 	
-	private static ArrayList<HashMap<String, String>> shainMst(Connection con, String fromEigyoshoCode, String toEigyoshoCode, String fromShainNO,String toShainNO,String fromSaishuKoshinDate, String toSaishuKoshinDate) throws Exception {
-		ArrayList<HashMap<String, String>> mstDatas = new ArrayList<>();
-		
+	public void shain(HttpServletRequest req, HttpServletResponse res) throws Exception {
 		// DB接続
+		Connection con		= this.getConnection("kintai", req);
 		StringBuffer sql				= new StringBuffer();
 		PreparedStatement pstmt			= null;
 		PreparedStatementFactory pstmtf	= new PreparedStatementFactory();
 		ResultSet rset					= null;
-		
-		sql.append(" SELECT ");
-		sql.append(" 	* ");
+		// 画面パラメータの取得
+		int count = 0;
+		String fromEigyoshoCode	= req.getParameter("txtSrhEigyoshoCodeF");
+		String toEigyoshoCode	= req.getParameter("txtSrhEigyoshoCodeT");
+		String fromShainNO	= req.getParameter("txtSrhShainNOF");
+		String toShainNO	= req.getParameter("txtSrhShainNOT");
+		String fromSaishuKoshinDate	= req.getParameter("txtSrhSaishuKoshinDateF");
+	    String toSaishuKoshinDate	= req.getParameter("txtSrhSaishuKoshinDateT");
+	    sql.append(" SELECT ");
+		sql.append(" 	COUNT(*) AS CNT ");
 		sql.append(" FROM ");
 		sql.append(" 	MST_SHAIN ");
 		sql.append(" WHERE ");
@@ -322,41 +280,37 @@ public class MstChohyoListAction extends PJActionBase {
 			// 実行
 			rset = pstmt.executeQuery();
 			// 結果取得
-			ResultSetMetaData metaData = rset.getMetaData(); 
-			
-			// カラム数(列数)の取得
-			int colCount = metaData.getColumnCount(); 
-			
-			// レコード数分繰り返す
 			while (rset.next()){
-				// 1レコード分の配列を用意
-				HashMap<String, String> record = new HashMap<String, String>();
-				// カラム名をkeyとして値を格納
-				for (int i = 1; i <= colCount; i++) {
-					record.put(metaData.getColumnLabel(i), StringUtils.stripToEmpty(rset.getString(i)));
-				}
-				// 配列の格納
-				mstDatas.add(record);
+				count = rset.getInt("CNT");
 			}
 		} finally {
 			if (rset != null){ try { rset.close(); } catch (Exception exp){}}
 			if (pstmt != null){ try { pstmt.close(); } catch (Exception exp){}}
 		}
-		
-		return mstDatas;
+	    
+		if(count == 0) {
+	    	this.addContent("result", false);
+			this.addContent("message","対象データが存在しません。");
+	    } else {
+	    	this.addContent("result", true);
+	    }
 	}
 	
-	private static ArrayList<HashMap<String, String>> kbnMst(Connection con, String fromKbnCode, String toKbnCode, String fromSaishuKoshinDate, String toSaishuKoshinDate) throws Exception {
-		ArrayList<HashMap<String, String>> mstDatas = new ArrayList<>();
-		
+	public void kbn(HttpServletRequest req, HttpServletResponse res) throws Exception {
 		// DB接続
+		Connection con		= this.getConnection("kintai", req);
 		StringBuffer sql				= new StringBuffer();
 		PreparedStatement pstmt			= null;
 		PreparedStatementFactory pstmtf	= new PreparedStatementFactory();
 		ResultSet rset					= null;
-		
+		// 画面パラメータの取得
+		int count = 0;
+		String fromKbnCode	= req.getParameter("txtSrhKbnCodeF");
+		String toKbnCode	= req.getParameter("txtSrhKbnCodeT");
+		String fromSaishuKoshinDate	= req.getParameter("txtSrhSaishuKoshinDateF");
+		String toSaishuKoshinDate	= req.getParameter("txtSrhSaishuKoshinDateT");
 		sql.append(" SELECT ");
-		sql.append(" 	* ");
+		sql.append(" 	COUNT(*) AS CNT ");
 		sql.append(" FROM ");
 		sql.append(" 	MST_KUBUN ");
 		sql.append(" WHERE ");
@@ -390,28 +344,19 @@ public class MstChohyoListAction extends PJActionBase {
 			// 実行
 			rset = pstmt.executeQuery();
 			// 結果取得
-			ResultSetMetaData metaData = rset.getMetaData(); 
-			
-			// カラム数(列数)の取得
-			int colCount = metaData.getColumnCount(); 
-			
-			// レコード数分繰り返す
 			while (rset.next()){
-				// 1レコード分の配列を用意
-				HashMap<String, String> record = new HashMap<String, String>();
-				// カラム名をkeyとして値を格納
-				for (int i = 1; i <= colCount; i++) {
-					record.put(metaData.getColumnLabel(i), StringUtils.stripToEmpty(rset.getString(i)));
-				}
-				// 配列の格納
-				mstDatas.add(record);
+				count = rset.getInt("CNT");
 			}
 		} finally {
 			if (rset != null){ try { rset.close(); } catch (Exception exp){}}
 			if (pstmt != null){ try { pstmt.close(); } catch (Exception exp){}}
 		}
 		
-		return mstDatas;
+		if(count == 0) {
+	    	this.addContent("result", false);
+			this.addContent("message","対象データが存在しません。");
+	    } else {
+	    	this.addContent("result", true);
+	    }
 	}
-	
 }
