@@ -5,7 +5,7 @@
 <main id="main-content">
 	<h2>出勤簿入力</h2>
 	<div class="inputArea">
-		<div>
+		<div class="box">
 			<table>
 				<tr>
 					<td class="title center w100 req">
@@ -31,11 +31,11 @@
 			</table>
 		</div>
 		<div id = "nyuryokuArea" style="display: none;">
-			<div>
+			<div class="box">
 				<button type="button" id="btnFirstHalf" onclick="onDisplayNyuryokuArea(true);" disabled>◀前一覧</button>
 				<button type="button" id="btnSecondHalf" onclick="onDisplayNyuryokuArea(false);" disabled>次一覧▶</button>
 			</div>
-			<div>
+			<div class="box">
 				<table class="kinShukkinBoSearchRecord">
 					<thead>
 						<tr>
@@ -67,7 +67,7 @@
 					</tbody>
 				</table>
 			</div>
-			<div>
+			<div class="box">
 				<table>
 					<tbody id="tokubetsuNyuryokuArea">
 						<tr>
@@ -91,7 +91,7 @@
 					</tbody>
 				</table>
 			</div>
-			<div style="text-align: right;">
+			<div style="text-align: right;" class="box">
 				<button type="button" id="btnDelete" onclick="onDelete();">削除 [ F2 ]</button>
 				<button type="button" id="btnUpdate" onclick="onUpdate();">確定 [ F9 ]</button>
 			</div>
