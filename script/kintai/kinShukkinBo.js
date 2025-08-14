@@ -369,7 +369,7 @@ function onDisplayNyuryokuArea(firstHalfFlg){
 					"<input type=\"text\" class=\"\"  style=\"width: 40px; text-align: right;\" maxlength=\"5\" name=\"JitsudoJikan" + i + "\" id=\"JitsudoJikan" + i + "\"  value=\"" + jitsudoJikan + "\"  onchange=\"setShukkinBo('JitsudoJikan', " + i + ");\" >" + 
 				"</td>" +
 				"<td class=\"value center w180\">" + 
-					"<input type=\"text\" class=\"\"  style=\"width: 160px\"\" maxlength=\"40\" name=\"KintaiShinseiBiko" + i + "\" id=\"KintaiShinseiBiko" + i + "\"  value=\"" + kintaiShinseiBiko + "\"  onchange=\"setShukkinBo('KintaiShinseiBiko', " + i + ");\" >" + 
+					"<input type=\"text\" class=\"\"  style=\"width: 300px\"\" maxlength=\"40\" name=\"KintaiShinseiBiko" + i + "\" id=\"KintaiShinseiBiko" + i + "\"  value=\"" + kintaiShinseiBiko + "\"  onchange=\"setShukkinBo('KintaiShinseiBiko', " + i + ");\" >" + 
 				"</td>" +
 				"<td class=\"value center w100\">" + 
 					sinsei1SelectBox + 

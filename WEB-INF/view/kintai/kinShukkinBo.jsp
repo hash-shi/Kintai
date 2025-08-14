@@ -48,7 +48,7 @@
 							<th class="title center w100" colspan="2">	<a >退社</a></th>
 							<th class="title center w70">				<a >通常勤務</a></th>
 
-							<th class="title center w180">				<a >備考</a></th>
+							<th class="title center w320">				<a >備考</a></th>
 							<th class="title center w100">				<a >申請区分１</a></th>
 							<th class="title center w100" colspan="2">	<a >開始</a></th>
 							<th class="title center w100" colspan="2">	<a >終了</a></th>
