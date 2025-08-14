@@ -52,6 +52,29 @@
 
 			<check class="KinShukkinBoValidate" message="更新処理でエラーが発生しました。"></check>
 		</variable>
+
+		<variable name="txtShinseiKingaku01" dispName="特別作業金額">
+			<check class="IsNumber" message="!#itemName#!には数値を入力してください。" itemName="{dispName}">
+				<param name="isReplaceComma">true</param>
+			</check>
+			<check class="MaxNumberLimit" message="!#itemName#!の桁数が不正です。" itemName="{dispName}">
+				<param name="length">9999999</param>
+			</check>
+			<check class="MinNumberLimit" message="!#itemName#!にはマイナスは設定できません。" itemName="{dispName}">
+				<param name="length">0</param>
+			</check>
+		</variable>
+		<variable name="txtShinseiKingaku02" dispName="営業日当手当">
+			<check class="IsNumber" message="!#itemName#!には数値を入力してください。" itemName="{dispName}">
+				<param name="isReplaceComma">true</param>
+			</check>
+			<check class="MaxNumberLimit" message="!#itemName#!の桁数が不正です。" itemName="{dispName}">
+				<param name="length">9999999</param>
+			</check>
+			<check class="MinNumberLimit" message="!#itemName#!にはマイナスは設定できません。" itemName="{dispName}">
+				<param name="length">0</param>
+			</check>
+		</variable>
 	</proc>
 
 	<proc func="delete">

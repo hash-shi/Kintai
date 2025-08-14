@@ -17,6 +17,10 @@ import org.apache.commons.lang3.StringUtils;
 import jp.co.tjs_net.java.framework.base.ValidateBase;
 import jp.co.tjs_net.java.framework.database.PreparedStatementFactory;
 import jp.co.tjs_net.java.framework.information.IndexInformation;
+import jp.co.tjs_net.java.framework.validate.IsNumber;
+import jp.co.tjs_net.java.framework.validate.Length;
+import jp.co.tjs_net.java.framework.validate.MaxNumberLimit;
+import jp.co.tjs_net.java.framework.validate.MinNumberLimit;
 
 public class KinShukkinBoValidate extends ValidateBase {
 
@@ -31,6 +35,10 @@ public class KinShukkinBoValidate extends ValidateBase {
 	 */
 	@Override
 	public boolean doValidate(HttpServletRequest req, HttpServletResponse res, String value, IndexInformation info) throws Exception {
+		IsNumber isNumberValidate = new IsNumber(req, res, info);
+		Length lengthValidate = new Length(req, res, info);
+		MinNumberLimit minNumberLimitValidate = new MinNumberLimit(req, res, info);
+		MaxNumberLimit maxNumberLimitValidate = new MaxNumberLimit(req, res, info);
 		
 		//=====================================================================
 		// パラメータ取得
@@ -46,6 +54,8 @@ public class KinShukkinBoValidate extends ValidateBase {
 				//データが終わったので終了
 				break;
 			}
+
+			//各日ごとに入力チェックを呼び出す
 			StringBuilder kintaiKbnKeySb	= new StringBuilder();
 			kintaiKbnKeySb	.append("KintaiKbn")	.append(String.valueOf(i));
 			String kintaiKbn		= this.getParameter(kintaiKbnKeySb.toString());
@@ -77,87 +87,139 @@ public class KinShukkinBoValidate extends ValidateBase {
 			int intTaishaFun		= 0;
 			BigDecimal dcmJitsudoJikan	= BigDecimal.ZERO;
 			
+
+
+			isNumberValidate.setParams(this.params);
+			if(isNumberValidate.doValidate(req, res, shusshaJi, info) == false) {
+				this.addValidateMessage("出社（時）には数値を入力してください。");
+				return false;
+			}
+
+			this.params.put("type", "half");
+			this.params.put("comparisonoperator", "<");
+			this.params.put("length", "3");
+			lengthValidate.setParams(this.params);
+			if(lengthValidate.doValidate(req, res, shusshaJi, info) == false) {
+				this.addValidateMessage("出社（時）の桁数が不正です。");
+				return false;
+			}
+
+			this.params.put("length", "0");
+			minNumberLimitValidate.setParams(this.params);
+			if(minNumberLimitValidate.doValidate(req, res, shusshaJi, info) == false) {
+				this.addValidateMessage("出社（時）にはマイナスは設定できません。");
+				return false;
+			}
+
+			this.params.put("length", "23");
+			maxNumberLimitValidate.setParams(this.params);
+			if(maxNumberLimitValidate.doValidate(req, res, shusshaJi, info) == false) {
+				this.addValidateMessage("時間は00～23の値で入力してください。");
+				return false;
+			}
+			
+			isNumberValidate.setParams(this.params);
+			if(isNumberValidate.doValidate(req, res, shusshaFun, info) == false) {
+				this.addValidateMessage("出社（分）には数値を入力してください。");
+				return false;
+			}
+
+			this.params.put("type", "half");
+			this.params.put("comparisonoperator", "<");
+			this.params.put("length", "3");
+			lengthValidate.setParams(this.params);
+			if(lengthValidate.doValidate(req, res, shusshaFun, info) == false) {
+				this.addValidateMessage("出社（分）の桁数が不正です。");
+				return false;
+			}
+
+			this.params.put("length", "0");
+			minNumberLimitValidate.setParams(this.params);
+			if(minNumberLimitValidate.doValidate(req, res, shusshaFun, info) == false) {
+				this.addValidateMessage("出社（分）にはマイナスは設定できません。");
+				return false;
+			}
+
+			this.params.put("length", "59");
+			maxNumberLimitValidate.setParams(this.params);
+			if(maxNumberLimitValidate.doValidate(req, res, shusshaFun, info) == false) {
+				this.addValidateMessage("分は00～59の値で入力してください。");
+				return false;
+			}
+
+			isNumberValidate.setParams(this.params);
+			if(isNumberValidate.doValidate(req, res, taishaJi, info) == false) {
+				this.addValidateMessage("退社（時）には数値を入力してください。");
+				return false;
+			}
+
+			this.params.put("type", "half");
+			this.params.put("comparisonoperator", "<");
+			this.params.put("length", "3");
+			lengthValidate.setParams(this.params);
+			if(lengthValidate.doValidate(req, res, taishaJi, info) == false) {
+				this.addValidateMessage("退社（時）の桁数が不正です。");
+				return false;
+			}
+
+			this.params.put("length", "0");
+			minNumberLimitValidate.setParams(this.params);
+			if(minNumberLimitValidate.doValidate(req, res, taishaJi, info) == false) {
+				this.addValidateMessage("退社（時）にはマイナスは設定できません。");
+				return false;
+			}
+
+			this.params.put("length", "23");
+			maxNumberLimitValidate.setParams(this.params);
+			if(maxNumberLimitValidate.doValidate(req, res, taishaJi, info) == false) {
+				this.addValidateMessage("時間は00～23の値で入力してください。");
+				return false;
+			}
+			
+			isNumberValidate.setParams(this.params);
+			if(isNumberValidate.doValidate(req, res, taishaFun, info) == false) {
+				this.addValidateMessage("退社（分）には数値を入力してください。");
+				return false;
+			}
+
+			this.params.put("type", "half");
+			this.params.put("comparisonoperator", "<");
+			this.params.put("length", "3");
+			lengthValidate.setParams(this.params);
+			if(lengthValidate.doValidate(req, res, taishaFun, info) == false) {
+				this.addValidateMessage("退社（分）の桁数が不正です。");
+				return false;
+			}
+
+			this.params.put("length", "0");
+			minNumberLimitValidate.setParams(this.params);
+			if(minNumberLimitValidate.doValidate(req, res, taishaFun, info) == false) {
+				this.addValidateMessage("退社（分）にはマイナスは設定できません。");
+				return false;
+			}
+
+			this.params.put("length", "59");
+			maxNumberLimitValidate.setParams(this.params);
+			if(maxNumberLimitValidate.doValidate(req, res, taishaFun, info) == false) {
+				this.addValidateMessage("分は00～59の値で入力してください。");
+				return false;
+			}
+			
+			
 			try {
 				if("".equals(shusshaJi) == false){
 					intShusshaJi = Integer.parseInt(shusshaJi);
 				}
-			} catch (Exception e) {
-				this.addValidateMessage("出社（時）には数値を入力してください。");
-				return false;
-			}
-			if(intShusshaJi > 100){
-				this.addValidateMessage("出社（時）の桁数が不正です。");
-				return false;
-			}
-			if(intShusshaJi < 0){
-				this.addValidateMessage("出社（時）にはマイナスは設定できません。");
-				return false;
-			}
-			if(intShusshaJi > 23){
-				this.addValidateMessage("時間は00～23の値で入力してください。");
-				return false;
-			}
-
-			try {
 				if("".equals(shusshaFun) == false){
 					intShusshaFun = Integer.parseInt(shusshaFun);
 				}
-			} catch (Exception e) {
-				this.addValidateMessage("出社（分）には数値を入力してください。");
-				return false;
-			}
-			if(intShusshaFun > 100){
-				this.addValidateMessage("出社（分）の桁数が不正です。");
-				return false;
-			}
-			if(intShusshaFun < 0){
-				this.addValidateMessage("出社（分）にはマイナスは設定できません。");
-				return false;
-			}
-			if(intShusshaFun > 59){
-				this.addValidateMessage("分は00～59の値で入力してください。");
-				return false;
-			}
-
-			try {
 				if("".equals(taishaJi) == false){
 					intTaishaJi = Integer.parseInt(taishaJi);
 				}
-			} catch (Exception e) {
-				this.addValidateMessage("退社（時）には数値を入力してください。");
-				return false;
-			}
-			if(intTaishaJi > 100){
-				this.addValidateMessage("退社（時）の桁数が不正です。");
-				return false;
-			}
-			if(intTaishaJi < 0){
-				this.addValidateMessage("退社（時）にはマイナスは設定できません。");
-				return false;
-			}
-			if(intTaishaJi > 23){
-				this.addValidateMessage("時間は00～23の値で入力してください。");
-				return false;
-			}
-
-			try {
 				if("".equals(taishaFun) == false){
 					intTaishaFun = Integer.parseInt(taishaFun);
 				}
 			} catch (Exception e) {
-				this.addValidateMessage("退社（分）には数値を入力してください。");
-				return false;
-			}
-			if(intTaishaFun > 100){
-				this.addValidateMessage("退社（分）の桁数が不正です。");
-				return false;
-			}
-			if(intTaishaFun < 0){
-				this.addValidateMessage("退社（分）にはマイナスは設定できません。");
-				return false;
-			}
-			if(intTaishaFun > 59){
-				this.addValidateMessage("分は00～59の値で入力してください。");
 				return false;
 			}
 
@@ -172,23 +234,27 @@ public class KinShukkinBoValidate extends ValidateBase {
 				return false;
 			}
 
+			isNumberValidate.setParams(this.params);
+			if(isNumberValidate.doValidate(req, res, jitsudoJikan, info) == false) {
+				this.addValidateMessage("実働時間には数値を入力してください。");
+				return false;
+			}
+			this.params.put("length", "0");
+			minNumberLimitValidate.setParams(this.params);
+			if(minNumberLimitValidate.doValidate(req, res, jitsudoJikan, info) == false) {
+				this.addValidateMessage("実働時間にはマイナスは設定できません。");
+				return false;
+			}
+
 			try {
 				if("".equals(jitsudoJikan) == false){
 					dcmJitsudoJikan = new BigDecimal(jitsudoJikan);
 				}
+				if((dcmJitsudoJikan.precision() - dcmJitsudoJikan.scale() > 2) || (dcmJitsudoJikan.scale() > 2)){
+						this.addValidateMessage("実働時間の桁数が不正です。");
+						return false;
+					}
 			} catch (Exception e) {
-				this.addValidateMessage("実働時間には数値を入力してください。");
-				return false;
-			}
-			if(
-				(dcmJitsudoJikan.precision() - dcmJitsudoJikan.scale() > 2) ||
-				(dcmJitsudoJikan.scale() > 2)
-			){
-				this.addValidateMessage("実働時間の桁数が不正です。");
-				return false;
-			}
-			if(dcmJitsudoJikan.compareTo(BigDecimal.ZERO) < 0){
-				this.addValidateMessage("実働時間にはマイナスは設定できません。");
 				return false;
 			}
 			
@@ -216,87 +282,138 @@ public class KinShukkinBoValidate extends ValidateBase {
 				int intShuryoFun	= 0;
 				BigDecimal dcmJikan	= BigDecimal.ZERO;
 				
+
+				
+				isNumberValidate.setParams(this.params);
+				if(isNumberValidate.doValidate(req, res, kaishiJi, info) == false) {
+					this.addValidateMessage("勤怠申請区分開始（時）" + String.valueOf(j) + "には数値を入力してください。");
+					return false;
+				}
+
+				this.params.put("type", "half");
+				this.params.put("comparisonoperator", "<");
+				this.params.put("length", "3");
+				lengthValidate.setParams(this.params);
+				if(lengthValidate.doValidate(req, res, kaishiJi, info) == false) {
+					this.addValidateMessage("勤怠申請区分開始（時）" + String.valueOf(j) + "の桁数が不正です。");
+					return false;
+				}
+
+				this.params.put("length", "0");
+				minNumberLimitValidate.setParams(this.params);
+				if(minNumberLimitValidate.doValidate(req, res, kaishiJi, info) == false) {
+					this.addValidateMessage("勤怠申請区分開始（時）" + String.valueOf(j) + "にはマイナスは設定できません。");
+					return false;
+				}
+
+				this.params.put("length", "23");
+				maxNumberLimitValidate.setParams(this.params);
+				if(maxNumberLimitValidate.doValidate(req, res, kaishiJi, info) == false) {
+					this.addValidateMessage("時間は00～23の値で入力してください。");
+					return false;
+				}
+				
+				isNumberValidate.setParams(this.params);
+				if(isNumberValidate.doValidate(req, res, kaishiFun, info) == false) {
+					this.addValidateMessage("勤怠申請区分開始（分）" + String.valueOf(j) + "には数値を入力してください。");
+					return false;
+				}
+
+				this.params.put("type", "half");
+				this.params.put("comparisonoperator", "<");
+				this.params.put("length", "3");
+				lengthValidate.setParams(this.params);
+				if(lengthValidate.doValidate(req, res, kaishiFun, info) == false) {
+					this.addValidateMessage("勤怠申請区分開始（分）" + String.valueOf(j) + "の桁数が不正です。");
+					return false;
+				}
+
+				this.params.put("length", "0");
+				minNumberLimitValidate.setParams(this.params);
+				if(minNumberLimitValidate.doValidate(req, res, kaishiFun, info) == false) {
+					this.addValidateMessage("勤怠申請区分開始（分）" + String.valueOf(j) + "にはマイナスは設定できません。");
+					return false;
+				}
+
+				this.params.put("length", "59");
+				maxNumberLimitValidate.setParams(this.params);
+				if(maxNumberLimitValidate.doValidate(req, res, kaishiFun, info) == false) {
+					this.addValidateMessage("分は00～59の値で入力してください。");
+					return false;
+				}
+
+				isNumberValidate.setParams(this.params);
+				if(isNumberValidate.doValidate(req, res, shuryoJi, info) == false) {
+					this.addValidateMessage("勤怠申請区分終了（時）" + String.valueOf(j) + "には数値を入力してください。");
+					return false;
+				}
+
+				this.params.put("type", "half");
+				this.params.put("comparisonoperator", "<");
+				this.params.put("length", "3");
+				lengthValidate.setParams(this.params);
+				if(lengthValidate.doValidate(req, res, shuryoJi, info) == false) {
+					this.addValidateMessage("勤怠申請区分終了（時）" + String.valueOf(j) + "の桁数が不正です。");
+					return false;
+				}
+
+				this.params.put("length", "0");
+				minNumberLimitValidate.setParams(this.params);
+				if(minNumberLimitValidate.doValidate(req, res, shuryoJi, info) == false) {
+					this.addValidateMessage("勤怠申請区分終了（時）" + String.valueOf(j) + "にはマイナスは設定できません。");
+					return false;
+				}
+
+				this.params.put("length", "23");
+				maxNumberLimitValidate.setParams(this.params);
+				if(maxNumberLimitValidate.doValidate(req, res, shuryoJi, info) == false) {
+					this.addValidateMessage("時間は00～23の値で入力してください。");
+					return false;
+				}
+				
+				isNumberValidate.setParams(this.params);
+				if(isNumberValidate.doValidate(req, res, shuryoFun, info) == false) {
+					this.addValidateMessage("勤怠申請区分終了（分）" + String.valueOf(j) + "には数値を入力してください。");
+					return false;
+				}
+
+				this.params.put("type", "half");
+				this.params.put("comparisonoperator", "<");
+				this.params.put("length", "3");
+				lengthValidate.setParams(this.params);
+				if(lengthValidate.doValidate(req, res, shuryoFun, info) == false) {
+					this.addValidateMessage("勤怠申請区分終了（分）" + String.valueOf(j) + "の桁数が不正です。");
+					return false;
+				}
+
+				this.params.put("length", "0");
+				minNumberLimitValidate.setParams(this.params);
+				if(minNumberLimitValidate.doValidate(req, res, shuryoFun, info) == false) {
+					this.addValidateMessage("勤怠申請区分終了（分）" + String.valueOf(j) + "にはマイナスは設定できません。");
+					return false;
+				}
+
+				this.params.put("length", "59");
+				maxNumberLimitValidate.setParams(this.params);
+				if(maxNumberLimitValidate.doValidate(req, res, shuryoFun, info) == false) {
+					this.addValidateMessage("分は00～59の値で入力してください。");
+					return false;
+				}
+				
 				try {
 					if("".equals(kaishiJi) == false){
 						intKaishiJi = Integer.parseInt(kaishiJi);
 					}
-				} catch (Exception e) {
-					this.addValidateMessage("勤怠申請区分開始（時）" + String.valueOf(j) + "には数値を入力してください。");
-					return false;
-				}
-				if(intKaishiJi > 100){
-					this.addValidateMessage("勤怠申請区分開始（時）" + String.valueOf(j) + "の桁数が不正です。");
-					return false;
-				}
-				if(intKaishiJi < 0){
-					this.addValidateMessage("勤怠申請区分開始（時）" + String.valueOf(j) + "にはマイナスは設定できません。");
-					return false;
-				}
-				if(intKaishiJi > 23){
-					this.addValidateMessage("時間は00～23の値で入力してください。");
-					return false;
-				}
-
-				try {
 					if("".equals(kaishiFun) == false){
 						intKaishiFun = Integer.parseInt(kaishiFun);
 					}
-				} catch (Exception e) {
-					this.addValidateMessage("勤怠申請区分開始（分）" + String.valueOf(j) + "には数値を入力してください。");
-					return false;
-				}
-				if(intKaishiFun > 100){
-					this.addValidateMessage("勤怠申請区分開始（分）" + String.valueOf(j) + "の桁数が不正です。");
-					return false;
-				}
-				if(intKaishiFun < 0){
-					this.addValidateMessage("勤怠申請区分開始（分）" + String.valueOf(j) + "にはマイナスは設定できません。");
-					return false;
-				}
-				if(intKaishiFun > 59){
-					this.addValidateMessage("分は00～59の値で入力してください。");
-					return false;
-				}
-
-				try {
 					if("".equals(shuryoJi) == false){
 						intShuryoJi = Integer.parseInt(shuryoJi);
 					}
-				} catch (Exception e) {
-					this.addValidateMessage("勤怠申請区分終了（時）" + String.valueOf(j) + "には数値を入力してください。");
-					return false;
-				}
-				if(intShuryoJi > 100){
-					this.addValidateMessage("勤怠申請区分終了（時）" + String.valueOf(j) + "の桁数が不正です。");
-					return false;
-				}
-				if(intShuryoJi < 0){
-					this.addValidateMessage("勤怠申請区分終了（時）" + String.valueOf(j) + "にはマイナスは設定できません。");
-					return false;
-				}
-				if(intShuryoJi > 23){
-					this.addValidateMessage("時間は00～23の値で入力してください。");
-					return false;
-				}
-
-				try {
 					if("".equals(shuryoFun) == false){
 						intShuryoFun = Integer.parseInt(shuryoFun);
 					}
 				} catch (Exception e) {
-					this.addValidateMessage("勤怠申請区分終了（分）" + String.valueOf(j) + "には数値を入力してください。");
-					return false;
-				}
-				if(intShuryoFun > 100){
-					this.addValidateMessage("勤怠申請区分終了（分）" + String.valueOf(j) + "の桁数が不正です。");
-					return false;
-				}
-				if(intShuryoFun < 0){
-					this.addValidateMessage("勤怠申請区分終了（分）" + String.valueOf(j) + "にはマイナスは設定できません。");
-					return false;
-				}
-				if(intShuryoFun > 59){
-					this.addValidateMessage("分は00～59の値で入力してください。");
 					return false;
 				}
 
@@ -311,23 +428,27 @@ public class KinShukkinBoValidate extends ValidateBase {
 					return false;
 				}
 
+				isNumberValidate.setParams(this.params);
+				if(isNumberValidate.doValidate(req, res, jikan, info) == false) {
+					this.addValidateMessage("勤怠申請時間" + String.valueOf(j) + "には数値を入力してください。");
+					return false;
+				}
+				this.params.put("length", "0");
+				minNumberLimitValidate.setParams(this.params);
+				if(minNumberLimitValidate.doValidate(req, res, jikan, info) == false) {
+					this.addValidateMessage("勤怠申請時間" + String.valueOf(j) + "にはマイナスは設定できません。");
+					return false;
+				}
+
 				try {
 					if("".equals(jikan) == false){
 						dcmJikan = new BigDecimal(jikan);
 					}
+					if((dcmJikan.precision() - dcmJikan.scale() > 2) || (dcmJikan.scale() > 2)){
+						this.addValidateMessage("勤怠申請時間" + String.valueOf(j) + "の桁数が不正です。");
+							return false;
+						}
 				} catch (Exception e) {
-					this.addValidateMessage("勤怠申請時間" + String.valueOf(j) + "には数値を入力してください。");
-					return false;
-				}
-				if(
-					(dcmJikan.precision() - dcmJikan.scale() > 2) ||
-					(dcmJikan.scale() > 2)
-				){
-					this.addValidateMessage("勤怠申請時間" + String.valueOf(j) + "の桁数が不正です。");
-					return false;
-				}
-				if(dcmJikan.compareTo(BigDecimal.ZERO) < 0){
-					this.addValidateMessage("勤怠申請時間" + String.valueOf(j) + "にはマイナスは設定できません。");
 					return false;
 				}
 				
@@ -362,53 +483,6 @@ public class KinShukkinBoValidate extends ValidateBase {
 				return false;
 			}
 
-		}
-
-		
-		String shinseiKingaku01 = this.getParameter("txtShinseiKingaku01");
-		if(StringUtils.isEmpty(shinseiKingaku01)) {
-			shinseiKingaku01 = "0";
-		}
-		BigDecimal dcmDhinseiKingaku01 = BigDecimal.ZERO;
-		try {
-			dcmDhinseiKingaku01 = new BigDecimal(shinseiKingaku01);
-		} catch (Exception e) {
-			this.addValidateMessage("特別作業金額には数値を入力してください。");
-			return false;
-		}
-		if(
-			(dcmDhinseiKingaku01.precision() - dcmDhinseiKingaku01.scale() > 7) ||
-			(dcmDhinseiKingaku01.scale() > 0)
-		){
-			this.addValidateMessage("特別作業金額の桁数が不正です。");
-			return false;
-		}
-		if(dcmDhinseiKingaku01.compareTo(BigDecimal.ZERO) < 0){
-			this.addValidateMessage("特別作業金額にはマイナスは設定できません。");
-			return false;
-		}
-
-		String shinseiKingaku02 = this.getParameter("txtShinseiKingaku02");
-		if(StringUtils.isEmpty(shinseiKingaku02)) {
-			shinseiKingaku02 = "0";
-		}
-		BigDecimal dcmDhinseiKingaku02 = BigDecimal.ZERO;
-		try {
-			dcmDhinseiKingaku02 = new BigDecimal(shinseiKingaku02);
-		} catch (Exception e) {
-			this.addValidateMessage("営業日当手当には数値を入力してください。");
-			return false;
-		}
-		if(
-			(dcmDhinseiKingaku02.precision() - dcmDhinseiKingaku02.scale() > 7) ||
-			(dcmDhinseiKingaku02.scale() > 0)
-		){
-			this.addValidateMessage("営業日当手当の桁数が不正です。");
-			return false;
-		}
-		if(dcmDhinseiKingaku02.compareTo(BigDecimal.ZERO) < 0){
-			this.addValidateMessage("営業日当手当にはマイナスは設定できません。");
-			return false;
 		}
 
 		return true;

@@ -33,6 +33,7 @@ public class KinShukkinBoExclusiveValidate extends ValidateBase {
 				break;
 			}
 
+			//各日ごとに排他チェックを呼び出す
 			StringBuilder meisaiSaishuKoshinDateKeySb	= new StringBuilder();
 			meisaiSaishuKoshinDateKeySb	.append("MeisaiSaishuKoshinDate")	.append(String.valueOf(i));
 			StringBuilder meisaiSaishuKoshinJikanKeySb	= new StringBuilder();
