@@ -10,7 +10,7 @@ function toggleVisibility(){
 		let Saisho = $("#hidSrhEigyoshoCodeF").val();
 		let Saidai = $("#hidSrhEigyoshoCodeT").val();
 		
-		document.getElementById("displayShoriArea").style.display = "";
+		$("#displayShoriArea").css("visibility", "visible");
 		$("#txtShoriSentaku").val(kbnName);
 		$("#txtSrhEigyoshoCodeF").val(Saisho);
 		$("#txtSrhEigyoshoCodeT").val(Saidai);
@@ -28,29 +28,29 @@ function toggleVisibility(){
 	    $("#txtSrhKbnCodeT").val("");
 		
 		if(value == "01"||value == "02"||value == "03"){
-			document.getElementById("displayKbnArea").style.display = 'none';
-			document.getElementById("displayEigyoshoArea").style.display = "";
+			$("#displayKbnArea").css("display", "none");
+			$("#displayEigyoshoArea").css("display", "table-row");
 			$("#txtSrhEigyoshoCodeF").focus();
 		 if(value == "02"){
-			document.getElementById("displayBushoArea").style.display = "";
-			document.getElementById("displayShainArea").style.display = 'none';
+			$("#displayBushoArea").css("display", "table-row");
+			$("#displayShainArea").css("display", "none");
 		 } else if(value == "03") {
-			document.getElementById("displayBushoArea").style.display = 'none';
-			document.getElementById("displayShainArea").style.display = "";
+			$("#displayBushoArea").css("display", "none");
+			$("#displayShainArea").css("display", "table-row");
 		 } else {
-			document.getElementById("displayBushoArea").style.display = 'none';
-			document.getElementById("displayShainArea").style.display = 'none';
+			$("#displayBushoArea").css("display", "none");
+			$("#displayShainArea").css("display", "none");
 		 }
 		} else {
-			document.getElementById("displayEigyoshoArea").style.display = 'none';
-			document.getElementById("displayKbnArea").style.display = "";
-			document.getElementById("displayBushoArea").style.display = 'none';
-			document.getElementById("displayShainArea").style.display = 'none';
+			$("#displayEigyoshoArea").css("display", "none");
+			$("#displayKbnArea").css("display", "table-row");
+			$("#displayBushoArea").css("display", "none");
+			$("#displayShainArea").css("display", "none");
 			$("#txtSrhKbnCodeF").focus();
 		}
-		document.getElementById("displayBottonArea").style.display = "";
 		$("#txtSrhSaishuKoshinDateF").val(formatDateYYYYMMDD(date, "/"));
 		$("#txtSrhSaishuKoshinDateT").val(formatDateYYYYMMDD(date, "/"));
+		$("#displayBottonArea").css("visibility", "visible");
 		// mainAreaの背景色を変更
 		if (!$("#displayShoriArea").hasClass("ins")) {
 			$("#displayShoriArea").addClass("ins");

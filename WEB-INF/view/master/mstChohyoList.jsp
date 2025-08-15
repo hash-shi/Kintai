@@ -37,7 +37,7 @@ HashMap<String, String> eigyoshoCnt = eigyosho.get(0);
 	  </div>
 	</div>
 	
-	<div id="displayShoriArea"  class="mainArea" style="display: none;">
+	<div id="displayShoriArea"  class="mainArea" style="visibility:hidden;">
 	  <div class="inputArea">
 		<table>
 		    <tr>
@@ -122,7 +122,7 @@ HashMap<String, String> eigyoshoCnt = eigyosho.get(0);
 	    <input type="hidden" name="hidSrhEigyoshoCodeF" id="hidSrhEigyoshoCodeF" value="<%=UtilEscape.htmlspecialchars(eigyoshoCnt.get("Saisho")) %>">
 		<input type="hidden" name="hidSrhEigyoshoCodeT" id="hidSrhEigyoshoCodeT" value="<%=UtilEscape.htmlspecialchars(eigyoshoCnt.get("Saidai")) %>">
 	</div>
-	<div class="buttonArea right" id="displayBottonArea" style="display: none;">
+	<div class="buttonArea right" id="displayBottonArea" style="visibility:hidden;">
 			<button type="button" onclick="output()">作表[F12]</button>
 	</div>
 	
