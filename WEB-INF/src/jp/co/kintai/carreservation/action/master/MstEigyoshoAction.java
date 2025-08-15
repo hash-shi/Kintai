@@ -125,15 +125,14 @@ public class MstEigyoshoAction extends PJActionBase {
 	 * @param res
 	 * @throws Exception
 	 */
-	public void update(HttpServletRequest req, HttpServletResponse res) throws Exception {
+	public void insert(HttpServletRequest req, HttpServletResponse res) throws Exception {
 		
 	}
-	public void update_(HttpServletRequest req, HttpServletResponse res) throws Exception {
+	public void insert_(HttpServletRequest req, HttpServletResponse res) throws Exception {
 		
 		//=====================================================================
 		// パラメータ取得
 		//=====================================================================
-		String isNew		= req.getParameter("hdnIsNew");
 		String eigyoshoCode	= req.getParameter("txtEigyoshoCode");
 		String eigyoshoName	= req.getParameter("txtEigyoshoName");
 		
@@ -150,76 +149,110 @@ public class MstEigyoshoAction extends PJActionBase {
 		StringBuffer sql				= new StringBuffer();
 		PreparedStatementFactory pstmtf	= new PreparedStatementFactory();
 		
-		if ("1".equals(isNew)) {
-			
-			//=====================================================================
-			// 登録
-			//=====================================================================
-			pstmtf.clear();
-			sql.setLength(0);
-			sql.append(" INSERT INTO MST_EIGYOSHO ( ");
-			sql.append("  EigyoshoCode ");
-			sql.append("  ,EigyoshoName ");
-			sql.append("  ,SaishuKoshinShainNO ");
-			sql.append("  ,SaishuKoshinDate ");
-			sql.append("  ,SaishuKoshinJikan ");
-			sql.append(" ) VALUES ( ");
-			sql.append("  ? ");
-			sql.append("  ,? ");
-			sql.append("  ,? ");
-			sql.append("  ,? ");
-			sql.append("  ,? ");
-			sql.append(" ) ");
-			
-			// パラメータ設定
-			pstmtf.addValue("String", eigyoshoCode);
-			pstmtf.addValue("String", eigyoshoName);
-			pstmtf.addValue("String", userInformation.getShainNO());
-			pstmtf.addValue("String", PJActionBase.getNowDate());
-			pstmtf.addValue("String", PJActionBase.getNowTime());
-			
-			try {
-				pstmt = con.prepareStatement(sql.toString());
-				pstmtf.setPreparedStatement(pstmt);
-				pstmt.execute();
-			} catch (Exception exp){
-				exp.printStackTrace();
-			} finally {
-				if (pstmt != null){ try { pstmt.close(); } catch (Exception exp){}}
-			}
-			
-		} else {
-			
-			//=====================================================================
-			// 更新
-			//=====================================================================
-			pstmtf.clear();
-			sql.setLength(0);
-			sql.append(" UPDATE MST_EIGYOSHO SET ");
-			sql.append("  SaishuKoshinShainNO = ? ");
-			sql.append("  ,SaishuKoshinDate = ?  ");
-			sql.append("  ,SaishuKoshinJikan = ?  ");
-			sql.append("  ,EigyoshoName = ? ");
-			sql.append(" WHERE ");
-			sql.append(" 	1 = 1 ");
-			sql.append(" AND EigyoshoCode = ? ");
-			
-			// パラメータ設定
-			pstmtf.addValue("String", userInformation.getShainNO());
-			pstmtf.addValue("String", PJActionBase.getNowDate());
-			pstmtf.addValue("String", PJActionBase.getNowTime());
-			pstmtf.addValue("String", eigyoshoName);
-			pstmtf.addValue("String", eigyoshoCode);
-			
-			try {
-				pstmt = con.prepareStatement(sql.toString());
-				pstmtf.setPreparedStatement(pstmt);
-				pstmt.execute();
-			} catch (Exception exp){
-				exp.printStackTrace();
-			} finally {
-				if (pstmt != null){ try { pstmt.close(); } catch (Exception exp){}}
-			}
+		//=====================================================================
+		// 登録
+		//=====================================================================
+		pstmtf.clear();
+		sql.setLength(0);
+		sql.append(" INSERT INTO MST_EIGYOSHO ( ");
+		sql.append("  EigyoshoCode ");
+		sql.append("  ,EigyoshoName ");
+		sql.append("  ,SaishuKoshinShainNO ");
+		sql.append("  ,SaishuKoshinDate ");
+		sql.append("  ,SaishuKoshinJikan ");
+		sql.append(" ) VALUES ( ");
+		sql.append("  ? ");
+		sql.append("  ,? ");
+		sql.append("  ,? ");
+		sql.append("  ,? ");
+		sql.append("  ,? ");
+		sql.append(" ) ");
+		
+		// パラメータ設定
+		pstmtf.addValue("String", eigyoshoCode);
+		pstmtf.addValue("String", eigyoshoName);
+		pstmtf.addValue("String", userInformation.getShainNO());
+		pstmtf.addValue("String", PJActionBase.getNowDate());
+		pstmtf.addValue("String", PJActionBase.getNowTime());
+		
+		try {
+			pstmt = con.prepareStatement(sql.toString());
+			pstmtf.setPreparedStatement(pstmt);
+			pstmt.execute();
+		} catch (Exception exp){
+			exp.printStackTrace();
+		} finally {
+			if (pstmt != null){ try { pstmt.close(); } catch (Exception exp){}}
 		}
+	}
+	
+	/**
+	 * @param req
+	 * @param res
+	 * @throws Exception
+	 */
+	public void update(HttpServletRequest req, HttpServletResponse res) throws Exception {
+		
+	}
+	public void update_(HttpServletRequest req, HttpServletResponse res) throws Exception {
+		
+		//=====================================================================
+		// パラメータ取得
+		//=====================================================================
+		String eigyoshoCode	= req.getParameter("txtEigyoshoCode");
+		String eigyoshoName	= req.getParameter("txtEigyoshoName");
+		
+		//=====================================================================
+		// ユーザー情報の取得
+		//=====================================================================
+		UserInformation userInformation = (UserInformation)req.getSession().getAttribute(Define.SESSION_ID);
+		
+		//=====================================================================
+		// DB接続
+		//=====================================================================
+		Connection con = this.getConnection("kintai", req);		
+		PreparedStatement pstmt			= null;
+		StringBuffer sql				= new StringBuffer();
+		PreparedStatementFactory pstmtf	= new PreparedStatementFactory();
+		
+		//=====================================================================
+		// 更新
+		//=====================================================================
+		pstmtf.clear();
+		sql.setLength(0);
+		sql.append(" UPDATE MST_EIGYOSHO SET ");
+		sql.append("  SaishuKoshinShainNO = ? ");
+		sql.append("  ,SaishuKoshinDate = ?  ");
+		sql.append("  ,SaishuKoshinJikan = ?  ");
+		sql.append("  ,EigyoshoName = ? ");
+		sql.append(" WHERE ");
+		sql.append(" 	1 = 1 ");
+		sql.append(" AND EigyoshoCode = ? ");
+		
+		// パラメータ設定
+		pstmtf.addValue("String", userInformation.getShainNO());
+		pstmtf.addValue("String", PJActionBase.getNowDate());
+		pstmtf.addValue("String", PJActionBase.getNowTime());
+		pstmtf.addValue("String", eigyoshoName);
+		pstmtf.addValue("String", eigyoshoCode);
+		
+		try {
+			pstmt = con.prepareStatement(sql.toString());
+			pstmtf.setPreparedStatement(pstmt);
+			pstmt.execute();
+		} catch (Exception exp){
+			exp.printStackTrace();
+		} finally {
+			if (pstmt != null){ try { pstmt.close(); } catch (Exception exp){}}
+		}
+	}
+	/**
+	 * @param req
+	 * @param res
+	 * @throws Exception
+	 */
+	public void copy_(HttpServletRequest req, HttpServletResponse res) throws Exception {
+		// やりたい処理自体は登録処理と同一のため、insert_を呼び出すことで実施される。
+		insert_(req, res);
 	}
 }

@@ -33,6 +33,12 @@ function getMstEigyosho() {
 			$("#mainArea").addClass("upd");
 		}
 		
+		// 新規の時は営業所コードを非活性
+		$("#txtEigyoshoCode").prop('readonly', false);
+		if (isNew == "1") {
+			$("#txtEigyoshoCode").prop('readonly', true);
+		}
+		
 		// 新規の時は削除ボタンは非活性
 		$("#btnDelete").prop('disabled', false);
 		if (isNew == "1") {
@@ -93,16 +99,60 @@ function onDelete() {
 //****************************************************************************
 function onUpdate() {
 	
-	proc("update",{}, function(data){
-		// 確認メッセージ
-		if(!confirm("データの更新を行います。\nよろしいですか？")) { return; }
-		
-		// 更新処理の本体
-		proc("update_",{}, function(data){
-			// 完了メッセージ
-			alert("データが正常に更新されました。");
-			// 画面のクリアなど何かしらの処理
-			getMstEigyosho();
+	// 新規モードと更新モードで分岐
+	var isNew = $("#hdnIsNew").val();
+	
+	// 更新モード時の切り替えに必要
+	var txtEigyoshoCode = $("#txtEigyoshoCode").val();
+	var hdnEigyoshoCode = $("#hdnEigyoshoCode").val();
+	
+	if (isNew == "1") {
+		// 新規モード
+		proc("insert",{}, function(data){
+			// 確認メッセージ
+			if(!confirm("データの更新を行います。\nよろしいですか？")) { return; }
+			// 登録処理の本体
+			proc("insert_",{}, function(data){
+				// 完了メッセージ
+				alert("データが正常に更新されました。");
+				// 画面のクリアなど何かしらの処理
+				// 処理した営業所コードで再読込
+				$("#srhTxtEigyoshoCode").val($("#txtEigyoshoCode").val());
+				getMstEigyosho();
+			});
 		});
-	});
+	} else {
+		// 更新モード
+		proc("update",{}, function(data){
+			
+			if (txtEigyoshoCode == hdnEigyoshoCode) {
+				// 画面項目と隠し項目が同じ値 = 単純にデータ更新
+				// 確認メッセージ
+				if(!confirm("データの更新を行います。\nよろしいですか？")) { return; }
+				// 登録処理の本体
+				proc("update_",{}, function(data){
+					// 完了メッセージ
+					alert("データが正常に更新されました。");
+					// 画面のクリアなど何かしらの処理
+					// 処理した営業所コードで再読込
+					$("#srhTxtEigyoshoCode").val($("#txtEigyoshoCode").val());
+					getMstEigyosho();
+				});
+			} else {
+				// 画面項目と隠し項目が異なる値 = データコピー(画面で入力した新しい値で登録)
+				// 確認メッセージ
+				if(!confirm("データのコピーを行います。\nよろしいですか？")) { return; }
+				
+				// 登録処理の本体
+				proc("copy_",{}, function(data){
+					// 完了メッセージ
+					alert("データが正常に更新されました。");
+					// 画面のクリアなど何かしらの処理
+					// 処理した営業所コードで再読込
+					$("#srhTxtEigyoshoCode").val($("#txtEigyoshoCode").val());
+					getMstEigyosho();
+				});
+			}
+		});
+	}
 }

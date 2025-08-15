@@ -24,7 +24,7 @@
 						<a href="#" onclick="opnDialog('srhMstEigyosho','srhTxtEigyoshoCode'); return false;">営業所</a>
 					</td>
 					<td class="value w250">
-						<input type="text" class="w80" maxlength="4" name="srhTxtEigyoshoCode" id="srhTxtEigyoshoCode" value="" onblur="getEigyoshoName('srhTxtEigyoshoCode', '');" >
+						<input type="text" class="w80" maxlength="3" name="srhTxtEigyoshoCode" id="srhTxtEigyoshoCode" value="" onblur="getEigyoshoName('srhTxtEigyoshoCode', '');" >
 						<img class="img border" src="./images/search.png"  onclick="opnDialog('srhMstEigyosho','srhTxtEigyoshoCode');">
 						<button type="button" onclick="getMstEigyosho()">検索</button>
 					</td>
@@ -40,7 +40,8 @@
 				<tr>
 					<td class="title center w100 req">営業所コード</td>
 					<td class="value w500">
-						<input type="text" class="w80" maxlength="3" name="txtEigyoshoCode" id="txtEigyoshoCode" value=""  readonly>
+						<input type="text" class="w80" maxlength="3" name="txtEigyoshoCode" id="txtEigyoshoCode" value="" >
+						<input type="hidden" class="" name="hdnEigyoshoCode" id="hdnEigyoshoCode"  value="" >
 					</td>
 				</tr>
 				<tr>

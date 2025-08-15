@@ -15,19 +15,8 @@
 			</check>
 		</variable>
 	</proc>
-	<proc func="delete_">
-		<variable name="dummy" dispName="">
-			<check class="ExclusiveValidate" message="このデータはすでに、別のユーザに更新されています。もう一度データを確認してください。" itemName="{dispName}">
-				<param name="tableName">MST_EIGYOSHO</param>
-				<param name="keyName">EigyoshoCode</param>
-				<param name="keyValue">txtEigyoshoCode</param>
-				<param name="saishuKoshinDate">hdnSaishuKoshinDate</param>
-				<param name="saishuKoshinJikan">hdnSaishuKoshinJikan</param>
-			</check>
-		</variable>
-	</proc>
 	
-	<proc func="update">
+	<proc func="insert,update">
 		<variable name="txtEigyoshoCode" dispName="営業所コード">
 			<check class="IsRequired" message="!#itemName#!が入力されていません。" itemName="{dispName}"></check>
 			<check class="IsHalf" message="!#itemName#!には全角文字は入力できません。" itemName="{dispName}"></check>
@@ -41,7 +30,8 @@
 			</check>
 		</variable>
 	</proc>
-	<proc func="update_">
+	
+	<proc func="delete_,insert_,update_">
 		<variable name="dummy" dispName="">
 			<check class="ExclusiveValidate" message="このデータはすでに、別のユーザに更新されています。もう一度データを確認してください。" itemName="{dispName}">
 				<param name="tableName">MST_EIGYOSHO</param>
@@ -50,6 +40,18 @@
 				<param name="saishuKoshinDate">hdnSaishuKoshinDate</param>
 				<param name="saishuKoshinJikan">hdnSaishuKoshinJikan</param>
 			</check>
+		</variable>
+	</proc>
+	
+	<proc func="copy_">
+		<variable name="dummy" dispName="">
+			<check class="ExclusiveValidate" message="同一キーのレコードが既に存在します。" itemName="{dispName}">
+				<param name="tableName">MST_EIGYOSHO</param>
+				<param name="keyName">EigyoshoCode</param>
+				<param name="keyValue">txtEigyoshoCode</param>
+				<param name="saishuKoshinDate"></param>
+				<param name="saishuKoshinJikan"></param>
+			</check>			
 		</variable>
 	</proc>
 </validate>

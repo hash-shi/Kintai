@@ -53,8 +53,10 @@ public class ExclusiveValidate extends ValidateBase {
 		String[] keyValues					= keyValue.split(",");
 		// 最終更新日
 		String saishuKoshinDate				= req.getParameter(this.params.get("saishuKoshinDate").toString());
+		saishuKoshinDate					= StringUtils.defaultString(saishuKoshinDate);
 		// 最終更新時間
 		String saishuKoshinJikan			= req.getParameter(this.params.get("saishuKoshinJikan").toString());
+		saishuKoshinJikan					= StringUtils.defaultString(saishuKoshinJikan);
 		
 		//=====================================================================
 		// 検索結果
