@@ -40,7 +40,7 @@
 				<tr>
 					<td class="title center w100 req">営業所コード</td>
 					<td class="value w500">
-						<input type="text" class="w80" maxlength="3" name="txtEigyoshoCode" id="txtEigyoshoCode" value="" >
+						<input type="text" class="w80" maxlength="3" name="txtEigyoshoCode" id="txtEigyoshoCode" value=""  readonly>
 					</td>
 				</tr>
 				<tr>
@@ -64,6 +64,7 @@
 					<input type="hidden" class="" name="hdnSaishuKoshinShainName" id="hdnSaishuKoshinShainName"  value="" >
 					<input type="hidden" class="" name="hdnSaishuKoshinDate" id="hdnSaishuKoshinDate"  value="" >
 					<input type="hidden" class="" name="hdnSaishuKoshinJikan" id="hdnSaishuKoshinJikan"  value="" >
+					<input type="hidden" class="" name="hdnIsNew" id="hdnIsNew"  value="" >
 				</tr>
 			</table>
 		</div>
@@ -71,8 +72,8 @@
 	</div>
 	
 	<div class="buttonArea right" id="buttonArea" style="visibility:hidden;">
-		<button type="button" onclick="onDelete()">削除 [ F2 ] </button>
-		<button type="button" onclick="onUpdate()">確定 [ F9 ] </button>
+		<button type="button" class="" name="btnDelete" id="btnDelete" onclick="onDelete()">削除 [ F2 ] </button>
+		<button type="button" class="" name="btnUpdate" id="btnUpdate" onclick="onUpdate()">確定 [ F9 ] </button>
 	</div>
 	
 </main>
