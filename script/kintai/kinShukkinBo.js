@@ -135,7 +135,7 @@ function onSearchKinShukkinBo(){
 		if (contents["result"] == undefined){ return; }
 		
 		//検索結果があれば入力項目表示
-		document.getElementById("nyuryokuArea").style.display = "";
+		$("#nyuryokuArea").css("visibility", "");
 
 		let result			= contents["result"];
 		kinShukkinBoResultAll = result;
@@ -171,8 +171,8 @@ function onSearchKinShukkinBo(){
 		if ($("#nyuryokuArea").hasClass("ins")) {
 			$("#nyuryokuArea").removeClass("ins");
 		}
-		if ($("#nyuryokuArea").hasClass("uod")) {
-			$("#nyuryokuArea").removeClass("uod");
+		if ($("#nyuryokuArea").hasClass("upd")) {
+			$("#nyuryokuArea").removeClass("upd");
 		}
 		document.getElementById("btnDelete").disabled = true;
 		document.getElementById("btnUpdate").disabled = true;
@@ -183,16 +183,16 @@ function onSearchKinShukkinBo(){
 			if (!$("#nyuryokuArea").hasClass("ins")) {
 				$("#nyuryokuArea").addClass("ins");
 			}
-			if ($("#nyuryokuArea").hasClass("uod")) {
-				$("#nyuryokuArea").removeClass("uod");
+			if ($("#nyuryokuArea").hasClass("upd")) {
+				$("#nyuryokuArea").removeClass("upd");
 			}
 			if ($("#nyuryokuArea").hasClass("nom")) {
 				$("#nyuryokuArea").removeClass("nom");
 			}
 		}
 		else{
-			if (!$("#nyuryokuArea").hasClass("uod")) {
-				$("#nyuryokuArea").addClass("uod");
+			if (!$("#nyuryokuArea").hasClass("upd")) {
+				$("#nyuryokuArea").addClass("upd");
 			}
 			if ($("#nyuryokuArea").hasClass("ins")) {
 				$("#nyuryokuArea").removeClass("ins");
@@ -358,112 +358,147 @@ function onDisplayNyuryokuArea(firstHalfFlg){
 			}
 			sinsei3SelectBox += 		">" + sinseiKubunRecord["KbnName"] + "</option>" ;
 		}
-
-
-		let trDisplay = "";
+		
+		let kihonNyuryokuAreaHtml = "";
 		if(
 			(firstHalfFlg == true && record["TaishoGetsu"] == kinShukkinBoResultAll[0]["TaishoGetsu"]) ||
 			(firstHalfFlg != true && record["TaishoGetsu"] != kinShukkinBoResultAll[0]["TaishoGetsu"])
 		){
-			trDisplay = "";
+			kihonNyuryokuAreaHtml =
+				"<tr>" +
+					"<input type=\"hidden\" name=\"TaishoNengappi" + i + "\" id=\"TaishoNengappi" + i + "\" value=\"" + taishoNengappi + "\">" +
+					"<input type=\"hidden\" name=\"MeisaiSaishuKoshinDate" + i + "\" id=\"MeisaiSaishuKoshinDate" + i + "\" value=\"" + meisaiSaishuKoshinDate + "\">" +
+					"<input type=\"hidden\" name=\"MeisaiSaishuKoshinJikan" + i + "\" id=\"MeisaiSaishuKoshinJikan" + i + "\" value=\"" + meisaiSaishuKoshinJikan + "\">" +
+					
+					"<td class=\"value center w50\"><a >" + taishoGetsu + "</a></td>" +
+					"<input type=\"hidden\" name=\"TaishoGetsu" + i + "\" id=\"TaishoGetsu" + i + "\" value=\"" + taishoGetsu + "\">" +
+					"<td class=\"value center w50\"><a >" + taishoBi + "</a></td>" +
+					"<input type=\"hidden\" name=\"TaishoBi" + i + "\" id=\"TaishoBi" + i + "\" value=\"" + taishoBi + "\">" +
+					"<td class=\"value center w50\"><a class=\"" + yobiColorClass + "\">" + yobiKbn + "</a></td>" +
+					"<td class=\"value center w50\">" + 
+						yoteiSelectBox + 
+					"</td>" +
+					"<td class=\"value center w100\">" + 
+						kintaiSelectBox + 
+					"</td>" +
+					"<td class=\"value center w50\">" + 
+						"<input type=\"text\" class=\"\"  style=\"width: 40px; text-align: right;\" maxlength=\"2\" name=\"ShusshaJi" + i + "\" id=\"ShusshaJi" + i + "\"  value=\"" + shusshaJi + "\"  onchange=\"setShukkinBo('ShusshaJi', " + i + ");calcJitsudoJikan(" + i + ");\" >" + 
+					"</td>" +
+					"<td class=\"value center w50\">" + 
+						"<input type=\"text\" class=\"\"  style=\"width: 40px; text-align: right;\" maxlength=\"2\" name=\"ShusshaFun" + i + "\" id=\"ShusshaFun" + i + "\"  value=\"" + shusshaFun + "\"  onchange=\"setShukkinBo('ShusshaFun', " + i + ");calcJitsudoJikan(" + i + ");\" >" + 
+					"</td>" +
+					"<td class=\"value center w50\">" + 
+						"<a >-</a>" + 
+					"</td>" +
+					"<td class=\"value center w50\">" + 
+						"<input type=\"text\" class=\"\"  style=\"width: 40px; text-align: right;\" maxlength=\"2\" name=\"TaishaJi" + i + "\" id=\"TaishaJi" + i + "\"  value=\"" + taishaJi + "\"  onchange=\"setShukkinBo('TaishaJi', " + i + ");calcJitsudoJikan(" + i + ");\" >" + 
+					"</td>" +
+					"<td class=\"value center w50\">" + 
+						"<input type=\"text\" class=\"\"  style=\"width: 40px; text-align: right;\" maxlength=\"2\" name=\"TaishaFun" + i + "\" id=\"TaishaFun" + i + "\"  value=\"" + taishaFun + "\"  onchange=\"setShukkinBo('TaishaFun', " + i + ");calcJitsudoJikan(" + i + ");\" >" + 
+					"</td>" +
+					"<td class=\"value center w70\">" + 
+						"<input type=\"text\" class=\"\"  style=\"width: 40px; text-align: right;\" maxlength=\"5\" name=\"JitsudoJikan" + i + "\" id=\"JitsudoJikan" + i + "\"  value=\"" + jitsudoJikan + "\"  onchange=\"setShukkinBo('JitsudoJikan', " + i + ");\" >" + 
+					"</td>" +
+					"<td class=\"value center w180\">" + 
+						"<input type=\"text\" class=\"\"  style=\"width: 300px\"\" maxlength=\"40\" name=\"KintaiShinseiBiko" + i + "\" id=\"KintaiShinseiBiko" + i + "\"  value=\"" + kintaiShinseiBiko + "\"  onchange=\"setShukkinBo('KintaiShinseiBiko', " + i + ");\" >" + 
+					"</td>" +
+					"<td class=\"value center w100\">" + 
+						sinsei1SelectBox + 
+					"</td>" +
+					"<td class=\"value center w50\">" + 
+						"<input type=\"text\" class=\"\"  style=\"width: 40px; text-align: right;\" maxlength=\"2\" name=\"KintaiShinseiKaishiJi1" + i + "\" id=\"KintaiShinseiKaishiJi1" + i + "\"  value=\"" + kintaiShinseiKaishiJi1 + "\"  onchange=\"setShukkinBo('KintaiShinseiKaishiJi1', " + i + ");calcShinseiJikan(1, " + i + ");\" >" + 
+					"</td>" +
+					"<td class=\"value center w50\">" + 
+						"<input type=\"text\" class=\"\"  style=\"width: 40px; text-align: right;\" maxlength=\"2\" name=\"KintaiShinseiKaishiFun1" + i + "\" id=\"KintaiShinseiKaishiFun1" + i + "\"  value=\"" + kintaiShinseiKaishiFun1 + "\"  onchange=\"setShukkinBo('KintaiShinseiKaishiFun1', " + i + ");calcShinseiJikan(1, " + i + ");\" >" + 
+					"</td>" +
+					"<td class=\"value center w50\">" + 
+						"<input type=\"text\" class=\"\"  style=\"width: 40px; text-align: right;\" maxlength=\"2\" name=\"KintaiShinseiShuryoJi1" + i + "\" id=\"KintaiShinseiShuryoJi1" + i + "\"  value=\"" + kintaiShinseiShuryoJi1 + "\"  onchange=\"setShukkinBo('KintaiShinseiShuryoJi1', " + i + ");calcShinseiJikan(1, " + i + ");\" >" + 
+					"</td>" +
+					"<td class=\"value center w50\">" + 
+						"<input type=\"text\" class=\"\"  style=\"width: 40px; text-align: right;\" maxlength=\"2\" name=\"KintaiShinseiShuryoFun1" + i + "\" id=\"KintaiShinseiShuryoFun1" + i + "\"  value=\"" + kintaiShinseiShuryoFun1 + "\"  onchange=\"setShukkinBo('KintaiShinseiShuryoFun1', " + i + ");calcShinseiJikan(1, " + i + ");\" >" + 
+					"</td>" +
+					"<td class=\"value center w50\">" + 
+						"<input type=\"text\" class=\"\"  style=\"width: 40px; text-align: right;\" maxlength=\"5\" name=\"KintaiShinseiJikan1" + i + "\" id=\"KintaiShinseiJikan1" + i + "\"  value=\"" + kintaiShinseiJikan1 + "\"  onchange=\"setShukkinBo('KintaiShinseiJikan1', " + i + ");\" >" + 
+					"</td>" +
+					"<td class=\"value center w100\">" + 
+						sinsei2SelectBox + 
+					"</td>" +
+					"<td class=\"value center w50\">" + 
+						"<input type=\"text\" class=\"\"  style=\"width: 40px; text-align: right;\" maxlength=\"2\" name=\"KintaiShinseiKaishiJi2" + i + "\" id=\"KintaiShinseiKaishiJi2" + i + "\"  value=\"" + kintaiShinseiKaishiJi2 + "\"  onchange=\"setShukkinBo('KintaiShinseiKaishiJi2', " + i + ");calcShinseiJikan(2, " + i + ");\" >" + 
+					"</td>" +
+					"<td class=\"value center w50\">" + 
+						"<input type=\"text\" class=\"\"  style=\"width: 40px; text-align: right;\" maxlength=\"2\" name=\"KintaiShinseiKaishiFun2" + i + "\" id=\"KintaiShinseiKaishiFun2" + i + "\"  value=\"" + kintaiShinseiKaishiFun2 + "\"  onchange=\"setShukkinBo('KintaiShinseiKaishiFun2', " + i + ");calcShinseiJikan(2, " + i + ");\" >" + 
+					"</td>" +
+					"<td class=\"value center w50\">" + 
+						"<input type=\"text\" class=\"\"  style=\"width: 40px; text-align: right;\" maxlength=\"2\" name=\"KintaiShinseiShuryoJi2" + i + "\" id=\"KintaiShinseiShuryoJi2" + i + "\"  value=\"" + kintaiShinseiShuryoJi2 + "\"  onchange=\"setShukkinBo('KintaiShinseiShuryoJi2', " + i + ");calcShinseiJikan(2, " + i + ");\" >" + 
+					"</td>" +
+					"<td class=\"value center w50\">" + 
+						"<input type=\"text\" class=\"\"  style=\"width: 40px; text-align: right;\" maxlength=\"2\" name=\"KintaiShinseiShuryoFun2" + i + "\" id=\"KintaiShinseiShuryoFun2" + i + "\"  value=\"" + kintaiShinseiShuryoFun2 + "\"  onchange=\"setShukkinBo('KintaiShinseiShuryoFun2', " + i + ");calcShinseiJikan(2, " + i + ");\" >" + 
+					"</td>" +
+					"<td class=\"value center w50\">" + 
+						"<input type=\"text\" class=\"\"  style=\"width: 40px; text-align: right;\" maxlength=\"5\" name=\"KintaiShinseiJikan2" + i + "\" id=\"KintaiShinseiJikan2" + i + "\"  value=\"" + kintaiShinseiJikan2 + "\"  onchange=\"setShukkinBo('KintaiShinseiJikan2', " + i + ");\" >" + 
+					"</td>" +
+					"<td class=\"value center w100\">" + 
+						sinsei3SelectBox + 
+					"</td>" +
+					"<td class=\"value center w50\">" + 
+						"<input type=\"text\" class=\"\"  style=\"width: 40px; text-align: right;\" maxlength=\"2\" name=\"KintaiShinseiKaishiJi3" + i + "\" id=\"KintaiShinseiKaishiJi3" + i + "\"  value=\"" + kintaiShinseiKaishiJi3 + "\"  onchange=\"setShukkinBo('KintaiShinseiKaishiJi3', " + i + ");calcShinseiJikan(3, " + i + ");\" >" + 
+					"</td>" +
+					"<td class=\"value center w50\">" + 
+						"<input type=\"text\" class=\"\"  style=\"width: 40px; text-align: right;\" maxlength=\"2\" name=\"KintaiShinseiKaishiFun3" + i + "\" id=\"KintaiShinseiKaishiFun3" + i + "\"  value=\"" + kintaiShinseiKaishiFun3 + "\"  onchange=\"setShukkinBo('KintaiShinseiKaishiFun3', " + i + ");calcShinseiJikan(3, " + i + ");\" >" + 
+					"</td>" +
+					"<td class=\"value center w50\">" + 
+						"<input type=\"text\" class=\"\"  style=\"width: 40px; text-align: right;\" maxlength=\"2\" name=\"KintaiShinseiShuryoJi3" + i + "\" id=\"KintaiShinseiShuryoJi3" + i + "\"  value=\"" + kintaiShinseiShuryoJi3 + "\"  onchange=\"setShukkinBo('KintaiShinseiShuryoJi3', " + i + ");calcShinseiJikan(3, " + i + ");\" >" + 
+					"</td>" +
+					"<td class=\"value center w50\">" + 
+						"<input type=\"text\" class=\"\"  style=\"width: 40px; text-align: right;\" maxlength=\"2\" name=\"KintaiShinseiShuryoFun3" + i + "\" id=\"KintaiShinseiShuryoFun3" + i + "\"  value=\"" + kintaiShinseiShuryoFun3 + "\"  onchange=\"setShukkinBo('KintaiShinseiShuryoFun3', " + i + ");calcShinseiJikan(3, " + i + ");\" >" + 
+					"</td>" +
+					"<td class=\"value center w50\">" + 
+						"<input type=\"text\" class=\"\"  style=\"width: 40px; text-align: right;\" maxlength=\"5\" name=\"KintaiShinseiJikan3" + i + "\" id=\"KintaiShinseiJikan3" + i + "\"  value=\"" + kintaiShinseiJikan3 + "\"  onchange=\"setShukkinBo('KintaiShinseiJikan3', " + i + ");\" >" + 
+					"</td>" +
+				"</tr>";
 		}
 		else{
-			trDisplay = " style=\"display: none;\"";
+			kihonNyuryokuAreaHtml =
+					"<input type=\"hidden\" name=\"TaishoNengappi" + i + "\" id=\"TaishoNengappi" + i + "\" value=\"" + taishoNengappi + "\">" +
+					"<input type=\"hidden\" name=\"MeisaiSaishuKoshinDate" + i + "\" id=\"MeisaiSaishuKoshinDate" + i + "\" value=\"" + meisaiSaishuKoshinDate + "\">" +
+					"<input type=\"hidden\" name=\"MeisaiSaishuKoshinJikan" + i + "\" id=\"MeisaiSaishuKoshinJikan" + i + "\" value=\"" + meisaiSaishuKoshinJikan + "\">" +
+					"<input type=\"hidden\" name=\"TaishoGetsu" + i + "\" id=\"TaishoGetsu" + i + "\" value=\"" + taishoGetsu + "\">" +
+					"<input type=\"hidden\" name=\"TaishoBi" + i + "\" id=\"TaishoBi" + i + "\" value=\"" + taishoBi + "\">" +
+
+					"<input type=\"hidden\" name=\"ShukkinYoteiKbn" + i + "\" id=\"ShukkinYoteiKbn" + i + "\" value=\"" + shukkinYoteiKbn + "\">" +
+					"<input type=\"hidden\" name=\"KintaiKbn" + i + "\" id=\"KintaiKbn" + i + "\" value=\"" + kintaiKbn + "\">" +
+					
+					"<input type=\"hidden\" name=\"ShusshaJi" + i + "\" id=\"ShusshaJi" + i + "\"  value=\"" + shusshaJi + "\"  >" + 
+					"<input type=\"hidden\" name=\"ShusshaFun" + i + "\" id=\"ShusshaFun" + i + "\"  value=\"" + shusshaFun + "\"  >" + 
+					"<input type=\"hidden\" name=\"TaishaJi" + i + "\" id=\"TaishaJi" + i + "\"  value=\"" + taishaJi + "\"  >" + 
+					"<input type=\"hidden\" name=\"TaishaFun" + i + "\" id=\"TaishaFun" + i + "\"  value=\"" + taishaFun + "\"  >" + 
+					"<input type=\"hidden\" name=\"JitsudoJikan" + i + "\" id=\"JitsudoJikan" + i + "\"  value=\"" + jitsudoJikan + "\"  >" + 
+					"<input type=\"hidden\" name=\"KintaiShinseiBiko" + i + "\" id=\"KintaiShinseiBiko" + i + "\"  value=\"" + kintaiShinseiBiko + "\"  >" + 
+
+					"<input type=\"hidden\" name=\"KintaiShinseiKbn1" + i + "\" id=\"KintaiShinseiKbn1" + i + "\" value=\"" + kintaiShinseiKbn1 + "\">" +
+					"<input type=\"hidden\" name=\"KintaiShinseiKaishiJi1" + i + "\" id=\"KintaiShinseiKaishiJi1" + i + "\"  value=\"" + kintaiShinseiKaishiJi1 + "\"  >" + 
+					"<input type=\"hidden\" name=\"KintaiShinseiKaishiFun1" + i + "\" id=\"KintaiShinseiKaishiFun1" + i + "\"  value=\"" + kintaiShinseiKaishiFun1 + "\"  >" + 
+					"<input type=\"hidden\" name=\"KintaiShinseiShuryoJi1" + i + "\" id=\"KintaiShinseiShuryoJi1" + i + "\"  value=\"" + kintaiShinseiShuryoJi1 + "\"  >" + 
+					"<input type=\"hidden\" name=\"KintaiShinseiShuryoFun1" + i + "\" id=\"KintaiShinseiShuryoFun1" + i + "\"  value=\"" + kintaiShinseiShuryoFun1 + "\"  >" + 
+					"<input type=\"hidden\" name=\"KintaiShinseiJikan1" + i + "\" id=\"KintaiShinseiJikan1" + i + "\"  value=\"" + kintaiShinseiJikan1 + "\"  >" + 
+
+					"<input type=\"hidden\" name=\"KintaiShinseiKbn2" + i + "\" id=\"KintaiShinseiKbn2" + i + "\" value=\"" + kintaiShinseiKbn2 + "\">" +
+					"<input type=\"hidden\" name=\"KintaiShinseiKaishiJi2" + i + "\" id=\"KintaiShinseiKaishiJi2" + i + "\"  value=\"" + kintaiShinseiKaishiJi2 + "\"  >" + 
+					"<input type=\"hidden\" name=\"KintaiShinseiKaishiFun2" + i + "\" id=\"KintaiShinseiKaishiFun2" + i + "\"  value=\"" + kintaiShinseiKaishiFun2 + "\"  >" + 
+					"<input type=\"hidden\" name=\"KintaiShinseiShuryoJi2" + i + "\" id=\"KintaiShinseiShuryoJi2" + i + "\"  value=\"" + kintaiShinseiShuryoJi2 + "\"  >" + 
+					"<input type=\"hidden\" name=\"KintaiShinseiShuryoFun2" + i + "\" id=\"KintaiShinseiShuryoFun2" + i + "\"  value=\"" + kintaiShinseiShuryoFun2 + "\"  >" + 
+					"<input type=\"hidden\" name=\"KintaiShinseiJikan2" + i + "\" id=\"KintaiShinseiJikan2" + i + "\"  value=\"" + kintaiShinseiJikan2 + "\"  >" + 
+
+					"<input type=\"hidden\" name=\"KintaiShinseiKbn3" + i + "\" id=\"KintaiShinseiKbn3" + i + "\" value=\"" + kintaiShinseiKbn3 + "\">" +
+					"<input type=\"hidden\" name=\"KintaiShinseiKaishiJi3" + i + "\" id=\"KintaiShinseiKaishiJi3" + i + "\"  value=\"" + kintaiShinseiKaishiJi3 + "\"  >" + 
+					"<input type=\"hidden\" name=\"KintaiShinseiKaishiFun3" + i + "\" id=\"KintaiShinseiKaishiFun3" + i + "\"  value=\"" + kintaiShinseiKaishiFun3 + "\"  >" + 
+					"<input type=\"hidden\" name=\"KintaiShinseiShuryoJi3" + i + "\" id=\"KintaiShinseiShuryoJi3" + i + "\"  value=\"" + kintaiShinseiShuryoJi3 + "\"  >" + 
+					"<input type=\"hidden\" name=\"KintaiShinseiShuryoFun3" + i + "\" id=\"KintaiShinseiShuryoFun3" + i + "\"  value=\"" + kintaiShinseiShuryoFun3 + "\"  >" + 
+					"<input type=\"hidden\" name=\"KintaiShinseiJikan3" + i + "\" id=\"KintaiShinseiJikan3" + i + "\"  value=\"" + kintaiShinseiJikan3 + "\"  >" + 
+				"";
 		}
 
-		let	kihonNyuryokuAreaHtml =
-			"<tr" + trDisplay + ">" +
-				"<input type=\"hidden\" name=\"TaishoNengappi" + i + "\" id=\"TaishoNengappi" + i + "\" value=\"" + taishoNengappi + "\">" +
-				"<input type=\"hidden\" name=\"MeisaiSaishuKoshinDate" + i + "\" id=\"MeisaiSaishuKoshinDate" + i + "\" value=\"" + meisaiSaishuKoshinDate + "\">" +
-				"<input type=\"hidden\" name=\"MeisaiSaishuKoshinJikan" + i + "\" id=\"MeisaiSaishuKoshinJikan" + i + "\" value=\"" + meisaiSaishuKoshinJikan + "\">" +
-				
-				"<td class=\"value center w50\"><a >" + taishoGetsu + "</a></td>" +
-				"<input type=\"hidden\" name=\"TaishoGetsu" + i + "\" id=\"TaishoGetsu" + i + "\" value=\"" + taishoGetsu + "\">" +
-				"<td class=\"value center w50\"><a >" + taishoBi + "</a></td>" +
-				"<input type=\"hidden\" name=\"TaishoBi" + i + "\" id=\"TaishoBi" + i + "\" value=\"" + taishoBi + "\">" +
-				"<td class=\"value center w50\"><a class=\"" + yobiColorClass + "\">" + yobiKbn + "</a></td>" +
-				"<td class=\"value center w50\">" + 
-					yoteiSelectBox + 
-				"</td>" +
-				"<td class=\"value center w100\">" + 
-					kintaiSelectBox + 
-				"</td>" +
-				"<td class=\"value center w50\">" + 
-					"<input type=\"text\" class=\"\"  style=\"width: 40px; text-align: right;\" maxlength=\"2\" name=\"ShusshaJi" + i + "\" id=\"ShusshaJi" + i + "\"  value=\"" + shusshaJi + "\"  onchange=\"setShukkinBo('ShusshaJi', " + i + ");calcJitsudoJikan(" + i + ");\" >" + 
-				"</td>" +
-				"<td class=\"value center w50\">" + 
-					"<input type=\"text\" class=\"\"  style=\"width: 40px; text-align: right;\" maxlength=\"2\" name=\"ShusshaFun" + i + "\" id=\"ShusshaFun" + i + "\"  value=\"" + shusshaFun + "\"  onchange=\"setShukkinBo('ShusshaFun', " + i + ");calcJitsudoJikan(" + i + ");\" >" + 
-				"</td>" +
-				"<td class=\"value center w50\">" + 
-					"<a >-</a>" + 
-				"</td>" +
-				"<td class=\"value center w50\">" + 
-					"<input type=\"text\" class=\"\"  style=\"width: 40px; text-align: right;\" maxlength=\"2\" name=\"TaishaJi" + i + "\" id=\"TaishaJi" + i + "\"  value=\"" + taishaJi + "\"  onchange=\"setShukkinBo('TaishaJi', " + i + ");calcJitsudoJikan(" + i + ");\" >" + 
-				"</td>" +
-				"<td class=\"value center w50\">" + 
-					"<input type=\"text\" class=\"\"  style=\"width: 40px; text-align: right;\" maxlength=\"2\" name=\"TaishaFun" + i + "\" id=\"TaishaFun" + i + "\"  value=\"" + taishaFun + "\"  onchange=\"setShukkinBo('TaishaFun', " + i + ");calcJitsudoJikan(" + i + ");\" >" + 
-				"</td>" +
-				"<td class=\"value center w70\">" + 
-					"<input type=\"text\" class=\"\"  style=\"width: 40px; text-align: right;\" maxlength=\"5\" name=\"JitsudoJikan" + i + "\" id=\"JitsudoJikan" + i + "\"  value=\"" + jitsudoJikan + "\"  onchange=\"setShukkinBo('JitsudoJikan', " + i + ");\" >" + 
-				"</td>" +
-				"<td class=\"value center w180\">" + 
-					"<input type=\"text\" class=\"\"  style=\"width: 300px\"\" maxlength=\"40\" name=\"KintaiShinseiBiko" + i + "\" id=\"KintaiShinseiBiko" + i + "\"  value=\"" + kintaiShinseiBiko + "\"  onchange=\"setShukkinBo('KintaiShinseiBiko', " + i + ");\" >" + 
-				"</td>" +
-				"<td class=\"value center w100\">" + 
-					sinsei1SelectBox + 
-				"</td>" +
-				"<td class=\"value center w50\">" + 
-					"<input type=\"text\" class=\"\"  style=\"width: 40px; text-align: right;\" maxlength=\"2\" name=\"KintaiShinseiKaishiJi1" + i + "\" id=\"KintaiShinseiKaishiJi1" + i + "\"  value=\"" + kintaiShinseiKaishiJi1 + "\"  onchange=\"setShukkinBo('KintaiShinseiKaishiJi1', " + i + ");calcShinseiJikan(1, " + i + ");\" >" + 
-				"</td>" +
-				"<td class=\"value center w50\">" + 
-					"<input type=\"text\" class=\"\"  style=\"width: 40px; text-align: right;\" maxlength=\"2\" name=\"KintaiShinseiKaishiFun1" + i + "\" id=\"KintaiShinseiKaishiFun1" + i + "\"  value=\"" + kintaiShinseiKaishiFun1 + "\"  onchange=\"setShukkinBo('KintaiShinseiKaishiFun1', " + i + ");calcShinseiJikan(1, " + i + ");\" >" + 
-				"</td>" +
-				"<td class=\"value center w50\">" + 
-					"<input type=\"text\" class=\"\"  style=\"width: 40px; text-align: right;\" maxlength=\"2\" name=\"KintaiShinseiShuryoJi1" + i + "\" id=\"KintaiShinseiShuryoJi1" + i + "\"  value=\"" + kintaiShinseiShuryoJi1 + "\"  onchange=\"setShukkinBo('KintaiShinseiShuryoJi1', " + i + ");calcShinseiJikan(1, " + i + ");\" >" + 
-				"</td>" +
-				"<td class=\"value center w50\">" + 
-					"<input type=\"text\" class=\"\"  style=\"width: 40px; text-align: right;\" maxlength=\"2\" name=\"KintaiShinseiShuryoFun1" + i + "\" id=\"KintaiShinseiShuryoFun1" + i + "\"  value=\"" + kintaiShinseiShuryoFun1 + "\"  onchange=\"setShukkinBo('KintaiShinseiShuryoFun1', " + i + ");calcShinseiJikan(1, " + i + ");\" >" + 
-				"</td>" +
-				"<td class=\"value center w50\">" + 
-					"<input type=\"text\" class=\"\"  style=\"width: 40px; text-align: right;\" maxlength=\"5\" name=\"KintaiShinseiJikan1" + i + "\" id=\"KintaiShinseiJikan1" + i + "\"  value=\"" + kintaiShinseiJikan1 + "\"  onchange=\"setShukkinBo('KintaiShinseiJikan1', " + i + ");\" >" + 
-				"</td>" +
-				"<td class=\"value center w100\">" + 
-					sinsei2SelectBox + 
-				"</td>" +
-				"<td class=\"value center w50\">" + 
-					"<input type=\"text\" class=\"\"  style=\"width: 40px; text-align: right;\" maxlength=\"2\" name=\"KintaiShinseiKaishiJi2" + i + "\" id=\"KintaiShinseiKaishiJi2" + i + "\"  value=\"" + kintaiShinseiKaishiJi2 + "\"  onchange=\"setShukkinBo('KintaiShinseiKaishiJi2', " + i + ");calcShinseiJikan(2, " + i + ");\" >" + 
-				"</td>" +
-				"<td class=\"value center w50\">" + 
-					"<input type=\"text\" class=\"\"  style=\"width: 40px; text-align: right;\" maxlength=\"2\" name=\"KintaiShinseiKaishiFun2" + i + "\" id=\"KintaiShinseiKaishiFun2" + i + "\"  value=\"" + kintaiShinseiKaishiFun2 + "\"  onchange=\"setShukkinBo('KintaiShinseiKaishiFun2', " + i + ");calcShinseiJikan(2, " + i + ");\" >" + 
-				"</td>" +
-				"<td class=\"value center w50\">" + 
-					"<input type=\"text\" class=\"\"  style=\"width: 40px; text-align: right;\" maxlength=\"2\" name=\"KintaiShinseiShuryoJi2" + i + "\" id=\"KintaiShinseiShuryoJi2" + i + "\"  value=\"" + kintaiShinseiShuryoJi2 + "\"  onchange=\"setShukkinBo('KintaiShinseiShuryoJi2', " + i + ");calcShinseiJikan(2, " + i + ");\" >" + 
-				"</td>" +
-				"<td class=\"value center w50\">" + 
-					"<input type=\"text\" class=\"\"  style=\"width: 40px; text-align: right;\" maxlength=\"2\" name=\"KintaiShinseiShuryoFun2" + i + "\" id=\"KintaiShinseiShuryoFun2" + i + "\"  value=\"" + kintaiShinseiShuryoFun2 + "\"  onchange=\"setShukkinBo('KintaiShinseiShuryoFun2', " + i + ");calcShinseiJikan(2, " + i + ");\" >" + 
-				"</td>" +
-				"<td class=\"value center w50\">" + 
-					"<input type=\"text\" class=\"\"  style=\"width: 40px; text-align: right;\" maxlength=\"5\" name=\"KintaiShinseiJikan2" + i + "\" id=\"KintaiShinseiJikan2" + i + "\"  value=\"" + kintaiShinseiJikan2 + "\"  onchange=\"setShukkinBo('KintaiShinseiJikan2', " + i + ");\" >" + 
-				"</td>" +
-				"<td class=\"value center w100\">" + 
-					sinsei3SelectBox + 
-				"</td>" +
-				"<td class=\"value center w50\">" + 
-					"<input type=\"text\" class=\"\"  style=\"width: 40px; text-align: right;\" maxlength=\"2\" name=\"KintaiShinseiKaishiJi3" + i + "\" id=\"KintaiShinseiKaishiJi3" + i + "\"  value=\"" + kintaiShinseiKaishiJi3 + "\"  onchange=\"setShukkinBo('KintaiShinseiKaishiJi3', " + i + ");calcShinseiJikan(3, " + i + ");\" >" + 
-				"</td>" +
-				"<td class=\"value center w50\">" + 
-					"<input type=\"text\" class=\"\"  style=\"width: 40px; text-align: right;\" maxlength=\"2\" name=\"KintaiShinseiKaishiFun3" + i + "\" id=\"KintaiShinseiKaishiFun3" + i + "\"  value=\"" + kintaiShinseiKaishiFun3 + "\"  onchange=\"setShukkinBo('KintaiShinseiKaishiFun3', " + i + ");calcShinseiJikan(3, " + i + ");\" >" + 
-				"</td>" +
-				"<td class=\"value center w50\">" + 
-					"<input type=\"text\" class=\"\"  style=\"width: 40px; text-align: right;\" maxlength=\"2\" name=\"KintaiShinseiShuryoJi3" + i + "\" id=\"KintaiShinseiShuryoJi3" + i + "\"  value=\"" + kintaiShinseiShuryoJi3 + "\"  onchange=\"setShukkinBo('KintaiShinseiShuryoJi3', " + i + ");calcShinseiJikan(3, " + i + ");\" >" + 
-				"</td>" +
-				"<td class=\"value center w50\">" + 
-					"<input type=\"text\" class=\"\"  style=\"width: 40px; text-align: right;\" maxlength=\"2\" name=\"KintaiShinseiShuryoFun3" + i + "\" id=\"KintaiShinseiShuryoFun3" + i + "\"  value=\"" + kintaiShinseiShuryoFun3 + "\"  onchange=\"setShukkinBo('KintaiShinseiShuryoFun3', " + i + ");calcShinseiJikan(3, " + i + ");\" >" + 
-				"</td>" +
-				"<td class=\"value center w50\">" + 
-					"<input type=\"text\" class=\"\"  style=\"width: 40px; text-align: right;\" maxlength=\"5\" name=\"KintaiShinseiJikan3" + i + "\" id=\"KintaiShinseiJikan3" + i + "\"  value=\"" + kintaiShinseiJikan3 + "\"  onchange=\"setShukkinBo('KintaiShinseiJikan3', " + i + ");\" >" + 
-				"</td>" +
-			"</tr>";
 		$("#kihonNyuryokuArea").append(kihonNyuryokuAreaHtml);
 	}
 	$("#txtShinseiKingaku01").val(kinShukkinBoResultAll[0]["ShinseiKingaku01"]);
@@ -567,8 +602,9 @@ function calcJitsudoJikan(nowRow){
 		kaishiJi != "" && checkIfNumber.test(kaishiJi) &&
 		kaishiFun != "" && checkIfNumber.test(kaishiFun) &&
 		shuryoJi != "" && checkIfNumber.test(shuryoJi) &&
-		shuryoFun != "" && checkIfNumber.test(shuryoFun) &&
-		(jikan == "" || Number(jikan) == 0)
+		shuryoFun != "" && checkIfNumber.test(shuryoFun)
+//		 &&
+//		(jikan == "" || Number(jikan) == 0)
 	){
 		let kaishiJiNum = Number(kaishiJi);
 		let kaishiFunNum = Number(kaishiFun);
@@ -591,8 +627,8 @@ function calcJitsudoJikan(nowRow){
 			//4.実際に項目に表示する値を計算
 			let jikanDisp = jikanJi + (jikanFun * 0.01);
 			
-			kinShukkinBoResultAll[nowRow]["JitsudoJikan"] = String(jikanDisp);
-			$("#JitsudoJikan" + nowRow).val(String(jikanDisp));
+			kinShukkinBoResultAll[nowRow]["JitsudoJikan"] = jikanDisp.toFixed(2);
+			$("#JitsudoJikan" + nowRow).val(jikanDisp.toFixed(2));
 		}
 	}
 }
@@ -653,7 +689,7 @@ function calcShinseiJikan(nowCol, nowRow){
 *
 */
 function onKeyEventF02(){
-	if(document.getElementById("nyuryokuArea").style.display == ""){
+	if(($("#nyuryokuArea").css("visibility") != "hidden") && (document.getElementById("btnDelete").disabled != true)){
 		onDelete();
 	}
 }
@@ -677,7 +713,7 @@ function onDelete(){
 		}
 		document.getElementById("txtTaishoYM").focus();
 		//画面表示を初期状態に戻す
-		document.getElementById("nyuryokuArea").style.display = "none";
+		$("#nyuryokuArea").css("visibility", "hidden");
 	});
 }
 
@@ -687,7 +723,7 @@ function onDelete(){
 *
 */
 function onKeyEventF09(){
-	if(document.getElementById("nyuryokuArea").style.display == ""){
+	if(($("#nyuryokuArea").css("visibility") != "hidden") && (document.getElementById("btnUpdate").disabled != true)){
 		onUpdate();
 	}
 }
@@ -714,6 +750,6 @@ function onUpdate(){
 		}
 		document.getElementById("txtTaishoYM").focus();
 		//画面表示を初期状態に戻す
-		document.getElementById("nyuryokuArea").style.display = "none";
+		$("#nyuryokuArea").css("visibility", "hidden");
 	});
 }

@@ -37,7 +37,7 @@
 			</div>
 		</div>
 	</div>
-	<div id = "nyuryokuArea" class="mainArea" style="display: none;">
+	<div id = "nyuryokuArea" class="mainArea" style="visibility: hidden;">
 		<div class="inputArea">
 			<div class="box">
 				<button type="button" id="btnFirstHalf" onclick="onDisplayNyuryokuArea(true);" disabled>◀前一覧</button>
