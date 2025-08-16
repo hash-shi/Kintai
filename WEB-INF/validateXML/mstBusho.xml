@@ -1,0 +1,53 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<validate>
+	<proc func="search">	
+		<variable name="srhTxtBushoCode" dispName="部署コード(検索)">
+			<check class="IsRequired" message="!#itemName#!が入力されていません。" itemName="{dispName}"></check>
+			<check class="IsHalf" message="!#itemName#!には全角文字は入力できません。" itemName="{dispName}"></check>
+			<check class="IsNumber" message="!#itemName#!には数字を入力してください。" itemName="{dispName}"></check>
+			<check class="MaxLength" message="!#itemName#!が4バイトを超えています。(4バイト = 全角4/2文字, 半角4文字)" itemName="{dispName}">
+				<param name="type">full</param>
+				<param name="length">4</param>
+			</check>
+		</variable>
+	</proc>
+	
+	<proc func="update">
+		<variable name="txtBushoCode" dispName="部署コード">
+			<check class="IsRequired" message="!#itemName#!が入力されていません。" itemName="{dispName}"></check>
+			<check class="IsHalf" message="!#itemName#!には全角文字は入力できません。" itemName="{dispName}"></check>
+			<check class="IsNumber" message="!#itemName#!には数字を入力してください。" itemName="{dispName}"></check>
+			<check class="MaxLength" message="!#itemName#!が4バイトを超えています。(4バイト = 全角4/2文字, 半角4文字)" itemName="{dispName}">
+				<param name="type">full</param>
+				<param name="length">4</param>
+			</check>
+		</variable>
+		<variable name="txtBushoName" dispName="部署名">
+			<check class="IsRequired" message="!#itemName#!が入力されていません。" itemName="{dispName}"></check>			
+			<check class="MaxLength" message="!#itemName#!が20バイトを超えています。(20バイト = 全角20/2文字, 半角20文字)" itemName="{dispName}">
+				<param name="type">full</param>
+				<param name="length">20</param>
+			</check>
+		</variable>
+		<variable name="txtBushoKbn" dispName="部署区分">
+			<check class="IsRequired" message="!#itemName#!が入力されていません。" itemName="{dispName}"></check>
+			<check class="IsHalf" message="!#itemName#!には全角文字は入力できません。" itemName="{dispName}"></check>
+			<check class="IsNumber" message="!#itemName#!には数字を入力してください。" itemName="{dispName}"></check>
+			<check class="MaxLength" message="!#itemName#!が2バイトを超えています。(2バイト = 全角2/2文字, 半角4文字)" itemName="{dispName}">
+				<param name="type">full</param>
+				<param name="length">2</param>
+			</check>
+		</variable>
+		<variable name="txtEigyoshoCode" dispName="営業所コード">
+			<check class="IsRequired" message="!#itemName#!が入力されていません。" itemName="{dispName}"></check>
+			<check class="IsHalf" message="!#itemName#!には全角文字は入力できません。" itemName="{dispName}"></check>
+			<check class="IsNumber" message="!#itemName#!には数字を入力してください。" itemName="{dispName}"></check>
+			<check class="MaxLength" message="!#itemName#!が3バイトを超えています。(3バイト = 全角3/2文字, 半角3文字)" itemName="{dispName}">
+				<param name="type">full</param>
+				<param name="length">3</param>
+			</check>
+			<check class="EigyoshoExistValidate" message="該当する!#itemName#!が存在しません。" itemName="{dispName}"></check>
+		</variable>
+	</proc>
+</validate>
