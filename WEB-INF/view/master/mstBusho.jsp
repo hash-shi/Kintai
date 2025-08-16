@@ -1,11 +1,9 @@
 <%@ page contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
 <%@ page import="java.util.ArrayList"%>
 <%@ page import="java.util.HashMap"%>
-<%@ page import="java.util.Calendar"%>
-<%@ page import="java.text.SimpleDateFormat"%>
+<%@ page import="jp.co.tjs_net.java.framework.common.UtilEscape" %>
 <%@ page import="jp.co.kintai.carreservation.define.Define" %>
 <%@ page import="jp.co.kintai.carreservation.information.UserInformation" %>
-<%@ page import="jp.co.tjs_net.java.framework.common.UtilEscape" %>
 
 <% ArrayList<HashMap<String, String>> mstKubun0153 = (ArrayList<HashMap<String, String>>)request.getAttribute("mstKubun0153");%>
 

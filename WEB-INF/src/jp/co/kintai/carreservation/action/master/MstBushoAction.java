@@ -278,4 +278,9 @@ public class MstBushoAction extends PJActionBase {
 			if (pstmt != null){ try { pstmt.close(); } catch (Exception exp){}}
 		}
 	}
+	
+	public void copy_(HttpServletRequest req, HttpServletResponse res) throws Exception {
+		// やりたい処理自体は登録処理と同一のため、insert_を呼び出すことで実施される。
+		insert_(req, res);
+	}
 }
