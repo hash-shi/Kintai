@@ -62,6 +62,10 @@
 		<action id="mstChohyoList"  group="public"  class="action.master.MstChohyoListAction"  title="マスタ帳票リスト"  header=""  footer=""  script="./script/master/mstChohyoList.js"  style="./css/master/mstChohyoList.css"  authority=""  meta=""  requiredParam="" >
 			<view return="success" path="master/mstChohyoList.jsp" />
 		</action>
+				
+		<action id="mstKanri" group="public" class="action.master.MstKanriAction" title="管理マスタメンテ" header=""  footer="" script="./script/master/mstKanri.js" style="./css/master/mstKanri.css" authority=""  meta=""  requiredParam="" >
+			<view return="success" path="master/mstKanri.jsp" />
+		</action>		
 		
 	</actions>
 
