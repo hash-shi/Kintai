@@ -37,8 +37,12 @@ public class MstEigyoshoAction extends PJActionBase {
 		// パラメータ取得
 		//=====================================================================
 		String eigyoshoCode	= req.getParameter("srhTxtEigyoshoCode");
-		// 3桁0詰めをする
-		eigyoshoCode = String.format("%3s", eigyoshoCode).replace(" ", "0");
+		
+		// 3桁0詰めに統一するための処理
+		// 数値に変換
+		int eigyoshoCode_ = Integer.parseInt(eigyoshoCode);
+		// 3桁0詰めに変換
+		eigyoshoCode = String.format("%03d", eigyoshoCode_);
 		
 		//=====================================================================
 		// DB接続
@@ -87,6 +91,12 @@ public class MstEigyoshoAction extends PJActionBase {
 		//=====================================================================
 		String eigyoshoCode	= req.getParameter("txtEigyoshoCode");
 		
+		// 3桁0詰めに統一するための処理
+		// 数値に変換
+		int eigyoshoCode_ = Integer.parseInt(eigyoshoCode);
+		// 3桁0詰めに変換
+		eigyoshoCode = String.format("%03d", eigyoshoCode_);
+		
 		//=====================================================================
 		// DB接続
 		//=====================================================================
@@ -103,7 +113,7 @@ public class MstEigyoshoAction extends PJActionBase {
 		sql.append(" DELETE FROM MST_EIGYOSHO ");
 		sql.append(" WHERE ");
 		sql.append(" 1 = 1 ");
-		sql.append(" and EigyoshoCode = ? ");
+		sql.append(" AND CAST(EigyoshoCode AS int) = ? ");
 		
 		// パラメータ設定
 		pstmtf.addValue("String", eigyoshoCode);
@@ -135,6 +145,12 @@ public class MstEigyoshoAction extends PJActionBase {
 		//=====================================================================
 		String eigyoshoCode	= req.getParameter("txtEigyoshoCode");
 		String eigyoshoName	= req.getParameter("txtEigyoshoName");
+		
+		// 3桁0詰めに統一するための処理
+		// 数値に変換
+		int eigyoshoCode_ = Integer.parseInt(eigyoshoCode);
+		// 3桁0詰めに変換
+		eigyoshoCode = String.format("%03d", eigyoshoCode_);
 		
 		//=====================================================================
 		// ユーザー情報の取得
@@ -202,6 +218,12 @@ public class MstEigyoshoAction extends PJActionBase {
 		String eigyoshoCode	= req.getParameter("txtEigyoshoCode");
 		String eigyoshoName	= req.getParameter("txtEigyoshoName");
 		
+		// 3桁0詰めに統一するための処理
+		// 数値に変換
+		int eigyoshoCode_ = Integer.parseInt(eigyoshoCode);
+		// 3桁0詰めに変換
+		eigyoshoCode = String.format("%03d", eigyoshoCode_);
+		
 		//=====================================================================
 		// ユーザー情報の取得
 		//=====================================================================
@@ -227,7 +249,7 @@ public class MstEigyoshoAction extends PJActionBase {
 		sql.append("  ,EigyoshoName = ? ");
 		sql.append(" WHERE ");
 		sql.append(" 	1 = 1 ");
-		sql.append(" AND EigyoshoCode = ? ");
+		sql.append(" AND CAST(EigyoshoCode AS int) = ? ");
 		
 		// パラメータ設定
 		pstmtf.addValue("String", userInformation.getShainNO());
