@@ -158,6 +158,12 @@ function onSearchKinShukkinBo(){
 	$("#txtSearchedTaishoYM").val($("#txtTaishoYM").val());
 	$("#txtSearchedShainNO").val($("#txtShainNO").val());
 
+	//検索結果が0の時のため、画面非表示
+	$("#nyuryokuArea").css("visibility", "hidden");
+	$("#buttonArea").css("visibility", "hidden");
+	document.getElementById("btnDelete").disabled = true;
+	document.getElementById("btnUpdate").disabled = true;
+	
 	let honshaKakuteizumiFlg = false;
 
 	//検索結果表示
@@ -171,6 +177,9 @@ function onSearchKinShukkinBo(){
 		
 		//検索結果があれば入力項目表示
 		$("#nyuryokuArea").css("visibility", "");
+		$("#buttonArea").css("visibility", "");
+		document.getElementById("btnDelete").disabled = false;
+		document.getElementById("btnUpdate").disabled = false;
 
 		let result			= contents["result"];
 		kinShukkinBoResultAll = result;
@@ -209,9 +218,6 @@ function onSearchKinShukkinBo(){
 		if ($("#nyuryokuArea").hasClass("upd")) {
 			$("#nyuryokuArea").removeClass("upd");
 		}
-		document.getElementById("btnDelete").disabled = true;
-		document.getElementById("btnUpdate").disabled = true;
-		$("#buttonArea").css("visibility", "hidden");
 	}
 	else{
 		//取得した更新日付・時間が空の時、新規登録として背景色を変更する
@@ -237,9 +243,6 @@ function onSearchKinShukkinBo(){
 				$("#nyuryokuArea").removeClass("nom");
 			}
 		}
-		document.getElementById("btnDelete").disabled = false;
-		document.getElementById("btnUpdate").disabled = false;
-		$("#buttonArea").css("visibility", "");
 	}
 }
 
