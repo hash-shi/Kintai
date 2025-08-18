@@ -11,19 +11,19 @@
 			<tr>
 				<td class="title center w100">営業所コード</td>
 				<td class="value w170">
-					<input type="text" class=""  style="width: 150px"" name="srhDlgTxtEigyoshoCode" id="srhDlgTxtEigyoshoCode" value="" >
+					<input type="text" class="w150" maxlength="3" name="srhDlgTxtEigyoshoCode" id="srhDlgTxtEigyoshoCode" value="" >
 				</td>
 			</tr>
 			<tr>
 				<td class="title center w100">部署コード</td>
 				<td class="value w170">
-					<input type="text" class=""  style="width: 150px"" name="srhDlgTxtBushoCode" id="srhDlgTxtBushoCode" value="" >
+					<input type="text" class="w150" maxlength="4" name="srhDlgTxtBushoCode" id="srhDlgTxtBushoCode" value="" >
 				</td>
 			</tr>
 			<tr>
 				<td class="title center w100">部署名</td>
 				<td class="value w170">
-					<input type="text" class=""  style="width: 150px"" name="srhDlgTxtBushoName" id="srhDlgTxtBushoName" value="" >
+					<input type="text" class="w150" maxlength="20" name="srhDlgTxtBushoName" id="srhDlgTxtBushoName" value="" >
 				</td>
 			</tr>
 		</table>
@@ -31,7 +31,7 @@
 	<div class="searchButtonArea">
 		<button type="button" onclick="getMstBushos();">検索</button>
 	</div>
-	<div class="searchResultArea" style="max-height: 465px">
+	<div class="searchResultArea" style="max-height: 430px">
 		<table class="searchRecord" style="table-layout: fixed">
 			<thead>
 				<tr>

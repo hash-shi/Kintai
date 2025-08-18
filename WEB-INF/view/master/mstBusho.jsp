@@ -64,7 +64,7 @@
 						<a href="#" onclick="opnDialog('srhMstEigyosho','txtEigyoshoCode','txtEigyoshoName'); return false;">営業所</a>
 					</td>
 					<td class="value w500">
-						<input type="text" class="w200" maxlength="3" name="txtEigyoshoCode" id="txtEigyoshoCode" value="" onblur="getEigyoshoName('txtEigyoshoCode', 'txtEigyoshoName');">
+						<input type="text" class="w80" maxlength="3" name="txtEigyoshoCode" id="txtEigyoshoCode" value="" onblur="getEigyoshoName('txtEigyoshoCode', 'txtEigyoshoName');">
 						<input type="text" class="w200" maxlength="20" name="txtEigyoshoName" id="txtEigyoshoName" value="" readonly>
 					</td>
 				</tr>
