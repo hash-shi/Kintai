@@ -50,8 +50,12 @@ public class MstBushoAction extends PJActionBase {
 		// パラメータ取得
 		//=====================================================================
 		String bushoCode	= this.getParameter("srhTxtBushoCode");
-		// 4桁詰めをする
-		bushoCode = String.format("%4s", bushoCode).replace(" ", "0");
+		
+		// 4桁0詰めに統一するための処理
+		// 数値に変換
+		int bushoCode_ = Integer.parseInt(bushoCode);
+		// 4桁0詰めに変換
+		bushoCode = String.format("%04d", bushoCode_);
 		
 		//=====================================================================
 		// DB接続
@@ -103,7 +107,13 @@ public class MstBushoAction extends PJActionBase {
 		//=====================================================================
 		// パラメータ取得
 		//=====================================================================
-		String bushoCode	= this.getParameter("srhTxtBushoCode");
+		String bushoCode	= this.getParameter("txtBushoCode");
+		
+		// 4桁0詰めに統一するための処理
+		// 数値に変換
+		int bushoCode_ = Integer.parseInt(bushoCode);
+		// 4桁0詰めに変換
+		bushoCode = String.format("%04d", bushoCode_);	
 		
 		//=====================================================================
 		// DB接続
@@ -121,7 +131,7 @@ public class MstBushoAction extends PJActionBase {
 		sql.append(" DELETE FROM MST_BUSHO ");
 		sql.append(" WHERE ");
 		sql.append(" 1 = 1 ");
-		sql.append(" and BushoCode = ? ");
+		sql.append(" AND CAST(BushoCode AS int) = ? ");
 		
 		// パラメータ設定
 		pstmtf.addValue("String", bushoCode);
@@ -155,6 +165,12 @@ public class MstBushoAction extends PJActionBase {
 		String bushoName	= req.getParameter("txtBushoName");
 		String bushoKbn		= req.getParameter("txtBushoKbn");
 		String eigyoshoCode	= req.getParameter("txtEigyoshoCode");
+		
+		// 4桁0詰めに統一するための処理
+		// 数値に変換
+		int bushoCode_ = Integer.parseInt(bushoCode);
+		// 4桁0詰めに変換
+		bushoCode = String.format("%04d", bushoCode_);
 		
 		//=====================================================================
 		// ユーザー情報の取得
@@ -230,6 +246,12 @@ public class MstBushoAction extends PJActionBase {
 		String bushoKbn		= req.getParameter("txtBushoKbn");
 		String eigyoshoCode	= req.getParameter("txtEigyoshoCode");
 				
+		// 4桁0詰めに統一するための処理
+		// 数値に変換
+		int bushoCode_ = Integer.parseInt(bushoCode);
+		// 4桁0詰めに変換
+		bushoCode = String.format("%04d", bushoCode_);
+		
 		//=====================================================================
 		// ユーザー情報の取得
 		//=====================================================================
@@ -257,7 +279,7 @@ public class MstBushoAction extends PJActionBase {
 		sql.append("  ,EigyoshoCode = ? ");
 		sql.append(" WHERE ");
 		sql.append(" 	1 = 1 ");
-		sql.append(" AND BushoCode = ? ");
+		sql.append(" AND CAST(BushoCode AS int) = ? ");
 			
 		// パラメータ設定
 		pstmtf.addValue("String", userInformation.getShainNO());

@@ -55,7 +55,9 @@
 				<param name="type">full</param>
 				<param name="length">3</param>
 			</check>
-			<check class="EigyoshoExistValidate" message="該当する!#itemName#!が存在しません。" itemName="{dispName}"></check>
+		</variable>
+		<variable name="txtEigyoshoName" dispName="営業所名">
+			<check class="IsRequired" message="該当する営業所コードが存在しません。" itemName="{dispName}"></check>
 		</variable>
 	</proc>
 	
