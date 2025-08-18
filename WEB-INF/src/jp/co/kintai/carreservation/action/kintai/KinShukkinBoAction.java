@@ -208,6 +208,50 @@ public class KinShukkinBoAction extends PJActionBase {
 	}
 	
 	/**
+	 * ログイン社員の社員区分取得
+	 * 
+	 * @param req
+	 * @param res
+	 * @throws Exception
+	 */
+	public void getLoginUserkbn(HttpServletRequest req, HttpServletResponse res) throws Exception {
+		
+		/**
+		 * 詳細説明
+		 * 
+		 * 対象社員の区分チェック
+		 */
+		
+		//=====================================================================
+		// DB接続
+		//=====================================================================
+		Connection con	= this.getConnection("kintai", req);
+		
+		//=====================================================================
+		// パラメータ取得
+		//=====================================================================
+		// チェック対象の社員NO
+		UserInformation userInformation = (UserInformation)req.getSession().getAttribute(Define.SESSION_ID);
+		String shainNo = userInformation.getShainNO();
+		
+		//=====================================================================
+		// 処理
+		//=====================================================================
+		// チェック対象の社員の存在確認、区分取得
+		ArrayList<HashMap<String, String>> mstShains = PJActionBase.getMstShains(con, shainNo, null, null, null, null, null, null, null);
+		
+		//社員が存在しなければ処理終了
+		if (0 >= mstShains.size()){ return; }
+		
+		HashMap<String, String> mstShain = mstShains.get(0);
+
+		//=====================================================================
+		// 結果返却
+		//=====================================================================
+		this.addContent("result", mstShain.get("ShainKbn"));
+	}
+	
+	/**
 	 * 本社確定済みの確認
 	 * 
 	 * @param req
