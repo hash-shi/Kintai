@@ -53,6 +53,7 @@
 					<td class="value w500">
 						<input type="text" class="w80" maxlength="2" name="txtBushoKbn" id="txtBushoKbn" value="" onblur="setSelKbnName();">
 						<select  class="w200" name = "selKbnName" id="selKbnName" value="" onchange="setTxtBushoKbn();">
+						<option value=""> </option>
 						<% for (int count = 0 ; count < mstKubun0153.size() ; count++){ HashMap<String, String> record = mstKubun0153.get(count);%>
 								<option value="<%=UtilEscape.htmlspecialchars(record.get("Code")) %>"><%=UtilEscape.htmlspecialchars(record.get("KbnName")) %></option>
 							<% } %>
