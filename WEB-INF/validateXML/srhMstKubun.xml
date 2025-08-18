@@ -3,15 +3,11 @@
 <validate>
 	<proc func="search">
 		<variable name="srhDlgTxtKbnCode" dispName="区分コード">
-			<check class="IsRegex" message="!#itemName#!には数字を入力してください。" itemName="{dispName}">
-				<param name="format">^$|^[0-9]{1,50}$</param>
-			</check>
+			<check class="IsNumber" message="!#itemName#!には数字を入力してください。" itemName="{dispName}"></check>
 		</variable>
 		
 		<variable name="srhDlgTxtCode" dispName="コード">
-			<check class="IsRegex" message="!#itemName#!には数字を入力してください。" itemName="{dispName}">
-				<param name="format">^$|^[0-9]{1,50}$</param>
-			</check>
+			<check class="IsNumber" message="!#itemName#!には数字を入力してください。" itemName="{dispName}"></check>
 		</variable>
 	</proc>
 </validate>

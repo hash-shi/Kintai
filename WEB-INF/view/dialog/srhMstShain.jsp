@@ -6,38 +6,40 @@
 <%@ page import="jp.co.kintai.carreservation.information.UserInformation" %>
 
 <div class="dialogBody">
-		<div class="searchConditionArea">
-			<table>
-				<tr>
-					<td class="title center w100">社員NO</td>
-					<td class="value w170">
-						<input type="text" class=""  style="width: 150px" name="srhDlgTxtShainNO" id="srhDlgTxtShainNO" value="" >
-					</td>
-				</tr>
-				<tr>
-					<td class="title center w100">社員名</td>
-					<td class="value w170">
-						<input type="text" class=""  style="width: 150px" name="srhDlgTxtShainName" id="srhDlgTxtShainName" value="" >
-					</td>
-				</tr>
-				<tr>
-					<td class="title center w100">営業所コード</td>
-					<td class="value w170">
-						<input type="text" class=""  style="width: 150px" name="srhDlgTxtEigyoshoCode" id="srhDlgTxtEigyoshoCode" value="" >
-					</td>
-				</tr>
-				<tr>
-					<td class="title center w100">社員区分</td>
-					<td class="value w170">
-						<input type="text" class=""  style="width: 150px" name="srhDlgTxtShainKbn" id="srhDlgTxtShainKbn" value="" >
-					</td>
-				</tr>
-			</table>
-		</div>
-		<div class="searchButtonArea">
-			<button type="button" onclick="getMstShains();">検索</button>
-		</div>
-	<div class="searchResultArea" style="max-height: 465px">
+	<div class="searchConditionArea">
+		<table>
+			<tr>
+				<td class="title center w100">社員NO</td>
+				<td class="value w170">
+					<input type="text" class="w150" maxlength="4" name="srhDlgTxtShainNO" id="srhDlgTxtShainNO" value="" >
+				</td>
+			</tr>
+			<tr>
+				<td class="title center w100">社員名</td>
+				<td class="value w170">
+					<input type="text" class="w150" maxlength="20" name="srhDlgTxtShainName" id="srhDlgTxtShainName" value="" >
+				</td>
+			</tr>
+			<tr>
+				<td class="title center w100">営業所コード</td>
+				<td class="value w170">
+					<input type="text" class="w150" maxlength="3" name="srhDlgTxtEigyoshoCode" id="srhDlgTxtEigyoshoCode" value="" >
+				</td>
+			</tr>
+			<tr>
+				<td class="title center w100">社員区分</td>
+				<td class="value w170">
+					<input type="text" class="w150" maxlength="2" name="srhDlgTxtShainKbn" id="srhDlgTxtShainKbn" value="" >
+				</td>
+			</tr>
+		</table>
+	</div>
+	
+	<div class="searchButtonArea">
+		<button type="button" onclick="getMstShains();">検索</button>
+	</div>
+	
+	<div class="searchResultArea" style="max-height: 405px">
 		<table class="searchRecord" style="table-layout: fixed">
 			<thead>
 				<tr>
