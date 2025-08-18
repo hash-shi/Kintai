@@ -39,6 +39,10 @@
 			<view return="success" path="kintai/kinShukkinBo.jsp" />
 		</action>
 		
+		<action id="chiChinginkeisansho"  group="public"  class="action.kintai.ChiChinginkeisanshoAction"  title="賃金計算書入力"  header=""  footer=""  script="./script/kintai/chiChinginkeisansho.js"  style="./css/kintai/chiChinginkeisansho.css"  authority=""  meta=""  requiredParam="" >
+			<view return="success" path="kintai/chiChinginkeisansho.jsp" />
+		</action>
+		
 		<action id="kintaiList"  group="public"  class="action.kintai.KintaiListAction"  title="勤怠リスト"  header=""  footer=""  script="./script/kintai/kintaiList.js"  style="./css/kintai/kintaiList.css"  authority=""  meta=""  requiredParam="" >
 			<view return="success" path="kintai/kintaiList.jsp" />
 		</action>

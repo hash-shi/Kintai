@@ -1,0 +1,124 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<validate>
+	<proc func="search">
+		<variable name="txtSearchedTaishoYM" dispName="対象年月">
+			<check class="IsRequired" message="!#itemName#!が入力されていません。" itemName="{dispName}"></check>
+			<check class="IsLength" message="!#itemName#!の指定が不正です。(YYYY/MM)" itemName="{dispName}">
+				<param name="type">half</param>
+				<param name="comparisonoperator">=</param>
+				<param name="length">7</param>
+			</check>
+			<check class="IsDate" message="!#itemName#!の指定が不正です。(YYYY/MM)" itemName="{dispName}">
+				<param name="format">yyyy/MM</param>
+			</check>
+		</variable>
+		<variable name="txtSearchedShainNO" dispName="社員NO">
+			<check class="IsRequired" message="!#itemName#!が入力されていません。" itemName="{dispName}"></check>
+			<check class="ShainExistValidate" message="該当する!#itemName#!が存在しません。" itemName="{dispName}"></check>
+			<check class="ShainTaisyokuValidate" message="該当する!#itemName#!は処理できません。" itemName="{dispName}"></check>
+			<check class="ShainKbnValidate" message="該当する!#itemName#!は出勤簿不要です。" itemName="{dispName}"></check>
+		</variable>
+
+		<variable name="dummy" dispName="">
+			<check class="ShainAuthorityValidate" message="ログインしたユーザIDでは処理できません。">
+				<param name="shainNo">txtSearchedShainNO</param>
+			</check>
+		</variable>
+	</proc>
+
+	<proc func="update">
+		<variable name="txtSearchedTaishoYM" dispName="対象年月">
+			<check class="IsRequired" message="!#itemName#!が入力されていません。" itemName="{dispName}"></check>
+			<check class="IsLength" message="!#itemName#!の指定が不正です。(YYYY/MM)" itemName="{dispName}">
+				<param name="type">half</param>
+				<param name="comparisonoperator">=</param>
+				<param name="length">7</param>
+			</check>
+			<check class="IsDate" message="!#itemName#!の指定が不正です。(YYYY/MM)" itemName="{dispName}">
+				<param name="format">yyyy/MM</param>
+			</check>
+		</variable>
+		<variable name="txtSearchedShainNO" dispName="社員NO">
+			<check class="IsRequired" message="!#itemName#!が入力されていません。" itemName="{dispName}"></check>
+			<check class="ShainExistValidate" message="該当する!#itemName#!が存在しません。" itemName="{dispName}"></check>
+			<check class="ShainTaisyokuValidate" message="該当する!#itemName#!は処理できません。" itemName="{dispName}"></check>
+			<check class="ShainKbnValidate" message="該当する!#itemName#!は出勤簿不要です。" itemName="{dispName}"></check>
+		</variable>
+		
+		
+		<variable name="dummy" dispName="">
+			<check class="ShainAuthorityValidate" message="ログインしたユーザIDでは処理できません。">
+				<param name="shainNo">txtSearchedShainNO</param>
+			</check>
+
+			<check class="KinShukkinBoExclusiveValidate" message="この出勤簿明細データはすでに、別のユーザーに更新されています。もう一度データを確認してください。"></check>
+			<check class="ExclusiveValidate" message="この出勤簿基本データはすでに、別のユーザーに更新されています。もう一度データを確認してください。">
+				<param name="tableName">KIN_SHUKKINBO_KIHON</param>
+				<param name="keyName">TaishoNenGetsudo,ShainNO</param>
+				<param name="keyValue">txtSearchedTaishoYM,txtSearchedShainNO</param>
+				<param name="saishuKoshinDate">hdnKihonSaishuKoshinDate</param>
+				<param name="saishuKoshinJikan">hdnKihonSaishuKoshinJikan</param>
+			</check>
+
+			<check class="KinShukkinBoValidate" message="更新処理でエラーが発生しました。"></check>
+		</variable>
+
+		<variable name="txtShinseiKingaku01" dispName="特別作業金額">
+			<check class="IsNumber" message="!#itemName#!には数値を入力してください。" itemName="{dispName}">
+				<param name="isReplaceComma">true</param>
+			</check>
+			<check class="MaxNumberLimit" message="!#itemName#!の桁数が不正です。" itemName="{dispName}">
+				<param name="length">9999999</param>
+			</check>
+			<check class="MinNumberLimit" message="!#itemName#!にはマイナスは設定できません。" itemName="{dispName}">
+				<param name="length">0</param>
+			</check>
+		</variable>
+		<variable name="txtShinseiKingaku02" dispName="営業日当手当">
+			<check class="IsNumber" message="!#itemName#!には数値を入力してください。" itemName="{dispName}">
+				<param name="isReplaceComma">true</param>
+			</check>
+			<check class="MaxNumberLimit" message="!#itemName#!の桁数が不正です。" itemName="{dispName}">
+				<param name="length">9999999</param>
+			</check>
+			<check class="MinNumberLimit" message="!#itemName#!にはマイナスは設定できません。" itemName="{dispName}">
+				<param name="length">0</param>
+			</check>
+		</variable>
+	</proc>
+
+	<proc func="delete">
+		<variable name="txtSearchedTaishoYM" dispName="対象年月">
+			<check class="IsRequired" message="!#itemName#!が入力されていません。" itemName="{dispName}"></check>
+			<check class="IsLength" message="!#itemName#!の指定が不正です。(YYYY/MM)" itemName="{dispName}">
+				<param name="type">half</param>
+				<param name="comparisonoperator">=</param>
+				<param name="length">7</param>
+			</check>
+			<check class="IsDate" message="!#itemName#!の指定が不正です。(YYYY/MM)" itemName="{dispName}">
+				<param name="format">yyyy/MM</param>
+			</check>
+		</variable>
+		<variable name="txtSearchedShainNO" dispName="社員NO">
+			<check class="IsRequired" message="!#itemName#!が入力されていません。" itemName="{dispName}"></check>
+			<check class="ShainExistValidate" message="該当する!#itemName#!が存在しません。" itemName="{dispName}"></check>
+			<check class="ShainTaisyokuValidate" message="該当する!#itemName#!は処理できません。" itemName="{dispName}"></check>
+			<check class="ShainKbnValidate" message="該当する!#itemName#!は出勤簿不要です。" itemName="{dispName}"></check>
+		</variable>
+
+		<variable name="dummy" dispName="">
+			<check class="ShainAuthorityValidate" message="ログインしたユーザIDでは処理できません。">
+				<param name="shainNo">txtSearchedShainNO</param>
+			</check>
+
+			<check class="KinShukkinBoExclusiveValidate" message="この出勤簿明細データはすでに、別のユーザーに更新されています。もう一度データを確認してください。"></check>
+			<check class="ExclusiveValidate" message="この出勤簿基本データはすでに、別のユーザーに更新されています。もう一度データを確認してください。">
+				<param name="tableName">KIN_SHUKKINBO_KIHON</param>
+				<param name="keyName">TaishoNenGetsudo,ShainNO</param>
+				<param name="keyValue">txtSearchedTaishoYM,txtSearchedShainNO</param>
+				<param name="saishuKoshinDate">hdnKihonSaishuKoshinDate</param>
+				<param name="saishuKoshinJikan">hdnKihonSaishuKoshinJikan</param>
+			</check>
+		</variable>
+	</proc>
+</validate>
