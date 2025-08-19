@@ -41,19 +41,21 @@
 					<tr>
 						<td class="title center w150 req">年度確定ステータス</td>
 						<td class="value w500">
-						<input type="text" name="txtNendoKakuteiStatus" id="txtNendoKakuteiStatus" value="" class="w80">
-							<select name="rdoStatusSentaku" class="w150">
+						<input type="text" name="txtNendoKakuteiStatus" id="txtNendoKakuteiStatus" value="" class="w80" onblur="setNendoKakuteiStatus();" >
+							<select name="selStatusSentaku" id="selStatusSentaku" class="w150" onchange="setNendoKakuteiStatusbox();">
+							
 								<option value=""></option>
-								<option value="Mikakutei">未確定</option>
-								<option value="Kakutei">確定</option>
+								<option value="0">未確定</option>
+								<option value="1">確定</option>
 
 						</select>
+						</td>
 					</tr>
 
 					<tr>
 						<td class="title center w150 req">現在処理年月度</td>
 						<td class="value w500">
-						<input type="text" class="" style="width: 80px; text-align: right;" " name="txtGenzaishoriNengetsudo" id="txtGenzaishoriNengetsudo" maxlength="10" value="" class="w80">(YYYY/MM/DD)</td>
+						<input type="text" class="" style="width: 80px; text-align: right;" " name="txtGenzaishoriNengetsudo" id="txtGenzaishoriNengetsudo" maxlength="10" value="" class="w80">(YYYY/MM)</td>
 					</tr>
 
 					<tr>
@@ -69,15 +71,33 @@
 					</tr>
 
 					<tr>
-						<td class="title center w150 req">勤本作業時間</td>
-						<td class="value w500"><input type="text" name="txtKintaiKihonSagyoJikan" id="txtKintaiKihonSagyoJikan" value=""  class="w80" style="text-align: center;">
+						<td class="title center w150 req">勤怠基本作業時間</td>
+						<td class="value w500"><input type="text" name="txtKintaiKihonSagyoJikan" id="txtKintaiKihonSagyoJikan" value=""  class="w80" style="text-align: right;">
 					</tr>
 				</table>
 
 			</div>
+			
+			<div class="inputArea lastEdit">
+			<table>
+				<tr>
+					<td class="title center w100 rep">最終更新社員</td>
+					<td class="label w200" id="lblSaishuKoshinShainName"></td>
+					<td class="title center w100 rep">最終更新日時</td>
+					<td class="label w80 center" id="lblSaishuKoshinDate"></td>
+					<td class="label w80 center" id="lblSaishuKoshinJikan"></td>
+					<input type="hidden" class="" name="hdnSaishuKoshinShainNO" id="hdnSaishuKoshinShainNO"  value="" >
+					<input type="hidden" class="" name="hdnSaishuKoshinShainName" id="hdnSaishuKoshinShainName"  value="" >
+					<input type="hidden" class="" name="hdnSaishuKoshinDate" id="hdnSaishuKoshinDate"  value="" >
+					<input type="hidden" class="" name="hdnSaishuKoshinJikan" id="hdnSaishuKoshinJikan"  value="" >
+					<input type="hidden" class="" name="hdnIsNew" id="hdnIsNew"  value="" >
+				</tr>
+			</table>
 		</div>
-		<div class="buttonArea right" id="buttonArea" style="visibility:hidden;">
-			<button type="button" onclick="output()">確定[F9]</button>
+	</div>
+		<div id="buttonArea"  class="buttonArea right"  style="visibility: hidden;">
+				<button type="button" class="" name="btnUpdate" id="btnUpdate" onclick="onUpdate()">確定 [ F9 ]</button>
 		</div>
-	</main>
+	</div>
+</main>
 

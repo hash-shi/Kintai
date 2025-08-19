@@ -7,7 +7,7 @@
 //****************************************************************************
 function getMstKanri() {
 
-	proc("search", {srhKanriCode: $("#srhKanriCode").val()}, function(data) {
+	proc("search", {}, function(data) {
 
 		if (data == undefined) { return; }
 		if (data["contents"] == undefined) { return; }
@@ -17,7 +17,7 @@ function getMstKanri() {
 		console.log("contents:", data.contents);
 		console.log("mstDatas:", data.contents?.mstDatas);
 		if (contents["mstDatas"] == undefined) { return; }
-		
+
 
 		// 取得した値の格納
 		//var isNew = contents["isNew"];
@@ -41,11 +41,12 @@ function getMstKanri() {
 		for (var i = 0; i < mstDatas.length; i++) {
 			$("#txtKanriCode").val(mstDatas[i]["KanriCode"]);
 			$("#txtNendoKakuteiStatus").val(mstDatas[i]["NendoKakuteiStatus"]);
+			$("#selStatusSentaku").val(mstDatas[i]["NendoKakuteiStatus"]);
 			$("#txtGenzaishoriNengetsudo").val(mstDatas[i]["GenzaishoriNengetsudo"]);
 			$("#txtKintaiKishuGetsudo").val(mstDatas[i]["KintaiKishuGetsudo"]);
 			$("#txtKintaiGetsudoShimebi").val(mstDatas[i]["KintaiGetsudoShimebi"]);
 			$("#txtKintaiKihonSagyoJikan").val(mstDatas[i]["KintaiKihonSagyoJikan"]);
-			
+
 			$("#hdnSaishuKoshinShainNO").val(mstDatas[i]["SaishuKoshinShainNO"]);
 			$("#hdnSaishuKoshinShainName").val(mstDatas[i]["SaishuKoshinShainName"]);
 			$("#hdnSaishuKoshinDate").val(mstDatas[i]["SaishuKoshinDate"]);
@@ -61,3 +62,48 @@ function getMstKanri() {
 
 }
 
+//****************************************************************************
+// 入力値に合わせて部署区分をセット
+// 
+// 
+//
+//
+//****************************************************************************
+function setNendoKakuteiStatus() {
+	var txtNendoKakuteiStatus = $("#txtNendoKakuteiStatus").val();
+	$("#selStatusSentaku").val(txtNendoKakuteiStatus);
+}
+
+function setNendoKakuteiStatusbox() {
+	var NendoKakuteiStatus = $("#selStatusSentaku").val();
+	$("#txtNendoKakuteiStatus").val(NendoKakuteiStatus);
+}
+
+
+//****************************************************************************
+// onUpdate
+//
+//
+//
+//
+//****************************************************************************
+function onUpdate() {
+
+	proc("update", {}, function(data) {
+
+		// 更新モード
+		// 確認メッセージ
+		if (!confirm("データの更新を行います。\nよろしいですか？")) { return; }
+
+		// 登録処理の本体
+		proc("update_", {}, function(data) {
+
+			// 完了メッセージ
+			alert("データが正常に更新されました。");
+			// 画面のクリアなど何かしらの処理
+			// 処理した営業所コードで再読込
+			$("#srhTxtKanriCode").val($("#txtKanriCode").val());
+			getMstKanri();
+		});
+	})
+}

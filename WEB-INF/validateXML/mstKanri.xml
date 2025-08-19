@@ -1,0 +1,57 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<validate>
+	<proc func="update">
+		<variable name="txtNendoKakuteiStatus" dispName="年度確定ステータス">
+			<check class="IsRequired" message="!#itemName#!が入力されていません。" itemName="{dispName}"></check>			
+			<check class="IsHalf" message="!#itemName#!には全角文字は入力できません。" itemName="{dispName}"></check>
+			<!-- 1バイト兼マイナスチェック -->
+			<check class="MaxLength" message="!#itemName#!が1バイトを超えています。(1バイト = 全角1/2文字, 半角1文字)" itemName="{dispName}">
+				<param name="type">full</param>
+				<param name="length">1</param>
+			</check>
+			<!-- 数字チェック 0か1しか入らない処理 -->
+			<check class="IsRegex" message="!#itemName#!の値が不正です。" itemName="{dispName}">
+				<param name="format">^[0-1]$</param>
+			</check>			
+		</variable>
+		<variable name="selStatusSentaku" dispName="ステータス選択">
+			<check class="IsRequired" message="該当するステータスが存在しません。" itemName="{dispName}"></check>
+		</variable>
+		<variable name="txtGenzaishoriNengetsudo" dispName="現在処理年月度">
+			<check class="IsRequired" message="!#itemName#!が入力されていません。" itemName="{dispName}"></check>
+			<check class="IsHalf" message="!#itemName#!には全角文字は入力できません。" itemName="{dispName}"></check>
+			<check class="IsDate" message="!#itemName#!の指定が不正です。(YYYY/MM)" itemName="{dispName}">
+				<param name="format">yyyy/MM</param>
+			</check>
+		</variable>
+		<variable name="txtKintaiKishuGetsudo" dispName="勤怠期首月度">
+			<check class="IsRequired" message="!#itemName#!が入力されていません。" itemName="{dispName}"></check>
+			<check class="IsHalf" message="!#itemName#!には全角文字は入力できません。" itemName="{dispName}"></check>
+			<check class="IsDate" message="!#itemName#!の指定が不正です。(DD)" itemName="{dispName}">
+  				<param name="format">dd</param>
+			</check>
+		</variable>
+		<variable name="txtKintaiGetsudoShimebi" dispName="勤怠月度締日">
+			<check class="IsRequired" message="!#itemName#!が入力されていません。" itemName="{dispName}"></check>
+			<check class="IsHalf" message="!#itemName#!には全角文字は入力できません。" itemName="{dispName}"></check>
+			<check class="IsDate" message="!#itemName#!の指定が不正です。(DD)" itemName="{dispName}">
+  				<param name="format">dd</param>
+			</check>
+		</variable>
+		<variable name="txtKintaiKihonSagyoJikan" dispName="勤怠基本作業時間">
+			<check class="IsRequired" message="!#itemName#!が入力されていません。" itemName="{dispName}"></check>
+			<check class="IsHalf" message="!#itemName#!には全角文字は入力できません。" itemName="{dispName}"></check>
+			
+			<check class="MaxLength" message="!#itemName#!が5バイトを超えています。(5バイト = 全角5/2文字, 半角5文字)" itemName="{dispName}">
+				<param name="type">full</param>
+				<param name="length">5</param>
+			</check>
+			<!-- xx.xxのformatチェック 00.00～99.59以外はエラー -->
+			<check class="IsRegex" message="!#itemName#!の指定が不正です。" itemName="{dispName}">
+				<param name="format">^\d{1,2}\.(?:[0-5][0-9]|59)$</param>
+			</check>
+		</variable>		
+	</proc>
+</validate>
+	
