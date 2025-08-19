@@ -1372,27 +1372,27 @@ public class KinShukkinBoAction extends PJActionBase {
 		String shuryoFun3			= this.getParameter(shuryoFun3KeySb.toString());
 		String jikan3				= this.getParameter(jikan3KeySb.toString());
 
-		if(StringUtils.isNumeric(shusshaJi) == false) {shusshaJi = "";}
-		if(StringUtils.isNumeric(shusshaFun) == false) {shusshaFun = "";}
-		if(StringUtils.isNumeric(taishaJi) == false) {taishaJi = "";}
-		if(StringUtils.isNumeric(taishaFun) == false) {taishaFun = "";}
-		if(StringUtils.isNumeric(kaishiJi1) == false) {kaishiJi1 = "";}
-		if(StringUtils.isNumeric(kaishiFun1) == false) {kaishiFun1 = "";}
-		if(StringUtils.isNumeric(shuryoJi1) == false) {shuryoJi1 = "";}
-		if(StringUtils.isNumeric(shuryoFun1) == false) {shuryoFun1 = "";}
-		if(StringUtils.isNumeric(kaishiJi2) == false) {kaishiJi2 = "";}
-		if(StringUtils.isNumeric(kaishiFun2) == false) {kaishiFun2 = "";}
-		if(StringUtils.isNumeric(shuryoJi2) == false) {shuryoJi2 = "";}
-		if(StringUtils.isNumeric(shuryoFun2) == false) {shuryoFun2 = "";}
-		if(StringUtils.isNumeric(kaishiJi3) == false) {kaishiJi3 = "";}
-		if(StringUtils.isNumeric(kaishiFun3) == false) {kaishiFun3 = "";}
-		if(StringUtils.isNumeric(shuryoJi3) == false) {shuryoJi3 = "";}
-		if(StringUtils.isNumeric(shuryoFun3) == false) {shuryoFun3 = "";}
+		if(isDouble(shusshaJi) == false) {shusshaJi = "";}
+		if(isDouble(shusshaFun) == false) {shusshaFun = "";}
+		if(isDouble(taishaJi) == false) {taishaJi = "";}
+		if(isDouble(taishaFun) == false) {taishaFun = "";}
+		if(isDouble(kaishiJi1) == false) {kaishiJi1 = "";}
+		if(isDouble(kaishiFun1) == false) {kaishiFun1 = "";}
+		if(isDouble(shuryoJi1) == false) {shuryoJi1 = "";}
+		if(isDouble(shuryoFun1) == false) {shuryoFun1 = "";}
+		if(isDouble(kaishiJi2) == false) {kaishiJi2 = "";}
+		if(isDouble(kaishiFun2) == false) {kaishiFun2 = "";}
+		if(isDouble(shuryoJi2) == false) {shuryoJi2 = "";}
+		if(isDouble(shuryoFun2) == false) {shuryoFun2 = "";}
+		if(isDouble(kaishiJi3) == false) {kaishiJi3 = "";}
+		if(isDouble(kaishiFun3) == false) {kaishiFun3 = "";}
+		if(isDouble(shuryoJi3) == false) {shuryoJi3 = "";}
+		if(isDouble(shuryoFun3) == false) {shuryoFun3 = "";}
 
-		if(StringUtils.isEmpty(jitsudoJikan) || (StringUtils.isNumeric(jitsudoJikan) == false)) {jitsudoJikan = "0";}
-		if(StringUtils.isEmpty(jikan1) || (StringUtils.isNumeric(jikan1) == false)) {jikan1 = "0";}
-		if(StringUtils.isEmpty(jikan2) || (StringUtils.isNumeric(jikan2) == false)) {jikan2 = "0";}
-		if(StringUtils.isEmpty(jikan3) || (StringUtils.isNumeric(jikan3) == false)) {jikan3 = "0";}
+		if(StringUtils.isEmpty(jitsudoJikan) || (isDouble(jitsudoJikan) == false)) {jitsudoJikan = "0";}
+		if(StringUtils.isEmpty(jikan1) || (isDouble(jikan1) == false)) {jikan1 = "0";}
+		if(StringUtils.isEmpty(jikan2) || (isDouble(jikan2) == false)) {jikan2 = "0";}
+		if(StringUtils.isEmpty(jikan3) || (isDouble(jikan3) == false)) {jikan3 = "0";}
 
 		HashMap<String, String> shinseiPatternRecord = getShinseiPattern(con, kintaiKbn, kintaiShinseiKbn1, kintaiShinseiKbn2, kintaiShinseiKbn3);
 		String jikanKeisan1 = "0";
@@ -1788,27 +1788,27 @@ public class KinShukkinBoAction extends PJActionBase {
 		String shuryoFun3			= this.getParameter(shuryoFun3KeySb.toString());
 		String jikan3				= this.getParameter(jikan3KeySb.toString());
 
-		if(StringUtils.isNumeric(shusshaJi) == false) {shusshaJi = "";}
-		if(StringUtils.isNumeric(shusshaFun) == false) {shusshaFun = "";}
-		if(StringUtils.isNumeric(taishaJi) == false) {taishaJi = "";}
-		if(StringUtils.isNumeric(taishaFun) == false) {taishaFun = "";}
-		if(StringUtils.isNumeric(kaishiJi1) == false) {kaishiJi1 = "";}
-		if(StringUtils.isNumeric(kaishiFun1) == false) {kaishiFun1 = "";}
-		if(StringUtils.isNumeric(shuryoJi1) == false) {shuryoJi1 = "";}
-		if(StringUtils.isNumeric(shuryoFun1) == false) {shuryoFun1 = "";}
-		if(StringUtils.isNumeric(kaishiJi2) == false) {kaishiJi2 = "";}
-		if(StringUtils.isNumeric(kaishiFun2) == false) {kaishiFun2 = "";}
-		if(StringUtils.isNumeric(shuryoJi2) == false) {shuryoJi2 = "";}
-		if(StringUtils.isNumeric(shuryoFun2) == false) {shuryoFun2 = "";}
-		if(StringUtils.isNumeric(kaishiJi3) == false) {kaishiJi3 = "";}
-		if(StringUtils.isNumeric(kaishiFun3) == false) {kaishiFun3 = "";}
-		if(StringUtils.isNumeric(shuryoJi3) == false) {shuryoJi3 = "";}
-		if(StringUtils.isNumeric(shuryoFun3) == false) {shuryoFun3 = "";}
+		if(isDouble(shusshaJi) == false) {shusshaJi = "";}
+		if(isDouble(shusshaFun) == false) {shusshaFun = "";}
+		if(isDouble(taishaJi) == false) {taishaJi = "";}
+		if(isDouble(taishaFun) == false) {taishaFun = "";}
+		if(isDouble(kaishiJi1) == false) {kaishiJi1 = "";}
+		if(isDouble(kaishiFun1) == false) {kaishiFun1 = "";}
+		if(isDouble(shuryoJi1) == false) {shuryoJi1 = "";}
+		if(isDouble(shuryoFun1) == false) {shuryoFun1 = "";}
+		if(isDouble(kaishiJi2) == false) {kaishiJi2 = "";}
+		if(isDouble(kaishiFun2) == false) {kaishiFun2 = "";}
+		if(isDouble(shuryoJi2) == false) {shuryoJi2 = "";}
+		if(isDouble(shuryoFun2) == false) {shuryoFun2 = "";}
+		if(isDouble(kaishiJi3) == false) {kaishiJi3 = "";}
+		if(isDouble(kaishiFun3) == false) {kaishiFun3 = "";}
+		if(isDouble(shuryoJi3) == false) {shuryoJi3 = "";}
+		if(isDouble(shuryoFun3) == false) {shuryoFun3 = "";}
 
-		if(StringUtils.isEmpty(jitsudoJikan) || (StringUtils.isNumeric(jitsudoJikan) == false)) {jitsudoJikan = "0";}
-		if(StringUtils.isEmpty(jikan1) || (StringUtils.isNumeric(jikan1) == false)) {jikan1 = "0";}
-		if(StringUtils.isEmpty(jikan2) || (StringUtils.isNumeric(jikan2) == false)) {jikan2 = "0";}
-		if(StringUtils.isEmpty(jikan3) || (StringUtils.isNumeric(jikan3) == false)) {jikan3 = "0";}
+		if(StringUtils.isEmpty(jitsudoJikan) || (isDouble(jitsudoJikan) == false)) {jitsudoJikan = "0";}
+		if(StringUtils.isEmpty(jikan1) || (isDouble(jikan1) == false)) {jikan1 = "0";}
+		if(StringUtils.isEmpty(jikan2) || (isDouble(jikan2) == false)) {jikan2 = "0";}
+		if(StringUtils.isEmpty(jikan3) || (isDouble(jikan3) == false)) {jikan3 = "0";}
 
 		HashMap<String, String> shinseiPatternRecord = getShinseiPattern(con, kintaiKbn, kintaiShinseiKbn1, kintaiShinseiKbn2, kintaiShinseiKbn3);
 		String jikanKeisan1 = "0";
@@ -2340,4 +2340,15 @@ public class KinShukkinBoAction extends PJActionBase {
 
 	}
 	
+	private boolean isDouble(String str) {
+		//判定処理
+		boolean result = false;
+		try {
+			Double.parseDouble(str);
+			result = true;
+		}
+		catch (NumberFormatException e) {
+		}
+		return result;
+	}
 }

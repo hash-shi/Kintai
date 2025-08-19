@@ -694,8 +694,9 @@ function calcShinseiJikan(nowCol, nowRow){
 		kaishiJi != "" && checkIfNumber.test(kaishiJi) &&
 		kaishiFun != "" && checkIfNumber.test(kaishiFun) &&
 		shuryoJi != "" && checkIfNumber.test(shuryoJi) &&
-		shuryoFun != "" && checkIfNumber.test(shuryoFun) &&
-		(jikan == "" || Number(jikan) == 0)
+		shuryoFun != "" && checkIfNumber.test(shuryoFun)
+//		 &&
+//		(jikan == "" || Number(jikan) == 0)
 	){
 		let kaishiJiNum = Number(kaishiJi);
 		let kaishiFunNum = Number(kaishiFun);
@@ -718,8 +719,8 @@ function calcShinseiJikan(nowCol, nowRow){
 			//4.実際に項目に表示する値を計算
 			let jikanDisp = jikanJi + (jikanFun * 0.01);
 			
-			kinShukkinBoResultAll[nowRow]["KintaiShinseiJikan" + nowCol] = String(jikanDisp);
-			$("#KintaiShinseiJikan" + nowCol + nowRow).val(String(jikanDisp));
+			kinShukkinBoResultAll[nowRow]["KintaiShinseiJikan" + nowCol] = jikanDisp.toFixed(2);
+			$("#KintaiShinseiJikan" + nowCol + nowRow).val(jikanDisp.toFixed(2));
 		}
 	}
 }

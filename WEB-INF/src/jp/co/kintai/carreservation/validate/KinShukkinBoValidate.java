@@ -1,7 +1,6 @@
 package jp.co.kintai.carreservation.validate;
 
 import java.math.BigDecimal;
-import java.nio.charset.Charset;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
@@ -15,7 +14,7 @@ import jp.co.tjs_net.java.framework.base.ValidateBase;
 import jp.co.tjs_net.java.framework.database.PreparedStatementFactory;
 import jp.co.tjs_net.java.framework.information.IndexInformation;
 import jp.co.tjs_net.java.framework.validate.IsNumber;
-import jp.co.tjs_net.java.framework.validate.Length;
+import jp.co.tjs_net.java.framework.validate.MaxLength;
 import jp.co.tjs_net.java.framework.validate.MaxNumberLimit;
 import jp.co.tjs_net.java.framework.validate.MinNumberLimit;
 
@@ -36,7 +35,7 @@ public class KinShukkinBoValidate extends ValidateBase {
 		Connection con		= this.getConnection("kintai", req);
 
 		IsNumber isNumberValidate = new IsNumber(req, res, info);
-		Length lengthValidate = new Length(req, res, info);
+		MaxLength lengthValidate = new MaxLength(req, res, info);
 		MinNumberLimit minNumberLimitValidate = new MinNumberLimit(req, res, info);
 		MaxNumberLimit maxNumberLimitValidate = new MaxNumberLimit(req, res, info);
 		
@@ -96,8 +95,7 @@ public class KinShukkinBoValidate extends ValidateBase {
 			}
 
 			this.params.put("type", "half");
-			this.params.put("comparisonoperator", "<");
-			this.params.put("length", "3");
+			this.params.put("length", "2");
 			lengthValidate.setParams(this.params);
 			if(lengthValidate.doValidate(req, res, shusshaJi, info) == false) {
 				this.addValidateMessage("出社（時）の桁数が不正です。");
@@ -125,8 +123,7 @@ public class KinShukkinBoValidate extends ValidateBase {
 			}
 
 			this.params.put("type", "half");
-			this.params.put("comparisonoperator", "<");
-			this.params.put("length", "3");
+			this.params.put("length", "2");
 			lengthValidate.setParams(this.params);
 			if(lengthValidate.doValidate(req, res, shusshaFun, info) == false) {
 				this.addValidateMessage("出社（分）の桁数が不正です。");
@@ -154,8 +151,7 @@ public class KinShukkinBoValidate extends ValidateBase {
 			}
 
 			this.params.put("type", "half");
-			this.params.put("comparisonoperator", "<");
-			this.params.put("length", "3");
+			this.params.put("length", "2");
 			lengthValidate.setParams(this.params);
 			if(lengthValidate.doValidate(req, res, taishaJi, info) == false) {
 				this.addValidateMessage("退社（時）の桁数が不正です。");
@@ -183,8 +179,7 @@ public class KinShukkinBoValidate extends ValidateBase {
 			}
 
 			this.params.put("type", "half");
-			this.params.put("comparisonoperator", "<");
-			this.params.put("length", "3");
+			this.params.put("length", "2");
 			lengthValidate.setParams(this.params);
 			if(lengthValidate.doValidate(req, res, taishaFun, info) == false) {
 				this.addValidateMessage("退社（分）の桁数が不正です。");
@@ -230,7 +225,7 @@ public class KinShukkinBoValidate extends ValidateBase {
 				("".equals(taishaFun) == false) &&
 				((intShusshaJi * 60 + intShusshaFun) > (intTaishaJi * 60 + intTaishaFun))
 			){
-				this.addValidateMessage("開始時刻が終了時刻以降になっています。");
+				this.addValidateMessage("出社時刻が退社時刻以降になっています。");
 				return false;
 			}
 
@@ -291,8 +286,7 @@ public class KinShukkinBoValidate extends ValidateBase {
 				}
 
 				this.params.put("type", "half");
-				this.params.put("comparisonoperator", "<");
-				this.params.put("length", "3");
+				this.params.put("length", "2");
 				lengthValidate.setParams(this.params);
 				if(lengthValidate.doValidate(req, res, kaishiJi, info) == false) {
 					this.addValidateMessage("勤怠申請区分開始（時）" + String.valueOf(j) + "の桁数が不正です。");
@@ -320,8 +314,7 @@ public class KinShukkinBoValidate extends ValidateBase {
 				}
 
 				this.params.put("type", "half");
-				this.params.put("comparisonoperator", "<");
-				this.params.put("length", "3");
+				this.params.put("length", "2");
 				lengthValidate.setParams(this.params);
 				if(lengthValidate.doValidate(req, res, kaishiFun, info) == false) {
 					this.addValidateMessage("勤怠申請区分開始（分）" + String.valueOf(j) + "の桁数が不正です。");
@@ -349,8 +342,7 @@ public class KinShukkinBoValidate extends ValidateBase {
 				}
 
 				this.params.put("type", "half");
-				this.params.put("comparisonoperator", "<");
-				this.params.put("length", "3");
+				this.params.put("length", "2");
 				lengthValidate.setParams(this.params);
 				if(lengthValidate.doValidate(req, res, shuryoJi, info) == false) {
 					this.addValidateMessage("勤怠申請区分終了（時）" + String.valueOf(j) + "の桁数が不正です。");
@@ -378,8 +370,7 @@ public class KinShukkinBoValidate extends ValidateBase {
 				}
 
 				this.params.put("type", "half");
-				this.params.put("comparisonoperator", "<");
-				this.params.put("length", "3");
+				this.params.put("length", "2");
 				lengthValidate.setParams(this.params);
 				if(lengthValidate.doValidate(req, res, shuryoFun, info) == false) {
 					this.addValidateMessage("勤怠申請区分終了（分）" + String.valueOf(j) + "の桁数が不正です。");
@@ -471,14 +462,14 @@ public class KinShukkinBoValidate extends ValidateBase {
 				return false;
 			}
 
-			//半角1Byte、全角2Byteで換算するため、sjisで判定する
-			Charset charsetMS932 = Charset.forName("MS932");
-
 			StringBuilder bikoKeySb	= new StringBuilder();
 			bikoKeySb	.append("KintaiShinseiBiko")	.append(String.valueOf(i));
 			String biko		= this.getParameter(bikoKeySb.toString());
 
-			if(biko.getBytes(charsetMS932).length > 40){
+			this.params.put("type", "half");
+			this.params.put("length", "40");
+			lengthValidate.setParams(this.params);
+			if(lengthValidate.doValidate(req, res, biko, info) == false) {
 				this.addValidateMessage("備考が40バイトを超えています。");
 				return false;
 			}
