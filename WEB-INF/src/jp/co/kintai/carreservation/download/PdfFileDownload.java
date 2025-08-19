@@ -20,8 +20,6 @@ import org.jodconverter.core.office.OfficeManager;
 import org.jodconverter.local.LocalConverter;
 import org.jodconverter.local.office.LocalOfficeManager;
 
-import jp.co.kintai.carreservation.define.Define;
-import jp.co.kintai.carreservation.information.PdfInformation;
 import jp.co.tjs_net.java.framework.base.DownloadBase;
 import jp.co.tjs_net.java.framework.information.IndexInformation;
 
@@ -34,10 +32,7 @@ public class PdfFileDownload extends DownloadBase {
 	@Override
 	public void doRun(HttpServletRequest req, HttpServletResponse res) throws Exception {
 		
-		// セッションに格納したパラメータを取得
-		PdfInformation pdfInformation	= (PdfInformation)req.getSession().getAttribute(Define.SESSION_ID_PDF);
-		
-		String textData = pdfInformation.getTextData();
+		String textData = this.getParameter("txtData");
 		
 		// テンプレートファイルの場所
 		String templateFilePath = "C:/tmp";

@@ -190,6 +190,82 @@ public abstract class PJActionBase extends ActionBase {
 	}
 	
 	/**
+	 * 管理の取得
+	 * 
+	 * @param con
+	 * @return
+	 * @throws Exception
+	 */
+	public static ArrayList<HashMap<String, String>> getMstKanris(Connection con, String kanriCode) throws Exception {
+		
+		ArrayList<HashMap<String, String>> mstDatas = new ArrayList<>();
+		
+		// DB接続
+		StringBuffer sql				= new StringBuffer();
+		PreparedStatement pstmt			= null;
+		PreparedStatementFactory pstmtf	= new PreparedStatementFactory();
+		ResultSet rset					= null;
+		
+		sql.append(" SELECT ");
+		sql.append(" 	K.KanriCode ");
+		sql.append(" 	,K.NendoKakuteiStatus ");
+		sql.append(" 	,K.GenzaishoriNengetsudo ");
+		sql.append(" 	,K.KintaiKishuGetsudo ");
+		sql.append(" 	,K.KintaiGetsudoShimebi ");
+		sql.append(" 	,K.KintaiKihonSagyoJikan ");
+		sql.append(" 	,K.SaishuKoshinShainNO ");
+		sql.append(" 	,U.ShainName SaishuKoshinShainName ");
+		sql.append(" 	,K.SaishuKoshinDate ");
+		sql.append(" 	,K.SaishuKoshinJikan ");
+		sql.append(" FROM ");
+		sql.append(" 	MST_KANRI K ");
+		sql.append(" LEFT JOIN MST_SHAIN U ");
+		sql.append(" 	ON K.SaishuKoshinShainNO = U.ShainNO ");
+		sql.append(" WHERE ");
+		sql.append(" 	1 = 1 ");
+
+		if (StringUtils.isNotBlank(kanriCode)) {
+			sql.append(" AND CAST(K.KanriCode AS int) = ? ");
+			pstmtf.addValue("String", kanriCode);
+		}
+		
+		sql.append(" ORDER BY ");
+		sql.append("     K.KanriCode ");
+		
+		try {
+			// パラメータ付きSQL文の生成
+			pstmt = con.prepareStatement(sql.toString());
+			// パラメータの設定
+			pstmtf.setPreparedStatement(pstmt);
+			// 実行
+			rset = pstmt.executeQuery();
+			// 結果取得
+			ResultSetMetaData metaData = rset.getMetaData(); 
+			
+			// カラム数(列数)の取得
+			int colCount = metaData.getColumnCount(); 
+			
+			// レコード数分繰り返す
+			while (rset.next()){
+				// 1レコード分の配列を用意
+				HashMap<String, String> record = new HashMap<String, String>();
+				// カラム名をkeyとして値を格納
+				for (int i = 1; i <= colCount; i++) {
+					record.put(metaData.getColumnLabel(i), StringUtils.stripToEmpty(rset.getString(i)));
+				}
+				// 配列の格納
+				mstDatas.add(record);
+			}
+		} finally {
+			if (rset != null){ try { rset.close(); } catch (Exception exp){}}
+			if (pstmt != null){ try { pstmt.close(); } catch (Exception exp){}}
+		}
+		
+		return mstDatas;
+		
+	}
+	
+	/**
 	 * 営業所の取得
 	 * 
 	 * @param con

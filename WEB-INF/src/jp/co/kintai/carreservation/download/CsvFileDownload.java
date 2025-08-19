@@ -4,8 +4,6 @@ import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 
 import jp.ac.wakhok.tomoharu.csv.CSVLine;
-import jp.co.kintai.carreservation.define.Define;
-import jp.co.kintai.carreservation.information.CsvInformation;
 import jp.co.tjs_net.java.framework.base.DownloadBase;
 import jp.co.tjs_net.java.framework.information.IndexInformation;
 
@@ -18,10 +16,7 @@ public class CsvFileDownload extends DownloadBase {
 	@Override
 	public void doRun(HttpServletRequest req, HttpServletResponse res) throws Exception {
 		
-		// セッションに格納したパラメータを取得
-		CsvInformation cavInformation	= (CsvInformation)req.getSession().getAttribute(Define.SESSION_ID_CSV);
-		
-		String textData = cavInformation.getTextData();
+		String textData = this.getParameter("txtData");
 		
 		// 改行コード
 		String newLine = "\r\n";
