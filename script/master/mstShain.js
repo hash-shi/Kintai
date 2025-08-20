@@ -1,108 +1,10 @@
 //****************************************************************************
-// ページロード時に区分一覧を格納（キャッシュ利用）
-//
-//
-//
-//
-//****************************************************************************
-
-// キャッシュ用オブジェクト
-var kubunCache = {};
-
-// ページロード時にまとめて取得
-function initKubunCache() {
-    // 取得したい区分コードリスト
-    var kbnCodes = [
-						"0500", //ユーザ区分
-						"0010", //社員区分
-						"0011", //出勤簿入力区分
-						"0012", //時給日給区分
-						"0052", //勤務開始・終了時刻（時）
-						"0053", //勤務開始・終了時刻（分）
-						"0013"  //通勤費精算区分
-					];
-    
-    kbnCodes.forEach(function(kbnCode) {
-        proc("getKubunList", { kbnCode: kbnCode }, function(data){
-            if (!data || !data.contents || !data.contents.result) return;
-            kubunCache[kbnCode] = data.contents.result; // キャッシュ
-			console.log(kbnCode, kubunCache[kbnCode]);  // キャッシュ確認
-        });
-    });
-}
-//****************************************************************************
-// プルダウンセット（キャッシュ利用）
-//
-//
-//
-//
-//****************************************************************************
-function getKubunNameAndSetSelect(kbnCodeId, codeId, nameId, selectId) {
-    var kbnCode = $("#" + kbnCodeId).val();
-    if (!kbnCode || !kubunCache[kbnCode]) return;
-
-    var kubuns = kubunCache[kbnCode];
-    var currentCodeOrName = $("#" + codeId).val() || $("#" + nameId).val() || "";
-    var $select = $("#" + selectId);
-    $select.empty();
-    $select.append($("<option>").val("").text(""));
-
-    var selectedCode = "";
-    var selectedName = "";
-
-    kubuns.forEach(function(item){
-        var $option = $("<option>").val(item.Code).text(item.KbnName);
-        if (item.Code === currentCodeOrName || item.KbnName === currentCodeOrName) {
-            $option.prop("selected", true);
-            selectedCode = item.Code;
-            selectedName = item.KbnName;
-        }
-        $select.append($option);
-    });
-
-    $("#" + codeId).val(selectedCode);
-    $("#" + nameId).val(selectedName);
-
-    $select.off("change").on("change", function() {
-        var sc = $(this).val();
-        var sn = $(this).find("option:selected").text();
-        $("#" + codeId).val(sc);
-        $("#" + nameId).val(sn);
-    });
-}
-//****************************************************************************
-// コードからプルダウン＆名称セット（キャッシュ利用）
-//
-//
-//
-//
-//****************************************************************************
-function setKubunSelect(txtCodeId, txtNameId, selectId, code) {
-    $("#" + txtCodeId).val(code);
-    $("#" + selectId).val(code);
-    getKubunNameAndSetSelect(txtCodeId, txtCodeId, txtNameId, selectId);
-}
-
-//****************************************************************************
-// ページロード時にキャッシュ初期化
-//
-//
-//
-//
-//****************************************************************************
-$(function(){
-    initKubunCache();
-});
-
-//****************************************************************************
 // getMstShain
 //
 //
 //
 //
 //****************************************************************************
-var eigyoshoList = [];
-
 function getMstShain() {
 	
 	// 処理可能営業所リスト初期化、表示クリア
@@ -145,19 +47,20 @@ function getMstShain() {
 		var mstDatas = contents["mstDatas"];
 		for (var i = 0; i < mstDatas.length; i++) {
 			$("#txtShainNO").val(mstDatas[i]["ShainNO"]);
+			$("#hdnShainNO").val(mstDatas[i]["ShainNO"]);
 			$("#txtShainName").val(mstDatas[i]["ShainName"]);
 			$("#txtPassword").val(mstDatas[i]["Password"]);
-			$("#txtUserCode").val(mstDatas[i]["UserKbn"]);
-			$("#txtShainCode").val(mstDatas[i]["ShainKbn"]);
-			$("#txtShukinboCode").val(mstDatas[i]["ShukinboKbn"]);
+			$("#txtUserKbn").val(mstDatas[i]["UserKbn"]);
+			$("#txtShainKbn").val(mstDatas[i]["ShainKbn"]);
+			$("#txtShukinboKbn").val(mstDatas[i]["ShukinboKbn"]);
 			$("#txtEigyoshoCode").val(mstDatas[i]["EigyoshoCode"]);
 			$("#txtBushoCode").val(mstDatas[i]["BushoCode"]);
 			$("#txtYukyuKyukaFuyoNissu").val(mstDatas[i]["YukyuKyukaFuyoNissu"]);
-			$("#txtJikyuNikkyuCode").val(mstDatas[i]["JikyuNikkyuKbn"]);
-			$("#txtKinmuKaishiJiCode").val(mstDatas[i]["KinmuKaishiJi"]);
-			$("#txtKinmuKaishiFunCode").val(mstDatas[i]["KinmuKaishiFun"]);
-			$("#txtKinmuShuryoJiCode").val(mstDatas[i]["KinmuShuryoJi"]);
-			$("#txtKinmuShuryoFunCode").val(mstDatas[i]["KinmuShuryoFun"]);
+			$("#txtJikyuNikkyuKbn").val(mstDatas[i]["JikyuNikkyuKbn"]);		
+			$("#txtKinmuKaishiJiKbnName").val(mstDatas[i]["KinmuKaishiJi"]);			
+			$("#txtKinmuKaishiFunKbnName").val(mstDatas[i]["KinmuKaishiFun"]);
+			$("#txtKinmuShuryoJiKbnName").val(mstDatas[i]["KinmuShuryoJi"]);
+			$("#txtKinmuShuryoFunKbnName").val(mstDatas[i]["KinmuShuryoFun"]);
 			$("#txtKeiyakuJitsudoJikan").val(mstDatas[i]["KeiyakuJitsudoJikan"]);
 			$("#txtShinseiTanka01").val(mstDatas[i]["ShinseiTanka01"]);
 			$("#txtShinseiTanka02").val(mstDatas[i]["ShinseiTanka02"]);
@@ -170,11 +73,17 @@ function getMstShain() {
 			$("#txtShinseiTanka09").val(mstDatas[i]["ShinseiTanka09"]);
 			$("#txtShinseiTanka10").val(mstDatas[i]["ShinseiTanka10"]);
 			$("#txtShinseiTanka11").val(mstDatas[i]["ShinseiTanka11"]);
-			$("#txtTsukinHiCode").val(mstDatas[i]["TsukinHiKbn"]);
+			$("#txtTsukinHiKbn").val(mstDatas[i]["TsukinHiKbn"]);
 			$("#txtTaisyokuDate").val(mstDatas[i]["TaisyokuDate"]);
 			
-			eigyoshoList = mstDatas[i]["ShoriKanoEigyoshos"] || []; // サーバーからの配列
-			
+			if (isNew == "1") {
+				// 新規登録 → 空リストにする
+				eigyoshoList = [];
+			} else {
+				// 既存データ → サーバーの営業所リストを利用	
+				eigyoshoList = mstDatas[i]["ShoriKanoEigyoshos"] || []; 
+			}
+				
 			$("#hdnSaishuKoshinShainNO").val(mstDatas[i]["SaishuKoshinShainNO"]);
 			$("#hdnSaishuKoshinShainName").val(mstDatas[i]["SaishuKoshinShainName"]);
 			$("#hdnSaishuKoshinDate").val(mstDatas[i]["SaishuKoshinDate"]);
@@ -186,34 +95,84 @@ function getMstShain() {
 		}
 		
 		// 処理可能営業所描画
-		//renderEigyoshoTable();
 		getShoriKanoEigyoshos();
 		
 		console.log("処理可能営業所リスト:", eigyoshoList);
-		
+		// ユーザ区分名
+		setSelectFromInput('txtUserKbn','selectUserKbnName');
+		// 社員区分名
+		setSelectFromInput('txtShainKbn','selectShainKbnName');
+		// 出勤簿入力区分名
+		setSelectFromInput('txtShukinboKbn','selectShukinboKbnName');
 		// 営業所名
 		getEigyoshoName('txtEigyoshoCode', 'txtEigyoshoName');
 		// 部署名
 		getBushoName('txtBushoCode', 'txtBushoName');
+		// 時給日給区分名
+		setSelectFromInput('txtJikyuNikkyuKbn','selectJikyuNikkyuKbnName');
+		// 勤務開始時刻（時）
+		setSelectKinmuFromInput('txtKinmuKaishiJiKbnName','selectKinmuKaishiJiKbnName');
+		getCodeFromKbnName('txtKinmuKaishiJiKbnName','txtKinmuKaishiJiKbn','selectKinmuKaishiJiKbnName');
+		// 勤務開始時刻（分）
+		setSelectKinmuFromInput('txtKinmuKaishiFunKbnName','selectKinmuKaishiFunKbnName');
+		getCodeFromKbnName('txtKinmuKaishiFunKbnName','txtKinmuKaishiFunKbn','selectKinmuKaishiFunKbnName');
+		// 勤務終了時刻（時）
+		setSelectKinmuFromInput('txtKinmuShuryoJiKbnName','selectKinmuShuryoJiKbnName');
+		getCodeFromKbnName('txtKinmuShuryoJiKbnName','txtKinmuShuryoJiKbn','selectKinmuShuryoJiKbnName');
+		// 勤務終了時刻（分）
+		setSelectKinmuFromInput('txtKinmuShuryoFunKbnName','selectKinmuShuryoFunKbnName');	
+		getCodeFromKbnName('txtKinmuShuryoFunKbnName','txtKinmuShuryoFunKbn','selectKinmuShuryoFunKbnName');
+		// 通勤費精算区分名
+		setSelectFromInput('txtTsukinHiKbn','selectTsukinHiKbnName');		
 		// 処理可能営業所名
 		getEigyoshoName('txtShoriKanoEigyoshoCode', 'txtShoriKanoEigyoshoName');
-		// ユーザ区分
-		getKubunNameAndSetSelect('txtUserKbnCode','txtUserCode','txtUserKbnName','selectUserKbnName');
-		// 社員区分
-		getKubunNameAndSetSelect('txtShainKbnCode','txtShainCode','txtShainKbnName','selectShainKbnName');
-		// 出勤簿入力区分
-		getKubunNameAndSetSelect('txtShukinboKbnCode','txtShukinboCode','txtShukinboKbnName','selectShukinboKbnName');
-		// 時給日給区分
-		getKubunNameAndSetSelect('txtJikyuNikkyuKbnCode','txtJikyuNikkyuCode','txtJikyuNikkyuKbnName','selectJikyuNikkyuKbnName');
-		// 通勤費精算区分
-		getKubunNameAndSetSelect('txtTsukinHiKbnCode','txtTsukinHiCode','txtTsukinHiKbnName','selectTsukinHiKbnName');
-		// 勤務開始・終了時刻
-		getKubunNameAndSetSelect('txtKinmuKaishiJiKbnCode','txtKinmuKaishiJiCode','txtKinmuKaishiJiKbnName','selectKinmuKaishiJiKbnName');
-		getKubunNameAndSetSelect('txtKinmuKaishiFunKbnCode','txtKinmuKaishiFunCode','txtKinmuKaishiFunKbnName','selectKinmuKaishiFunKbnName');
-		getKubunNameAndSetSelect('txtKinmuShuryoJiKbnCode','txtKinmuShuryoJiCode','txtKinmuShuryoJiKbnName','selectKinmuShuryoJiKbnName');
-		getKubunNameAndSetSelect('txtKinmuShuryoFunKbnCode','txtKinmuShuryoFunCode','txtKinmuShuryoFunKbnName','selectKinmuShuryoFunKbnName');
-
+		
+		//活性・非活性切り替え
+		updateActiveSwitch();
+		
 	});
+}
+
+//****************************************************************************
+// プルダウン同期処理
+//
+// 勤務開始・終了時刻についてはDBに直接、
+//「区分名称」（例：00, 15, 30, 45）が保存されているため、
+// 画面上の <select> で使用する
+//「区分コード」（例：01, 02, 03, 04）を取得する必要がある。
+//****************************************************************************
+// 入力欄からプルダウンに同期
+function setSelectFromInput(inputId, selectId) { 
+	var val = $("#" + inputId).val(); 
+	$("#" + selectId).val(val); 
+}
+
+// 勤務開始・終了時刻プルダウン
+function setSelectKinmuFromInput(inputId, selectId) {
+    var val = $("#" + inputId).val();
+	var $sel = $("#" + selectId);
+	var found = false;
+
+	$sel.find("option").each(function() {
+	    if ($(this).text() === val) {
+	        $sel.val($(this).val());
+	        found = true;
+	        return false;
+	    }
+	});
+
+	if (!found) {
+	    $sel.val("");
+	}
+	// 名称 input も更新
+	var nameInputId = inputId + "Name"; // txtKinmuKaishiJiKbn → txtKinmuKaishiJiKbnName
+	$("#" + nameInputId).val(val);
+}
+
+// プルダウンから入力欄に同期
+function setInputFromSelect(selectId, inputId) {
+    var val = $("#" + selectId).val();
+    $("#" + inputId).val(val).trigger("change");
 }
 
 //****************************************************************************
@@ -251,7 +210,7 @@ function getShoriKanoEigyoshos() {
                         "<input type=\"text\" class=\"w80\" id=\"eigyoshoCode_" + count + "\" name=\"eigyoshoCode[]\" value=\"" + code + "\" " +
                                "onblur=\"getEigyoshoName('eigyoshoCode_" + count + "','eigyoshoName_" + count + "');\">" +
                         "<input type=\"text\" class=\"w200\" id=\"eigyoshoName_" + count + "\" name=\"eigyoshoName[]\" value=\"\" readonly>" +
-                        " <button type=\"button\" onclick=\"removeShoriKanoEigyosho(" + count + ")\">×</button>" +
+                        "<button type=\"button\" style=\"font-weight: bold;\" onclick=\"removeShoriKanoEigyosho(" + count + ")\">×</button>" +
                     "</td>" +
                 "</tr>";
             
@@ -273,6 +232,7 @@ function getShoriKanoEigyoshos() {
 //
 //****************************************************************************
 function addShoriKanoEigyosho() {
+	reflectShoriKanoEigyosho();
     eigyoshoList.push({ EigyoshoCode: "" });
     renderEigyoshoTable();
 }
@@ -285,8 +245,23 @@ function addShoriKanoEigyosho() {
 //
 //****************************************************************************
 function removeShoriKanoEigyosho(index) {
+	reflectShoriKanoEigyosho()
     eigyoshoList.splice(index, 1);   // 配列から削除
     renderEigyoshoTable();           // 再描画
+}
+
+//****************************************************************************
+// reflectShoriKanoEigyosho
+// 入力欄の値を eigyoshoList に反映
+//
+//
+//
+//****************************************************************************
+function reflectShoriKanoEigyosho() {
+    $("#ShoriKanoEigyoshoResult tr").each(function(index) {
+        var code = $("#eigyoshoCode_" + index).val();
+        eigyoshoList[index].EigyoshoCode = code;
+    });
 }
 
 //****************************************************************************
@@ -313,7 +288,7 @@ function renderEigyoshoTable() {
                     "<input type=\"text\" class=\"w80\" id=\"eigyoshoCode_" + count + "\" name=\"eigyoshoCode[]\" value=\"" + code + "\" " +
                            "onblur=\"getEigyoshoName('eigyoshoCode_" + count + "','eigyoshoName_" + count + "');\">" +
                     "<input type=\"text\" class=\"w200\" id=\"eigyoshoName_" + count + "\" name=\"eigyoshoName[]\" value=\"\" readonly>" +
-                    " <button type=\"button\" onclick=\"removeShoriKanoEigyosho(" + count + ")\">×</button>" +
+                    "<button type=\"button\" style=\"font-weight: bold;\" onclick=\"removeShoriKanoEigyosho(" + count + ")\">×</button>" +
                 "</td>" +
             "</tr>";
         
@@ -323,4 +298,183 @@ function renderEigyoshoTable() {
             getEigyoshoName('eigyoshoCode_' + count, 'eigyoshoName_' + count);
         }
     }
+}
+
+//****************************************************************************
+// onDelete
+//
+//
+//
+//
+//****************************************************************************
+function onDelete() {
+	
+	proc("delete",{}, function(data){
+		// 確認メッセージ
+		if(!confirm("データの削除を行います。\nよろしいですか？")) { return; }
+		
+		// 削除処理の本体
+		proc("delete_",{}, function(data){
+			// 完了メッセージ
+			alert("データが正常に更新されました。");
+			// 画面のクリアなど何かしらの処理
+			getMstShain();
+		});
+		
+	});
+}
+
+//****************************************************************************
+// onUpdate
+//
+//
+//
+//
+//****************************************************************************
+function onUpdate() {
+	
+	// 新規モードと更新モードで分岐
+	var isNew = $("#hdnIsNew").val();
+	
+	// 更新モード時の切り替えに必要
+	var txtShainNO = $("#txtShainNO").val();
+	var hdnShainNO = $("#hdnShainNO").val();
+	
+	if (isNew == "1") {
+		// 新規モード
+		proc("insert",{}, function(data){
+			// 確認メッセージ
+			if(!confirm("データの更新を行います。\nよろしいですか？")) { return; }
+			// 登録処理の本体
+			proc("insert_",{}, function(data){
+				// 完了メッセージ
+				alert("データが正常に更新されました。");
+				// 画面のクリアなど何かしらの処理
+				// 処理した社員NOで再読込
+				$("#srhTxtShainNO").val($("#txtShainNO").val());
+				getMstShain();
+			});
+		});
+	} else {
+		// 更新モード
+		proc("update",{}, function(data){
+			
+			if (txtShainNO == hdnShainNO) {
+				// 画面項目と隠し項目が同じ値 = 単純にデータ更新
+				// 確認メッセージ
+				if(!confirm("データの更新を行います。\nよろしいですか？")) { return; }
+				// 登録処理の本体
+				proc("update_",{}, function(data){
+					// 完了メッセージ
+					alert("データが正常に更新されました。");
+					// 画面のクリアなど何かしらの処理
+					// 処理した社員NOで再読込
+					$("#srhTxtShainNO").val($("#txtShainNO").val());
+					getMstShain();
+				});
+			} else {
+				// 画面項目と隠し項目が異なる値 = データコピー(画面で入力した新しい値で登録)
+				// 確認メッセージ
+				if(!confirm("データのコピーを行います。\nよろしいですか？")) { return; }
+				
+				// 登録処理の本体
+				proc("copy_",{}, function(data){
+					// 完了メッセージ
+					alert("データが正常に更新されました。");
+					// 画面のクリアなど何かしらの処理
+					// 処理した社員NOで再読込
+					$("#srhTxtShainNO").val($("#txtShainNO").val());
+					getMstShain();
+				});
+			}
+		});
+	}
+}
+
+//****************************************************************************
+// updateActiveSwitch
+// 各区分に応じて入力欄活性切り替え
+// 一旦現行システムと合わせるためコメントアウト
+// そもそも入力をさせないようにするならコメントを解除し、
+// 下部のupdateActiveSwitchと置き換え
+//****************************************************************************
+/*
+function updateActiveSwitch() {
+    var shainboVal   = $("#txtShainKbn").val();     // 社員区分
+    var shukinboVal  = $("#txtShukinboKbn").val();  // 出勤簿入力区分
+
+    var shainDisable    = (shainboVal === "00");    // 社員区分が00なら無効
+    var shukinboEnable  = (shukinboVal === "01");   // 出勤簿入力区分が01なら有効
+
+    // --- 時給日給区分 ---
+    // 社員区分が00でなく、かつ出勤簿区分が01のときだけ活性
+    var jikyuEnable = !shainDisable && shukinboEnable;
+    $("#txtJikyuNikkyuKbn").prop("disabled", !jikyuEnable);
+    $("#selectJikyuNikkyuKbnName").prop("disabled", !jikyuEnable);
+
+    // --- 勤務開始・終了時刻 ---
+    $("#selectKinmuKaishiJiKbnName").prop("disabled", shainDisable);
+    $("#selectKinmuKaishiFunKbnName").prop("disabled", shainDisable);
+    $("#selectKinmuShuryoJiKbnName").prop("disabled", shainDisable);
+    $("#selectKinmuShuryoFunKbnName").prop("disabled", shainDisable);
+
+    // --- 勤務実働時間 ---
+    $("#txtKeiyakuJitsudoJikan").prop("disabled", !shukinboEnable);
+
+    // --- 単価01～11 ---
+    for (var i = 1; i <= 11; i++) {
+        $("#txtShinseiTanka" + (i < 10 ? "0" + i : i)).prop("disabled", !shukinboEnable);
+    }
+
+    // --- 通勤費精算区分 ---
+    $("#txtTsukinHiKbn").prop("disabled", !shukinboEnable);
+    $("#selectTsukinHiKbnName").prop("disabled", !shukinboEnable);
+}
+*/
+
+//****************************************************************************
+// updateActiveSwitch
+// 出勤簿入力関連活性切り替え
+//
+//
+//
+//****************************************************************************
+function updateActiveSwitch() {
+    var shukinboVal = $("#txtShukinboKbn").val(); // 出勤簿入力区分の値
+    var enable = (shukinboVal === "01");          // 01 のときだけ活性
+
+    // 時給日給区分
+    $("#txtJikyuNikkyuKbn").prop("disabled", !enable);
+    $("#selectJikyuNikkyuKbnName").prop("disabled", !enable);
+
+    // 勤務実働時間
+    $("#txtKeiyakuJitsudoJikan").prop("disabled", !enable);
+
+	// 単価01～11
+	for (var i = 1; i <= 11; i++) {
+	    $("#txtShinseiTanka" + (i < 10 ? "0" + i : i)).prop("disabled", !enable);
+	}
+	
+	// 通勤費精算区分
+	$("#txtTsukinHiKbn").prop("disabled", !enable);
+	$("#selectTsukinHiKbnName").prop("disabled", !enable);
+}
+
+//****************************************************************************
+// getCodeFromName
+// 名称からコード取得
+//
+//
+//
+//****************************************************************************
+function getCodeFromKbnName(inputId, hiddenId, selectId) {
+    var name = $("#" + inputId).val(); // 入力された名称
+    var code = "";
+    $("#" + selectId + " option").each(function() {
+        if ($(this).text() === name) {
+            code = $(this).val(); // option の value がコード
+            return false; // break
+        }
+    });
+    $("#" + hiddenId).val(code);
 }
