@@ -13,7 +13,7 @@
 			<!-- 数字チェック 0か1しか入らない処理 -->
 			<check class="IsRegex" message="!#itemName#!の値が不正です。" itemName="{dispName}">
 				<param name="format">^[0-1]$</param>
-			</check>			
+			</check>
 		</variable>
 		<variable name="selStatusSentaku" dispName="ステータス選択">
 			<check class="IsRequired" message="該当するステータスが存在しません。" itemName="{dispName}"></check>
@@ -51,7 +51,19 @@
 			<check class="IsRegex" message="!#itemName#!の指定が不正です。" itemName="{dispName}">
 				<param name="format">^\d{1,2}\.(?:[0-5][0-9]|59)$</param>
 			</check>
-		</variable>		
+		</variable>	
 	</proc>
-</validate>
 	
+	<proc func="update_">
+		<variable name="dummy" dispName="">
+			<check class="ExclusiveValidate" message="このデータはすでに、別のユーザに更新されています。もう一度データを確認してください。" itemName="{dispName}">
+				<param name="tableName">MST_KANRI</param>
+				<param name="keyName">KanriCode</param>
+				<param name="keyValue">txtKanriCode</param>
+				<param name="saishuKoshinDate">hdnSaishuKoshinDate</param>
+				<param name="saishuKoshinJikan">hdnSaishuKoshinJikan</param>
+			</check>
+		</variable>
+	</proc>
+	
+</validate>	
