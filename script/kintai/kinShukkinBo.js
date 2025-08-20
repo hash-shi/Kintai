@@ -669,10 +669,10 @@ function calcJitsudoJikan(nowRow){
 			//3.勤怠申請時間の分部分を計算
 			let jikanFun = jikanWk % 60;
 			//4.実際に項目に表示する値を計算
-			let jikanDisp = jikanJi + (jikanFun * 0.01);
+			let jikanDisp = (Math.floor((jikanJi + (jikanFun / 60)) * 100) / 100).toFixed(2);
 			
-			kinShukkinBoResultAll[nowRow]["JitsudoJikan"] = jikanDisp.toFixed(2);
-			$("#JitsudoJikan" + nowRow).val(jikanDisp.toFixed(2));
+			kinShukkinBoResultAll[nowRow]["JitsudoJikan"] = jikanDisp;
+			$("#JitsudoJikan" + nowRow).val(jikanDisp);
 		}
 	}
 }
@@ -720,10 +720,10 @@ function calcShinseiJikan(nowCol, nowRow){
 			//3.勤怠申請時間の分部分を計算
 			let jikanFun = jikanWk % 60;
 			//4.実際に項目に表示する値を計算
-			let jikanDisp = jikanJi + (jikanFun * 0.01);
+			let jikanDisp = (Math.floor((jikanJi + (jikanFun / 60)) * 100) / 100).toFixed(2);
 			
-			kinShukkinBoResultAll[nowRow]["KintaiShinseiJikan" + nowCol] = jikanDisp.toFixed(2);
-			$("#KintaiShinseiJikan" + nowCol + nowRow).val(jikanDisp.toFixed(2));
+			kinShukkinBoResultAll[nowRow]["KintaiShinseiJikan" + nowCol] = jikanDisp;
+			$("#KintaiShinseiJikan" + nowCol + nowRow).val(jikanDisp);
 		}
 	}
 }
