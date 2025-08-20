@@ -177,9 +177,6 @@ function onSearchKinShukkinBo(){
 		
 		//検索結果があれば入力項目表示
 		$("#nyuryokuArea").css("visibility", "");
-		$("#buttonArea").css("visibility", "");
-		document.getElementById("btnDelete").disabled = false;
-		document.getElementById("btnUpdate").disabled = false;
 
 		let result			= contents["result"];
 		kinShukkinBoResultAll = result;
@@ -217,6 +214,9 @@ function onSearchKinShukkinBo(){
 			if ($("#nyuryokuArea").hasClass("upd")) {
 				$("#nyuryokuArea").removeClass("upd");
 			}
+			$("#buttonArea").css("visibility", "hidden");
+			document.getElementById("btnDelete").disabled = true;
+			document.getElementById("btnUpdate").disabled = true;
 		}
 		else{
 			//取得した更新日付・時間が空の時、新規登録として背景色を変更する
@@ -242,6 +242,9 @@ function onSearchKinShukkinBo(){
 					$("#nyuryokuArea").removeClass("nom");
 				}
 			}
+			$("#buttonArea").css("visibility", "");
+			document.getElementById("btnDelete").disabled = false;
+			document.getElementById("btnUpdate").disabled = false;
 		}
 	});
 
