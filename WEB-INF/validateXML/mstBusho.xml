@@ -47,6 +47,9 @@
 				<param name="length">2</param>
 			</check>
 		</variable>
+		<variable name="selKbnName" dispName="部署区分">
+			<check class="IsRequired" message="該当する!#itemName#!が存在しません。" itemName="{dispName}"></check>
+		</variable>
 		<variable name="txtEigyoshoCode" dispName="営業所コード">
 			<check class="IsRequired" message="!#itemName#!が入力されていません。" itemName="{dispName}"></check>
 			<check class="IsHalf" message="!#itemName#!には全角文字は入力できません。" itemName="{dispName}"></check>
