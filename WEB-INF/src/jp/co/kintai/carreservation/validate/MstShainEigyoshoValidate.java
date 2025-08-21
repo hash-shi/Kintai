@@ -1,6 +1,5 @@
 package jp.co.kintai.carreservation.validate;
 
-import java.util.ArrayList;
 import java.util.HashMap;
 
 import jakarta.servlet.http.HttpServletRequest;
@@ -55,54 +54,31 @@ public class MstShainEigyoshoValidate extends ValidateBase {
 		// 処理可能営業所名(id)
 		String shoriKanoEigyoshoName	= this.params.get("name").toString();
 		
-		// まずループしながら全体を取得する
-		
-		// 全体を格納する配列
-		ArrayList<HashMap<String, String>> eigyoshos = new ArrayList<>();
-		
-		for (int i = 0; 0 <= i; i++) {
-			
-			// 処理可能営業所項目がない場合はループを抜ける
-			// ※keyが存在して値がない場合は空文字が返却される
-			// 　keyそのものが存在しない場合はnullが返却される
-			if (req.getParameter(shoriKanoEigyoshoCode + "_" + i) == null) { break; }
-			
-			// 配列の準備
-			HashMap<String, String> record = new HashMap<String, String>();
-
-			// パラメータ取得
-			String eigyoshoCode	= req.getParameter(shoriKanoEigyoshoCode + "_" + i);
-			String eigyoshoName	= req.getParameter(shoriKanoEigyoshoName + "_" + i);
-			
-			// 値を格納
-			record.put("columnName", "処理可能営業所コード" + "_" + (i + 1));
-			record.put("eigyoshoCode", eigyoshoCode);
-			record.put("eigyoshoName", eigyoshoName);
-			
-			// 配列の格納
-			eigyoshos.add(record);
-		}
+		// パラメータを名前指定で取得する。
+		// 同名の項目がある場合は配列で取得可能。
+		String[] shoriKanoEigyoshoCodes	= req.getParameterValues(shoriKanoEigyoshoCode);
+		String[] shoriKanoEigyoshoNames	= req.getParameterValues(shoriKanoEigyoshoName);
 		
 		// 配列を回しながらチェックを行う。
-		for (HashMap<String, String> eigyosho : eigyoshos) {
+		for (int i = 0; i < shoriKanoEigyoshoCodes.length; i++) {
 			// 必須
-			if (!isRequired.doValidate(req, res, eigyosho.get("eigyoshoCode"), info)) { 
-				this.addValidateMessage(eigyosho.get("columnName") + "が入力されていません。");
+			if (!isRequired.doValidate(req, res, shoriKanoEigyoshoCodes[i], info)) { 
+				this.addValidateMessage("処理可能営業所コード" + (i + 1) + "が入力されていません。");
 				return false;
 			}
 			// 全角半角
-			if (!isHalf.doValidate(req, res, eigyosho.get("eigyoshoCode"), info)) { 
-				this.addValidateMessage(eigyosho.get("columnName") + "には全角文字は入力できません。");
+			if (!isHalf.doValidate(req, res, shoriKanoEigyoshoCodes[i], info)) { 
+				this.addValidateMessage("処理可能営業所コード" + (i + 1) + "には全角文字は入力できません。");
 				return false;
 			}
 			// 数字
-			if (!isNumber.doValidate(req, res, eigyosho.get("eigyoshoCode"), info)) { 
-				this.addValidateMessage(eigyosho.get("columnName") + "には数字を入力してください。");
+			if (!isNumber.doValidate(req, res, shoriKanoEigyoshoCodes[i], info)) { 
+				this.addValidateMessage("処理可能営業所コード" + (i + 1) + "には数字を入力してください。");
 				return false;
 			}
 			// コード存在(名称がない = 存在しないコード)
-			if (!isRequired.doValidate(req, res, eigyosho.get("eigyoshoName"), info)) { 
-				this.addValidateMessage("該当する" + eigyosho.get("columnName") + "が存在しません。");
+			if (!isRequired.doValidate(req, res, shoriKanoEigyoshoNames[i], info)) { 
+				this.addValidateMessage("該当する処理可能営業所コード" + (i + 1) + "が存在しません。");
 				return false;
 			}
 		}

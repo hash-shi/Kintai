@@ -349,6 +349,7 @@
 		<variable name="shoriKanoEigyosho" dispName="処理可能営業所">
         	<check class="MstShainEigyoshoValidate">
 	            <param name="code">eigyoshoCode[]</param>
+	            <param name="name">eigyoshoName[]</param>
 	        </check>
     	</variable>
 			
