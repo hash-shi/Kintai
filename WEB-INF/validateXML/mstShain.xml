@@ -143,7 +143,9 @@
 		
 	<!-- 時給日給区分 -->
 		<variable name="txtJikyuNikkyuKbn" dispName="時給日給区分">
-			<check class="IsRequired" message="!#itemName#!が入力されていません。" itemName="{dispName}"></check>
+			<check class="IsRequired" message="!#itemName#!が入力されていません。" itemName="{dispName}">
+				<!-- 条件入力、上行クラス名も適宜変更 -->
+			</check>
 			<check class="IsNumber" message="!#itemName#!には数字を入力してください。" itemName="{dispName}"></check>
 			<check class="IsHalf" message="!#itemName#!には全角文字は入力できません。" itemName="{dispName}"></check>
 			<check class="MaxLength" message="!#itemName#!が2バイトを超えています。(2バイト = 全角2/2文字, 半角2文字)" itemName="{dispName}">
@@ -342,6 +344,14 @@
 		        <param name="format">yyyy/MM/dd</param>
 		    </check>
 		</variable>
+		
+	<!-- 処理可能営業所 -->
+		<variable name="shoriKanoEigyosho" dispName="処理可能営業所">
+        	<check class="MstShainEigyoshoValidate">
+	            <param name="code">eigyoshoCode[]</param>
+	        </check>
+    	</variable>
+			
 		
 	</proc>
 	
