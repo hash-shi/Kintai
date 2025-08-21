@@ -207,7 +207,7 @@ function getShoriKanoEigyoshos() {
                         "</a>" +
                     "</td>" +
                     "<td class=\"value w500\">" +
-                        "<input type=\"text\" class=\"w80\" id=\"eigyoshoCode_" + count + "\" name=\"eigyoshoCode[]\" value=\"" + code + "\" " +
+                        "<input type=\"text\" class=\"w80\" maxlength=\"3\" id=\"eigyoshoCode_" + count + "\" name=\"eigyoshoCode[]\" value=\"" + code + "\" " +
                                "onblur=\"getEigyoshoName('eigyoshoCode_" + count + "','eigyoshoName_" + count + "');\">" +
                         "<input type=\"text\" class=\"w200\" id=\"eigyoshoName_" + count + "\" name=\"eigyoshoName[]\" value=\"\" readonly>" +
                         "<button type=\"button\" style=\"font-weight: bold;\" onclick=\"removeShoriKanoEigyosho(" + count + ")\">×</button>" +
@@ -285,7 +285,7 @@ function renderEigyoshoTable() {
                     "</a>" +
                 "</td>" +
                 "<td class=\"value w500\">" +
-                    "<input type=\"text\" class=\"w80\" id=\"eigyoshoCode_" + count + "\" name=\"eigyoshoCode[]\" value=\"" + code + "\" " +
+                    "<input type=\"text\" class=\"w80\" maxlength=\"3\" id=\"eigyoshoCode_" + count + "\" name=\"eigyoshoCode[]\" value=\"" + code + "\" " +
                            "onblur=\"getEigyoshoName('eigyoshoCode_" + count + "','eigyoshoName_" + count + "');\">" +
                     "<input type=\"text\" class=\"w200\" id=\"eigyoshoName_" + count + "\" name=\"eigyoshoName[]\" value=\"\" readonly>" +
                     "<button type=\"button\" style=\"font-weight: bold;\" onclick=\"removeShoriKanoEigyosho(" + count + ")\">×</button>" +
@@ -477,4 +477,43 @@ function getCodeFromKbnName(inputId, hiddenId, selectId) {
         }
     });
     $("#" + hiddenId).val(code);
+}
+
+//****************************************************************************
+// ファンクションキーF9
+//
+//
+//
+//
+//****************************************************************************
+function onKeyEventF09() {
+	
+	// mainAreaの表示状態を取得
+	var display = $("#buttonArea").css("visibility");
+	
+	// mainAreaが非表示(初期表示時)はスキップする。
+	if (display == "visible") {
+		// 該当の処理を呼び出す。
+		onUpdate();
+	}
+}
+
+//****************************************************************************
+// ファンクションキーF2
+//
+//
+//
+//
+//****************************************************************************
+function onKeyEventF02() {
+	
+	//ボタンaの表示状態を取得
+	var display = $("#buttonArea").css("visibility");
+	var isNew = $("#hdnIsNew").val();
+	
+	// mainAreaが非表示(初期表示時)はスキップする。
+	if (display == "visible"&& isNew != "1") {
+			// 該当の処理を呼び出す。
+			onDelete();
+	}
 }
