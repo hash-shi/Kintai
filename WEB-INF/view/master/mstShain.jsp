@@ -60,13 +60,13 @@ ArrayList<HashMap<String, String>> mstKubun0013 = (ArrayList<HashMap<String, Str
 				<tr>
 					<td class="title center w150 req">パスワード</td>
 					<td class="value w500">
-						<input type="text" class="w200" name="txtPassword" id="txtPassword"  value="" >
+						<input type="text" class="w200" maxlength="50" name="txtPassword" id="txtPassword"  value="" >
 					</td>
 				</tr>
 				<tr>
 					<td class="title center w150 req">ユーザ区分</td>
 					<td class="value w500">
-				  		<input type="text" class="w80"  maxlength="2" name="txtUserKbn" id="txtUserKbn" onblur="setSelectFromInput('txtUserKbn','selectUserKbnName');" >		
+				  		<input type="text" class="w80"  maxlength="2" name="txtUserKbn" id="txtUserKbn"  value="" onblur="setSelectFromInput('txtUserKbn','selectUserKbnName');" >		
 						<select class="w150" name="selectUserKbnName" id="selectUserKbnName" onchange="setInputFromSelect('selectUserKbnName','txtUserKbn');">
 						<option value=""> </option>
 							<% for (int count = 0 ; count < mstKubun0500.size() ; count++){ HashMap<String, String> record = mstKubun0500.get(count);%>
@@ -121,7 +121,7 @@ ArrayList<HashMap<String, String>> mstKubun0013 = (ArrayList<HashMap<String, Str
 				<tr>
 					<td class="title center w150 req">有給休暇付与日数</td>
 					<td class="value w500">
-						<input type="text" class="w80" name="txtYukyuKyukaFuyoNissu" id="txtYukyuKyukaFuyoNissu"  value="0.0" >				
+						<input type="text" class="w80"  maxlength="4" name="txtYukyuKyukaFuyoNissu" id="txtYukyuKyukaFuyoNissu"  value="0.0" >				
 					</td>
 				</tr>
 				<tr>
@@ -187,79 +187,79 @@ ArrayList<HashMap<String, String>> mstKubun0013 = (ArrayList<HashMap<String, Str
 				<tr>
 					<td class="title center w150">勤務実働時間</td>
 					<td class="value w500">
-						<input type="text" class="w200"  maxlength="50"  name="txtKeiyakuJitsudoJikan" id="txtKeiyakuJitsudoJikan"  value="0.00" >				
+						<input type="text" class="w200"  maxlength="4"  name="txtKeiyakuJitsudoJikan" id="txtKeiyakuJitsudoJikan"  value="0.00" >				
 					</td>
 				</tr>
 				<tr>
 					<td class="title center w150 req">01 勤務時間 単価</td>
 					<td class="value w500">
-						<input type="text" class="w200"  maxlength="50"  name="txtShinseiTanka01" id="txtShinseiTanka01"  value="0" >				
+						<input type="text" class="w200"  maxlength="6"  name="txtShinseiTanka01" id="txtShinseiTanka01"  value="0" >				
 					</td>
 				</tr>
 				<tr>
 					<td class="title center w150 req">02 勤務時間 単価</td>
 					<td class="value w500">
-						<input type="text" class="w200"  maxlength="50"  name="txtShinseiTanka02" id="txtShinseiTanka02"  value="0" >				
+						<input type="text" class="w200"  maxlength="6"  name="txtShinseiTanka02" id="txtShinseiTanka02"  value="0" >				
 					</td>
 				</tr>
 				<tr>
 					<td class="title center w150 req">03 深夜勤務 単価</td>
 					<td class="value w500">
-						<input type="text" class="w200"  maxlength="50"  name="txtShinseiTanka03" id="txtShinseiTanka03"  value="0" >				
+						<input type="text" class="w200"  maxlength="6"  name="txtShinseiTanka03" id="txtShinseiTanka03"  value="0" >				
 					</td>
 				</tr>
 				<tr>
 					<td class="title center w150 req">04 休日勤務 単価</td>
 					<td class="value w500">
-						<input type="text" class="w200"  maxlength="50"  name="txtShinseiTanka04" id="txtShinseiTanka04"  value="0" >				
+						<input type="text" class="w200"  maxlength="6"  name="txtShinseiTanka04" id="txtShinseiTanka04"  value="0" >				
 					</td>
 				</tr>
 				<tr>
 					<td class="title center w150 req">05 有給休暇 単価</td>
 					<td class="value w500">
-						<input type="text" class="w200"  maxlength="50"  name="txtShinseiTanka05" id="txtShinseiTanka05"  value="0" >				
+						<input type="text" class="w200"  maxlength="6"  name="txtShinseiTanka05" id="txtShinseiTanka05"  value="0" >				
 					</td>
 				</tr>
 				<tr>
 					<td class="title center w150 req">06 半日有給 単価</td>
 					<td class="value w500">
-						<input type="text" class="w200"  maxlength="50"  name="txtShinseiTanka06" id="txtShinseiTanka06"  value="0" >				
+						<input type="text" class="w200"  maxlength="6"  name="txtShinseiTanka06" id="txtShinseiTanka06"  value="0" >				
 					</td>
 				</tr>
 				<tr>
 					<td class="title center w150 req">07 控除 単価</td>
 					<td class="value w500">
-						<input type="text" class="w200"  maxlength="50"  name="txtShinseiTanka07" id="txtShinseiTanka07"  value="0" >				
+						<input type="text" class="w200"  maxlength="6"  name="txtShinseiTanka07" id="txtShinseiTanka07"  value="0" >				
 					</td>
 				</tr>
 				<tr>
 					<td class="title center w150 req">08 単価</td>
 					<td class="value w500">
-						<input type="text" class="w200"  maxlength="50"  name="txtShinseiTanka08" id="txtShinseiTanka08"  value="0" >				
+						<input type="text" class="w200"  maxlength="6"  name="txtShinseiTanka08" id="txtShinseiTanka08"  value="0" >				
 					</td>
 				</tr>
 				<tr>
 					<td class="title center w150 req">09 通勤費 単価／月給</td>
 					<td class="value w500">
-						<input type="text" class="w200"  maxlength="50"  name="txtShinseiTanka09" id="txtShinseiTanka09"  value="0" >				
+						<input type="text" class="w200"  maxlength="6"  name="txtShinseiTanka09" id="txtShinseiTanka09"  value="0" >				
 					</td>
 				</tr>
 				<tr>
 					<td class="title center w150 req">10 時間外勤務 単価</td>
 					<td class="value w500">
-						<input type="text" class="w200"  maxlength="50"  name="txtShinseiTanka10" id="txtShinseiTanka10"  value="0" >				
+						<input type="text" class="w200"  maxlength="6"  name="txtShinseiTanka10" id="txtShinseiTanka10"  value="0" >				
 					</td>
 				</tr>
 				<tr>
 					<td class="title center w150 req">11 特別有給休暇 単価</td>
 					<td class="value w500">
-						<input type="text" class="w200"  maxlength="50"  name="txtShinseiTanka11" id="txtShinseiTanka11"  value="0" >				
+						<input type="text" class="w200"  maxlength="6"  name="txtShinseiTanka11" id="txtShinseiTanka11"  value="0" >				
 					</td>
 				</tr>
 				<tr>
 					<td class="title center w150 req">通勤費精算区分</td>
 					<td class="value w500">
-				  		<input type="text" class="w80"  name="txtTsukinHiKbn" id="txtTsukinHiKbn"  value="" onblur="setSelectFromInput('txtTsukinHiKbn','selectTsukinHiKbnName');" >
+				  		<input type="text" class="w80" maxlength="2" name="txtTsukinHiKbn" id="txtTsukinHiKbn"  value="" onblur="setSelectFromInput('txtTsukinHiKbn','selectTsukinHiKbnName');" >
 						<select class="w150" name="selectTsukinHiKbnName" id="selectTsukinHiKbnName" onchange="setInputFromSelect('selectTsukinHiKbnName','txtTsukinHiKbn');" >
 						<option value=""> </option>
 							<% for (int count = 0 ; count < mstKubun0013.size() ; count++){ HashMap<String, String> record = mstKubun0013.get(count);%>
@@ -271,7 +271,7 @@ ArrayList<HashMap<String, String>> mstKubun0013 = (ArrayList<HashMap<String, Str
 				<tr>
 					<td class="title center w150">退職年月日</td>
 					<td class="value w500">
-						<input type="text" class="w200"  maxlength="50"  name="txtTaisyokuDate" id="txtTaisyokuDate"  value="" >				
+						<input type="text" class="w200"  maxlength="10"  name="txtTaisyokuDate" id="txtTaisyokuDate"  value="" >				
 					</td>
 				</tr>
 			</table>
