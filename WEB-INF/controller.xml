@@ -58,6 +58,10 @@
 		<action id="mstBusho"  group="public"  class="action.master.MstBushoAction"  title="部署マスタメンテ"  header=""  footer=""  script="./script/master/mstBusho.js"  style="./css/master/mstBusho.css"  authority=""  meta=""  requiredParam="" >
 			<view return="success" path="master/mstBusho.jsp" />
 		</action>
+		
+		<action id="mstKubun"  group="public"  class="action.master.MstKubunAction"  title="区分名称マスタメンテ"  header=""  footer=""  script="./script/master/mstKubun.js"  style="./css/master/mstKubun.css"  authority=""  meta=""  requiredParam="" >
+			<view return="success" path="master/mstKubun.jsp" />
+		</action>
 
 		<action id="mstShain"  group="public"  class="action.master.MstShainAction"  title="社員マスタメンテ"  header=""  footer=""  script="./script/master/mstShain.js"  style="./css/master/mstShain.css"  authority=""  meta=""  requiredParam="" >
 			<view return="success" path="master/mstShain.jsp" />

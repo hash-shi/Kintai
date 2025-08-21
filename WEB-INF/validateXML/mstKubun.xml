@@ -1,0 +1,112 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<validate>
+	<proc func="search">	
+		<variable name="srhTxtKbnCode" dispName="区分コード(検索)">
+			<check class="IsRequired" message="!#itemName#!が入力されていません。" itemName="{dispName}"></check>
+			<check class="IsHalf" message="!#itemName#!には全角文字は入力できません。" itemName="{dispName}"></check>
+			<check class="IsNumber" message="!#itemName#!には数字を入力してください。" itemName="{dispName}"></check>
+			<check class="MaxLength" message="!#itemName#!が4バイトを超えています。(4バイト = 全角4/2文字, 半角4文字)" itemName="{dispName}">
+				<param name="type">full</param>
+				<param name="length">4</param>
+			</check>
+		</variable>
+		<variable name="srhTxtCode" dispName="コード(検索)">
+			<check class="IsRequired" message="!#itemName#!が入力されていません。" itemName="{dispName}"></check>
+			<check class="IsHalf" message="!#itemName#!には全角文字は入力できません。" itemName="{dispName}"></check>
+			<check class="IsNumber" message="!#itemName#!には数字を入力してください。" itemName="{dispName}"></check>
+			<check class="MaxLength" message="!#itemName#!が2バイトを超えています。(4バイト = 全角2/2文字, 半角2文字)" itemName="{dispName}">
+				<param name="type">full</param>
+				<param name="length">2</param>
+			</check>
+		</variable>
+	</proc>
+
+	<proc func="delete">
+		<variable name="txtKbnCode" dispName="区分コード">
+			<check class="IsEquals" message="コピー機能使用時は削除できません。" itemName="{dispName}">
+				<param name="targetvalue">hdnKbnCode</param>
+			</check>
+		</variable>
+		<variable name="txtCode" dispName="コード">
+			<check class="IsEquals" message="コピー機能使用時は削除できません。" itemName="{dispName}">
+				<param name="targetvalue">hdnCode</param>
+			</check>
+		</variable>
+	</proc>
+	
+	<proc func="insert,update">
+		<variable name="txtKbnCode" dispName="区分コード">
+			<check class="IsRequired" message="!#itemName#!が入力されていません。" itemName="{dispName}"></check>
+			<check class="IsHalf" message="!#itemName#!には全角文字は入力できません。" itemName="{dispName}"></check>
+			<check class="IsNumber" message="!#itemName#!には数字を入力してください。" itemName="{dispName}"></check>
+			<check class="MaxLength" message="!#itemName#!が4バイトを超えています。(4バイト = 全角4/2文字, 半角4文字)" itemName="{dispName}">
+				<param name="type">full</param>
+				<param name="length">4</param>
+			</check>
+		</variable>
+		<variable name="txtCode" dispName="コード">
+			<check class="IsRequired" message="!#itemName#!が入力されていません。" itemName="{dispName}"></check>
+			<check class="IsHalf" message="!#itemName#!には全角文字は入力できません。" itemName="{dispName}"></check>
+			<check class="IsNumber" message="!#itemName#!には数字を入力してください。" itemName="{dispName}"></check>
+			<check class="MaxLength" message="!#itemName#!が4バイトを超えています。(4バイト = 全角2/2文字, 半角2文字)" itemName="{dispName}">
+				<param name="type">full</param>
+				<param name="length">2</param>
+			</check>
+		</variable>
+		<variable name="txtKbnName" dispName="区分名称">
+			<check class="IsRequired" message="!#itemName#!が入力されていません。" itemName="{dispName}"></check>			
+			<check class="MaxLength" message="!#itemName#!が40バイトを超えています。(40バイト = 全角40/2文字, 半角40文字)" itemName="{dispName}">
+				<param name="type">full</param>
+				<param name="length">40</param>
+			</check>
+		</variable>
+		<variable name="txtKbnRyaku" dispName="区分略称">		
+			<check class="MaxLength" message="!#itemName#!が10バイトを超えています。(10バイト = 全角10/2文字, 半角10文字)" itemName="{dispName}">
+				<param name="type">full</param>
+				<param name="length">10</param>
+			</check>
+		</variable>
+		<variable name="txtGroupCode1" dispName="グループコード1">
+			<check class="IsHalf" message="!#itemName#!には全角文字は入力できません。" itemName="{dispName}"></check>
+			<check class="IsNumber" message="!#itemName#!には数字を入力してください。" itemName="{dispName}"></check>
+			<check class="MaxLength" message="!#itemName#!が4バイトを超えています。(4バイト = 全角4/2文字, 半角4文字)" itemName="{dispName}">
+				<param name="type">full</param>
+				<param name="length">4</param>
+			</check>
+		</variable>
+		<variable name="txtGroupCode2" dispName="グループコード2">
+			<check class="IsHalf" message="!#itemName#!には全角文字は入力できません。" itemName="{dispName}"></check>
+			<check class="IsNumber" message="!#itemName#!には数字を入力してください。" itemName="{dispName}"></check>
+			<check class="MaxLength" message="!#itemName#!が4バイトを超えています。(4バイト = 全角4/2文字, 半角4文字)" itemName="{dispName}">
+				<param name="type">full</param>
+				<param name="length">4</param>
+			</check>
+		</variable>
+	</proc>
+	
+	<proc func="delete_,insert_,update_">
+		<variable name="dummy" dispName="">
+			<check class="ExclusiveValidate" message="このデータはすでに、別のユーザに更新されています。もう一度データを確認してください。" itemName="{dispName}">
+				<param name="tableName">MST_KUBUN</param>
+				<param name="keyName">KbnCode,Code</param>
+				<param name="keyValue">txtKbnCode,txtCode</param>
+				<param name="saishuKoshinDate">hdnSaishuKoshinDate</param>
+				<param name="saishuKoshinJikan">hdnSaishuKoshinJikan</param>
+			</check>
+		</variable>
+	</proc>
+	
+	<proc func="copy_">
+		<variable name="dummy" dispName="">
+			<check class="ExclusiveValidate" message="同一キーのレコードが既に存在します。" itemName="{dispName}">
+				<param name="tableName">MST_KUBUN</param>
+				<param name="keyName">KbnCode,Code</param>
+				<param name="keyValue">txtKbnCode,txtCode</param>
+				<param name="saishuKoshinDate"></param>
+				<param name="saishuKoshinJikan"></param>
+			</check>			
+		</variable>
+	</proc>
+	
+</validate>
