@@ -100,6 +100,14 @@ public class MstShainAction extends PJActionBase {
 	    // パラメータ取得
 	    //=====================================================================
 	    String shainNo = req.getParameter("srhTxtShainNO");
+	    
+	    //=====================================================================
+	    // 0詰め処理
+	    //=====================================================================
+	    
+	    // 社員NO
+	    int shainNo_ = Integer.parseInt(shainNo);
+	    shainNo = String.format("%04d", shainNo_);	 
 
 	    //=====================================================================
 	    // デバッグ出力
@@ -199,6 +207,14 @@ public class MstShainAction extends PJActionBase {
 		//=====================================================================
 		String shainNo	= req.getParameter("txtShainNO");
 		
+	    //=====================================================================
+	    // 0詰め処理
+	    //=====================================================================
+	    
+	    // 社員NO
+	    int shainNo_ = Integer.parseInt(shainNo);
+	    shainNo = String.format("%04d", shainNo_);	 
+		
 		//=====================================================================
 		// DB接続
 		//=====================================================================
@@ -295,6 +311,34 @@ public class MstShainAction extends PJActionBase {
 
 	    // 処理可能営業所
 	    String[] shoriKanoEigyoshoCodes = req.getParameterValues("eigyoshoCode[]");
+	    
+	    //=====================================================================
+	    // 0詰め処理
+	    //=====================================================================
+	    
+	    // 社員NO
+	    int shainNo_ = Integer.parseInt(shainNo);
+	    shainNo = String.format("%04d", shainNo_);	 
+	    
+	    // 営業所コード
+	    int eigyoshoCode_ = Integer.parseInt(eigyoshoCode);
+	    eigyoshoCode = String.format("%03d", eigyoshoCode_);
+	    
+	    // 部署コード
+	    int bushoCode_ = Integer.parseInt(bushoCode);
+	    bushoCode = String.format("%04d", bushoCode_);
+	    
+	    // 処理可能営業所コード
+	    if (shoriKanoEigyoshoCodes != null) {
+	        for (int i = 0; i < shoriKanoEigyoshoCodes.length; i++) {
+	            String code = shoriKanoEigyoshoCodes[i];
+	            if (code != null && !code.isEmpty()) {
+	                // 数値として解釈して3桁に0埋め
+	                int num = Integer.parseInt(code);
+	                shoriKanoEigyoshoCodes[i] = String.format("%03d", num);
+	            }
+	        }
+	    }
 
 		// ===== デフォルト値補正 =====
 	    
@@ -460,8 +504,36 @@ public class MstShainAction extends PJActionBase {
 
 	    // 処理可能営業所
 	    String[] shoriKanoEigyoshoCodes = req.getParameterValues("eigyoshoCode[]");
+	    
+	    //=====================================================================
+	    // 0詰め処理
+	    //=====================================================================
+	    
+	    // 社員NO
+	    int shainNo_ = Integer.parseInt(shainNo);
+	    shainNo = String.format("%04d", shainNo_);	 
+	    
+	    // 営業所コード
+	    int eigyoshoCode_ = Integer.parseInt(eigyoshoCode);
+	    eigyoshoCode = String.format("%03d", eigyoshoCode_);
+	    
+	    // 部署コード
+	    int bushoCode_ = Integer.parseInt(bushoCode);
+	    bushoCode = String.format("%04d", bushoCode_);
+	    
+	    // 処理可能営業所コード
+	    if (shoriKanoEigyoshoCodes != null) {
+	        for (int i = 0; i < shoriKanoEigyoshoCodes.length; i++) {
+	            String code = shoriKanoEigyoshoCodes[i];
+	            if (code != null && !code.isEmpty()) {
+	                // 数値として解釈して3桁に0埋め
+	                int num = Integer.parseInt(code);
+	                shoriKanoEigyoshoCodes[i] = String.format("%03d", num);
+	            }
+	        }
+	    }
 
-		 // ===== デフォルト値補正 =====
+		// ===== デフォルト値補正 =====
 	    
 	    // ユーザ区分 → 空なら null 
 	    userKbn = (userKbn == null || userKbn.isEmpty()) ? null : userKbn;

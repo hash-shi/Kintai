@@ -143,8 +143,9 @@
 		
 	<!-- 時給日給区分 -->
 		<variable name="txtJikyuNikkyuKbn" dispName="時給日給区分">
-			<check class="IsRequired" message="!#itemName#!が入力されていません。" itemName="{dispName}">
-				<!-- 条件入力、上行クラス名も適宜変更 -->
+			<check class="IsRequiredIf" message="!#itemName#!が入力されていません。" itemName="{dispName}">
+				<param name="type">txtShukinboKbn</param>
+				<param name="targetvalue">01</param>
 			</check>
 			<check class="IsNumber" message="!#itemName#!には数字を入力してください。" itemName="{dispName}"></check>
 			<check class="IsHalf" message="!#itemName#!には全角文字は入力できません。" itemName="{dispName}"></check>
