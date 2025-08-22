@@ -25,7 +25,7 @@ public class MstShainEigyoshoValidate extends ValidateBase {
 		 * 
 		 * 社員マスタメンテの処理可能営業所関係のチェックを行う。
 		 * 処理可能営業所は行数が可変のため、xmlで静的な指定ができず動的に指定する。
-		 * 必須,半角,数字,コード存在をチェックする。
+		 * 半角,数字,コード存在をチェックする。
 		 * 重複は考慮しないモノとする。(登録,更新処理時に対応する)
 		 * 
 		 */
@@ -58,6 +58,14 @@ public class MstShainEigyoshoValidate extends ValidateBase {
 		// 同名の項目がある場合は配列で取得可能。
 		String[] shoriKanoEigyoshoCodes	= req.getParameterValues(shoriKanoEigyoshoCode);
 		String[] shoriKanoEigyoshoNames	= req.getParameterValues(shoriKanoEigyoshoName);
+		
+		//=====================================================================
+		// 入力が無い場合はチェックをスキップ
+		//=====================================================================
+		if (shoriKanoEigyoshoCodes == null || shoriKanoEigyoshoCodes.length == 0 ||
+		    (shoriKanoEigyoshoCodes.length == 1 && shoriKanoEigyoshoCodes[0].trim().isEmpty())) {
+		    return true;
+		}
 		
 		// 配列を回しながらチェックを行う。
 		for (int i = 0; i < shoriKanoEigyoshoCodes.length; i++) {

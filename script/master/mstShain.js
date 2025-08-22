@@ -30,11 +30,18 @@ function getMstShain() {
 		// 既に背景色が設定されている場合は一旦削除
 		$("#mainArea").removeClass('ins');
 		$("#mainArea").removeClass('upd');
+		
 		// 背景色を設定
 		if (isNew == "1") {
 			$("#mainArea").addClass("ins");
 		} else {
 			$("#mainArea").addClass("upd");
+		}
+		
+		// 新規の時は社員NOを非活性
+		$("#txtShainNO").prop('readonly', false);
+		if (isNew == "1") {
+			$("#txtShainNO").prop('readonly', true);
 		}
 		
 		// 新規の時は削除ボタンは非活性

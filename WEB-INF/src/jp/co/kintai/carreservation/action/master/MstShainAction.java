@@ -434,75 +434,90 @@ public class MstShainAction extends PJActionBase {
 		     //=====================================================================
 		     // ② MST_SHAIN_EIGYOSHO 差分更新（複数）
 		     //=====================================================================
-		     if (shoriKanoEigyoshoCodes != null) {
-		         // 既存の営業所コードを取得
-		         List<String> existingCodes = new ArrayList<>();
-		         sql.setLength(0);
-		         sql.append("SELECT EigyoshoCode FROM MST_SHAIN_EIGYOSHO WHERE ShainNO = ?");
-		         pstmtf.clear();
-		         pstmtf.addValue("String", shainNo);
-		         pstmt = con.prepareStatement(sql.toString());
-		         pstmtf.setPreparedStatement(pstmt);
-		         ResultSet rs = pstmt.executeQuery();
-		         while (rs.next()) {
-		             existingCodes.add(rs.getString("EigyoshoCode"));
-		         }
-		         rs.close();
-		         pstmt.close();
-
-		         // 新規追加対象
-		         List<String> toInsert = new ArrayList<>();
-		         for (String code : shoriKanoEigyoshoCodes) {
-		             if (code != null && !code.trim().isEmpty() && !existingCodes.contains(code)) {
-		                 toInsert.add(code);
-		             }
-		         }
-
-		         // 削除対象（既存だが送られてこなかったもの）
-		         List<String> toDelete = new ArrayList<>();
-		         for (String code : existingCodes) {
-		             if (!Arrays.asList(shoriKanoEigyoshoCodes).contains(code)) {
-		                 toDelete.add(code);
-		             }
-		         }
-
-		         // 削除
-		         if (!toDelete.isEmpty()) {
-		        	 sql.setLength(0);
-		             sql.append("DELETE FROM MST_SHAIN_EIGYOSHO WHERE ShainNO = ? AND EigyoshoCode = ?");
-		             pstmt = con.prepareStatement(sql.toString());
-		             
-		             for (String code : toDelete) {
-		                 pstmt.setString(1, shainNo);
-		                 pstmt.setString(2, code);
-		                 pstmt.addBatch();
-		             }
-		             
-		             pstmt.executeBatch();
-		             pstmt.close();
-		         }
-
-		         // 新規追加
-		         if (!toInsert.isEmpty()) {
-	                 sql.setLength(0);
-	                 sql.append("INSERT INTO MST_SHAIN_EIGYOSHO (ShainNO, EigyoshoCode, SaishuKoshinShainNO, SaishuKoshinDate, SaishuKoshinJikan) ");
-		             sql.append("VALUES (?, ?, ?, ?, ?)");
-		             pstmt = con.prepareStatement(sql.toString());
-
-		             for (String code : toInsert) {
-		                 pstmt.setString(1, shainNo);
-		                 pstmt.setString(2, code);
-		                 pstmt.setString(3, userInformation.getShainNO());
-		                 pstmt.setString(4, PJActionBase.getNowDate());
-		                 pstmt.setString(5, PJActionBase.getNowTime());
-		                 pstmt.addBatch();
-		             }
-
-		             pstmt.executeBatch();
-		             pstmt.close();
-		         }
-		         
-		    }
+		   	 // 入力が「全て空」の場合の判定フラグ
+			 boolean noInput = (shoriKanoEigyoshoCodes == null
+				|| shoriKanoEigyoshoCodes.length == 0
+				|| Arrays.stream(shoriKanoEigyoshoCodes)
+					.allMatch(s -> s == null || s.trim().isEmpty()));
+			
+			 // 既存の営業所コードを取得
+			 List<String> existingCodes = new ArrayList<>();
+			 sql.setLength(0);
+			 sql.append("SELECT EigyoshoCode FROM MST_SHAIN_EIGYOSHO WHERE ShainNO = ?");
+			 pstmtf.clear();
+			 pstmtf.addValue("String", shainNo);
+			 pstmt = con.prepareStatement(sql.toString());
+			 pstmtf.setPreparedStatement(pstmt);
+			 ResultSet rs = pstmt.executeQuery();
+			 while (rs.next()) {
+			     existingCodes.add(rs.getString("EigyoshoCode"));
+			 }
+			 rs.close();
+			 pstmt.close();
+			
+			 if (noInput) {
+			     // 全削除
+			     if (!existingCodes.isEmpty()) {
+			         sql.setLength(0);
+			         sql.append("DELETE FROM MST_SHAIN_EIGYOSHO WHERE ShainNO = ?");
+			         pstmt = con.prepareStatement(sql.toString());
+			         pstmt.setString(1, shainNo);
+			         pstmt.executeUpdate();
+			         pstmt.close();
+			     }
+			 } else {
+			     // 新規追加対象
+			     List<String> toInsert = new ArrayList<>();
+			     for (String code : shoriKanoEigyoshoCodes) {
+			         if (code != null && !code.trim().isEmpty() && !existingCodes.contains(code)) {
+			             toInsert.add(code);
+			         }
+			     }
+			
+			     // 削除対象（既存だが送られてこなかったもの）
+			     List<String> toDelete = new ArrayList<>();
+			     for (String code : existingCodes) {
+			         if (!Arrays.asList(shoriKanoEigyoshoCodes).contains(code)) {
+			             toDelete.add(code);
+			         }
+			     }
+			
+			     // 削除
+			     if (!toDelete.isEmpty()) {
+			         sql.setLength(0);
+			         sql.append("DELETE FROM MST_SHAIN_EIGYOSHO WHERE ShainNO = ? AND EigyoshoCode = ?");
+			         pstmt = con.prepareStatement(sql.toString());
+			
+			         for (String code : toDelete) {
+			             pstmt.setString(1, shainNo);
+			             pstmt.setString(2, code);
+			             pstmt.addBatch();
+			         }
+			
+			         pstmt.executeBatch();
+			         pstmt.close();
+			     }
+			
+			     // 新規追加
+			     if (!toInsert.isEmpty()) {
+			         sql.setLength(0);
+			         sql.append("INSERT INTO MST_SHAIN_EIGYOSHO (ShainNO, EigyoshoCode, SaishuKoshinShainNO, SaishuKoshinDate, SaishuKoshinJikan) ");
+			         sql.append("VALUES (?, ?, ?, ?, ?)");
+			         pstmt = con.prepareStatement(sql.toString());
+			
+			         for (String code : toInsert) {
+			             pstmt.setString(1, shainNo);
+			             pstmt.setString(2, code);
+			             pstmt.setString(3, userInformation.getShainNO());
+			             pstmt.setString(4, PJActionBase.getNowDate());
+			             pstmt.setString(5, PJActionBase.getNowTime());
+			             pstmt.addBatch();
+			         }
+			
+			         pstmt.executeBatch();
+			         pstmt.close();
+			     }
+			 }
 
 			} catch (Exception exp){
 				exp.printStackTrace();
@@ -671,77 +686,91 @@ public class MstShainAction extends PJActionBase {
 	     //=====================================================================
 	     // ② MST_SHAIN_EIGYOSHO 差分更新（複数）
 	     //=====================================================================
-	     if (shoriKanoEigyoshoCodes != null) {
-	         // 既存の営業所コードを取得
-	         List<String> existingCodes = new ArrayList<>();
-	         sql.setLength(0);
-	         sql.append("SELECT EigyoshoCode FROM MST_SHAIN_EIGYOSHO WHERE ShainNO = ?");
-	         pstmtf.clear();
-	         pstmtf.addValue("String", shainNo);
-	         pstmt = con.prepareStatement(sql.toString());
-	         pstmtf.setPreparedStatement(pstmt);
-	         ResultSet rs = pstmt.executeQuery();
-	         while (rs.next()) {
-	             existingCodes.add(rs.getString("EigyoshoCode"));
-	         }
-	         rs.close();
-	         pstmt.close();
-
-	         // 新規追加対象
-	         List<String> toInsert = new ArrayList<>();
-	         for (String code : shoriKanoEigyoshoCodes) {
-	             if (code != null && !code.trim().isEmpty() && !existingCodes.contains(code)) {
-	                 toInsert.add(code);
-	             }
-	         }
-
-	         // 削除対象（既存だが送られてこなかったもの）
-	         List<String> toDelete = new ArrayList<>();
-	         for (String code : existingCodes) {
-	             if (!Arrays.asList(shoriKanoEigyoshoCodes).contains(code)) {
-	                 toDelete.add(code);
-	             }
-	         }
-
-	         // 削除
-	         if (!toDelete.isEmpty()) {
-	        	 sql.setLength(0);
-	             sql.append("DELETE FROM MST_SHAIN_EIGYOSHO WHERE ShainNO = ? AND EigyoshoCode = ?");
-	             pstmt = con.prepareStatement(sql.toString());
-	             
-	             for (String code : toDelete) {
-	                 pstmt.setString(1, shainNo);
-	                 pstmt.setString(2, code);
-	                 pstmt.addBatch();
-	             }
-	             
-	             pstmt.executeBatch();
-	             pstmt.close();
-	         }
-
-	         // 新規追加
-	         if (!toInsert.isEmpty()) {
-                 sql.setLength(0);
-                 sql.append("INSERT INTO MST_SHAIN_EIGYOSHO (ShainNO, EigyoshoCode, SaishuKoshinShainNO, SaishuKoshinDate, SaishuKoshinJikan) ");
-	             sql.append("VALUES (?, ?, ?, ?, ?)");
-	             pstmt = con.prepareStatement(sql.toString());
-
-	             for (String code : toInsert) {
-	                 pstmt.setString(1, shainNo);
-	                 pstmt.setString(2, code);
-	                 pstmt.setString(3, userInformation.getShainNO());
-	                 pstmt.setString(4, PJActionBase.getNowDate());
-	                 pstmt.setString(5, PJActionBase.getNowTime());
-	                 pstmt.addBatch();
-	             }
-
-	             pstmt.executeBatch();
-	             pstmt.close();
-	         }
-	         
-	    }
-
-		} catch (Exception exp){
+	   	 // 入力が「全て空」の場合の判定フラグ
+		 boolean noInput = (shoriKanoEigyoshoCodes == null
+			|| shoriKanoEigyoshoCodes.length == 0
+			|| Arrays.stream(shoriKanoEigyoshoCodes)
+				.allMatch(s -> s == null || s.trim().isEmpty()));
+		
+		 // 既存の営業所コードを取得
+		 List<String> existingCodes = new ArrayList<>();
+		 sql.setLength(0);
+		 sql.append("SELECT EigyoshoCode FROM MST_SHAIN_EIGYOSHO WHERE ShainNO = ?");
+		 pstmtf.clear();
+		 pstmtf.addValue("String", shainNo);
+		 pstmt = con.prepareStatement(sql.toString());
+		 pstmtf.setPreparedStatement(pstmt);
+		 ResultSet rs = pstmt.executeQuery();
+		 while (rs.next()) {
+		     existingCodes.add(rs.getString("EigyoshoCode"));
+		 }
+		 rs.close();
+		 pstmt.close();
+		
+		 if (noInput) {
+		     // 全削除
+		     if (!existingCodes.isEmpty()) {
+		         sql.setLength(0);
+		         sql.append("DELETE FROM MST_SHAIN_EIGYOSHO WHERE ShainNO = ?");
+		         pstmt = con.prepareStatement(sql.toString());
+		         pstmt.setString(1, shainNo);
+		         pstmt.executeUpdate();
+		         pstmt.close();
+		     }
+		 } else {
+		     // 新規追加対象
+		     List<String> toInsert = new ArrayList<>();
+		     for (String code : shoriKanoEigyoshoCodes) {
+		         if (code != null && !code.trim().isEmpty() && !existingCodes.contains(code)) {
+		             toInsert.add(code);
+		         }
+		     }
+		
+		     // 削除対象（既存だが送られてこなかったもの）
+		     List<String> toDelete = new ArrayList<>();
+		     for (String code : existingCodes) {
+		         if (!Arrays.asList(shoriKanoEigyoshoCodes).contains(code)) {
+		             toDelete.add(code);
+		         }
+		     }
+		
+		     // 削除
+		     if (!toDelete.isEmpty()) {
+		         sql.setLength(0);
+		         sql.append("DELETE FROM MST_SHAIN_EIGYOSHO WHERE ShainNO = ? AND EigyoshoCode = ?");
+		         pstmt = con.prepareStatement(sql.toString());
+		
+		         for (String code : toDelete) {
+		             pstmt.setString(1, shainNo);
+		             pstmt.setString(2, code);
+		             pstmt.addBatch();
+		         }
+		
+		         pstmt.executeBatch();
+		         pstmt.close();
+		     }
+		
+		     // 新規追加
+		     if (!toInsert.isEmpty()) {
+		         sql.setLength(0);
+		         sql.append("INSERT INTO MST_SHAIN_EIGYOSHO (ShainNO, EigyoshoCode, SaishuKoshinShainNO, SaishuKoshinDate, SaishuKoshinJikan) ");
+		         sql.append("VALUES (?, ?, ?, ?, ?)");
+		         pstmt = con.prepareStatement(sql.toString());
+		
+		         for (String code : toInsert) {
+		             pstmt.setString(1, shainNo);
+		             pstmt.setString(2, code);
+		             pstmt.setString(3, userInformation.getShainNO());
+		             pstmt.setString(4, PJActionBase.getNowDate());
+		             pstmt.setString(5, PJActionBase.getNowTime());
+		             pstmt.addBatch();
+		         }
+		
+		         pstmt.executeBatch();
+		         pstmt.close();
+		     }
+		 }
+	    } catch (Exception exp){
 			exp.printStackTrace();
 		} finally {
 			if (pstmt != null){ try { pstmt.close(); } catch (Exception exp){}}
