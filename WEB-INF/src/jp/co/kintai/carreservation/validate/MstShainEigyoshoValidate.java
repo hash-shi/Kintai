@@ -61,11 +61,11 @@ public class MstShainEigyoshoValidate extends ValidateBase {
 		
 		// 配列を回しながらチェックを行う。
 		for (int i = 0; i < shoriKanoEigyoshoCodes.length; i++) {
-			// 必須
-			if (!isRequired.doValidate(req, res, shoriKanoEigyoshoCodes[i], info)) { 
-				this.addValidateMessage("処理可能営業所コード" + (i + 1) + "が入力されていません。");
-				return false;
-			}
+//			// 必須
+//			if (!isRequired.doValidate(req, res, shoriKanoEigyoshoCodes[i], info)) { 
+//				this.addValidateMessage("処理可能営業所コード" + (i + 1) + "が入力されていません。");
+//				return false;
+//			}
 			// 全角半角
 			if (!isHalf.doValidate(req, res, shoriKanoEigyoshoCodes[i], info)) { 
 				this.addValidateMessage("処理可能営業所コード" + (i + 1) + "には全角文字は入力できません。");

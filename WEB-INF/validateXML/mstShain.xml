@@ -4,8 +4,8 @@
 	<proc func="search">
 		<variable name="srhTxtShainNO" dispName="社員NO(検索)">
 			<check class="IsRequired" message="!#itemName#!が入力されていません。" itemName="{dispName}"></check>
+			<check class="IsHalf" message="!#itemName#!には全角文字は入力できません。" itemName="{dispName}"></check>			
 			<check class="IsNumber" message="!#itemName#!には数字を入力してください。" itemName="{dispName}"></check>
-			<check class="IsHalf" message="!#itemName#!には全角文字は入力できません。" itemName="{dispName}"></check>
 			<check class="MaxLength" message="!#itemName#!が4バイトを超えています。(4バイト = 全角4/2文字, 半角4文字)" itemName="{dispName}">
 				<param name="type">full</param>
 				<param name="length">4</param>
@@ -17,8 +17,8 @@
 	<!-- 社員NO -->
 		<variable name="txtShainNO" dispName="社員NO">
 			<check class="IsRequired" message="!#itemName#!が入力されていません。" itemName="{dispName}"></check>
+			<check class="IsHalf" message="!#itemName#!には全角文字は入力できません。" itemName="{dispName}"></check>			
 			<check class="IsNumber" message="!#itemName#!には数字を入力してください。" itemName="{dispName}"></check>
-			<check class="IsHalf" message="!#itemName#!には全角文字は入力できません。" itemName="{dispName}"></check>
 			<check class="MaxLength" message="!#itemName#!が4バイトを超えています。(4バイト = 全角4/2文字, 半角4文字)" itemName="{dispName}">
 				<param name="type">full</param>
 				<param name="length">4</param>
@@ -59,8 +59,8 @@
 		
 	<!-- ユーザ区分 -->
 		<variable name="txtUserKbn" dispName="ユーザ区分">
+			<check class="IsHalf" message="!#itemName#!には全角文字は入力できません。" itemName="{dispName}"></check>		
 			<check class="IsNumber" message="!#itemName#!には数字を入力してください。" itemName="{dispName}"></check>
-			<check class="IsHalf" message="!#itemName#!には全角文字は入力できません。" itemName="{dispName}"></check>
 			<check class="MaxLength" message="!#itemName#!が2バイトを超えています。(2バイト = 全角2/2文字, 半角2文字)" itemName="{dispName}">
 				<param name="type">full</param>
 				<param name="length">2</param>
@@ -75,8 +75,8 @@
 	<!-- 社員区分 -->
 		<variable name="txtShainKbn" dispName="社員区分">
 			<check class="IsRequired" message="!#itemName#!が入力されていません。" itemName="{dispName}"></check>
-			<check class="IsNumber" message="!#itemName#!には数字を入力してください。" itemName="{dispName}"></check>
 			<check class="IsHalf" message="!#itemName#!には全角文字は入力できません。" itemName="{dispName}"></check>
+			<check class="IsNumber" message="!#itemName#!には数字を入力してください。" itemName="{dispName}"></check>
 			<check class="MaxLength" message="!#itemName#!が2バイトを超えています。(2バイト = 全角2/2文字, 半角2文字)" itemName="{dispName}">
 				<param name="type">full</param>
 				<param name="length">2</param>
@@ -89,8 +89,8 @@
 	<!-- 出勤簿入力区分 -->
 		<variable name="txtShukinboKbn" dispName="出勤簿入力区分">
 			<check class="IsRequired" message="!#itemName#!が入力されていません。" itemName="{dispName}"></check>
-			<check class="IsNumber" message="!#itemName#!には数字を入力してください。" itemName="{dispName}"></check>
 			<check class="IsHalf" message="!#itemName#!には全角文字は入力できません。" itemName="{dispName}"></check>
+			<check class="IsNumber" message="!#itemName#!には数字を入力してください。" itemName="{dispName}"></check>
 			<check class="MaxLength" message="!#itemName#!が2バイトを超えています。(2バイト = 全角2/2文字, 半角2文字)" itemName="{dispName}">
 				<param name="type">full</param>
 				<param name="length">2</param>
@@ -119,8 +119,8 @@
 	<!-- 部署コード -->
 		<variable name="txtBushoCode" dispName="部署コード">
 			<check class="IsRequired" message="!#itemName#!が入力されていません。" itemName="{dispName}"></check>
-			<check class="IsNumber" message="!#itemName#!には数字を入力してください。" itemName="{dispName}"></check>
 			<check class="IsHalf" message="!#itemName#!には全角文字は入力できません。" itemName="{dispName}"></check>
+			<check class="IsNumber" message="!#itemName#!には数字を入力してください。" itemName="{dispName}"></check>
 			<check class="MaxLength" message="!#itemName#!が4バイトを超えています。(4バイト = 全角2/2文字, 半角4文字)" itemName="{dispName}">
 				<param name="type">full</param>
 				<param name="length">4</param>
@@ -132,12 +132,13 @@
 		
 	<!-- 有給休暇付与日数 -->
 		<variable name="txtYukyuKyukaFuyoNissu" dispName="有給休暇付与日数">
-			<check class="IsNumber" message="!#itemName#!には数字を入力してください。" itemName="{dispName}"></check>
+			<check class="IsHalf" message="!#itemName#!には全角文字は入力できません。" itemName="{dispName}"></check>
+			<check class="IsNumber" message="!#itemName#!には数字を入力してください。形式(XXX.XX)" itemName="{dispName}"></check>
 			<check class="NumberLimit" message="!#itemName#!にはマイナスは設定できません。" itemName="{dispName}">
 			    <param name="length">0</param>
 			    <param name="comparisonoperator">&lt;=</param>
 			</check>
-			<check class="MaxNumberLimit" message="!#itemName#!の桁数が不正です。" itemName="{dispName}">
+			<check class="MaxNumberLimit" message="!#itemName#!の桁数が不正です。(XXX.X)" itemName="{dispName}">
 				<param name="length">999</param>
 			</check>
 			<check class="MaxLength" message="!#itemName#!が5バイトを超えています。(5バイト = 全角5/2文字, 半角5文字)" itemName="{dispName}">
@@ -152,8 +153,8 @@
 				<param name="targetvalue">txtShukinboKbn</param>
 				<param name="conditionvalue">01</param>
 			</check>
-			<check class="IsNumber" message="!#itemName#!には数字を入力してください。" itemName="{dispName}"></check>
 			<check class="IsHalf" message="!#itemName#!には全角文字は入力できません。" itemName="{dispName}"></check>
+			<check class="IsNumber" message="!#itemName#!には数字を入力してください。" itemName="{dispName}"></check>
 			<check class="MaxLength" message="!#itemName#!が2バイトを超えています。(2バイト = 全角2/2文字, 半角2文字)" itemName="{dispName}">
 				<param name="type">full</param>
 				<param name="length">2</param>
@@ -168,11 +169,12 @@
 	<!-- 勤務実働時間 -->
 		<variable name="txtKeiyakuJitsudoJikan" dispName="勤務実働時間">
 			<check class="IsHalf" message="!#itemName#!には全角文字は入力できません。" itemName="{dispName}"></check>
+			<check class="IsNumber" message="!#itemName#!には数字を入力してください。形式(XXX.XX)" itemName="{dispName}"></check>
 			<check class="NumberLimit" message="!#itemName#!にはマイナスは設定できません。" itemName="{dispName}">
 			    <param name="length">0</param>
 			    <param name="comparisonoperator">&lt;=</param>
 			</check>
-			<check class="MaxNumberLimit" message="!#itemName#!の桁数が不正です。" itemName="{dispName}">
+			<check class="MaxNumberLimit" message="!#itemName#!の桁数が不正です。(XXX.XX)" itemName="{dispName}">
 				<param name="length">999</param>
 			</check>			
 			<check class="MaxLength" message="!#itemName#!が6バイトを超えています。(6バイト = 全角6/2文字, 半角6文字)" itemName="{dispName}">
@@ -185,11 +187,11 @@
 		<variable name="txtShinseiTanka01" dispName="01 勤務時間 単価">
 			<check class="IsRequired" message="!#itemName#!が入力されていません。" itemName="{dispName}"></check>
 			<check class="IsHalf" message="!#itemName#!には全角文字は入力できません。" itemName="{dispName}"></check>
+			<check class="IsNumber" message="!#itemName#!には数字を入力してください。" itemName="{dispName}"></check>
 			<check class="NumberLimit" message="!#itemName#!にはマイナスは設定できません。" itemName="{dispName}">
 			    <param name="length">0</param>
 			    <param name="comparisonoperator">&lt;=</param>
 			</check>
-			<check class="IsNumber" message="!#itemName#!には数字を入力してください。" itemName="{dispName}"></check>
 			<check class="MaxLength" message="!#itemName#!が6バイトを超えています。(6バイト = 全角6/2文字, 半角6文字)" itemName="{dispName}">
 				<param name="type">full</param>
 				<param name="length">6</param>
@@ -200,11 +202,11 @@
 		<variable name="txtShinseiTanka02" dispName="02 勤務時間 単価">
 		    <check class="IsRequired" message="!#itemName#!が入力されていません。" itemName="{dispName}"></check>
 		    <check class="IsHalf" message="!#itemName#!には全角文字は入力できません。" itemName="{dispName}"></check>
+			<check class="IsNumber" message="!#itemName#!には数字を入力してください。" itemName="{dispName}"></check>
 			<check class="NumberLimit" message="!#itemName#!にはマイナスは設定できません。" itemName="{dispName}">
 			    <param name="length">0</param>
 			    <param name="comparisonoperator">&lt;=</param>
 			</check>
-			<check class="IsNumber" message="!#itemName#!には数字を入力してください。" itemName="{dispName}"></check>
 		    <check class="MaxLength" message="!#itemName#!が6バイトを超えています。(6バイト = 全角6/2文字, 半角6文字)" itemName="{dispName}">
 		        <param name="type">full</param>
 		        <param name="length">6</param>
@@ -215,11 +217,11 @@
 		<variable name="txtShinseiTanka03" dispName="03 深夜勤務 単価">
 		    <check class="IsRequired" message="!#itemName#!が入力されていません。" itemName="{dispName}"></check>
 		    <check class="IsHalf" message="!#itemName#!には全角文字は入力できません。" itemName="{dispName}"></check>
+			<check class="IsNumber" message="!#itemName#!には数字を入力してください。" itemName="{dispName}"></check>
 			<check class="NumberLimit" message="!#itemName#!にはマイナスは設定できません。" itemName="{dispName}">
 			    <param name="length">0</param>
 			    <param name="comparisonoperator">&lt;=</param>
 			</check>
-			<check class="IsNumber" message="!#itemName#!には数字を入力してください。" itemName="{dispName}"></check>
 		    <check class="MaxLength" message="!#itemName#!が6バイトを超えています。(6バイト = 全角6/2文字, 半角6文字)" itemName="{dispName}">
 		        <param name="type">full</param>
 		        <param name="length">6</param>
@@ -230,11 +232,11 @@
 		<variable name="txtShinseiTanka04" dispName="04 休日勤務 単価">
 		    <check class="IsRequired" message="!#itemName#!が入力されていません。" itemName="{dispName}"></check>
 		    <check class="IsHalf" message="!#itemName#!には全角文字は入力できません。" itemName="{dispName}"></check>
+			<check class="IsNumber" message="!#itemName#!には数字を入力してください。" itemName="{dispName}"></check>
 			<check class="NumberLimit" message="!#itemName#!にはマイナスは設定できません。" itemName="{dispName}">
 			    <param name="length">0</param>
 			    <param name="comparisonoperator">&lt;=</param>
 			</check>
-			<check class="IsNumber" message="!#itemName#!には数字を入力してください。" itemName="{dispName}"></check>
 		    <check class="MaxLength" message="!#itemName#!が6バイトを超えています。(6バイト = 全角6/2文字, 半角6文字)" itemName="{dispName}">
 		        <param name="type">full</param>
 		        <param name="length">6</param>
@@ -245,11 +247,11 @@
 		<variable name="txtShinseiTanka05" dispName="05 有給休暇 単価">
 		    <check class="IsRequired" message="!#itemName#!が入力されていません。" itemName="{dispName}"></check>
 		    <check class="IsHalf" message="!#itemName#!には全角文字は入力できません。" itemName="{dispName}"></check>
+			<check class="IsNumber" message="!#itemName#!には数字を入力してください。" itemName="{dispName}"></check>
 			<check class="NumberLimit" message="!#itemName#!にはマイナスは設定できません。" itemName="{dispName}">
 			    <param name="length">0</param>
 			    <param name="comparisonoperator">&lt;=</param>
 			</check>
-			<check class="IsNumber" message="!#itemName#!には数字を入力してください。" itemName="{dispName}"></check>
 		    <check class="MaxLength" message="!#itemName#!が6バイトを超えています。(6バイト = 全角6/2文字, 半角6文字)" itemName="{dispName}">
 		        <param name="type">full</param>
 		        <param name="length">6</param>
@@ -260,11 +262,11 @@
 		<variable name="txtShinseiTanka06" dispName="06 半日有給 単価">
 		    <check class="IsRequired" message="!#itemName#!が入力されていません。" itemName="{dispName}"></check>
 		    <check class="IsHalf" message="!#itemName#!には全角文字は入力できません。" itemName="{dispName}"></check>
+			<check class="IsNumber" message="!#itemName#!には数字を入力してください。" itemName="{dispName}"></check>
 			<check class="NumberLimit" message="!#itemName#!にはマイナスは設定できません。" itemName="{dispName}">
 			    <param name="length">0</param>
 			    <param name="comparisonoperator">&lt;=</param>
 			</check>
-			<check class="IsNumber" message="!#itemName#!には数字を入力してください。" itemName="{dispName}"></check>
 		    <check class="MaxLength" message="!#itemName#!が6バイトを超えています。(6バイト = 全角6/2文字, 半角6文字)" itemName="{dispName}">
 		        <param name="type">full</param>
 		        <param name="length">6</param>
@@ -275,11 +277,11 @@
 		<variable name="txtShinseiTanka07" dispName="07 控除 単価">
 		    <check class="IsRequired" message="!#itemName#!が入力されていません。" itemName="{dispName}"></check>
 		    <check class="IsHalf" message="!#itemName#!には全角文字は入力できません。" itemName="{dispName}"></check>
+			<check class="IsNumber" message="!#itemName#!には数字を入力してください。" itemName="{dispName}"></check>
 			<check class="NumberLimit" message="!#itemName#!にはマイナスは設定できません。" itemName="{dispName}">
 			    <param name="length">0</param>
 			    <param name="comparisonoperator">&lt;=</param>
 			</check>
-			<check class="IsNumber" message="!#itemName#!には数字を入力してください。" itemName="{dispName}"></check>
 		    <check class="MaxLength" message="!#itemName#!が6バイトを超えています。(6バイト = 全角6/2文字, 半角6文字)" itemName="{dispName}">
 		        <param name="type">full</param>
 		        <param name="length">6</param>
@@ -290,11 +292,11 @@
 		<variable name="txtShinseiTanka08" dispName="08 単価">
 		    <check class="IsRequired" message="!#itemName#!が入力されていません。" itemName="{dispName}"></check>
 		    <check class="IsHalf" message="!#itemName#!には全角文字は入力できません。" itemName="{dispName}"></check>
+			<check class="IsNumber" message="!#itemName#!には数字を入力してください。" itemName="{dispName}"></check>
 			<check class="NumberLimit" message="!#itemName#!にはマイナスは設定できません。" itemName="{dispName}">
 			    <param name="length">0</param>
 			    <param name="comparisonoperator">&lt;=</param>
 			</check>
-			<check class="IsNumber" message="!#itemName#!には数字を入力してください。" itemName="{dispName}"></check>
 		    <check class="MaxLength" message="!#itemName#!が6バイトを超えています。(6バイト = 全角6/2文字, 半角6文字)" itemName="{dispName}">
 		        <param name="type">full</param>
 		        <param name="length">6</param>
@@ -305,11 +307,11 @@
 		<variable name="txtShinseiTanka09" dispName="09 通勤費 単価／月給">
 		    <check class="IsRequired" message="!#itemName#!が入力されていません。" itemName="{dispName}"></check>
 		    <check class="IsHalf" message="!#itemName#!には全角文字は入力できません。" itemName="{dispName}"></check>
+			<check class="IsNumber" message="!#itemName#!には数字を入力してください。" itemName="{dispName}"></check>
 			<check class="NumberLimit" message="!#itemName#!にはマイナスは設定できません。" itemName="{dispName}">
 			    <param name="length">0</param>
 			    <param name="comparisonoperator">&lt;=</param>
 			</check>
-			<check class="IsNumber" message="!#itemName#!には数字を入力してください。" itemName="{dispName}"></check>
 		    <check class="MaxLength" message="!#itemName#!が6バイトを超えています。(6バイト = 全角6/2文字, 半角6文字)" itemName="{dispName}">
 		        <param name="type">full</param>
 		        <param name="length">6</param>
@@ -320,11 +322,11 @@
 		<variable name="txtShinseiTanka10" dispName="10 時間外勤務 単価">
 		    <check class="IsRequired" message="!#itemName#!が入力されていません。" itemName="{dispName}"></check>
 		    <check class="IsHalf" message="!#itemName#!には全角文字は入力できません。" itemName="{dispName}"></check>
+			<check class="IsNumber" message="!#itemName#!には数字を入力してください。" itemName="{dispName}"></check>
 			<check class="NumberLimit" message="!#itemName#!にはマイナスは設定できません。" itemName="{dispName}">
 			    <param name="length">0</param>
 			    <param name="comparisonoperator">&lt;=</param>
 			</check>
-			<check class="IsNumber" message="!#itemName#!には数字を入力してください。" itemName="{dispName}"></check>
 		    <check class="MaxLength" message="!#itemName#!が6バイトを超えています。(6バイト = 全角6/2文字, 半角6文字)" itemName="{dispName}">
 		        <param name="type">full</param>
 		        <param name="length">6</param>
@@ -335,11 +337,11 @@
 		<variable name="txtShinseiTanka11" dispName="11 特別有給休暇 単価">
 		    <check class="IsRequired" message="!#itemName#!が入力されていません。" itemName="{dispName}"></check>
 		    <check class="IsHalf" message="!#itemName#!には全角文字は入力できません。" itemName="{dispName}"></check>
+			<check class="IsNumber" message="!#itemName#!には数字を入力してください。" itemName="{dispName}"></check>
 			<check class="NumberLimit" message="!#itemName#!にはマイナスは設定できません。" itemName="{dispName}">
 			    <param name="length">0</param>
 			    <param name="comparisonoperator">&lt;=</param>
 			</check>
-			<check class="IsNumber" message="!#itemName#!には数字を入力してください。" itemName="{dispName}"></check>
 		    <check class="MaxLength" message="!#itemName#!が6バイトを超えています。(6バイト = 全角6/2文字, 半角6文字)" itemName="{dispName}">
 		        <param name="type">full</param>
 		        <param name="length">6</param>
@@ -352,8 +354,8 @@
 				<param name="targetvalue">txtShukinboKbn</param>
 				<param name="conditionvalue">01</param>
 			</check>
-			<check class="IsNumber" message="!#itemName#!には数字を入力してください。" itemName="{dispName}"></check>
 			<check class="IsHalf" message="!#itemName#!には全角文字は入力できません。" itemName="{dispName}"></check>
+			<check class="IsNumber" message="!#itemName#!には数字を入力してください。" itemName="{dispName}"></check>
 			<check class="MaxLength" message="!#itemName#!が2バイトを超えています。(2バイト = 全角2/2文字, 半角2文字)" itemName="{dispName}">
 				<param name="type">full</param>
 				<param name="length">2</param>
