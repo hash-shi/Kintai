@@ -121,7 +121,7 @@ ArrayList<HashMap<String, String>> mstKubun0013 = (ArrayList<HashMap<String, Str
 				<tr>
 					<td class="title center w150 req">有給休暇付与日数</td>
 					<td class="value w500">
-						<input type="text" class="w80 right"  maxlength="4" name="txtYukyuKyukaFuyoNissu" id="txtYukyuKyukaFuyoNissu"  value="0.0" >				
+						<input type="text" class="w80 right"  maxlength="5" name="txtYukyuKyukaFuyoNissu" id="txtYukyuKyukaFuyoNissu"  value="0.0" >				
 					</td>
 				</tr>
 				<tr>
@@ -187,7 +187,7 @@ ArrayList<HashMap<String, String>> mstKubun0013 = (ArrayList<HashMap<String, Str
 				<tr>
 					<td class="title center w150">勤務実働時間</td>
 					<td class="value w500">
-						<input type="text" class="w80 right"  maxlength="4"  name="txtKeiyakuJitsudoJikan" id="txtKeiyakuJitsudoJikan"  value="0.00" >				
+						<input type="text" class="w80 right"  maxlength="6"  name="txtKeiyakuJitsudoJikan" id="txtKeiyakuJitsudoJikan"  value="0.00" >				
 					</td>
 				</tr>
 				<tr>

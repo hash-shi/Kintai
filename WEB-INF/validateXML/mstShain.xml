@@ -140,9 +140,9 @@
 			<check class="MaxNumberLimit" message="!#itemName#!の桁数が不正です。" itemName="{dispName}">
 				<param name="length">999</param>
 			</check>
-			<check class="MaxLength" message="!#itemName#!が4バイトを超えています。(4バイト = 全角4/2文字, 半角4文字)" itemName="{dispName}">
+			<check class="MaxLength" message="!#itemName#!が5バイトを超えています。(5バイト = 全角5/2文字, 半角5文字)" itemName="{dispName}">
 				<param name="type">full</param>
-				<param name="length">4</param>
+				<param name="length">5</param>
 			</check>	
 		</variable>				
 		
@@ -175,9 +175,9 @@
 			<check class="MaxNumberLimit" message="!#itemName#!の桁数が不正です。" itemName="{dispName}">
 				<param name="length">999</param>
 			</check>			
-			<check class="MaxLength" message="!#itemName#!が4バイトを超えています。(4バイト = 全角4/2文字, 半角4文字)" itemName="{dispName}">
+			<check class="MaxLength" message="!#itemName#!が6バイトを超えています。(6バイト = 全角6/2文字, 半角6文字)" itemName="{dispName}">
 				<param name="type">full</param>
-				<param name="length">4</param>
+				<param name="length">6</param>
 			</check>	
 		</variable>			
 		
@@ -189,6 +189,7 @@
 			    <param name="length">0</param>
 			    <param name="comparisonoperator">&lt;=</param>
 			</check>
+			<check class="IsNumber" message="!#itemName#!には数字を入力してください。" itemName="{dispName}"></check>
 			<check class="MaxLength" message="!#itemName#!が6バイトを超えています。(6バイト = 全角6/2文字, 半角6文字)" itemName="{dispName}">
 				<param name="type">full</param>
 				<param name="length">6</param>
@@ -203,6 +204,7 @@
 			    <param name="length">0</param>
 			    <param name="comparisonoperator">&lt;=</param>
 			</check>
+			<check class="IsNumber" message="!#itemName#!には数字を入力してください。" itemName="{dispName}"></check>
 		    <check class="MaxLength" message="!#itemName#!が6バイトを超えています。(6バイト = 全角6/2文字, 半角6文字)" itemName="{dispName}">
 		        <param name="type">full</param>
 		        <param name="length">6</param>
@@ -217,6 +219,7 @@
 			    <param name="length">0</param>
 			    <param name="comparisonoperator">&lt;=</param>
 			</check>
+			<check class="IsNumber" message="!#itemName#!には数字を入力してください。" itemName="{dispName}"></check>
 		    <check class="MaxLength" message="!#itemName#!が6バイトを超えています。(6バイト = 全角6/2文字, 半角6文字)" itemName="{dispName}">
 		        <param name="type">full</param>
 		        <param name="length">6</param>
@@ -231,6 +234,7 @@
 			    <param name="length">0</param>
 			    <param name="comparisonoperator">&lt;=</param>
 			</check>
+			<check class="IsNumber" message="!#itemName#!には数字を入力してください。" itemName="{dispName}"></check>
 		    <check class="MaxLength" message="!#itemName#!が6バイトを超えています。(6バイト = 全角6/2文字, 半角6文字)" itemName="{dispName}">
 		        <param name="type">full</param>
 		        <param name="length">6</param>
@@ -245,6 +249,7 @@
 			    <param name="length">0</param>
 			    <param name="comparisonoperator">&lt;=</param>
 			</check>
+			<check class="IsNumber" message="!#itemName#!には数字を入力してください。" itemName="{dispName}"></check>
 		    <check class="MaxLength" message="!#itemName#!が6バイトを超えています。(6バイト = 全角6/2文字, 半角6文字)" itemName="{dispName}">
 		        <param name="type">full</param>
 		        <param name="length">6</param>
@@ -259,6 +264,7 @@
 			    <param name="length">0</param>
 			    <param name="comparisonoperator">&lt;=</param>
 			</check>
+			<check class="IsNumber" message="!#itemName#!には数字を入力してください。" itemName="{dispName}"></check>
 		    <check class="MaxLength" message="!#itemName#!が6バイトを超えています。(6バイト = 全角6/2文字, 半角6文字)" itemName="{dispName}">
 		        <param name="type">full</param>
 		        <param name="length">6</param>
@@ -273,6 +279,7 @@
 			    <param name="length">0</param>
 			    <param name="comparisonoperator">&lt;=</param>
 			</check>
+			<check class="IsNumber" message="!#itemName#!には数字を入力してください。" itemName="{dispName}"></check>
 		    <check class="MaxLength" message="!#itemName#!が6バイトを超えています。(6バイト = 全角6/2文字, 半角6文字)" itemName="{dispName}">
 		        <param name="type">full</param>
 		        <param name="length">6</param>
@@ -287,6 +294,7 @@
 			    <param name="length">0</param>
 			    <param name="comparisonoperator">&lt;=</param>
 			</check>
+			<check class="IsNumber" message="!#itemName#!には数字を入力してください。" itemName="{dispName}"></check>
 		    <check class="MaxLength" message="!#itemName#!が6バイトを超えています。(6バイト = 全角6/2文字, 半角6文字)" itemName="{dispName}">
 		        <param name="type">full</param>
 		        <param name="length">6</param>
@@ -301,6 +309,7 @@
 			    <param name="length">0</param>
 			    <param name="comparisonoperator">&lt;=</param>
 			</check>
+			<check class="IsNumber" message="!#itemName#!には数字を入力してください。" itemName="{dispName}"></check>
 		    <check class="MaxLength" message="!#itemName#!が6バイトを超えています。(6バイト = 全角6/2文字, 半角6文字)" itemName="{dispName}">
 		        <param name="type">full</param>
 		        <param name="length">6</param>
@@ -315,6 +324,7 @@
 			    <param name="length">0</param>
 			    <param name="comparisonoperator">&lt;=</param>
 			</check>
+			<check class="IsNumber" message="!#itemName#!には数字を入力してください。" itemName="{dispName}"></check>
 		    <check class="MaxLength" message="!#itemName#!が6バイトを超えています。(6バイト = 全角6/2文字, 半角6文字)" itemName="{dispName}">
 		        <param name="type">full</param>
 		        <param name="length">6</param>
@@ -329,6 +339,7 @@
 			    <param name="length">0</param>
 			    <param name="comparisonoperator">&lt;=</param>
 			</check>
+			<check class="IsNumber" message="!#itemName#!には数字を入力してください。" itemName="{dispName}"></check>
 		    <check class="MaxLength" message="!#itemName#!が6バイトを超えています。(6バイト = 全角6/2文字, 半角6文字)" itemName="{dispName}">
 		        <param name="type">full</param>
 		        <param name="length">6</param>
