@@ -28,6 +28,7 @@
 		<variable name="txtKintaiKishuGetsudo" dispName="勤怠期首月度">
 			<check class="IsRequired" message="!#itemName#!が入力されていません。" itemName="{dispName}"></check>
 			<check class="IsHalf" message="!#itemName#!には全角文字は入力できません。" itemName="{dispName}"></check>
+			<check class="IsNumber" message="!#itemName#!には数字を入力してください。" itemName="{dispName}"></check>
 			<check class="IsDate" message="!#itemName#!の指定が不正です。(DD)" itemName="{dispName}">
   				<param name="format">dd</param>
 			</check>
@@ -35,14 +36,14 @@
 		<variable name="txtKintaiGetsudoShimebi" dispName="勤怠月度締日">
 			<check class="IsRequired" message="!#itemName#!が入力されていません。" itemName="{dispName}"></check>
 			<check class="IsHalf" message="!#itemName#!には全角文字は入力できません。" itemName="{dispName}"></check>
+			<check class="IsNumber" message="!#itemName#!には数字を入力してください。" itemName="{dispName}"></check>
 			<check class="IsDate" message="!#itemName#!の指定が不正です。(DD)" itemName="{dispName}">
   				<param name="format">dd</param>
 			</check>
 		</variable>
 		<variable name="txtKintaiKihonSagyoJikan" dispName="勤怠基本作業時間">
 			<check class="IsRequired" message="!#itemName#!が入力されていません。" itemName="{dispName}"></check>
-			<check class="IsHalf" message="!#itemName#!には全角文字は入力できません。" itemName="{dispName}"></check>
-			
+			<check class="IsHalf" message="!#itemName#!には全角文字は入力できません。" itemName="{dispName}"></check>			
 			<check class="MaxLength" message="!#itemName#!が5バイトを超えています。(5バイト = 全角5/2文字, 半角5文字)" itemName="{dispName}">
 				<param name="type">full</param>
 				<param name="length">5</param>
