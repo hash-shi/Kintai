@@ -137,6 +137,9 @@
 			    <param name="length">0</param>
 			    <param name="comparisonoperator">&lt;=</param>
 			</check>
+			<check class="MaxNumberLimit" message="!#itemName#!の桁数が不正です。" itemName="{dispName}">
+				<param name="length">999</param>
+			</check>
 			<check class="MaxLength" message="!#itemName#!が4バイトを超えています。(4バイト = 全角4/2文字, 半角4文字)" itemName="{dispName}">
 				<param name="type">full</param>
 				<param name="length">4</param>
@@ -169,6 +172,9 @@
 			    <param name="length">0</param>
 			    <param name="comparisonoperator">&lt;=</param>
 			</check>
+			<check class="MaxNumberLimit" message="!#itemName#!の桁数が不正です。" itemName="{dispName}">
+				<param name="length">999</param>
+			</check>			
 			<check class="MaxLength" message="!#itemName#!が4バイトを超えています。(4バイト = 全角4/2文字, 半角4文字)" itemName="{dispName}">
 				<param name="type">full</param>
 				<param name="length">4</param>

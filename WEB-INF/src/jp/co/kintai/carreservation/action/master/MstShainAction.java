@@ -350,6 +350,9 @@ public class MstShainAction extends PJActionBase {
 		kinmukaishiFun = (kinmukaishiFun == null || kinmukaishiFun.isEmpty()) ? ""    : kinmukaishiFun;
 		kinmushuryoJi  = (kinmushuryoJi  == null || kinmushuryoJi.isEmpty())  ? ""    : kinmushuryoJi;
 		kinmushuryoFun = (kinmushuryoFun == null || kinmushuryoFun.isEmpty()) ? ""    : kinmushuryoFun;
+		
+		// 有給休暇付与日数 → 空なら 0.0
+		yukyukyukafuyoNissu = (yukyukyukafuyoNissu == null || yukyukyukafuyoNissu.isEmpty()) ? "0.0" : yukyukyukafuyoNissu;
 	
 		// 時給日給区分 → 空なら空文字
 		jikyunikkyuKbn = (jikyunikkyuKbn == null || jikyunikkyuKbn.isEmpty()) ? ""    : jikyunikkyuKbn;
@@ -543,6 +546,9 @@ public class MstShainAction extends PJActionBase {
 		kinmukaishiFun = (kinmukaishiFun == null || kinmukaishiFun.isEmpty()) ? ""    : kinmukaishiFun;
 		kinmushuryoJi  = (kinmushuryoJi  == null || kinmushuryoJi.isEmpty())  ? ""    : kinmushuryoJi;
 		kinmushuryoFun = (kinmushuryoFun == null || kinmushuryoFun.isEmpty()) ? ""    : kinmushuryoFun;
+		
+		// 有給休暇付与日数 → 空なら 0.0
+		yukyukyukafuyoNissu = (yukyukyukafuyoNissu == null || yukyukyukafuyoNissu.isEmpty()) ? "0.0" : yukyukyukafuyoNissu;
 	
 		// 時給日給区分 → 空なら空文字
 		jikyunikkyuKbn = (jikyunikkyuKbn == null || jikyunikkyuKbn.isEmpty()) ? ""    : jikyunikkyuKbn;
