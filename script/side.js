@@ -20,7 +20,6 @@ $(document).ready(function(){
 	// セッションストレージよりメニューの開閉状態を取得して反映する。
 	getSskSideMenu();
 	getSskProcessID();
-	
 });
 
 //****************************************************************************
@@ -165,7 +164,7 @@ function getSskProcessID() {
 //****************************************************************************
 function setSskSideMenu() {
 	
-//	var value = "";
+	// var value = "";
 	
 	// id=sideMenuを取得する。
 	var sideMenu = $("[id=sideMenu]");
@@ -209,82 +208,3 @@ function setSskProcessID() {
 	sessionStorage.setItem(sskProcessID, value);
 	
 }
-
-////****************************************************************************
-//// ストレージの登録
-////----------------------------------------------------------------------------
-////
-////
-////
-////****************************************************************************
-//function setSessionStorage() {
-//	
-//	var value = "";
-//	
-//	// id=side-の要素を取得する。
-//	var toggles = $("[id^=sideMenu]");
-//	
-//	for (var i = 0; i < toggles.length; i++) {
-//		console.log(toggles[i]);
-//		// 同じ親要素内の次の要素を取得
-//		const submenu = toggles[i].nextElementSibling;
-//		// id + 開閉状態を取得
-//		console.log(toggles[i].id);
-//		console.log(submenu.style.display);
-//		value += ',' + toggles[i].id + '_' + submenu.style.display
-//	}
-//	
-//	// セッションストレージに登録する。
-//	console.log(value);
-//	sessionStorage.setItem(sessionStorageKey, value);
-//	
-//}
-
-
-
-////****************************************************************************
-//// ストレージの取得
-////----------------------------------------------------------------------------
-////
-////
-////
-////****************************************************************************
-//function getSessionStorage() {
-//	
-//	var value = "";
-//	
-//	// セッションストレージを取得する。
-//	value = sessionStorage.getItem(sessionStorageKey);
-//	
-//	// ない場合はスキップ
-//	console.log(value);
-//	if (!value) { return; }
-//	
-//	//,で区切っているので分割
-//	var values = value.split(',');
-//	
-//	// 先頭行は空のため1からスタート
-//	for (var i = 1; i < values.length; i++) {
-//		// id と 開閉状態を分割
-//		console.log(values[i]);
-//		var id = values[i].split('_')[0];
-//		var display = values[i].split('_')[1];
-//		
-//		// idで要素を検索
-//		var toggle = $("[id=" + id +"]");
-//		
-//		// 要素がない場合はスキップ
-//		console.log(toggle);
-//		if (!toggle) { continue; }
-//		
-//		// 同じ親要素内の次の要素を取得
-//		const submenu = toggle[0].nextElementSibling;
-//		
-//		// 開閉状態を付加
-//		console.log(submenu);
-//		submenu.style.display = (display === '' ? 'none' : display);
-//		console.log(submenu.style.display);
-//	}
-//	
-//}
-//
