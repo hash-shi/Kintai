@@ -46,7 +46,7 @@ public class ChgPasswordAction extends PJActionBase {
 		//=====================================================================
 		// DB接続
 		//=====================================================================
-		Connection con = this.getConnection("kintai", req);		
+		Connection con = this.getConnection("kintai", req);
 		PreparedStatement pstmt			= null;
 		StringBuffer sql				= new StringBuffer();
 		PreparedStatementFactory pstmtf	= new PreparedStatementFactory();
@@ -132,5 +132,4 @@ public class ChgPasswordAction extends PJActionBase {
 			if (pstmt != null){ try { pstmt.close(); } catch (Exception exp){}}
 		}
 	}
-	
 }
