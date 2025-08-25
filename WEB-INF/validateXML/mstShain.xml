@@ -404,5 +404,17 @@
 			</check>
 		</variable>
 	</proc>
+	
+	<proc func="copy_">
+		<variable name="dummy" dispName="">
+			<check class="ExclusiveValidate" message="同一キーのレコードが既に存在します。" itemName="{dispName}">
+				<param name="tableName">MST_SHAIN</param>
+				<param name="keyName">ShainNO</param>
+				<param name="keyValue">txtShainNO</param>
+				<param name="saishuKoshinDate"></param>
+				<param name="saishuKoshinJikan"></param>
+			</check>			
+		</variable>
+	</proc>
 
 </validate>
