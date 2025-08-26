@@ -32,7 +32,7 @@
 					<tr>
 						<td class="title center w150 req">管理コード</td>
 						<td class="value w500">
-						<input type="text" name="txtKanriCode" id="txtKanriCode" value="01" class="w80" readonly>
+						<input type="text" name="txtKanriCode" id="txtKanriCode" value="" class="w80" maxlength="2">
 					</tr>
 
 					<tr>
@@ -43,11 +43,6 @@
 								<option value=""> </option>
 								<option value="0">未確定</option>
 								<option value="1">確定</option>
-																
-								<!-- <% for (int count = 0 ; count < mstKubun0505.size() ; count++){ HashMap<String, String> record = mstKubun0505.get(count);%>
-									<option value="<%=UtilEscape.htmlspecialchars(record.get("Code")) %>"><%=UtilEscape.htmlspecialchars(record.get("KbnName")) %></option>
-								<% } %> -->
-								
 							</select>
 						</td>
 					</tr>
@@ -97,7 +92,7 @@
 		</div>
 	
 		<div id="buttonArea"  class="buttonArea right"  style="visibility: hidden;">
-				<button type="button" class="" name="btnUpdate" id="btnUpdate" onclick="onUpdate()">確定 [ F9 ]</button>
+			<button type="button" class="" name="btnUpdate" id="btnUpdate" onclick="onUpdate()">確定 [ F9 ]</button>
 		</div>
 	</div>
 </main>

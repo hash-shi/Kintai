@@ -31,10 +31,6 @@ public class MstKanriAction extends PJActionBase {
 		// 結果返却
 		//=====================================================================
 		
-		// 処理選択
-		ArrayList<HashMap<String, String>> mstKubun0505 = PJActionBase.getMstKubuns(con, "0505", "", "");
-		req.setAttribute("mstKubun0505", mstKubun0505);
-				
 		// 画面表示
 		this.setView("success");
 	}
@@ -51,6 +47,12 @@ public class MstKanriAction extends PJActionBase {
 		//=====================================================================
 		String kanriCode	= req.getParameter("srhKanriCode");
 		
+		// 2桁0詰めに統一するための処理
+		// 数値に変換
+		int kanriCode_ = Integer.parseInt(kanriCode);
+		// 2桁0詰めに変換
+		kanriCode = String.format("%02d", kanriCode_);
+		
 		//=====================================================================
 		// DB接続
 		//=====================================================================
@@ -59,14 +61,32 @@ public class MstKanriAction extends PJActionBase {
 		//=====================================================================
 		// 検索
 		//=====================================================================
+		
+		String isNew = "0";
 		ArrayList<HashMap<String, String>> mstDatas = PJActionBase.getMstKanris(con, kanriCode);
 		
-		for (HashMap<String, String> rec : mstDatas) {
-		    System.out.println("レコード: " + rec);
+		// データが0件 = 新規の時は空の配列を作成する。
+		if (mstDatas.size() == 0) {
+			// 新規モード
+			isNew = "1";
+			// 1レコード分の配列を用意
+			HashMap<String, String> record = new HashMap<String, String>();
+			record.put("KanriCode", kanriCode);
+			record.put("NendoKakuteiStatus", "");
+			record.put("GenzaishoriNengetsudo", "");
+			record.put("KintaiKishuGetsudo", "");
+			record.put("KintaiGetsudoShimebi", "");
+			record.put("KintaiKihonSagyoJikan", "");
+			record.put("SaishuKoshinShainNO", "");
+			record.put("SaishuKoshinShainName", "");
+			record.put("SaishuKoshinDate", "");
+			record.put("SaishuKoshinJikan", "");
+			// 配列の格納
+			mstDatas.add(record);
 		}
-			
-		this.addContent("mstDatas", mstDatas != null ? mstDatas : new ArrayList<>());
-
+		
+		this.addContent("isNew", isNew);
+		this.addContent("mstDatas", mstDatas);
 	}
 	
 	public void update(HttpServletRequest req, HttpServletResponse res) throws Exception {
@@ -77,13 +97,18 @@ public class MstKanriAction extends PJActionBase {
 		//=====================================================================
 		// パラメータ取得
 		//=====================================================================
-		String nendoKakuteiStatus	= req.getParameter("txtNendoKakuteiStatus");
+		String kanriCode 				= req.getParameter("txtKanriCode");
+		String nendoKakuteiStatus		= req.getParameter("txtNendoKakuteiStatus");
 		String genzaishoriNengetsudo	= req.getParameter("txtGenzaishoriNengetsudo");
-		String kintaiKishuGetsudo	= req.getParameter("txtKintaiKishuGetsudo");
+		String kintaiKishuGetsudo		= req.getParameter("txtKintaiKishuGetsudo");
 		String kintaiGetsudoShimebi		= req.getParameter("txtKintaiGetsudoShimebi");
 		String kintaiKihonSagyoJikan	= req.getParameter("txtKintaiKihonSagyoJikan");
-		String kanriCode = req.getParameter("txtKanriCode");
-				
+		
+		// 2桁0詰めに統一するための処理
+		// 数値に変換
+		int kanriCode_ = Integer.parseInt(kanriCode);
+		// 2桁0詰めに変換
+		kanriCode = String.format("%02d", kanriCode_);
 		
 		//=====================================================================
 		// ユーザー情報の取得
@@ -104,27 +129,27 @@ public class MstKanriAction extends PJActionBase {
 		pstmtf.clear();
 		sql.setLength(0);
 		sql.append(" UPDATE MST_KANRI SET ");
-		sql.append("  NendoKakuteiStatus = ?  ");
+		sql.append("  SaishuKoshinShainNO = ? ");
+		sql.append("  ,SaishuKoshinDate = ? ");
+		sql.append("  ,SaishuKoshinJikan = ? ");
+		sql.append("  ,NendoKakuteiStatus = ?  ");
 		sql.append("  ,GenzaishoriNengetsudo = ?  ");
 		sql.append("  ,KintaiKishuGetsudo = ? ");
 		sql.append("  ,KintaiGetsudoShimebi = ? ");
 		sql.append("  ,KintaiKihonSagyoJikan = ? ");
-		sql.append("  ,SaishuKoshinShainNO = ? ");
-		sql.append("  ,SaishuKoshinDate = ? ");
-		sql.append("  ,SaishuKoshinJikan = ? ");
 		sql.append(" WHERE ");
 		sql.append(" 	1 = 1 ");
 		sql.append(" AND CAST(KanriCode AS int) = ? ");
 			
-		// パラメータ設定		
+		// パラメータ設定
+		pstmtf.addValue("String", userInformation.getShainNO());
+		pstmtf.addValue("String", PJActionBase.getNowDate());
+		pstmtf.addValue("String", PJActionBase.getNowTime());
 		pstmtf.addValue("String", nendoKakuteiStatus);
 		pstmtf.addValue("String", genzaishoriNengetsudo);
 		pstmtf.addValue("String", kintaiKishuGetsudo);
 		pstmtf.addValue("String", kintaiGetsudoShimebi);
 		pstmtf.addValue("String", kintaiKihonSagyoJikan);
-		pstmtf.addValue("String", userInformation.getShainNO());
-		pstmtf.addValue("String", PJActionBase.getNowDate());
-		pstmtf.addValue("String", PJActionBase.getNowTime());
 		pstmtf.addValue("String", kanriCode);
 		
 		try {

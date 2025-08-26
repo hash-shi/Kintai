@@ -2,6 +2,11 @@
 
 <validate>
 	<proc func="update">
+		<variable name="txtKanriCode" dispName="管理コード">
+			<check class="IsRequired" message="!#itemName#!が入力されていません。" itemName="{dispName}"></check>
+			<check class="IsHalf" message="!#itemName#!には全角文字は入力できません。" itemName="{dispName}"></check>
+			<check class="IsNumber" message="!#itemName#!には数字を入力してください。" itemName="{dispName}"></check>
+		</variable>
 		<variable name="txtNendoKakuteiStatus" dispName="年度確定ステータス">
 			<check class="IsRequired" message="!#itemName#!が入力されていません。" itemName="{dispName}"></check>			
 			<check class="IsHalf" message="!#itemName#!には全角文字は入力できません。" itemName="{dispName}"></check>
