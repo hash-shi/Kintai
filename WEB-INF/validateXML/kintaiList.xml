@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<validate>
+<validate
+>
 	<proc func="kinShukkinBo,chiChinginkeisansho">
-	
 		<variable name="srhTxtTaishoNengetsuF" dispName="対象年月度(自)">
 			<check class="IsRequired" message="!#itemName#!が入力されていません。" itemName="{dispName}"></check>
 			<check class="IsDate" message="!#itemName#!の指定が不正です(YYYY/MM)" itemName="{dispName}">
@@ -21,7 +21,6 @@
 				<param name="include">1</param>
 			</check>
 		</variable>
-		
 		<variable name="srhTxtEigyoshoCodeF" dispName="営業所コード(自)">
 			<check class="IsNumber" message="!#itemName#!には数字を入力してください。" itemName="{dispName}"></check>
 		</variable>
@@ -35,7 +34,6 @@
 				<param name="include">1</param>
 			</check>
 		</variable>
-		
 		<variable name="srhTxtBushoCodeF" dispName="部署コード(自)">
 			<check class="IsNumber" message="!#itemName#!には数字を入力してください。" itemName="{dispName}"></check>
 		</variable>
@@ -49,7 +47,6 @@
 				<param name="include">1</param>
 			</check>
 		</variable>
-		
 		<variable name="srhTxtShainNoF" dispName="社員NO(自)">
 			<check class="IsNumber" message="!#itemName#!には数字を入力してください。" itemName="{dispName}"></check>
 		</variable>
@@ -63,11 +60,9 @@
 				<param name="include">1</param>
 			</check>
 		</variable>
-		
 	</proc>
 	
 	<proc func="kinYukyuKyukaDaicho">
-	
 		<variable name="srhTxtTaishoNendoF" dispName="対象年度(自)">
 			<check class="IsRequired" message="!#itemName#!が入力されていません。" itemName="{dispName}"></check>
 			<check class="IsDate" message="!#itemName#!の指定が不正です(YYYY/MM)" itemName="{dispName}">
@@ -87,7 +82,6 @@
 				<param name="include">1</param>
 			</check>
 		</variable>
-		
 		<variable name="srhTxtEigyoshoCodeF" dispName="営業所コード(自)">
 			<check class="IsNumber" message="!#itemName#!には数字を入力してください。" itemName="{dispName}"></check>
 		</variable>
@@ -101,7 +95,6 @@
 				<param name="include">1</param>
 			</check>
 		</variable>
-		
 		<variable name="srhTxtBushoCodeF" dispName="部署コード(自)">
 			<check class="IsNumber" message="!#itemName#!には数字を入力してください。" itemName="{dispName}"></check>
 		</variable>
@@ -115,7 +108,6 @@
 				<param name="include">1</param>
 			</check>
 		</variable>
-		
 		<variable name="srhTxtShainNoF" dispName="社員NO(自)">
 			<check class="IsNumber" message="!#itemName#!には数字を入力してください。" itemName="{dispName}"></check>
 		</variable>
@@ -129,7 +121,6 @@
 				<param name="include">1</param>
 			</check>
 		</variable>
-		
 	</proc>
 	
 </validate>

@@ -21,9 +21,9 @@ ArrayList<HashMap<String, String>> mstKubun			= (ArrayList<HashMap<String, Strin
 			</table>
 			<table>
 				<tr>
-					<td class="title center w70">処理選択</td>
-					<td class="value w210">
-						<select name="selShoriSentaku"  id="selShoriSentaku" >
+					<td class="title center w100">処理選択</td>
+					<td class="value w220">
+						<select class="w160" name="selShoriSentaku"  id="selShoriSentaku" >
 					      <% for (int count = 0 ; count < mstKubun.size() ; count++){ HashMap<String, String> record = mstKubun.get(count);%>
 						   <option value="<%=UtilEscape.htmlspecialchars(record.get("Code")) %>"><%=UtilEscape.htmlspecialchars(record.get("KbnName")) %></option>
 					      <% } %>
@@ -39,9 +39,9 @@ ArrayList<HashMap<String, String>> mstKubun			= (ArrayList<HashMap<String, Strin
 		<div class="inputArea">
 			<table>
 				<tr>
-					<td class="title center w70">処理選択</td>
-					<td class="value w210">
-						<input type="text" class="w200"  name="txtShoriSentaku" id="txtShoriSentaku" value="" readonly>
+					<td class="title center w100">処理選択</td>
+					<td class="value w220">
+						<input type="text" class="w210"  name="txtShoriSentaku" id="txtShoriSentaku" value="" readonly>
 					</td>
 				</tr>
 			</table>
@@ -49,8 +49,8 @@ ArrayList<HashMap<String, String>> mstKubun			= (ArrayList<HashMap<String, Strin
 		<div class="inputArea">
 			<table>
 				<tr>
-					<td class="title center w70 req">対象年月</td>
-					<td class="value">
+					<td class="title center w100 req">対象年月</td>
+					<td class="value w600">
 						<input type="text" class="w60 right" maxlength="7" name="srhTxtTaishoNengetsuF" id="srhTxtTaishoNengetsuF" value="">
 						-
 						<input type="text" class="w60 right" maxlength="7" name="srhTxtTaishoNengetsuT" id="srhTxtTaishoNengetsuT" value="">

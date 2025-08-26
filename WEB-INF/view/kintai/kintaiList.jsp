@@ -45,9 +45,9 @@ ArrayList<HashMap<String, String>> mstKubun0050 = (ArrayList<HashMap<String, Str
 			</table>
 			<table>
 				<tr>
-					<td class="title center w70">処理選択</td>
-					<td class="value w210">
-						<select name="selShoriSentaku"  id="selShoriSentaku" >
+					<td class="title center w100">処理選択</td>
+					<td class="value w220">
+						<select class="w160" name="selShoriSentaku"  id="selShoriSentaku" >
 							<% for (int count = 0 ; count < mstKubun0504.size() ; count++){ HashMap<String, String> record = mstKubun0504.get(count);%>
 								<option value="<%=UtilEscape.htmlspecialchars(record.get("Code")) %>"><%=UtilEscape.htmlspecialchars(record.get("KbnName")) %></option>
 							<% } %>
@@ -64,9 +64,9 @@ ArrayList<HashMap<String, String>> mstKubun0050 = (ArrayList<HashMap<String, Str
 		<div class="inputArea">
 			<table>
 				<tr>
-					<td class="title center w70">処理選択</td>
-					<td class="value w210">
-						<input type="text" class="w200"  name="txtShoriSentaku" id="txtShoriSentaku" value="" readonly>
+					<td class="title center w100">処理選択</td>
+					<td class="value w220">
+						<input type="text" class="w210"  name="txtShoriSentaku" id="txtShoriSentaku" value="" readonly>
 					</td>
 				</tr>
 			</table>
@@ -76,7 +76,7 @@ ArrayList<HashMap<String, String>> mstKubun0050 = (ArrayList<HashMap<String, Str
 			<table>
 			
 				<tr id="taishoNengetsu" style="display: none">
-					<td class="title center w70 req">対象年月</td>
+					<td class="title center w100 req">対象年月</td>
 					<td class="value w600">
 						<input type="text" class="w60 right" maxlength="7" name="srhTxtTaishoNengetsuF" id="srhTxtTaishoNengetsuF" value="">
 						-
@@ -86,7 +86,7 @@ ArrayList<HashMap<String, String>> mstKubun0050 = (ArrayList<HashMap<String, Str
 				</tr>
 				
 				<tr id="taishoNendo" style="display: none;">
-					<td class="title center w70 req">対象年度</td>
+					<td class="title center w100 req">対象年度</td>
 					<td class="value w600">
 						<input type="text" class="w60 right" maxlength="4" name="srhTxtTaishoNendoF" id="srhTxtTaishoNendoF" value="">
 						-
@@ -96,7 +96,7 @@ ArrayList<HashMap<String, String>> mstKubun0050 = (ArrayList<HashMap<String, Str
 				</tr>
 				
 				<tr id="eigyosho" style="display: none;">
-					<td class="title center w70">営業所</td>
+					<td class="title center w100">営業所</td>
 					<td class="value w600">
 						<input type="text" class=""  style="width: 80px"  maxlength="3" name="srhTxtEigyoshoCodeF" id="srhTxtEigyoshoCodeF"  value=""  onblur="getEigyoshoName('srhTxtEigyoshoCodeF', 'srhTxtEigyoshoNameF');" >
 						<img class="img border" src="./images/search.png" onclick="opnDialog('srhMstEigyosho','srhTxtEigyoshoCodeF','srhTxtEigyoshoNameF');">
@@ -109,7 +109,7 @@ ArrayList<HashMap<String, String>> mstKubun0050 = (ArrayList<HashMap<String, Str
 				</tr>
 				
 				<tr id="busho" style="display: none;">
-					<td class="title center w70">部署</td>
+					<td class="title center w100">部署</td>
 					<td class="value w600">
 						<input type="text" class=""  style="width: 80px"  maxlength="4" name="srhTxtBushoCodeF" id="srhTxtBushoCodeF"  value=""  onblur="getBushoName('srhTxtBushoCodeF', 'srhTxtBushoNameF');" >
 						<img class="img border" src="./images/search.png" onclick="opnDialog('srhMstBusho','srhTxtBushoCodeF','srhTxtBushoNameF');">
@@ -122,7 +122,7 @@ ArrayList<HashMap<String, String>> mstKubun0050 = (ArrayList<HashMap<String, Str
 				</tr>
 				
 				<tr id="shain" style="display: none;">
-					<td class="title center w70">社員NO</td>
+					<td class="title center w100">社員NO</td>
 					<td class="value w600">
 						<input type="text" class=""  style="width: 80px"  maxlength="4" name="srhTxtShainNoF" id="srhTxtShainNoF"  value=""  onblur="getShainName('srhTxtShainNoF', 'srhTxtShainNameF');" >
 						<img class="img border" src="./images/search.png" onclick="opnDialog('srhMstShain','srhTxtShainNoF','srhTxtShainNameF');">
@@ -135,7 +135,7 @@ ArrayList<HashMap<String, String>> mstKubun0050 = (ArrayList<HashMap<String, Str
 				</tr>
 				
 				<tr id="joken" style="display: none;">
-					<td class="title center w70">条件</td>
+					<td class="title center w100">条件</td>
 					<td class="value w600">
 						<select name="srhSelJoken"  id="srhSelJoken" >
 							<option value="00"></option>
@@ -147,7 +147,7 @@ ArrayList<HashMap<String, String>> mstKubun0050 = (ArrayList<HashMap<String, Str
 				</tr>
 				
 				<tr id="order" style="display: none;">
-					<td class="title center w70">出力順</td>
+					<td class="title center w100">出力順</td>
 					<td class="value w600">
 						<input type="radio"  id="srhRdoOrder"  name="srhRdoOrder" value="01">社員NO
 						<input type="radio"  id="srhRdoOrder"  name="srhRdoOrder" value="02">営業所・社員NO
@@ -155,7 +155,7 @@ ArrayList<HashMap<String, String>> mstKubun0050 = (ArrayList<HashMap<String, Str
 				</tr>
 				
 				<tr id="output" style="display: none;">
-					<td class="title center w70">出力形式</td>
+					<td class="title center w100">出力形式</td>
 					<td class="value w600">
 						<input type="radio"  id="srhRdoOutput"  name="srhRdoOutput" value="01">PDF
 						<input type="radio"  id="srhRdoOutput"  name="srhRdoOutput" value="02">CSV
