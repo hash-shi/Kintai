@@ -51,7 +51,7 @@ function getMstBusho(){
 			$("#txtBushoCode").val(mstDatas[i]["BushoCode"]);
 			$("#txtBushoName").val(mstDatas[i]["BushoName"]);
 			$("#txtBushoKbn").val(mstDatas[i]["BushoKbn"]);
-			$("#selKbnName").val(mstDatas[i]["BushoKbn"]);
+			$("#selBushoKbnName").val(mstDatas[i]["BushoKbn"]);
 			$("#txtEigyoshoCode").val(mstDatas[i]["EigyoshoCode"]);
 			$("#txtEigyoshoName").val(mstDatas[i]["EigyoshoName"]);					
 			// $("#lblSaishuKoshinShainNO").html(mstDatas[i]["SaishuKoshinShainNO"]);
@@ -77,13 +77,13 @@ function getMstBusho(){
 //
 //
 //****************************************************************************
-function  setSelKbnName() {
+function  setSelBushoKbnName() {
 	var txtBushoKbn = $("#txtBushoKbn").val();
-	$("#selKbnName").val(txtBushoKbn);
+	$("#selBushoKbnName").val(txtBushoKbn);
 }
 
 function setTxtBushoKbn() {
-	var selKbnName = $("#selKbnName").val();
+	var selKbnName = $("#selBushoKbnName").val();
 	$("#txtBushoKbn").val(selKbnName);
 }
 

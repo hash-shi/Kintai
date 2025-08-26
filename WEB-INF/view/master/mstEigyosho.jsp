@@ -20,11 +20,11 @@
 			</table>
 			<table>
 				<tr>
-					<td class="title center w80">
+					<td class="title center w100">
 						<a href="#" onclick="opnDialog('srhMstEigyosho','srhTxtEigyoshoCode'); return false;">営業所</a>
 					</td>
 					<td class="value w165">
-						<input type="text" class="w80" maxlength="3" name="srhTxtEigyoshoCode" id="srhTxtEigyoshoCode" value="" onblur="getEigyoshoName('srhTxtEigyoshoCode', '');" >
+						<input type="text" class="w80" maxlength="3" name="srhTxtEigyoshoCode" id="srhTxtEigyoshoCode" value="" onblur="getEigyoshoName('srhTxtEigyoshoCode', '');">
 						<img class="img border" src="./images/search.png"  onclick="opnDialog('srhMstEigyosho','srhTxtEigyoshoCode');">
 						<button type="button" onclick="getMstEigyosho()">検索</button>
 					</td>

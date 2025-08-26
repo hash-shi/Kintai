@@ -18,7 +18,7 @@
 		 	</table>
 			<table>
 				<tr>
-					<td class="title center w80">
+					<td class="title center w100">
 						<a href="#" onclick="opnDialog('srhMstBusho','srhTxtBushoCode'); return false;">部署</a>
 					</td>
 					<td class="value w165">
@@ -51,8 +51,8 @@
 				<tr>
 					<td class="title center w100 req">部署区分</td>
 					<td class="value w500">
-						<input type="text" class="w80" maxlength="2" name="txtBushoKbn" id="txtBushoKbn" value="" onblur="setSelKbnName();">
-						<select  class="w200" name = "selKbnName" id="selKbnName" value="" onchange="setTxtBushoKbn();">
+						<input type="text" class="w80" maxlength="2" name="txtBushoKbn" id="txtBushoKbn" value="" onblur="setSelBushoKbnName();">
+						<select  class="w120" name = "selBushoKbnName" id="selBushoKbnName" value="" onchange="setTxtBushoKbn();">
 						<option value=""> </option>
 						<% for (int count = 0 ; count < mstKubun0153.size() ; count++){ HashMap<String, String> record = mstKubun0153.get(count);%>
 								<option value="<%=UtilEscape.htmlspecialchars(record.get("Code")) %>"><%=UtilEscape.htmlspecialchars(record.get("KbnName")) %></option>
@@ -66,6 +66,7 @@
 					</td>
 					<td class="value w500">
 						<input type="text" class="w80" maxlength="3" name="txtEigyoshoCode" id="txtEigyoshoCode" value="" onblur="getEigyoshoName('txtEigyoshoCode', 'txtEigyoshoName');">
+						<img class="img border" src="./images/search.png"  onclick="opnDialog('srhMstEigyosho','txtEigyoshoCode','txtEigyoshoName');">
 						<input type="text" class="w200" maxlength="20" name="txtEigyoshoName" id="txtEigyoshoName" value="" readonly>
 					</td>
 				</tr>
