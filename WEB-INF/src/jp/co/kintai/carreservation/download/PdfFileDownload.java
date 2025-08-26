@@ -35,10 +35,8 @@ public class PdfFileDownload extends DownloadBase {
 		String textData = this.getParameter("txtData");
 		
 		// テンプレートファイルの場所
-		String templateFilePath = "C:/tmp";
-		String templateFileName = "Kintai";
-		String templateFileExten = ".xlsx";
-		String templateFile = templateFilePath + "/" + templateFileName + templateFileExten;
+		// getTemplateFileにidを渡すとテンプレートファイルのパスを返却してくれる。
+		String templateFile = this.getTemplateFile("kinShukkinBo", req);
 		
 		// 新しいファイル名に付ける文字列
 		SimpleDateFormat sdfNewFileName = new SimpleDateFormat("yyyyMMddHHmms");

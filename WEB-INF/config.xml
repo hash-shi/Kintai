@@ -71,4 +71,24 @@
 	</exceptionView>
 	
 	<useTokenCheck>false</useTokenCheck>
+	
+	<templateFilePath>
+		<path>/WEB-INF/templateFile/</path>
+	</templateFilePath>
+	
+	<templateFileNames>
+		<fileName>
+			<id>chiChinginkeisansho</id>
+			<name>ChiChinginkeisansho.xlsx</name>
+		</fileName>
+		<fileName>
+			<id>kinShukkinBo</id>
+			<name>KinShukkinBo.xlsx</name>
+		</fileName>
+		<fileName>
+			<id>kinYukyuKyukaDaicho</id>
+			<name>KinYukyuKyukaDaicho.xlsx</name>
+		</fileName>
+	</templateFileNames>
+	
 </config>
