@@ -41,7 +41,7 @@ function getMstKanri() {
 		for (var i = 0; i < mstDatas.length; i++) {
 			$("#txtKanriCode").val(mstDatas[i]["KanriCode"]);
 			$("#txtNendoKakuteiStatus").val(mstDatas[i]["NendoKakuteiStatus"]);
-			$("#selStatusSentaku").val(mstDatas[i]["NendoKakuteiStatus"]);
+			$("#selNendoKakuteiStatus").val(mstDatas[i]["NendoKakuteiStatus"]);
 			$("#txtGenzaishoriNengetsudo").val(mstDatas[i]["GenzaishoriNengetsudo"]);
 			$("#txtKintaiKishuGetsudo").val(mstDatas[i]["KintaiKishuGetsudo"]);
 			$("#txtKintaiGetsudoShimebi").val(mstDatas[i]["KintaiGetsudoShimebi"]);
@@ -51,7 +51,6 @@ function getMstKanri() {
 			$("#hdnSaishuKoshinShainName").val(mstDatas[i]["SaishuKoshinShainName"]);
 			$("#hdnSaishuKoshinDate").val(mstDatas[i]["SaishuKoshinDate"]);
 			$("#hdnSaishuKoshinJikan").val(mstDatas[i]["SaishuKoshinJikan"]);
-			// $("#lblSaishuKoshinShainNO").html(mstDatas[i]["SaishuKoshinShainNO"]);
 			$("#lblSaishuKoshinShainName").html(mstDatas[i]["SaishuKoshinShainName"]);
 			$("#lblSaishuKoshinDate").html(mstDatas[i]["SaishuKoshinDate"]);
 			$("#lblSaishuKoshinJikan").html(mstDatas[i]["SaishuKoshinJikan"]);
@@ -70,13 +69,13 @@ function getMstKanri() {
 //
 //****************************************************************************
 function setNendoKakuteiStatus() {
-	var txtNendoKakuteiStatus = $("#txtNendoKakuteiStatus").val();
-	$("#selStatusSentaku").val(txtNendoKakuteiStatus);
+			var txtNendoKakuteiStatus = $("#txtNendoKakuteiStatus").val();
+			$("#selNendoKakuteiStatus").val(txtNendoKakuteiStatus);
 }
 
 function setNendoKakuteiStatusbox() {
-	var NendoKakuteiStatus = $("#selStatusSentaku").val();
-	$("#txtNendoKakuteiStatus").val(NendoKakuteiStatus);
+			var NendoKakuteiStatus = $("#selNendoKakuteiStatus").val();
+			$("#txtNendoKakuteiStatus").val(NendoKakuteiStatus);
 }
 
 
@@ -117,12 +116,13 @@ function onUpdate() {
 //****************************************************************************
 function onKeyEventF09() {
 	
-	// mainAreaの表示状態を取得
-	var display = $("#buttonArea").css("display");
+		// mainAreaの表示状態を取得
+		var display = $("#buttonArea").css("display");
 	
-	// mainAreaが非表示(初期表示時)はスキップする。
-	if (display == "block") {
-		// 該当の処理を呼び出す。
-		onUpdate();
+		// mainAreaが非表示(初期表示時)はスキップする。
+		if (display == "block") {
+			
+			// 該当の処理を呼び出す。
+			onUpdate();
 	}
 }

@@ -10,12 +10,14 @@
 				<param name="type">full</param>
 				<param name="length">1</param>
 			</check>
-			<!-- 数字チェック 0か1しか入らない処理 -->
+			<!-- 数値チェック -->
+				<check class="IsNumber" message="!#itemName#!には数字を入力してください。" itemName="{dispName}"></check>
+			<!-- 0か1しか入らない処理 -->
 			<check class="IsRegex" message="!#itemName#!の値が不正です。" itemName="{dispName}">
 				<param name="format">^[0-1]$</param>
 			</check>
 		</variable>
-		<variable name="selStatusSentaku" dispName="ステータス選択">
+		<variable name="selNendoKakuteiStatus" dispName="年度確定ステータス">
 			<check class="IsRequired" message="該当するステータスが存在しません。" itemName="{dispName}"></check>
 		</variable>
 		<variable name="txtGenzaishoriNengetsudo" dispName="現在処理年月度">
@@ -48,9 +50,15 @@
 				<param name="type">full</param>
 				<param name="length">5</param>
 			</check>
-			<!-- xx.xxのformatチェック 00.00～99.59以外はエラー -->
-			<check class="IsRegex" message="!#itemName#!の指定が不正です。" itemName="{dispName}">
-				<param name="format">^\d{1,2}\.(?:[0-5][0-9]|59)$</param>
+			<!-- 数値チェック -->
+			<check class="IsNumber" message="!#itemName#!には数字を入力してください。" itemName="{dispName}"></check>
+			<!-- 数値範囲チェック -->
+			<check class="NumberLimit" message="!#itemName#!にはマイナスは設定できません。" itemName="{dispName}">
+				<param name="length">0</param>
+				<param name="comparisonoperator">&lt;=</param>
+			</check>
+			<check class="MaxNumberLimit" message="!#itemName#!の桁数が不正です。(XX.XX)" itemName="{dispName}">
+				<param name="length">99.59</param>
 			</check>
 		</variable>	
 	</proc>

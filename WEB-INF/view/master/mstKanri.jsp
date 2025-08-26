@@ -5,10 +5,7 @@
 <%@ page import="jp.co.kintai.carreservation.define.Define" %>
 <%@ page import="jp.co.kintai.carreservation.information.UserInformation" %>
 
-<%
-
-%>
-
+<% ArrayList<HashMap<String, String>> mstKubun0505 = (ArrayList<HashMap<String, String>>)request.getAttribute("mstKubun0505");%>
 
 	<main id="main-content" class="nom">
 		<div class="headerArea" 　id="headerArea">
@@ -20,8 +17,8 @@
 				</table>
 				<table>
 					<tr>
-						<td class="title center w150">管理コード</td>
-						<td class="value w250">
+						<td class="title center w80">管理コード</td>
+						<td class="value w140">
 						<input type="text" name="srhKanriCode" id="srhKanriCode" value="01" class="w80" readonly>
 							<button type="button" onclick="getMstKanri();">検索</button></td>
 					</tr>
@@ -41,14 +38,17 @@
 					<tr>
 						<td class="title center w150 req">年度確定ステータス</td>
 						<td class="value w500">
-						<input type="text" name="txtNendoKakuteiStatus" id="txtNendoKakuteiStatus" value="" class="w80" maxlength="1" onblur="setNendoKakuteiStatus();" >
-							<select name="selStatusSentaku" id="selStatusSentaku" class="w150" onchange="setNendoKakuteiStatusbox();">
-							
-								<option value=""></option>
+						<input type="text" name="txtNendoKakuteiStatus" id="txtNendoKakuteiStatus" value="" class="w80" maxlength="1" onblur="setNendoKakuteiStatus();">
+							<select name="selNendoKakuteiStatus" id="selNendoKakuteiStatus" class="w80" onchange="setNendoKakuteiStatusbox();">
+								<option value=""> </option>
 								<option value="0">未確定</option>
 								<option value="1">確定</option>
-
-						</select>
+																
+								<!-- <% for (int count = 0 ; count < mstKubun0505.size() ; count++){ HashMap<String, String> record = mstKubun0505.get(count);%>
+									<option value="<%=UtilEscape.htmlspecialchars(record.get("Code")) %>"><%=UtilEscape.htmlspecialchars(record.get("KbnName")) %></option>
+								<% } %> -->
+								
+							</select>
 						</td>
 					</tr>
 
@@ -79,22 +79,23 @@
 			</div>
 			
 			<div class="inputArea lastEdit">
-			<table>
-				<tr>
-					<td class="title center w100 rep">最終更新社員</td>
-					<td class="label w200" id="lblSaishuKoshinShainName"></td>
-					<td class="title center w100 rep">最終更新日時</td>
-					<td class="label w80 center" id="lblSaishuKoshinDate"></td>
-					<td class="label w80 center" id="lblSaishuKoshinJikan"></td>
-					<input type="hidden" class="" name="hdnSaishuKoshinShainNO" id="hdnSaishuKoshinShainNO"  value="" >
-					<input type="hidden" class="" name="hdnSaishuKoshinShainName" id="hdnSaishuKoshinShainName"  value="" >
-					<input type="hidden" class="" name="hdnSaishuKoshinDate" id="hdnSaishuKoshinDate"  value="" >
-					<input type="hidden" class="" name="hdnSaishuKoshinJikan" id="hdnSaishuKoshinJikan"  value="" >
-					<input type="hidden" class="" name="hdnIsNew" id="hdnIsNew"  value="" >
-				</tr>
-			</table>
+				<table>
+					<tr>
+						<td class="title center w100 rep">最終更新社員</td>
+						<td class="label w200" id="lblSaishuKoshinShainName"></td>
+						<td class="title center w100 rep">最終更新日時</td>
+						<td class="label w80 center" id="lblSaishuKoshinDate"></td>
+						<td class="label w80 center" id="lblSaishuKoshinJikan"></td>
+						<input type="hidden" class="" name="hdnSaishuKoshinShainNO" id="hdnSaishuKoshinShainNO"  value="" >
+						<input type="hidden" class="" name="hdnSaishuKoshinShainName" id="hdnSaishuKoshinShainName"  value="" >
+						<input type="hidden" class="" name="hdnSaishuKoshinDate" id="hdnSaishuKoshinDate"  value="" >
+						<input type="hidden" class="" name="hdnSaishuKoshinJikan" id="hdnSaishuKoshinJikan"  value="" >
+						<input type="hidden" class="" name="hdnIsNew" id="hdnIsNew"  value="" >
+					</tr>
+				</table>
+			</div>
 		</div>
-	</div>
+	
 		<div id="buttonArea"  class="buttonArea right"  style="visibility: hidden;">
 				<button type="button" class="" name="btnUpdate" id="btnUpdate" onclick="onUpdate()">確定 [ F9 ]</button>
 		</div>
