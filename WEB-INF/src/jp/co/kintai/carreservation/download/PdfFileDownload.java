@@ -35,8 +35,14 @@ public class PdfFileDownload extends DownloadBase {
 		String textData = this.getParameter("txtData");
 		
 		// テンプレートファイルの場所
-		// getTemplateFileにidを渡すとテンプレートファイルのパスを返却してくれる。
+		// idを渡すと帳票テンプレートファイルのパスを返却してくれる。
 		String templateFile = this.getTemplateFile("kinShukkinBo", req);
+		// ファイル名のみ取得
+		String templateFileName = this.getTemplateFileName("kinShukkinBo");
+		// 拡張子
+		String extension = templateFileName.substring(templateFileName.lastIndexOf('.'));
+		// ファイル名から拡張子を取り除く
+		templateFileName = templateFileName.replace(extension, "");
 		
 		// 新しいファイル名に付ける文字列
 		SimpleDateFormat sdfNewFileName = new SimpleDateFormat("yyyyMMddHHmms");
@@ -112,7 +118,7 @@ public class PdfFileDownload extends DownloadBase {
 //			this.setFilename(templateFileName + "_" + sdfNewFileName.format(date) + templateFileExten);
 			
 			// 編集したエクセルデータをメモリに一時保存
-			File tempXlsx = File.createTempFile("temp_" + templateFileName, templateFileExten);
+			File tempXlsx = File.createTempFile("temp_" + templateFileName, extension);
 			fos = new FileOutputStream(tempXlsx);
 		    workbook.write(fos);
 			
