@@ -50,19 +50,19 @@
 					<td class="title w160">現在のパスワード</td>
 					<td class="value w200">
 						<input type="hidden" class="" name="hdnPassword" id="hdnPassword"  value="<%=UtilEscape.htmlspecialchars(password) %>" >
-						<input type="password" class="w190"  name="txtPasswordNow" id="txtPasswordNow"  value="" >
+						<input type="password" class="w190"  maxlength="50" name="txtPasswordNow" id="txtPasswordNow"  value="" >
 					</td>
 				</tr>
 				<tr>
 					<td class="title w160">新しいパスワード</td>
 					<td class="value w200">
-						<input type="password" class="w190"  name="txtPasswordNew" id="txtPasswordNew"  value="" >
+						<input type="password" class="w190"  maxlength="50" name="txtPasswordNew" id="txtPasswordNew"  value="" >
 					</td>
 				</tr>
 				<tr>
 					<td class="title w160">新しいパスワード(確認)</td>
 					<td class="value w200">
-						<input type="password" class="w190"  name="txtPasswordRe" id="txtPasswordRe"  value="" >
+						<input type="password" class="w190"  maxlength="50" name="txtPasswordRe" id="txtPasswordRe"  value="" >
 					</td>
 				</tr>
 			</table>
