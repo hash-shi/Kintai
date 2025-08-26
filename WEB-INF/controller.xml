@@ -51,7 +51,7 @@
 			<view return="success" path="kintai/kintaiOutData.jsp" />
 		</action>
 
-		<action id="mstEigyosho"  group="public"  class="action.master.MstEigyoshoAction"  title="営業所マスタ"  header=""  footer=""  script="./script/master/mstEigyosho.js"  style="./css/master/mstEigyosho.css"  authority=""  meta=""  requiredParam="" >
+		<action id="mstEigyosho"  group="public"  class="action.master.MstEigyoshoAction"  title="営業所マスタメンテ"  header=""  footer=""  script="./script/master/mstEigyosho.js"  style="./css/master/mstEigyosho.css"  authority=""  meta=""  requiredParam="" >
 			<view return="success" path="master/mstEigyosho.jsp" />
 		</action>
 
