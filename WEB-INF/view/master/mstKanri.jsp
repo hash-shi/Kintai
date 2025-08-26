@@ -17,9 +17,9 @@
 				</table>
 				<table>
 					<tr>
-						<td class="title center w80">管理コード</td>
-						<td class="value w140">
-						<input type="text" name="srhKanriCode" id="srhKanriCode" value="01" class="w80" readonly>
+						<td class="title center w100">管理コード</td>
+						<td class="value w150">
+						<input type="text" class="w80" maxlength="2" name="srhKanriCode" id="srhKanriCode" value="01" readonly>
 							<button type="button" onclick="getMstKanri();">検索</button></td>
 					</tr>
 				</table>

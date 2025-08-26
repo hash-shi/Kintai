@@ -23,17 +23,17 @@ public class MstKanriAction extends PJActionBase {
 	public void doRun(HttpServletRequest req, HttpServletResponse res) throws Exception {
 		
 		//=====================================================================
-				// DB接続
-				//=====================================================================
-				Connection con		= this.getConnection("kintai", req);
-				
-				//=====================================================================
-				// 結果返却
-				//=====================================================================
-						
-				// 処理選択
-				ArrayList<HashMap<String, String>> mstKubun0505 = PJActionBase.getMstKubuns(con, "0505", "", "");
-				req.setAttribute("mstKubun0505", mstKubun0505);
+		// DB接続
+		//=====================================================================
+		Connection con		= this.getConnection("kintai", req);
+		
+		//=====================================================================
+		// 結果返却
+		//=====================================================================
+		
+		// 処理選択
+		ArrayList<HashMap<String, String>> mstKubun0505 = PJActionBase.getMstKubuns(con, "0505", "", "");
+		req.setAttribute("mstKubun0505", mstKubun0505);
 				
 		// 画面表示
 		this.setView("success");
@@ -59,13 +59,11 @@ public class MstKanriAction extends PJActionBase {
 		//=====================================================================
 		// 検索
 		//=====================================================================
-
-			ArrayList<HashMap<String, String>> mstDatas = PJActionBase.getMstKanris(con, kanriCode);
-			
-
-			for (HashMap<String, String> rec : mstDatas) {
-			    System.out.println("レコード: " + rec);
-			}
+		ArrayList<HashMap<String, String>> mstDatas = PJActionBase.getMstKanris(con, kanriCode);
+		
+		for (HashMap<String, String> rec : mstDatas) {
+		    System.out.println("レコード: " + rec);
+		}
 			
 		this.addContent("mstDatas", mstDatas != null ? mstDatas : new ArrayList<>());
 

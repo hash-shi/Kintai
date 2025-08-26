@@ -5,16 +5,10 @@
 		<variable name="txtNendoKakuteiStatus" dispName="年度確定ステータス">
 			<check class="IsRequired" message="!#itemName#!が入力されていません。" itemName="{dispName}"></check>			
 			<check class="IsHalf" message="!#itemName#!には全角文字は入力できません。" itemName="{dispName}"></check>
-			<!-- 1バイト兼マイナスチェック -->
+			<check class="IsNumber" message="!#itemName#!には数字を入力してください。" itemName="{dispName}"></check>
 			<check class="MaxLength" message="!#itemName#!が1バイトを超えています。(1バイト = 全角1/2文字, 半角1文字)" itemName="{dispName}">
 				<param name="type">full</param>
 				<param name="length">1</param>
-			</check>
-			<!-- 数値チェック -->
-				<check class="IsNumber" message="!#itemName#!には数字を入力してください。" itemName="{dispName}"></check>
-			<!-- 0か1しか入らない処理 -->
-			<check class="IsRegex" message="!#itemName#!の値が不正です。" itemName="{dispName}">
-				<param name="format">^[0-1]$</param>
 			</check>
 		</variable>
 		<variable name="selNendoKakuteiStatus" dispName="年度確定ステータス">
@@ -46,21 +40,20 @@
 		<variable name="txtKintaiKihonSagyoJikan" dispName="勤怠基本作業時間">
 			<check class="IsRequired" message="!#itemName#!が入力されていません。" itemName="{dispName}"></check>
 			<check class="IsHalf" message="!#itemName#!には全角文字は入力できません。" itemName="{dispName}"></check>			
+			<check class="IsNumber" message="!#itemName#!には数字を入力してください。" itemName="{dispName}"></check>
 			<check class="MaxLength" message="!#itemName#!が5バイトを超えています。(5バイト = 全角5/2文字, 半角5文字)" itemName="{dispName}">
 				<param name="type">full</param>
 				<param name="length">5</param>
 			</check>
-			<!-- 数値チェック -->
-			<check class="IsNumber" message="!#itemName#!には数字を入力してください。" itemName="{dispName}"></check>
-			<!-- 数値範囲チェック -->
 			<check class="NumberLimit" message="!#itemName#!にはマイナスは設定できません。" itemName="{dispName}">
 				<param name="length">0</param>
 				<param name="comparisonoperator">&lt;=</param>
 			</check>
 			<check class="MaxNumberLimit" message="!#itemName#!の桁数が不正です。(XX.XX)" itemName="{dispName}">
 				<param name="length">99.59</param>
+				<param name="comparisonoperator">&gt;=</param>
 			</check>
-		</variable>	
+		</variable>
 	</proc>
 	
 	<proc func="update_">
