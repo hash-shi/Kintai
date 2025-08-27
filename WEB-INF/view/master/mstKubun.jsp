@@ -42,37 +42,37 @@
 			<table>
 				<tr>
 					<td class="title center w120 req">区分コード</td>
-					<td class="value w250">
+					<td class="value w240">
 						<input type="text" class="w50" maxlength="4" name="txtKbnCode" id="txtKbnCode" value="" >
 						<input type="hidden" class="" name="hdnKbnCode" id="hdnKbnCode"  value="" >
 					</td>
-					<td class="title center w100 req">コード</td>
-					<td class="value w170">
+					<td class="title center w120 req">コード</td>
+					<td class="value w240">
 						<input type="text" class="w50" maxlength="2" name="txtCode" id="txtCode" value="" >
 						<input type="hidden" class="" name="hdnCode" id="hdnCode"  value="" >
 					</td>
 				</tr>
 				<tr>
 					<td class="title center w120 req">区分名称</td>
-					<td class="value w700" colspan="3">
+					<td class="value w600" colspan="3">
 						<input type="text" class="w500" maxlength="40" name="txtKbnName" id="txtKbnName" value="" >
 					</td>
 				</tr>
 				<tr>
 					<td class="title center w120">区分略称</td>
-					<td class="value w700" colspan="3">
+					<td class="value w600" colspan="3">
 						<input type="text" class="w150" maxlength="10" name="txtKbnRyaku" id="txtKbnRyaku" value="" >
 					</td>
 				</tr>
 				<tr>
 					<td class="title center w120">グループコード1</td>
-					<td class="value w700" colspan="3">
+					<td class="value w600" colspan="3">
 						<input type="text" class="w50" maxlength="4" name="txtGroupCode1" id="txtGroupCode1" value="">
 					</td>
 				</tr>
 				<tr>
 					<td class="title center w120">グループコード2</td>
-					<td class="value w700" colspan="3">
+					<td class="value w600" colspan="3">
 						<input type="text" class="w50" maxlength="4" name="txtGroupCode2" id="txtGroupCode2" value="">
 					</td>
 				</tr>
