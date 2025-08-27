@@ -1,171 +1,219 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <validate>
 	<proc func="eigyosho">
-		<variable name="txtSrhEigyoshoCodeF" dispName="営業所コードFROM">
+		<variable name="srhTxtEigyoshoCodeF" dispName="営業所コードFROM">
 		    <check class="IsHalf" message="!#itemName#!には全角文字は入力できません。" itemName="{dispName}"></check>
 		    <check class="IsNumber" message="!#itemName#!には数字を入力してください。" itemName="{dispName}"></check>
+		    <check class="MaxLength" message="!#itemName#!が3バイトを超えています。(3バイト = 全角3/2文字, 半角3文字)" itemName="{dispName}">
+		    	<param name="type">full</param>
+				<param name="length">3</param>
+			</check>
 		</variable>
-		<variable name="txtSrhEigyoshoCodeT" dispName="営業所コードTO">
+		<variable name="srhTxtEigyoshoCodeT" dispName="営業所コードTO">
 		    <check class="IsHalf" message="!#itemName#!には全角文字は入力できません。" itemName="{dispName}"></check>
 		    <check class="IsNumber" message="!#itemName#!には数字を入力してください。" itemName="{dispName}"></check>
+		    <check class="MaxLength" message="!#itemName#!が3バイトを超えています。(3バイト = 全角3/2文字, 半角3文字)" itemName="{dispName}">
+		    	<param name="type">full</param>
+				<param name="length">3</param>
+			</check>
 		</variable>
 		<variable name="dummy" dispName="">
              <check class="SizeComparison" message="営業所コードFROM-TOの大小が不正です。" itemName="{dispName}">
-                 <param name="from">txtSrhEigyoshoCodeF</param>
-                 <param name="to">txtSrhEigyoshoCodeT</param>
+                 <param name="from">srhTxtEigyoshoCodeF</param>
+                 <param name="to">srhTxtEigyoshoCodeT</param>
                  <param name="include">1</param>
              </check>
         </variable>
-        <variable name="txtSrhSaishuKoshinDateF" dispName="最終更新日FROM">
+        <variable name="srhTxtSaishuKoshinDateF" dispName="最終更新日FROM">
 			<check class="IsDate" message="!#itemName#!の指定が不正です。(YYYY/MM/DD)" itemName="{dispName}">
                 <param name="format">yyyy/MM/dd</param>
             </check>
 		</variable>
-		<variable name="txtSrhSaishuKoshinDateT" dispName="最終更新日TO">
+		<variable name="srhTxtSaishuKoshinDateT" dispName="最終更新日TO">
 			<check class="IsDate" message="!#itemName#!の指定が不正です。(YYYY/MM/DD)" itemName="{dispName}">
                 <param name="format">yyyy/MM/dd</param>
             </check>
 		</variable>
 		<variable name="dummy" dispName="">
             <check class="SizeComparison" message="最終更新日FROM-TOの大小が不正です。" itemName="{dispName}">
-                 <param name="from">txtSrhSaishuKoshinDateF</param>
-                 <param name="to">txtSrhSaishuKoshinDateT</param>
+                 <param name="from">srhTxtSaishuKoshinDateF</param>
+                 <param name="to">srhTxtSaishuKoshinDateT</param>
                  <param name="include">1</param>
             </check>
         </variable>
      </proc>
      
      <proc func="busho">
-        <variable name="txtSrhEigyoshoCodeF" dispName="営業所コードFROM">
+        <variable name="srhTxtEigyoshoCodeF" dispName="営業所コードFROM">
 		    <check class="IsHalf" message="!#itemName#!には全角文字は入力できません。" itemName="{dispName}"></check>
 		    <check class="IsNumber" message="!#itemName#!には数字を入力してください。" itemName="{dispName}"></check>
+		    <check class="MaxLength" message="!#itemName#!が3バイトを超えています。(3バイト = 全角3/2文字, 半角3文字)" itemName="{dispName}">
+		    	<param name="type">full</param>
+				<param name="length">3</param>
+			</check>
 		</variable>
-		<variable name="txtSrhEigyoshoCodeT" dispName="営業所コードTO">
+		<variable name="srhTxtEigyoshoCodeT" dispName="営業所コードTO">
 		    <check class="IsHalf" message="!#itemName#!には全角文字は入力できません。" itemName="{dispName}"></check>
 		    <check class="IsNumber" message="!#itemName#!には数字を入力してください。" itemName="{dispName}"></check>
+		    <check class="MaxLength" message="!#itemName#!が3バイトを超えています。(3バイト = 全角3/2文字, 半角3文字)" itemName="{dispName}">
+		    	<param name="type">full</param>
+				<param name="length">3</param>
+			</check>
 		</variable>
 		<variable name="dummy" dispName="">
             <check class="SizeComparison" message="営業所コードFROM-TOの大小が不正です。" itemName="{dispName}">
-                 <param name="from">txtSrhEigyoshoCodeF</param>
-                 <param name="to">txtSrhEigyoshoCodeT</param>
-                 <param name="include">1</param>
+                <param name="from">srhTxtEigyoshoCodeF</param>
+                <param name="to">srhTxtEigyoshoCodeT</param>
+                <param name="include">1</param>
             </check>
         </variable>
-		<variable name="txtSrhBushoCodeF" dispName="部署コードFROM">
+		<variable name="srhTxtBushoCodeF" dispName="部署コードFROM">
 		    <check class="IsHalf" message="!#itemName#!には全角文字は入力できません。" itemName="{dispName}"></check>
 		    <check class="IsNumber" message="!#itemName#!には数字を入力してください。" itemName="{dispName}"></check>
+		    <check class="MaxLength" message="!#itemName#!が4バイトを超えています。(3バイト = 全角4/2文字, 半角4文字)" itemName="{dispName}">
+		    	<param name="type">full</param>
+				<param name="length">4</param>
+			</check>
 		</variable>
-		<variable name="txtSrhBushoCodeT" dispName="部署コードTO">
+		<variable name="srhTxtBushoCodeT" dispName="部署コードTO">
 			<check class="IsHalf" message="!#itemName#!には全角文字は入力できません。" itemName="{dispName}"></check>
 		    <check class="IsNumber" message="!#itemName#!には数字を入力してください。" itemName="{dispName}"></check>
+		    <check class="MaxLength" message="!#itemName#!が4バイトを超えています。(3バイト = 全角4/2文字, 半角4文字)" itemName="{dispName}">
+		    	<param name="type">full</param>
+				<param name="length">4</param>
+			</check>
 		</variable>
 		<variable name="dummy" dispName="">
 		    <check class="SizeComparison" message="部署コードFROM-TOの大小が不正です。" itemName="{dispName}">
-                 <param name="from">txtSrhBushoCodeF</param>
-                 <param name="to">txtSrhBushoCodeT</param>
-                 <param name="include">1</param>
+                <param name="from">srhTxtBushoCodeF</param>
+                <param name="to">srhTxtBushoCodeT</param>
+                <param name="include">1</param>
             </check>
 		</variable>
-		<variable name="txtSrhSaishuKoshinDateF" dispName="最終更新日FROM">
+		<variable name="srhTxtSaishuKoshinDateF" dispName="最終更新日FROM">
 			<check class="IsDate" message="!#itemName#!の指定が不正です。(YYYY/MM/DD)" itemName="{dispName}">
                 <param name="format">yyyy/MM/dd</param>
             </check>
 		</variable>
-		<variable name="txtSrhSaishuKoshinDateT" dispName="最終更新日TO">
+		<variable name="srhTxtSaishuKoshinDateT" dispName="最終更新日TO">
 			<check class="IsDate" message="!#itemName#!の指定が不正です。(YYYY/MM/DD)" itemName="{dispName}">
                 <param name="format">yyyy/MM/dd</param>
             </check>
 		</variable>
 		<variable name="dummy" dispName="">
             <check class="SizeComparison" message="最終更新日FROM-TOの大小が不正です。" itemName="{dispName}">
-                 <param name="from">txtSrhSaishuKoshinDateF</param>
-                 <param name="to">txtSrhSaishuKoshinDateT</param>
-                 <param name="include">1</param>
+                <param name="from">srhTxtSaishuKoshinDateF</param>
+                <param name="to">srhTxtSaishuKoshinDateT</param>
+                <param name="include">1</param>
             </check>
         </variable>
 	 </proc>
 	 
 	 <proc func="shain">
-	    <variable name="txtSrhEigyoshoCodeF" dispName="営業所コードFROM">
+	    <variable name="srhTxtEigyoshoCodeF" dispName="営業所コードFROM">
 		    <check class="IsHalf" message="!#itemName#!には全角文字は入力できません。" itemName="{dispName}"></check>
 		    <check class="IsNumber" message="!#itemName#!には数字を入力してください。" itemName="{dispName}"></check>
+		    <check class="MaxLength" message="!#itemName#!が3バイトを超えています。(3バイト = 全角3/2文字, 半角3文字)" itemName="{dispName}">
+		    	<param name="type">full</param>
+				<param name="length">3</param>
+			</check>
 		</variable>
-		<variable name="txtSrhEigyoshoCodeT" dispName="営業所コードTO">
+		<variable name="srhTxtEigyoshoCodeT" dispName="営業所コードTO">
 		    <check class="IsHalf" message="!#itemName#!には全角文字は入力できません。" itemName="{dispName}"></check>
 		    <check class="IsNumber" message="!#itemName#!には数字を入力してください。" itemName="{dispName}"></check>
+		    <check class="MaxLength" message="!#itemName#!が3バイトを超えています。(3バイト = 全角3/2文字, 半角3文字)" itemName="{dispName}">
+		    	<param name="type">full</param>
+				<param name="length">3</param>
+			</check>
 		</variable>
 		<variable name="dummy" dispName="">
             <check class="SizeComparison" message="営業所コードFROM-TOの大小が不正です。" itemName="{dispName}">
-                 <param name="from">txtSrhEigyoshoCodeF</param>
-                 <param name="to">txtSrhEigyoshoCodeT</param>
-                 <param name="include">1</param>
+                <param name="from">srhTxtEigyoshoCodeF</param>
+                <param name="to">srhTxtEigyoshoCodeT</param>
+                <param name="include">1</param>
             </check>
         </variable>
-		<variable name="txtSrhShainNOF" dispName="社員NOFROM">
+		<variable name="srhTxtShainNOF" dispName="社員NOFROM">
 			<check class="IsHalf" message="!#itemName#!には全角文字は入力できません。" itemName="{dispName}"></check>
 		    <check class="IsNumber" message="!#itemName#!には数字を入力してください。" itemName="{dispName}"></check>
+		    <check class="MaxLength" message="!#itemName#!が4バイトを超えています。(3バイト = 全角4/2文字, 半角4文字)" itemName="{dispName}">
+		    	<param name="type">full</param>
+				<param name="length">4</param>
+			</check>
 		</variable>
-		<variable name="txtSrhShainNOT" dispName="社員NOTO">
+		<variable name="srhTxtShainNOT" dispName="社員NOTO">
 			<check class="IsHalf" message="!#itemName#!には全角文字は入力できません。" itemName="{dispName}"></check>
 		    <check class="IsNumber" message="!#itemName#!には数字を入力してください。" itemName="{dispName}"></check>
+		    <check class="MaxLength" message="!#itemName#!が4バイトを超えています。(3バイト = 全角4/2文字, 半角4文字)" itemName="{dispName}">
+		    	<param name="type">full</param>
+				<param name="length">4</param>
+			</check>
 		</variable>
 		<variable name="dummy" dispName="">
 		    <check class="SizeComparison" message="社員NOFROM-TOの大小が不正です。" itemName="{dispName}">
-                 <param name="from">txtSrhShainNOF</param>
-                 <param name="to">txtSrhShainNOT</param>
-                 <param name="include">1</param>
+                <param name="from">srhTxtShainNOF</param>
+                <param name="to">srhTxtShainNOT</param>
+                <param name="include">1</param>
             </check>
 		</variable>
-		<variable name="txtSrhSaishuKoshinDateF" dispName="最終更新日FROM">
+		<variable name="srhTxtSaishuKoshinDateF" dispName="最終更新日FROM">
 			<check class="IsDate" message="!#itemName#!の指定が不正です。(YYYY/MM/DD)" itemName="{dispName}">
                 <param name="format">yyyy/MM/dd</param>
             </check>
 		</variable>
-		<variable name="txtSrhSaishuKoshinDateT" dispName="最終更新日TO">
+		<variable name="srhTxtSaishuKoshinDateT" dispName="最終更新日TO">
 			<check class="IsDate" message="!#itemName#!の指定が不正です。(YYYY/MM/DD)" itemName="{dispName}">
                 <param name="format">yyyy/MM/dd</param>
             </check>
 		</variable>
 		<variable name="dummy" dispName="">
             <check class="SizeComparison" message="最終更新日FROM-TOの大小が不正です。" itemName="{dispName}">
-                 <param name="from">txtSrhSaishuKoshinDateF</param>
-                 <param name="to">txtSrhSaishuKoshinDateT</param>
-                 <param name="include">1</param>
+                <param name="from">srhTxtSaishuKoshinDateF</param>
+                <param name="to">srhTxtSaishuKoshinDateT</param>
+                <param name="include">1</param>
             </check>
         </variable>
 	 </proc>
 	 
 	 <proc func="kbn">
-		<variable name="txtSrhKbnCodeF" dispName="区分コードFROM">
+		<variable name="srhTxtKbnCodeF" dispName="区分コードFROM">
 			<check class="IsHalf" message="!#itemName#!には全角文字は入力できません。" itemName="{dispName}"></check>
 		    <check class="IsNumber" message="!#itemName#!には数字を入力してください。" itemName="{dispName}"></check>
+		    <check class="MaxLength" message="!#itemName#!が4バイトを超えています。(3バイト = 全角4/2文字, 半角4文字)" itemName="{dispName}">
+		    	<param name="type">full</param>
+				<param name="length">4</param>
+			</check>
 		</variable>
-		<variable name="txtSrhKbnCodeT" dispName="区分コードTO">
+		<variable name="srhTxtKbnCodeT" dispName="区分コードTO">
 			<check class="IsHalf" message="!#itemName#!には全角文字は入力できません。" itemName="{dispName}"></check>
 		    <check class="IsNumber" message="!#itemName#!には数字を入力してください。" itemName="{dispName}"></check>
+		    <check class="MaxLength" message="!#itemName#!が4バイトを超えています。(3バイト = 全角4/2文字, 半角4文字)" itemName="{dispName}">
+		    	<param name="type">full</param>
+				<param name="length">4</param>
+			</check>
 		</variable>
 		<variable name="dummy" dispName="">
 		    <check class="SizeComparison" message="区分コードFROM-TOの大小が不正です。" itemName="{dispName}">
-                 <param name="from">txtSrhKbnCodeF</param>
-                 <param name="to">txtSrhKbnCodeT</param>
-                 <param name="include">1</param>
+                <param name="from">srhTxtKbnCodeF</param>
+                <param name="to">srhTxtKbnCodeT</param>
+                <param name="include">1</param>
             </check>
 		</variable>
-		<variable name="txtSrhSaishuKoshinDateF" dispName="最終更新日FROM">
+		<variable name="srhTxtSaishuKoshinDateF" dispName="最終更新日FROM">
 			<check class="IsDate" message="!#itemName#!の指定が不正です。(YYYY/MM/DD)" itemName="{dispName}">
                 <param name="format">yyyy/MM/dd</param>
             </check>
 		</variable>
-		<variable name="txtSrhSaishuKoshinDateT" dispName="最終更新日TO">
+		<variable name="srhTxtSaishuKoshinDateT" dispName="最終更新日TO">
 			<check class="IsDate" message="!#itemName#!の指定が不正です。(YYYY/MM/DD)" itemName="{dispName}">
                 <param name="format">yyyy/MM/dd</param>
             </check>
 		</variable>
 		<variable name="dummy" dispName="">
             <check class="SizeComparison" message="最終更新日FROM-TOの大小が不正です。" itemName="{dispName}">
-                 <param name="from">txtSrhSaishuKoshinDateF</param>
-                 <param name="to">txtSrhSaishuKoshinDateT</param>
-                 <param name="include">1</param>
+                <param name="from">srhTxtSaishuKoshinDateF</param>
+                <param name="to">srhTxtSaishuKoshinDateT</param>
+                <param name="include">1</param>
             </check>
         </variable>
 	 </proc>

@@ -183,10 +183,10 @@ function onUpdate() {
 //****************************************************************************
 function onKeyEventF09() {
 	
-	// mainAreaの表示状態を取得
+	// buttonAreaの表示状態を取得
 	var display = $("#buttonArea").css("visibility");
 	
-	// mainAreaが非表示(初期表示時)はスキップする。
+	// buttonAreaが非表示(初期表示時)はスキップする。
 	if (display == "visible") {
 		// 該当の処理を呼び出す。
 		onUpdate();
@@ -202,11 +202,11 @@ function onKeyEventF09() {
 //****************************************************************************
 function onKeyEventF02() {
 	
-	//ボタンaの表示状態を取得
+	//buttonの表示状態を取得
 	var display = $("#buttonArea").css("visibility");
 	var isNew = $("#hdnIsNew").val();
 	
-	// mainAreaが非表示(初期表示時)はスキップする。
+	// buttonが非表示(初期表示時)はスキップする。
 	if (display == "visible"&& isNew != "1") {
 			// 該当の処理を呼び出す。
 			onDelete();

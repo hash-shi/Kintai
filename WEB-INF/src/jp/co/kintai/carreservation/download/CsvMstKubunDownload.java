@@ -33,10 +33,10 @@ public class CsvMstKubunDownload extends DownloadBase {
 		//=====================================================================
 		int count = 0;
 		ArrayList<HashMap<String, String>> data = new ArrayList<>();
-		String fromKbnCode	= req.getParameter("txtSrhKbnCodeF");
-		String toKbnCode	= req.getParameter("txtSrhKbnCodeT");
-		String fromSaishuKoshinDate	= req.getParameter("txtSrhSaishuKoshinDateF");
-		String toSaishuKoshinDate	= req.getParameter("txtSrhSaishuKoshinDateT");
+		String fromKbnCode	= req.getParameter("srhTxtKbnCodeF");
+		String toKbnCode	= req.getParameter("srhTxtKbnCodeT");
+		String fromSaishuKoshinDate	= req.getParameter("srhTxtSaishuKoshinDateF");
+		String toSaishuKoshinDate	= req.getParameter("srhTxtSaishuKoshinDateT");
 		// 現在日時を取得
         LocalDateTime now = LocalDateTime.now();
 

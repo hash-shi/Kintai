@@ -33,12 +33,12 @@ public class CsvMstShainDownload extends DownloadBase {
 		//=====================================================================
 		int count = 0;
 		ArrayList<HashMap<String, String>> data = new ArrayList<>();
-		String fromEigyoshoCode	= req.getParameter("txtSrhEigyoshoCodeF");
-		String toEigyoshoCode	= req.getParameter("txtSrhEigyoshoCodeT");
-		String fromShainNO	= req.getParameter("txtSrhShainNOF");
-		String toShainNO	= req.getParameter("txtSrhShainNOT");
-		String fromSaishuKoshinDate	= req.getParameter("txtSrhSaishuKoshinDateF");
-	    String toSaishuKoshinDate	= req.getParameter("txtSrhSaishuKoshinDateT");
+		String fromEigyoshoCode	= req.getParameter("srhTxtEigyoshoCodeF");
+		String toEigyoshoCode	= req.getParameter("srhTxtEigyoshoCodeT");
+		String fromShainNO	= req.getParameter("srhTxtShainNOF");
+		String toShainNO	= req.getParameter("srhTxtShainNOT");
+		String fromSaishuKoshinDate	= req.getParameter("srhTxtSaishuKoshinDateF");
+	    String toSaishuKoshinDate	= req.getParameter("srhTxtSaishuKoshinDateT");
 	    // 現在日時を取得
         LocalDateTime now = LocalDateTime.now();
 

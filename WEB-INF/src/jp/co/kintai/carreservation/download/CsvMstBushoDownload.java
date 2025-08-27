@@ -33,12 +33,12 @@ public class CsvMstBushoDownload extends DownloadBase {
 		//=====================================================================
 		int count = 0;
 		ArrayList<HashMap<String, String>> data = new ArrayList<>();
-		String fromEigyoshoCode	= req.getParameter("txtSrhEigyoshoCodeF");
-		String toEigyoshoCode	= req.getParameter("txtSrhEigyoshoCodeT");
-		String fromBushoCode	= req.getParameter("txtSrhBushoCodeF");
-		String toBushoCode	= req.getParameter("txtSrhBushoCodeT");
-		String fromSaishuKoshinDate	= req.getParameter("txtSrhSaishuKoshinDateF");
-		String toSaishuKoshinDate	= req.getParameter("txtSrhSaishuKoshinDateT");
+		String fromEigyoshoCode	= req.getParameter("srhTxtEigyoshoCodeF");
+		String toEigyoshoCode	= req.getParameter("srhTxtEigyoshoCodeT");
+		String fromBushoCode	= req.getParameter("srhTxtBushoCodeF");
+		String toBushoCode	= req.getParameter("srhTxtBushoCodeT");
+		String fromSaishuKoshinDate	= req.getParameter("srhTxtSaishuKoshinDateF");
+		String toSaishuKoshinDate	= req.getParameter("srhTxtSaishuKoshinDateT");
 		// 現在日時を取得
         LocalDateTime now = LocalDateTime.now();
 

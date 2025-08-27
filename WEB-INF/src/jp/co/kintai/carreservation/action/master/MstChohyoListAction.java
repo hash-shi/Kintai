@@ -87,10 +87,10 @@ public class MstChohyoListAction extends PJActionBase {
 		ResultSet rset					= null;
 		// 画面パラメータの取得
 		int count = 0;
-		String fromEigyoshoCode	= req.getParameter("txtSrhEigyoshoCodeF");
-		String toEigyoshoCode	= req.getParameter("txtSrhEigyoshoCodeT");
-		String fromSaishuKoshinDate	= req.getParameter("txtSrhSaishuKoshinDateF");
-		String toSaishuKoshinDate	= req.getParameter("txtSrhSaishuKoshinDateT");
+		String fromEigyoshoCode	= req.getParameter("srhTxtEigyoshoCodeF");
+		String toEigyoshoCode	= req.getParameter("srhTxtEigyoshoCodeT");
+		String fromSaishuKoshinDate	= req.getParameter("srhTxtSaishuKoshinDateF");
+		String toSaishuKoshinDate	= req.getParameter("srhTxtSaishuKoshinDateT");
 		sql.append(" SELECT ");
 		sql.append(" 	COUNT(*) AS CNT ");
 		sql.append(" FROM ");
@@ -150,12 +150,12 @@ public class MstChohyoListAction extends PJActionBase {
 		ResultSet rset					= null;
 		// 画面パラメータの取得
 		int count = 0;
-		String fromEigyoshoCode	= req.getParameter("txtSrhEigyoshoCodeF");
-		String toEigyoshoCode	= req.getParameter("txtSrhEigyoshoCodeT");
-		String fromBushoCode	= req.getParameter("txtSrhBushoCodeF");
-		String toBushoCode	= req.getParameter("txtSrhBushoCodeT");
-		String fromSaishuKoshinDate	= req.getParameter("txtSrhSaishuKoshinDateF");
-		String toSaishuKoshinDate	= req.getParameter("txtSrhSaishuKoshinDateT");
+		String fromEigyoshoCode	= req.getParameter("srhTxtEigyoshoCodeF");
+		String toEigyoshoCode	= req.getParameter("srhTxtEigyoshoCodeT");
+		String fromBushoCode	= req.getParameter("srhTxtBushoCodeF");
+		String toBushoCode	= req.getParameter("srhTxtBushoCodeT");
+		String fromSaishuKoshinDate	= req.getParameter("srhTxtSaishuKoshinDateF");
+		String toSaishuKoshinDate	= req.getParameter("srhTxtSaishuKoshinDateT");
 		sql.append(" SELECT ");
 		sql.append(" 	COUNT(*) AS CNT ");
 		sql.append(" FROM ");
@@ -225,12 +225,12 @@ public class MstChohyoListAction extends PJActionBase {
 		ResultSet rset					= null;
 		// 画面パラメータの取得
 		int count = 0;
-		String fromEigyoshoCode	= req.getParameter("txtSrhEigyoshoCodeF");
-		String toEigyoshoCode	= req.getParameter("txtSrhEigyoshoCodeT");
-		String fromShainNO	= req.getParameter("txtSrhShainNOF");
-		String toShainNO	= req.getParameter("txtSrhShainNOT");
-		String fromSaishuKoshinDate	= req.getParameter("txtSrhSaishuKoshinDateF");
-	    String toSaishuKoshinDate	= req.getParameter("txtSrhSaishuKoshinDateT");
+		String fromEigyoshoCode	= req.getParameter("srhTxtEigyoshoCodeF");
+		String toEigyoshoCode	= req.getParameter("srhTxtEigyoshoCodeT");
+		String fromShainNO	= req.getParameter("srhTxtShainNOF");
+		String toShainNO	= req.getParameter("srhTxtShainNOT");
+		String fromSaishuKoshinDate	= req.getParameter("srhTxtSaishuKoshinDateF");
+	    String toSaishuKoshinDate	= req.getParameter("srhTxtSaishuKoshinDateT");
 	    sql.append(" SELECT ");
 		sql.append(" 	COUNT(*) AS CNT ");
 		sql.append(" FROM ");
@@ -300,10 +300,10 @@ public class MstChohyoListAction extends PJActionBase {
 		ResultSet rset					= null;
 		// 画面パラメータの取得
 		int count = 0;
-		String fromKbnCode	= req.getParameter("txtSrhKbnCodeF");
-		String toKbnCode	= req.getParameter("txtSrhKbnCodeT");
-		String fromSaishuKoshinDate	= req.getParameter("txtSrhSaishuKoshinDateF");
-		String toSaishuKoshinDate	= req.getParameter("txtSrhSaishuKoshinDateT");
+		String fromKbnCode	= req.getParameter("srhTxtKbnCodeF");
+		String toKbnCode	= req.getParameter("srhTxtKbnCodeT");
+		String fromSaishuKoshinDate	= req.getParameter("srhTxtSaishuKoshinDateF");
+		String toSaishuKoshinDate	= req.getParameter("srhTxtSaishuKoshinDateT");
 		sql.append(" SELECT ");
 		sql.append(" 	COUNT(*) AS CNT ");
 		sql.append(" FROM ");

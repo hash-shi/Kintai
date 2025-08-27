@@ -1,4 +1,4 @@
-function toggleVisibility(){
+function shoriAreaDisplay(){
 		// 選択した処理内容を格納
 		// 値を取得する方法
 		var value = $("#rdoShoriSentaku").val();
@@ -12,25 +12,25 @@ function toggleVisibility(){
 		
 		$("#displayShoriArea").css("visibility", "visible");
 		$("#txtShoriSentaku").val(kbnName);
-		$("#txtSrhEigyoshoCodeF").val(Saisho);
-		$("#txtSrhEigyoshoCodeT").val(Saidai);
-		getEigyoshoName('txtSrhEigyoshoCodeF', 'txtSrhEigyoshoNameF');
-		getEigyoshoName('txtSrhEigyoshoCodeT', 'txtSrhEigyoshoNameT');
-		$("#txtSrhBushoCodeF").val("");
-		$("#txtSrhBushoNameF").val("");
-	    $("#txtSrhBushoCodeT").val("");
-		$("#txtSrhBushoNameT").val("");
-		$("#txtSrhShainNOF").val("");
-		$("#txtSrhShainNameF").val("");
-		$("#txtSrhShainNOT").val("");
-		$("#txtSrhShainNameT").val("");
-		$("#txtSrhKbnCodeF").val("");
-	    $("#txtSrhKbnCodeT").val("");
+		$("#srhTxtEigyoshoCodeF").val(Saisho);
+		$("#srhTxtEigyoshoCodeT").val(Saidai);
+		getEigyoshoName('srhTxtEigyoshoCodeF', 'srhTxtEigyoshoNameF');
+		getEigyoshoName('srhTxtEigyoshoCodeT', 'srhTxtEigyoshoNameT');
+		$("#srhTxtBushoCodeF").val("");
+		$("#srhTxtBushoNameF").val("");
+	    $("#srhTxtBushoCodeT").val("");
+		$("#srhTxtBushoNameT").val("");
+		$("#srhTxtShainNOF").val("");
+		$("#srhTxtShainNameF").val("");
+		$("#srhTxtShainNOT").val("");
+		$("#srhTxtShainNameT").val("");
+		$("#srhTxtKbnCodeF").val("");
+	    $("#srhTxtKbnCodeT").val("");
 		
 		if(value == "01"||value == "02"||value == "03"){
 			$("#displayKbnArea").css("display", "none");
 			$("#displayEigyoshoArea").css("display", "table-row");
-			$("#txtSrhEigyoshoCodeF").focus();
+			$("#srhTxtEigyoshoCodeF").focus();
 		 if(value == "02"){
 			$("#displayBushoArea").css("display", "table-row");
 			$("#displayShainArea").css("display", "none");
@@ -46,10 +46,10 @@ function toggleVisibility(){
 			$("#displayKbnArea").css("display", "table-row");
 			$("#displayBushoArea").css("display", "none");
 			$("#displayShainArea").css("display", "none");
-			$("#txtSrhKbnCodeF").focus();
+			$("#srhTxtKbnCodeF").focus();
 		}
-		$("#txtSrhSaishuKoshinDateF").val(formatDateYYYYMMDD(date, "/"));
-		$("#txtSrhSaishuKoshinDateT").val(formatDateYYYYMMDD(date, "/"));
+		$("#srhTxtSaishuKoshinDateF").val(formatDateYYYYMMDD(date, "/"));
+		$("#srhTxtSaishuKoshinDateT").val(formatDateYYYYMMDD(date, "/"));
 		$("#displayBottonArea").css("visibility", "visible");
 		// mainAreaの背景色を変更
 		if (!$("#displayShoriArea").hasClass("ins")) {
@@ -133,10 +133,10 @@ function output(){
 //****************************************************************************
 function onKeyEventF12() {
 	
-	// mainAreaの表示状態を取得
+	// displayBottonAreaの表示状態を取得
 	var display = $("#displayBottonArea").css("visibility");
 	
-	// mainAreaが非表示(初期表示時)はスキップする。
+	// displayBottonAreaが非表示(初期表示時)はスキップする。
 	if (display == "visible") {
 		// 該当の処理を呼び出す。
 		output();
