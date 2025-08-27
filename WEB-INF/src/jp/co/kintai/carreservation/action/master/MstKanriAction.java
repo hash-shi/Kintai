@@ -23,11 +23,6 @@ public class MstKanriAction extends PJActionBase {
 	public void doRun(HttpServletRequest req, HttpServletResponse res) throws Exception {
 		
 		//=====================================================================
-		// DB接続
-		//=====================================================================
-		Connection con		= this.getConnection("kintai", req);
-		
-		//=====================================================================
 		// 結果返却
 		//=====================================================================
 		
