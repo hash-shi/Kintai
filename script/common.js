@@ -535,15 +535,15 @@ function getMstEigyoshos(){
 		for (var count = 0 ; count < result.length ; count++){
 			var record			= result[count];
 
-			var	eigyoushoCode = record["EigyoshoCode"];
-			var eigyoushoName = record["EigyoshoName"];
+			var eigyoshoCode = record["EigyoshoCode"];
+			var eigyoshoName = record["EigyoshoName"];
 			
 			// onclickで呼ぶ関数を共通化
-			var onclickCode = "setDialogReturnValue('" + eigyoushoCode + "'); closeDialog(); setDialogReturnValueEigyoshoName(); return false;";
+			var onclickCode = "setDialogReturnValue('" + eigyoshoCode + "'); closeDialog(); setDialogReturnValueEigyoshoName(); return false;";
 			
 			var rowHtml = "<tr>" + 
-								"<td><div class=\"eigyoshoCode\"><a href=\"#\" onclick=\"" + onclickCode + "\">" + eigyoushoCode + "</a></div></td>" + 
-								"<td><div class=\"eigyoshoName\"><a href=\"#\" onclick=\"" + onclickCode + "\">" + eigyoushoName + "</a></div></td>" +  
+								"<td><div class=\"eigyoshoCode\"><a href=\"#\" onclick=\"" + onclickCode + "\">" + eigyoshoCode + "</a></div></td>" + 
+								"<td><div class=\"eigyoshoName\"><a href=\"#\" onclick=\"" + onclickCode + "\">" + eigyoshoName + "</a></div></td>" +  
 						  "</tr>";
 			
 			$("#searchEigyoshoResult").append(rowHtml);

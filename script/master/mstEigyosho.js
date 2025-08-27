@@ -191,8 +191,7 @@ function onKeyEventF02() {
 	
 	// mainAreaが非表示(初期表示時)はスキップする。
 	if (display == "visible"&& isNew != "1") {
-			// 該当の処理を呼び出す。
-			onDelete();
+		// 該当の処理を呼び出す。
+		onDelete();
 	}
 }
-

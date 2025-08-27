@@ -24,7 +24,7 @@
 					<td class="value w165">
 						<input type="text" class="w80" maxlength="4" name="srhTxtBushoCode" id="srhTxtBushoCode" value="" onblur="getBushoName('srhTxtBushoCode', '');" >
 						<img class="img border" src="./images/search.png"  onclick="opnDialog('srhMstBusho','srhTxtBushoCode');">
-					<button type="button" onclick="getMstBusho()">検索</button>
+						<button type="button" onclick="getMstBusho()">検索</button>
 					</td>
 				</tr>
 			</table>
@@ -53,8 +53,8 @@
 					<td class="value w500">
 						<input type="text" class="w80" maxlength="2" name="txtBushoKbn" id="txtBushoKbn" value="" onblur="setSelBushoKbnName();">
 						<select  class="w120" name = "selBushoKbnName" id="selBushoKbnName" value="" onchange="setTxtBushoKbn();">
-						<option value=""> </option>
-						<% for (int count = 0 ; count < mstKubun0153.size() ; count++){ HashMap<String, String> record = mstKubun0153.get(count);%>
+							<option value=""> </option>
+							<% for (int count = 0 ; count < mstKubun0153.size() ; count++){ HashMap<String, String> record = mstKubun0153.get(count);%>
 								<option value="<%=UtilEscape.htmlspecialchars(record.get("Code")) %>"><%=UtilEscape.htmlspecialchars(record.get("KbnName")) %></option>
 							<% } %>
 						</select>
@@ -93,7 +93,7 @@
 	</div>
 	
 	<div id="buttonArea"  class="buttonArea right"  style="visibility: hidden;">
-			<button type="button" class="" name="btnDelete" id="btnDelete" onclick="onDelete()">削除 [ F2 ]</button>
-			<button type="button" class="" name="btnUpdate" id="btnUpdate" onclick="onUpdate()">確定 [ F9 ]</button>
+		<button type="button" class="" name="btnDelete" id="btnDelete" onclick="onDelete()">削除 [ F2 ]</button>
+		<button type="button" class="" name="btnUpdate" id="btnUpdate" onclick="onUpdate()">確定 [ F9 ]</button>
 	</div>
 </main>
