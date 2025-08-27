@@ -27,11 +27,11 @@
 			<view return="success" path="Index.jsp" />
 		</action>
 	
-		<action id="menu"  group="public"  class="action.MenuAction"  title="メニュー画面"  header=""  footer=""  script="./script/menu.js"  style="./css/menu.css"  authority=""  meta=""  requiredParam="" >
+		<action id="menu"  group="public"  class="action.MenuAction"  title="メニュー"  header=""  footer=""  script="./script/menu.js"  style="./css/menu.css"  authority=""  meta=""  requiredParam="" >
 			<view return="success" path="menu.jsp" />
 		</action>
 		
-		<action id="chgPassword"  group="public"  class="action.user.ChgPasswordAction"  title="パスワード変更画面"  header=""  footer=""  script="./script/user/chgPassword.js"  style="./css/user/chgPassword.css"  authority=""  meta=""  requiredParam="" >
+		<action id="chgPassword"  group="public"  class="action.user.ChgPasswordAction"  title="パスワード変更"  header=""  footer=""  script="./script/user/chgPassword.js"  style="./css/user/chgPassword.css"  authority=""  meta=""  requiredParam="" >
 			<view return="success" path="user/chgPassword.jsp" />
 		</action>
 		
