@@ -14,9 +14,11 @@ import jp.co.tjs_net.java.framework.base.ValidateBase;
 import jp.co.tjs_net.java.framework.database.PreparedStatementFactory;
 import jp.co.tjs_net.java.framework.information.IndexInformation;
 import jp.co.tjs_net.java.framework.validate.IsNumber;
+import jp.co.tjs_net.java.framework.validate.IsRequired;
 import jp.co.tjs_net.java.framework.validate.MaxLength;
 import jp.co.tjs_net.java.framework.validate.MaxNumberLimit;
 import jp.co.tjs_net.java.framework.validate.MinNumberLimit;
+import jp.co.tjs_net.java.framework.validate.NumberLimit;
 
 public class KinShukkinBoValidate extends ValidateBase {
 
@@ -38,6 +40,8 @@ public class KinShukkinBoValidate extends ValidateBase {
 		MaxLength lengthValidate = new MaxLength(req, res, info);
 		MinNumberLimit minNumberLimitValidate = new MinNumberLimit(req, res, info);
 		MaxNumberLimit maxNumberLimitValidate = new MaxNumberLimit(req, res, info);
+		IsRequired isRequiredValidate = new IsRequired(req, res, info);
+		NumberLimit numberLimitValidate = new NumberLimit(req, res, info);
 		
 		//=====================================================================
 		// パラメータ取得
@@ -229,6 +233,12 @@ public class KinShukkinBoValidate extends ValidateBase {
 				return false;
 			}
 
+			isRequiredValidate.setParams(this.params);
+			if(isRequiredValidate.doValidate(req, res, jitsudoJikan, info) == false) {
+				this.addValidateMessage("実働時間が入力されていません。");
+				return false;
+			}
+			
 			isNumberValidate.setParams(this.params);
 			if(isNumberValidate.doValidate(req, res, jitsudoJikan, info) == false) {
 				this.addValidateMessage("実働時間には数値を入力してください。");
@@ -238,6 +248,14 @@ public class KinShukkinBoValidate extends ValidateBase {
 			minNumberLimitValidate.setParams(this.params);
 			if(minNumberLimitValidate.doValidate(req, res, jitsudoJikan, info) == false) {
 				this.addValidateMessage("実働時間にはマイナスは設定できません。");
+				return false;
+			}
+
+			this.params.put("length", "0");
+			this.params.put("comparisonoperator", "<");
+			numberLimitValidate.setParams(this.params);
+			if(numberLimitValidate.doValidate(req, res, jitsudoJikan, info) == false) {
+				this.addValidateMessage("実働時間が入力されていません。");
 				return false;
 			}
 
@@ -419,6 +437,12 @@ public class KinShukkinBoValidate extends ValidateBase {
 					return false;
 				}
 
+				isRequiredValidate.setParams(this.params);
+				if(isRequiredValidate.doValidate(req, res, jitsudoJikan, info) == false) {
+					this.addValidateMessage("勤怠申請時間" + String.valueOf(j) + "が入力されていません。");
+					return false;
+				}
+
 				isNumberValidate.setParams(this.params);
 				if(isNumberValidate.doValidate(req, res, jikan, info) == false) {
 					this.addValidateMessage("勤怠申請時間" + String.valueOf(j) + "には数値を入力してください。");
@@ -431,6 +455,14 @@ public class KinShukkinBoValidate extends ValidateBase {
 					return false;
 				}
 
+				this.params.put("length", "0");
+				this.params.put("comparisonoperator", "<");
+				numberLimitValidate.setParams(this.params);
+				if(numberLimitValidate.doValidate(req, res, jitsudoJikan, info) == false) {
+					this.addValidateMessage("勤怠申請時間" + String.valueOf(j) + "が入力されていません。");
+					return false;
+				}
+				
 				try {
 					if("".equals(jikan) == false){
 						dcmJikan = new BigDecimal(jikan);

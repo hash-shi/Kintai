@@ -542,7 +542,7 @@ public class KinShukkinBoAction extends PJActionBase {
 				break;
 			}
 			record.put("YobiKbn", yobi);
-			record.put("ShukkinYoteiKbn","00");
+			record.put("ShukkinYoteiKbn","01");
 			record.put("KintaiKbn","00");
 			record.put("ShusshaJi","");
 			record.put("ShusshaFun","");

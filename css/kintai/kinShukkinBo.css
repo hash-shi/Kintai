@@ -43,18 +43,29 @@
 .w45 { min-width: 45px !important; max-width: 45px !important; }
 
 
+/*
 .kinShukkinBoText{
 	font-size: 80% !important;
 }
+*/
 
 .kaishishuryoTextBox{
+	/*
 	width: 15px;
+	*/
+	width: 20px;
 	text-align: right;
 }
 .jikanTextBox{
+	/*
 	width: 30px;
+	*/
+	width: 50px;
 	text-align: right;
 }
 .bikoTextBox{
+	/*
 	width: 125px;
+	*/
+	width: 160px;
 }
