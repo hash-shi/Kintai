@@ -198,7 +198,7 @@ ArrayList<HashMap<String, String>> mstKubun0013 = (ArrayList<HashMap<String, Str
 					</td>
 				</tr>
 				<tr>
-					<td class="title center w150 req">02 勤務時間 単価</td>
+					<td class="title center w150 req">02 時間外勤務 単価</td>
 					<td class="value w500">
 						<input type="text" class="w80 right"  maxlength="6"  name="txtShinseiTanka02" id="txtShinseiTanka02"  value="0" >				
 					</td>
