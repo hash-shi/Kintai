@@ -23,7 +23,7 @@
 				<param name="length">4</param>
 			</check>		
 		</variable>
-		
+
 	<!-- 社員名 -->	
 		<variable name="txtShainName" dispName="社員名">
 			<check class="IsRequired" message="!#itemName#!が入力されていません。" itemName="{dispName}"></check>
@@ -64,7 +64,7 @@
 				<param name="length">2</param>
 			</check>
 		</variable>
-		<variable name="selectUserKbnName" dispName="ユーザ区分">
+		<variable name="selUserKbnName" dispName="ユーザ区分">
 			<check class="IsRequiredIf" message="該当するユーザ区分コードが存在しません。" itemName="{dispName}">
 				<param name="targetvalue">txtUserKbn</param>
 			</check>
@@ -80,7 +80,7 @@
 				<param name="length">2</param>
 			</check>
 		</variable>
-		<variable name="selectShainKbnName" dispName="社員区分名">
+		<variable name="selShainKbnName" dispName="社員区分名">
 			<check class="IsRequired" message="該当する社員区分コードが存在しません。" itemName="{dispName}"></check>
 		</variable>
 
@@ -94,7 +94,7 @@
 				<param name="length">2</param>
 			</check>
 		</variable>
-		<variable name="selectShukinboKbnName" dispName="出勤簿入力区分">
+		<variable name="selShukinboKbnName" dispName="出勤簿入力区分">
 			<check class="IsRequired" message="該当する出勤簿入力区分コードが存在しません。" itemName="{dispName}"></check>
 		</variable>
 
@@ -156,7 +156,7 @@
 				<param name="length">2</param>
 			</check>
 		</variable>
-		<variable name="selectJikyuNikkyuKbnName" dispName="時給日給区分名">
+		<variable name="seJikyuNikkyuKbnName" dispName="時給日給区分名">
 			<check class="IsRequiredIf" message="該当する時給日給区分コードが存在しません。" itemName="{dispName}">
 				<param name="targetvalue">txtJikyuNikkyuKbn</param>
 			</check>
@@ -346,7 +346,7 @@
 				<param name="length">2</param>
 			</check>
 		</variable>
-		<variable name="selectTsukinHiKbnName" dispName="通勤費精算区分名">
+		<variable name="selTsukinHiKbnName" dispName="通勤費精算区分名">
 			<check class="IsRequiredIf" message="該当する通勤費精算区分コードが存在しません。" itemName="{dispName}">
 				<param name="targetvalue">txtTsukinHiKbn</param>
 			</check>

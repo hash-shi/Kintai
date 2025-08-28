@@ -21,48 +21,44 @@ public class MstShainAction extends PJActionBase {
 	public MstShainAction(HttpServletRequest req, HttpServletResponse res, IndexInformation info) {
 		super(req, res, info);
 	}
-	
+
 	@Override
 	public void doRun(HttpServletRequest req, HttpServletResponse res) throws Exception {
-		
+
 		// DB接続
-		Connection con		= this.getConnection("kintai", req);
-		
+		Connection con = this.getConnection("kintai", req);
+
 		// 区分プルダウン取得
 		ArrayList<HashMap<String, String>> mstKubun0500 = PJActionBase.getMstKubuns(con, "0500", "", "");
 		req.setAttribute("mstKubun0500", mstKubun0500);
-		
+
 		ArrayList<HashMap<String, String>> mstKubun0010 = PJActionBase.getMstKubuns(con, "0010", "", "");
 		req.setAttribute("mstKubun0010", mstKubun0010);
-		
+
 		ArrayList<HashMap<String, String>> mstKubun0011 = PJActionBase.getMstKubuns(con, "0011", "", "");
 		req.setAttribute("mstKubun0011", mstKubun0011);
-		
+
 		ArrayList<HashMap<String, String>> mstKubun0012 = PJActionBase.getMstKubuns(con, "0012", "", "");
 		req.setAttribute("mstKubun0012", mstKubun0012);
-		
+
 		ArrayList<HashMap<String, String>> mstKubun0052 = PJActionBase.getMstKubuns(con, "0052", "", "");
 		req.setAttribute("mstKubun0052", mstKubun0052);
-		
+
 		ArrayList<HashMap<String, String>> mstKubun0053 = PJActionBase.getMstKubuns(con, "0053", "", "");
 		req.setAttribute("mstKubun0053", mstKubun0053);
-		
+
 		ArrayList<HashMap<String, String>> mstKubun0013 = PJActionBase.getMstKubuns(con, "0013", "", "");
 		req.setAttribute("mstKubun0013", mstKubun0013);
-		
+
 		// 画面表示
-		this.setView("success");		
-		
+		this.setView("success");
     }
-	
+
 	/**
 	 * 処理可能営業所取得
 	 */
 	public void getShoriKanoEigyoshoList(HttpServletRequest req, HttpServletResponse res) throws Exception {
 	    String shainNo = req.getParameter("srhTxtShainNO"); 
-	    
-	    //debakku
-	    System.out.println("shainNo param = [" + shainNo + "]");
 
 	    Connection con = this.getConnection("kintai", req);
 
@@ -81,8 +77,6 @@ public class MstShainAction extends PJActionBase {
 	    this.addContent("result", shoriKanoEigyoshos);
 	}
 
-	
-	
 	/**
 	 * 社員情報取得処理（処理可能営業所も同時に取得）
 	 * 
@@ -95,97 +89,90 @@ public class MstShainAction extends PJActionBase {
 	 * @throws Exception DB接続やSQL実行時の例外
 	 */
 	public void search(HttpServletRequest req, HttpServletResponse res) throws Exception {
+		//=====================================================================
+		// パラメータ取得
+		//=====================================================================
+		String shainNo = req.getParameter("srhTxtShainNO");
 
-	    //=====================================================================
-	    // パラメータ取得
-	    //=====================================================================
-	    String shainNo = req.getParameter("srhTxtShainNO");
-	    
-	    //=====================================================================
-	    // 0詰め処理
-	    //=====================================================================
-	    
-	    // 社員NO
-	    int shainNo_ = Integer.parseInt(shainNo);
-	    shainNo = String.format("%04d", shainNo_);	 
+		//=====================================================================
+		// 0詰め処理
+		//=====================================================================
+		// 社員NO
+		int shainNo_ = Integer.parseInt(shainNo);
+		shainNo = String.format("%04d", shainNo_);	 
 
-	    //=====================================================================
-	    // デバッグ出力
-	    //=====================================================================
-	    System.out.println("DEBUG: shainNo=" + shainNo);
+		//=====================================================================
+		// DB接続
+		//=====================================================================
+		Connection con = this.getConnection("kintai", req);
 
-	    //=====================================================================
-	    // DB接続
-	    //=====================================================================
-	    Connection con = this.getConnection("kintai", req);
+		//=====================================================================
+		// 社員情報検索
+		//=====================================================================
+		String isNew = "0";
+		ArrayList<HashMap<String, String>> mstDatas = PJActionBase.getMstShains(
+			con, shainNo, null, null, null, null, null, null, null
+		);
 
-	    //=====================================================================
-	    // 社員情報検索
-	    //=====================================================================
-	    String isNew = "0";
-	    ArrayList<HashMap<String, String>> mstDatas = PJActionBase.getMstShains(
-	        con, shainNo, null, null, null, null, null, null, null
-	    );
+		// データが0件の場合は新規モード用に空レコードを作成
+		if (mstDatas.size() == 0) {
+			isNew = "1";
+			HashMap<String, String> record = new HashMap<String, String>();
+			record.put("ShainNO", shainNo);
+			record.put("ShainName", "");
+			record.put("Password", "");
+			record.put("UserKbn", "");
+			record.put("ShainKbn", "");
+			record.put("ShukinboKbn", "");
+			record.put("EigyoshoCode", "");
+			record.put("BushoCode", "");
+			record.put("YukyuKyukaFuyoNissu", "0.0");
+			record.put("JikyuNikkyuKbn", "");
+			record.put("KinmuKaishiJi", "");
+			record.put("KinmuKaishiFun", "");
+			record.put("KinmuShuryoJi", "");
+			record.put("KinmuShuryoFun", "");
+			record.put("KeiyakuJitsudoJikan", "0.00");
+			record.put("ShinseiTanka01", "0");
+			record.put("ShinseiTanka02", "0");
+			record.put("ShinseiTanka03", "0");
+			record.put("ShinseiTanka04", "0");
+			record.put("ShinseiTanka05", "0");
+			record.put("ShinseiTanka06", "0");
+			record.put("ShinseiTanka07", "0");
+			record.put("ShinseiTanka08", "0");
+			record.put("ShinseiTanka09", "0");
+			record.put("ShinseiTanka10", "0");
+			record.put("ShinseiTanka11", "0");
+			record.put("TsukinHiKbn", "");
+			record.put("TaisyokuDate", "");
+			record.put("SaishuKoshinShainNO", "");
+			record.put("SaishuKoshinShainName", "");
+			record.put("SaishuKoshinDate", "");
+			record.put("SaishuKoshinJikan", "");
+			mstDatas.add(record);
+		}
 
-	    // データが0件の場合は新規モード用に空レコードを作成
-	    if (mstDatas.size() == 0) {
-	        isNew = "1";
-	        HashMap<String, String> record = new HashMap<String, String>();
-	        record.put("ShainNO", shainNo);
-	        record.put("ShainName", "");
-	        record.put("Password", "");
-	        record.put("UserKbn", "");
-	        record.put("ShainKbn", "");
-	        record.put("ShukinboKbn", "");
-	        record.put("EigyoshoCode", "");
-	        record.put("BushoCode", "");
-	        record.put("YukyuKyukaFuyoNissu", "0.0");
-	        record.put("JikyuNikkyuKbn", "");
-	        record.put("KinmuKaishiJi", "");
-	        record.put("KinmuKaishiFun", "");
-	        record.put("KinmuShuryoJi", "");
-	        record.put("KinmuShuryoFun", "");
-	        record.put("KeiyakuJitsudoJikan", "0.00");
-	        record.put("ShinseiTanka01", "0");
-	        record.put("ShinseiTanka02", "0");
-	        record.put("ShinseiTanka03", "0");
-	        record.put("ShinseiTanka04", "0");
-	        record.put("ShinseiTanka05", "0");
-	        record.put("ShinseiTanka06", "0");
-	        record.put("ShinseiTanka07", "0");
-	        record.put("ShinseiTanka08", "0");
-	        record.put("ShinseiTanka09", "0");
-	        record.put("ShinseiTanka10", "0");
-	        record.put("ShinseiTanka11", "0");
-	        record.put("TsukinHiKbn", "");
-	        record.put("TaisyokuDate", "");
-	        record.put("SaishuKoshinShainNO", "");
-	        record.put("SaishuKoshinShainName", "");
-	        record.put("SaishuKoshinDate", "");
-	        record.put("SaishuKoshinJikan", "");
-	        mstDatas.add(record);
-	    }
+		//=====================================================================
+		// 処理可能営業所リスト取得
+		//=====================================================================
+		List<HashMap<String, String>> shoriKanoEigyoshos = PJActionBase.getMstShainEigyoshos(con, shainNo);
+		if (shoriKanoEigyoshos == null || shoriKanoEigyoshos.isEmpty()) {
+			HashMap<String, String> empty = new HashMap<>();
+			empty.put("EigyoshoCode", "");
+			empty.put("EigyoshoName", "");
+			shoriKanoEigyoshos = new ArrayList<>();
+			shoriKanoEigyoshos.add(empty);
+		}
 
-	    //=====================================================================
-	    // 処理可能営業所リスト取得
-	    //=====================================================================
-	    List<HashMap<String, String>> shoriKanoEigyoshos = PJActionBase.getMstShainEigyoshos(con, shainNo);
-	    if (shoriKanoEigyoshos == null || shoriKanoEigyoshos.isEmpty()) {
-	        HashMap<String, String> empty = new HashMap<>();
-	        empty.put("EigyoshoCode", "");
-	        empty.put("EigyoshoName", "");
-	        shoriKanoEigyoshos = new ArrayList<>();
-	        shoriKanoEigyoshos.add(empty);
-	    }
-
-	    //=====================================================================
-	    // レスポンスにセット
-	    //=====================================================================
-	    this.addContent("isNew", isNew);
-	    this.addContent("mstDatas", mstDatas);
-	    this.addContent("shoriKanoEigyoshos", shoriKanoEigyoshos);
+		//=====================================================================
+		// レスポンスにセット
+		//=====================================================================
+		this.addContent("isNew", isNew);
+		this.addContent("mstDatas", mstDatas);
+		this.addContent("shoriKanoEigyoshos", shoriKanoEigyoshos);
 	}
-	
+
 	/**
 	 * 社員削除処理
 	 * 
@@ -207,13 +194,12 @@ public class MstShainAction extends PJActionBase {
 		//=====================================================================
 		String shainNo	= req.getParameter("txtShainNO");
 		
-	    //=====================================================================
-	    // 0詰め処理
-	    //=====================================================================
-	    
-	    // 社員NO
-	    int shainNo_ = Integer.parseInt(shainNo);
-	    shainNo = String.format("%04d", shainNo_);	 
+		//=====================================================================
+		// 0詰め処理
+		//=====================================================================
+		// 社員NO
+		int shainNo_ = Integer.parseInt(shainNo);
+		shainNo = String.format("%04d", shainNo_);	 
 		
 		//=====================================================================
 		// DB接続
@@ -227,37 +213,35 @@ public class MstShainAction extends PJActionBase {
 		// 削除
 		//=====================================================================
 		try {
-	        // ----------------------------
-	        // ① MST_SHAIN_EIGYOSHO 削除
-	        // ----------------------------
-	        pstmtf.clear();
-	        sql.setLength(0);
-	        sql.append(" DELETE FROM MST_SHAIN_EIGYOSHO ");
-	        sql.append(" WHERE ");
-	        sql.append("   ShainNO = ? ");
-	
-	        pstmtf.addValue("String", shainNo);
-	        pstmt = con.prepareStatement(sql.toString());
-	        pstmtf.setPreparedStatement(pstmt);
-	        pstmt.execute();
-	        pstmt.close();
-	
-	        // ----------------------------
-	        // ② MST_SHAIN 削除
-	        // ----------------------------
-	        pstmtf.clear();
-	        sql.setLength(0);
-	        sql.append(" DELETE FROM MST_SHAIN ");
-	        sql.append(" WHERE ");
-	        sql.append(" 	ShainNO = ? ");
-	
-	        pstmtf.addValue("String", shainNo);
-	        pstmt = con.prepareStatement(sql.toString());
-	        pstmtf.setPreparedStatement(pstmt);
-	        pstmt.execute();
-	        pstmt.close();
-		
+			// ----------------------------
+			// ① MST_SHAIN_EIGYOSHO 削除
+			// ----------------------------
+			pstmtf.clear();
+			sql.setLength(0);
+			sql.append(" DELETE FROM MST_SHAIN_EIGYOSHO ");
+			sql.append(" WHERE ");
+			sql.append("   ShainNO = ? ");
 
+			pstmtf.addValue("String", shainNo);
+			pstmt = con.prepareStatement(sql.toString());
+			pstmtf.setPreparedStatement(pstmt);
+			pstmt.execute();
+			pstmt.close();
+
+			// ----------------------------
+			// ② MST_SHAIN 削除
+			// ----------------------------
+			pstmtf.clear();
+			sql.setLength(0);
+			sql.append(" DELETE FROM MST_SHAIN ");
+			sql.append(" WHERE ");
+			sql.append(" 	ShainNO = ? ");
+
+			pstmtf.addValue("String", shainNo);
+			pstmt = con.prepareStatement(sql.toString());
+			pstmtf.setPreparedStatement(pstmt);
+			pstmt.execute();
+			pstmt.close();
 
 		} catch (Exception exp){
 			exp.printStackTrace();
@@ -265,8 +249,7 @@ public class MstShainAction extends PJActionBase {
 			if (pstmt != null){ try { pstmt.close(); } catch (Exception exp){}}
 		}
 	}
-	
-	
+
 	/**
 	 * 社員新規登録処理
 	 * 
@@ -279,14 +262,14 @@ public class MstShainAction extends PJActionBase {
 	 * @throws Exception DB接続・SQL実行時の例外
 	 */
 	public void insert(HttpServletRequest req, HttpServletResponse res) throws Exception {
-		
+
 	}
 	public void insert_(HttpServletRequest req, HttpServletResponse res) throws Exception {
-		
+
 		//=====================================================================
 		// パラメータ取得
 		//=====================================================================
-		
+
 		String shainNo 				= req.getParameter("txtShainNO");
 		String shainName 			= req.getParameter("txtShainName");
 		String password 			= req.getParameter("txtPassword");
@@ -302,20 +285,19 @@ public class MstShainAction extends PJActionBase {
 		String kinmushuryoJi 		= req.getParameter("txtKinmuShuryoJiKbnName");
 		String kinmushuryoFun 		= req.getParameter("txtKinmuShuryoFunKbnName");
 		String keiyakujitsudoJikan 	= req.getParameter("txtKeiyakuJitsudoJikan");
-	    String[] shinseiTanka = new String[11];
-		    for (int i = 1; i <= 11; i++) {
-		        shinseiTanka[i-1] 	= req.getParameter("txtShinseiTanka" + (i<10?"0":"") + i);
-		    }		
+		String[] shinseiTanka = new String[11];
+			for (int i = 1; i <= 11; i++) {
+				shinseiTanka[i-1] 	= req.getParameter("txtShinseiTanka" + (i<10?"0":"") + i);
+			}
 		String tsukinhiKbn 			= req.getParameter("txtTsukinHiKbn");
 		String taisyokuDate 		= req.getParameter("txtTaisyokuDate");
 
 	    // 処理可能営業所
 	    String[] shoriKanoEigyoshoCodes = req.getParameterValues("eigyoshoCode[]");
-	    
+
 	    //=====================================================================
 	    // 0詰め処理
 	    //=====================================================================
-	    
 	    // 社員NO
 	    int shainNo_ = Integer.parseInt(shainNo);
 	    shainNo = String.format("%04d", shainNo_);	 
@@ -333,7 +315,6 @@ public class MstShainAction extends PJActionBase {
 	        for (int i = 0; i < shoriKanoEigyoshoCodes.length; i++) {
 	            String code = shoriKanoEigyoshoCodes[i];
 	            if (code != null && !code.isEmpty()) {
-	                // 数値として解釈して3桁に0埋め
 	                int num = Integer.parseInt(code);
 	                shoriKanoEigyoshoCodes[i] = String.format("%03d", num);
 	            }
@@ -341,39 +322,37 @@ public class MstShainAction extends PJActionBase {
 	    }
 
 		// ===== デフォルト値補正 =====
-	    
 	    // ユーザ区分 → 空なら null 
 	    userKbn = (userKbn == null || userKbn.isEmpty()) ? null : userKbn;
-		
+
 		// 勤務開始・終了（時分） → 空なら空文字
 		kinmukaishiJi  = (kinmukaishiJi  == null || kinmukaishiJi.isEmpty())  ? ""    : kinmukaishiJi;
 		kinmukaishiFun = (kinmukaishiFun == null || kinmukaishiFun.isEmpty()) ? ""    : kinmukaishiFun;
 		kinmushuryoJi  = (kinmushuryoJi  == null || kinmushuryoJi.isEmpty())  ? ""    : kinmushuryoJi;
 		kinmushuryoFun = (kinmushuryoFun == null || kinmushuryoFun.isEmpty()) ? ""    : kinmushuryoFun;
-		
+
 		// 有給休暇付与日数 → 空なら 0.0
 		yukyukyukafuyoNissu = (yukyukyukafuyoNissu == null || yukyukyukafuyoNissu.isEmpty()) ? "0.0" : yukyukyukafuyoNissu;
-	
+
 		// 時給日給区分 → 空なら空文字
 		jikyunikkyuKbn = (jikyunikkyuKbn == null || jikyunikkyuKbn.isEmpty()) ? ""    : jikyunikkyuKbn;
-	
+
 		// 契約実働時間 → 空なら 0.00
 		keiyakujitsudoJikan = (keiyakujitsudoJikan == null || keiyakujitsudoJikan.isEmpty()) ? "0.00" : keiyakujitsudoJikan;
-	
+
 		// 申請単価1～11 → 空なら 0
 		for (int i = 0; i < shinseiTanka.length; i++) {
-		     shinseiTanka[i] = (shinseiTanka[i] == null || shinseiTanka[i].isEmpty()) ? "0" : shinseiTanka[i];
+			shinseiTanka[i] = (shinseiTanka[i] == null || shinseiTanka[i].isEmpty()) ? "0" : shinseiTanka[i];
 		}
-	
+
 		// 通勤費区分 → 空なら空文字
 		tsukinhiKbn = (tsukinhiKbn == null || tsukinhiKbn.isEmpty()) ? "" : tsukinhiKbn;
 
-	    
 		//=====================================================================
 		// ユーザー情報の取得
 		//=====================================================================
 		UserInformation userInformation = (UserInformation)req.getSession().getAttribute(Define.SESSION_ID);
-		
+
 		//=====================================================================
 		// DB接続
 		//=====================================================================
@@ -381,7 +360,7 @@ public class MstShainAction extends PJActionBase {
 		PreparedStatement pstmt			= null;
 		StringBuffer sql				= new StringBuffer();
 		PreparedStatementFactory pstmtf	= new PreparedStatementFactory();
-		
+
 		try {
 	        //=====================================================================
 	        // ① MST_SHAIN 登録
@@ -394,130 +373,125 @@ public class MstShainAction extends PJActionBase {
 	        sql.append(" TsukinHiKbn, TaisyokuDate, SaishuKoshinShainNO, SaishuKoshinDate, SaishuKoshinJikan ");
 	        sql.append(" ) VALUES ( ");
 	        sql.append(" ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ? ) ");
-	
-			
+
+
 			// パラメータ設定
-		    pstmtf.addValue("String", shainNo);
-		    pstmtf.addValue("String", shainName);
-		    pstmtf.addValue("String", password);
-		    pstmtf.addValue("String", userKbn);
-		    pstmtf.addValue("String", shainKbn);
-		    pstmtf.addValue("String", shukinboKbn);
-		    pstmtf.addValue("String", eigyoshoCode);
-		    pstmtf.addValue("String", bushoCode);
-		    pstmtf.addValue("String", yukyukyukafuyoNissu);
-		    pstmtf.addValue("String", jikyunikkyuKbn);
-		    pstmtf.addValue("String", kinmukaishiJi);
-		    pstmtf.addValue("String", kinmukaishiFun);
-		    pstmtf.addValue("String", kinmushuryoJi);
-		    pstmtf.addValue("String", kinmushuryoFun);
-		    pstmtf.addValue("String", keiyakujitsudoJikan);
-	        for (int i = 0; i < 11; i++) {
-	            pstmtf.addValue("String", shinseiTanka[i]);
-	        }
-		    pstmtf.addValue("String", tsukinhiKbn);
-		    pstmtf.addValue("String", taisyokuDate);
-		    pstmtf.addValue("String", userInformation.getShainNO());
-		    pstmtf.addValue("String", PJActionBase.getNowDate());
-		    pstmtf.addValue("String", PJActionBase.getNowTime());
-		    
+			pstmtf.addValue("String", shainNo);
+			pstmtf.addValue("String", shainName);
+			pstmtf.addValue("String", password);
+			pstmtf.addValue("String", userKbn);
+			pstmtf.addValue("String", shainKbn);
+			pstmtf.addValue("String", shukinboKbn);
+			pstmtf.addValue("String", eigyoshoCode);
+			pstmtf.addValue("String", bushoCode);
+			pstmtf.addValue("String", yukyukyukafuyoNissu);
+			pstmtf.addValue("String", jikyunikkyuKbn);
+			pstmtf.addValue("String", kinmukaishiJi);
+			pstmtf.addValue("String", kinmukaishiFun);
+			pstmtf.addValue("String", kinmushuryoJi);
+			pstmtf.addValue("String", kinmushuryoFun);
+			pstmtf.addValue("String", keiyakujitsudoJikan);
+			for (int i = 0; i < 11; i++) {
+				pstmtf.addValue("String", shinseiTanka[i]);
+			}
+			pstmtf.addValue("String", tsukinhiKbn);
+			pstmtf.addValue("String", taisyokuDate);
+			pstmtf.addValue("String", userInformation.getShainNO());
+			pstmtf.addValue("String", PJActionBase.getNowDate());
+			pstmtf.addValue("String", PJActionBase.getNowTime());
+
 			pstmt = con.prepareStatement(sql.toString());
 			pstmtf.setPreparedStatement(pstmt);
 			pstmt.execute();
 			pstmt.close();
-		
-			
-			//デバック
-			
-			System.out.println("勤務開始・終了時刻 " + kinmukaishiJi + kinmukaishiFun + kinmushuryoJi + kinmushuryoFun);
-			
-		     //=====================================================================
-		     // ② MST_SHAIN_EIGYOSHO 差分更新（複数）
-		     //=====================================================================
-		   	 // 入力が「全て空」の場合の判定フラグ
-			 boolean noInput = (shoriKanoEigyoshoCodes == null
+
+			//=====================================================================
+			// ② MST_SHAIN_EIGYOSHO 差分更新（複数）
+			//=====================================================================
+			// 入力が「全て空」の場合の判定フラグ
+			boolean noInput = (shoriKanoEigyoshoCodes == null
 				|| shoriKanoEigyoshoCodes.length == 0
 				|| Arrays.stream(shoriKanoEigyoshoCodes)
 					.allMatch(s -> s == null || s.trim().isEmpty()));
-			
-			 // 既存の営業所コードを取得
-			 List<String> existingCodes = new ArrayList<>();
-			 sql.setLength(0);
-			 sql.append("SELECT EigyoshoCode FROM MST_SHAIN_EIGYOSHO WHERE ShainNO = ?");
-			 pstmtf.clear();
-			 pstmtf.addValue("String", shainNo);
-			 pstmt = con.prepareStatement(sql.toString());
-			 pstmtf.setPreparedStatement(pstmt);
-			 ResultSet rs = pstmt.executeQuery();
-			 while (rs.next()) {
-			     existingCodes.add(rs.getString("EigyoshoCode"));
-			 }
-			 rs.close();
-			 pstmt.close();
-			
-			 if (noInput) {
-			     // 全削除
-			     if (!existingCodes.isEmpty()) {
-			         sql.setLength(0);
-			         sql.append("DELETE FROM MST_SHAIN_EIGYOSHO WHERE ShainNO = ?");
-			         pstmt = con.prepareStatement(sql.toString());
-			         pstmt.setString(1, shainNo);
-			         pstmt.executeUpdate();
-			         pstmt.close();
-			     }
-			 } else {
-			     // 新規追加対象
-			     List<String> toInsert = new ArrayList<>();
-			     for (String code : shoriKanoEigyoshoCodes) {
-			         if (code != null && !code.trim().isEmpty() && !existingCodes.contains(code)) {
-			             toInsert.add(code);
-			         }
-			     }
-			
-			     // 削除対象（既存だが送られてこなかったもの）
-			     List<String> toDelete = new ArrayList<>();
-			     for (String code : existingCodes) {
-			         if (!Arrays.asList(shoriKanoEigyoshoCodes).contains(code)) {
-			             toDelete.add(code);
-			         }
-			     }
-			
-			     // 削除
-			     if (!toDelete.isEmpty()) {
-			         sql.setLength(0);
-			         sql.append("DELETE FROM MST_SHAIN_EIGYOSHO WHERE ShainNO = ? AND EigyoshoCode = ?");
-			         pstmt = con.prepareStatement(sql.toString());
-			
-			         for (String code : toDelete) {
-			             pstmt.setString(1, shainNo);
-			             pstmt.setString(2, code);
-			             pstmt.addBatch();
-			         }
-			
-			         pstmt.executeBatch();
-			         pstmt.close();
-			     }
-			
-			     // 新規追加
-			     if (!toInsert.isEmpty()) {
-			         sql.setLength(0);
-			         sql.append("INSERT INTO MST_SHAIN_EIGYOSHO (ShainNO, EigyoshoCode, SaishuKoshinShainNO, SaishuKoshinDate, SaishuKoshinJikan) ");
-			         sql.append("VALUES (?, ?, ?, ?, ?)");
-			         pstmt = con.prepareStatement(sql.toString());
-			
-			         for (String code : toInsert) {
-			             pstmt.setString(1, shainNo);
-			             pstmt.setString(2, code);
-			             pstmt.setString(3, userInformation.getShainNO());
-			             pstmt.setString(4, PJActionBase.getNowDate());
-			             pstmt.setString(5, PJActionBase.getNowTime());
-			             pstmt.addBatch();
-			         }
-			
-			         pstmt.executeBatch();
-			         pstmt.close();
-			     }
-			 }
+
+			// 既存の営業所コードを取得
+			List<String> existingCodes = new ArrayList<>();
+			sql.setLength(0);
+			sql.append("SELECT EigyoshoCode FROM MST_SHAIN_EIGYOSHO WHERE ShainNO = ?");
+			pstmtf.clear();
+			pstmtf.addValue("String", shainNo);
+			pstmt = con.prepareStatement(sql.toString());
+			pstmtf.setPreparedStatement(pstmt);
+			ResultSet rs = pstmt.executeQuery();
+			while (rs.next()) {
+				existingCodes.add(rs.getString("EigyoshoCode"));
+			}
+			rs.close();
+			pstmt.close();
+
+			if (noInput) {
+				// 全削除
+				if (!existingCodes.isEmpty()) {
+					sql.setLength(0);
+					sql.append("DELETE FROM MST_SHAIN_EIGYOSHO WHERE ShainNO = ?");
+					pstmt = con.prepareStatement(sql.toString());
+					pstmt.setString(1, shainNo);
+					pstmt.executeUpdate();
+					pstmt.close();
+				}
+			} else {
+				// 新規追加対象
+				List<String> toInsert = new ArrayList<>();
+				for (String code : shoriKanoEigyoshoCodes) {
+					if (code != null && !code.trim().isEmpty() && !existingCodes.contains(code)) {
+						toInsert.add(code);
+					}
+				}
+
+				// 削除対象（既存だが送られてこなかったもの）
+				List<String> toDelete = new ArrayList<>();
+				for (String code : existingCodes) {
+					if (!Arrays.asList(shoriKanoEigyoshoCodes).contains(code)) {
+						toDelete.add(code);
+					}
+				}
+
+				// 削除
+				if (!toDelete.isEmpty()) {
+					sql.setLength(0);
+					sql.append("DELETE FROM MST_SHAIN_EIGYOSHO WHERE ShainNO = ? AND EigyoshoCode = ?");
+					pstmt = con.prepareStatement(sql.toString());
+
+					for (String code : toDelete) {
+						pstmt.setString(1, shainNo);
+						pstmt.setString(2, code);
+						pstmt.addBatch();
+					}
+
+					pstmt.executeBatch();
+					pstmt.close();
+				}
+
+				// 新規追加
+				if (!toInsert.isEmpty()) {
+					sql.setLength(0);
+					sql.append("INSERT INTO MST_SHAIN_EIGYOSHO (ShainNO, EigyoshoCode, SaishuKoshinShainNO, SaishuKoshinDate, SaishuKoshinJikan) ");
+					sql.append("VALUES (?, ?, ?, ?, ?)");
+					pstmt = con.prepareStatement(sql.toString());
+
+					for (String code : toInsert) {
+						pstmt.setString(1, shainNo);
+						pstmt.setString(2, code);
+						pstmt.setString(3, userInformation.getShainNO());
+						pstmt.setString(4, PJActionBase.getNowDate());
+						pstmt.setString(5, PJActionBase.getNowTime());
+						pstmt.addBatch();
+					}
+
+					pstmt.executeBatch();
+					pstmt.close();
+				}
+			}
 
 			} catch (Exception exp){
 				exp.printStackTrace();
@@ -525,7 +499,7 @@ public class MstShainAction extends PJActionBase {
 				if (pstmt != null){ try { pstmt.close(); } catch (Exception exp){}}
 			}
 		}
-	
+
 	/**
 	 * 社員情報更新処理
 	 * MST_SHAIN の基本情報を更新し、
@@ -536,251 +510,248 @@ public class MstShainAction extends PJActionBase {
 	 * @throws Exception DB接続やSQL実行で例外が発生した場合。
 	 */
 	public void update(HttpServletRequest req, HttpServletResponse res) throws Exception {
-		
+
 	}
 	public void update_(HttpServletRequest req, HttpServletResponse res) throws Exception {
-		
-	    //=====================================================================
-	    // パラメータ取得
-	    //=====================================================================
-	    String shainNo 				= req.getParameter("txtShainNO");
-	    String shainName 			= req.getParameter("txtShainName");
-	    String password 			= req.getParameter("txtPassword");
-	    String userKbn 				= req.getParameter("txtUserKbn");
-	    String shainKbn 			= req.getParameter("txtShainKbn");
-	    String shukinboKbn 			= req.getParameter("txtShukinboKbn");
-	    String eigyoshoCode 		= req.getParameter("txtEigyoshoCode");
-	    String bushoCode 			= req.getParameter("txtBushoCode");
-	    String yukyukyukafuyoNissu 	= req.getParameter("txtYukyuKyukaFuyoNissu");
-	    String jikyunikkyuKbn 		= req.getParameter("txtJikyuNikkyuKbn");
-	    String kinmukaishiJi 		= req.getParameter("txtKinmuKaishiJiKbnName");
-	    String kinmukaishiFun 		= req.getParameter("txtKinmuKaishiFunKbnName");
-	    String kinmushuryoJi 		= req.getParameter("txtKinmuShuryoJiKbnName");
-	    String kinmushuryoFun 		= req.getParameter("txtKinmuShuryoFunKbnName");
-	    String keiyakujitsudoJikan 	= req.getParameter("txtKeiyakuJitsudoJikan");
-	    String[] shinseiTanka = new String[11];
-	    for (int i = 1; i <= 11; i++) {
-	        shinseiTanka[i-1] 		= req.getParameter("txtShinseiTanka" + (i<10?"0":"") + i);
-	    }
-	    String tsukinhiKbn 			= req.getParameter("txtTsukinHiKbn");
-	    String taisyokuDate 		= req.getParameter("txtTaisyokuDate");
 
-	    // 処理可能営業所
-	    String[] shoriKanoEigyoshoCodes = req.getParameterValues("eigyoshoCode[]");
-	    
-	    //=====================================================================
-	    // 0詰め処理
-	    //=====================================================================
-	    
-	    // 社員NO
-	    int shainNo_ = Integer.parseInt(shainNo);
-	    shainNo = String.format("%04d", shainNo_);	 
-	    
-	    // 営業所コード
-	    int eigyoshoCode_ = Integer.parseInt(eigyoshoCode);
-	    eigyoshoCode = String.format("%03d", eigyoshoCode_);
-	    
-	    // 部署コード
-	    int bushoCode_ = Integer.parseInt(bushoCode);
-	    bushoCode = String.format("%04d", bushoCode_);
-	    
-	    // 処理可能営業所コード
-	    if (shoriKanoEigyoshoCodes != null) {
-	        for (int i = 0; i < shoriKanoEigyoshoCodes.length; i++) {
-	            String code = shoriKanoEigyoshoCodes[i];
-	            if (code != null && !code.isEmpty()) {
-	                // 数値として解釈して3桁に0埋め
-	                int num = Integer.parseInt(code);
-	                shoriKanoEigyoshoCodes[i] = String.format("%03d", num);
-	            }
-	        }
-	    }
+		//=====================================================================
+		// パラメータ取得
+		//=====================================================================
+		String shainNo 				= req.getParameter("txtShainNO");
+		String shainName 			= req.getParameter("txtShainName");
+		String password 			= req.getParameter("txtPassword");
+		String userKbn 				= req.getParameter("txtUserKbn");
+		String shainKbn 			= req.getParameter("txtShainKbn");
+		String shukinboKbn 			= req.getParameter("txtShukinboKbn");
+		String eigyoshoCode 		= req.getParameter("txtEigyoshoCode");
+		String bushoCode 			= req.getParameter("txtBushoCode");
+		String yukyukyukafuyoNissu 	= req.getParameter("txtYukyuKyukaFuyoNissu");
+		String jikyunikkyuKbn 		= req.getParameter("txtJikyuNikkyuKbn");
+		String kinmukaishiJi 		= req.getParameter("txtKinmuKaishiJiKbnName");
+		String kinmukaishiFun 		= req.getParameter("txtKinmuKaishiFunKbnName");
+		String kinmushuryoJi 		= req.getParameter("txtKinmuShuryoJiKbnName");
+		String kinmushuryoFun 		= req.getParameter("txtKinmuShuryoFunKbnName");
+		String keiyakujitsudoJikan 	= req.getParameter("txtKeiyakuJitsudoJikan");
+		String[] shinseiTanka = new String[11];
+		for (int i = 1; i <= 11; i++) {
+			shinseiTanka[i-1] 		= req.getParameter("txtShinseiTanka" + (i<10?"0":"") + i);
+		}
+		String tsukinhiKbn 			= req.getParameter("txtTsukinHiKbn");
+		String taisyokuDate 		= req.getParameter("txtTaisyokuDate");
+
+		// 処理可能営業所
+		String[] shoriKanoEigyoshoCodes = req.getParameterValues("eigyoshoCode[]");
+		//=====================================================================
+		// 0詰め処理
+		//=====================================================================
+
+		// 社員NO
+		int shainNo_ = Integer.parseInt(shainNo);
+		shainNo = String.format("%04d", shainNo_);	 
+
+		// 営業所コード
+		int eigyoshoCode_ = Integer.parseInt(eigyoshoCode);
+		eigyoshoCode = String.format("%03d", eigyoshoCode_);
+
+		// 部署コード
+		int bushoCode_ = Integer.parseInt(bushoCode);
+		bushoCode = String.format("%04d", bushoCode_);
+
+		// 処理可能営業所コード
+		if (shoriKanoEigyoshoCodes != null) {
+			for (int i = 0; i < shoriKanoEigyoshoCodes.length; i++) {
+				String code = shoriKanoEigyoshoCodes[i];
+				if (code != null && !code.isEmpty()) {
+					// 数値として解釈して3桁に0埋め
+					int num = Integer.parseInt(code);
+					shoriKanoEigyoshoCodes[i] = String.format("%03d", num);
+				}
+			}
+		}
 
 		// ===== デフォルト値補正 =====
-	    
-	    // ユーザ区分 → 空なら null 
-	    userKbn = (userKbn == null || userKbn.isEmpty()) ? null : userKbn;
-	
+		// ユーザ区分 → 空なら null 
+		userKbn = (userKbn == null || userKbn.isEmpty()) ? null : userKbn;
+
 		// 勤務開始・終了（時分） → 空なら空文字
 		kinmukaishiJi  = (kinmukaishiJi  == null || kinmukaishiJi.isEmpty())  ? ""    : kinmukaishiJi;
 		kinmukaishiFun = (kinmukaishiFun == null || kinmukaishiFun.isEmpty()) ? ""    : kinmukaishiFun;
 		kinmushuryoJi  = (kinmushuryoJi  == null || kinmushuryoJi.isEmpty())  ? ""    : kinmushuryoJi;
 		kinmushuryoFun = (kinmushuryoFun == null || kinmushuryoFun.isEmpty()) ? ""    : kinmushuryoFun;
-		
+
 		// 有給休暇付与日数 → 空なら 0.0
 		yukyukyukafuyoNissu = (yukyukyukafuyoNissu == null || yukyukyukafuyoNissu.isEmpty()) ? "0.0" : yukyukyukafuyoNissu;
-	
+
 		// 時給日給区分 → 空なら空文字
 		jikyunikkyuKbn = (jikyunikkyuKbn == null || jikyunikkyuKbn.isEmpty()) ? ""    : jikyunikkyuKbn;
-	
+
 		// 契約実働時間 → 空なら 0.00
 		keiyakujitsudoJikan = (keiyakujitsudoJikan == null || keiyakujitsudoJikan.isEmpty()) ? "0.00" : keiyakujitsudoJikan;
-	
+
 		// 申請単価1～11 → 空なら 0
 		for (int i = 0; i < shinseiTanka.length; i++) {
-		    shinseiTanka[i] = (shinseiTanka[i] == null || shinseiTanka[i].isEmpty()) ? "0" : shinseiTanka[i];
+			shinseiTanka[i] = (shinseiTanka[i] == null || shinseiTanka[i].isEmpty()) ? "0" : shinseiTanka[i];
 		}
-	
+
 		// 通勤費区分 → 空なら空文字
 		tsukinhiKbn = (tsukinhiKbn == null || tsukinhiKbn.isEmpty()) ? "" : tsukinhiKbn;
 
-	    //=====================================================================
-	    // ユーザー情報の取得
-	    //=====================================================================
-	    UserInformation userInformation = (UserInformation)req.getSession().getAttribute(Define.SESSION_ID);
+		//=====================================================================
+		// ユーザー情報の取得
+		//=====================================================================
+		UserInformation userInformation = (UserInformation)req.getSession().getAttribute(Define.SESSION_ID);
 
-	    //=====================================================================
-	    // DB接続
-	    //=====================================================================
-	    Connection con = this.getConnection("kintai", req);
-	    PreparedStatement pstmt = null;
-	    StringBuffer sql = new StringBuffer();
-	    PreparedStatementFactory pstmtf = new PreparedStatementFactory();
+		//=====================================================================
+		// DB接続
+		//=====================================================================
+		Connection con = this.getConnection("kintai", req);
+		PreparedStatement pstmt = null;
+		StringBuffer sql = new StringBuffer();
+		PreparedStatementFactory pstmtf = new PreparedStatementFactory();
 
-	    try {
-	        //=====================================================================
-	        // ① MST_SHAIN 更新
-	        //=====================================================================
-	        pstmtf.clear();
-	        sql.setLength(0);
-	        sql.append(" UPDATE MST_SHAIN SET ");
-	        sql.append(" ShainName = ?, Password = ?, UserKbn = ?, ShainKbn = ?, ShukinboKbn = ?, EigyoshoCode = ?, BushoCode = ?, ");
-	        sql.append(" YukyuKyukaFuyoNissu = ?, JikyuNikkyuKbn = ?, KinmuKaishiJi = ?, KinmuKaishiFun = ?, KinmuShuryoJi = ?, KinmuShuryoFun = ?, ");
-	        sql.append(" KeiyakuJitsudoJikan = ?, ");
-	        for (int i = 1; i <= 11; i++) {
-	            sql.append("ShinseiTanka" + (i<10?"0":"") + i + " = ?, ");
-	        }
-	        sql.append(" TsukinHiKbn = ?, TaisyokuDate = ?, ");
-	        sql.append(" SaishuKoshinShainNO = ?, SaishuKoshinDate = ?, SaishuKoshinJikan = ? ");
-	        sql.append(" WHERE ShainNO = ? ");
+		try {
+			//=====================================================================
+			// ① MST_SHAIN 更新
+			//=====================================================================
+			pstmtf.clear();
+			sql.setLength(0);
+			sql.append(" UPDATE MST_SHAIN SET ");
+			sql.append(" ShainName = ?, Password = ?, UserKbn = ?, ShainKbn = ?, ShukinboKbn = ?, EigyoshoCode = ?, BushoCode = ?, ");
+			sql.append(" YukyuKyukaFuyoNissu = ?, JikyuNikkyuKbn = ?, KinmuKaishiJi = ?, KinmuKaishiFun = ?, KinmuShuryoJi = ?, KinmuShuryoFun = ?, ");
+			sql.append(" KeiyakuJitsudoJikan = ?, ");
+			for (int i = 1; i <= 11; i++) {
+				sql.append("ShinseiTanka" + (i<10?"0":"") + i + " = ?, ");
+			}
+			sql.append(" TsukinHiKbn = ?, TaisyokuDate = ?, ");
+			sql.append(" SaishuKoshinShainNO = ?, SaishuKoshinDate = ?, SaishuKoshinJikan = ? ");
+			sql.append(" WHERE ShainNO = ? ");
 
-	        pstmtf.addValue("String", shainName);
-	        pstmtf.addValue("String", password);
-	        pstmtf.addValue("String", userKbn);
-	        pstmtf.addValue("String", shainKbn);
-	        pstmtf.addValue("String", shukinboKbn);
-	        pstmtf.addValue("String", eigyoshoCode);
-	        pstmtf.addValue("String", bushoCode);
-	        pstmtf.addValue("String", yukyukyukafuyoNissu);
-	        pstmtf.addValue("String", jikyunikkyuKbn);
-	        pstmtf.addValue("String", kinmukaishiJi);
-	        pstmtf.addValue("String", kinmukaishiFun);
-	        pstmtf.addValue("String", kinmushuryoJi);
-	        pstmtf.addValue("String", kinmushuryoFun);
-	        pstmtf.addValue("String", keiyakujitsudoJikan);
-	        for (int i = 0; i < 11; i++) {
-	            pstmtf.addValue("String", shinseiTanka[i]);
-	        }
-	        pstmtf.addValue("String", tsukinhiKbn);
-	        pstmtf.addValue("String", taisyokuDate);
-	        pstmtf.addValue("String", userInformation.getShainNO());
-	        pstmtf.addValue("String", PJActionBase.getNowDate());
-	        pstmtf.addValue("String", PJActionBase.getNowTime());
-	        pstmtf.addValue("String", shainNo);
+			pstmtf.addValue("String", shainName);
+			pstmtf.addValue("String", password);
+			pstmtf.addValue("String", userKbn);
+			pstmtf.addValue("String", shainKbn);
+			pstmtf.addValue("String", shukinboKbn);
+			pstmtf.addValue("String", eigyoshoCode);
+			pstmtf.addValue("String", bushoCode);
+			pstmtf.addValue("String", yukyukyukafuyoNissu);
+			pstmtf.addValue("String", jikyunikkyuKbn);
+			pstmtf.addValue("String", kinmukaishiJi);
+			pstmtf.addValue("String", kinmukaishiFun);
+			pstmtf.addValue("String", kinmushuryoJi);
+			pstmtf.addValue("String", kinmushuryoFun);
+			pstmtf.addValue("String", keiyakujitsudoJikan);
+			for (int i = 0; i < 11; i++) {
+				pstmtf.addValue("String", shinseiTanka[i]);
+			}
+			pstmtf.addValue("String", tsukinhiKbn);
+			pstmtf.addValue("String", taisyokuDate);
+			pstmtf.addValue("String", userInformation.getShainNO());
+			pstmtf.addValue("String", PJActionBase.getNowDate());
+			pstmtf.addValue("String", PJActionBase.getNowTime());
+			pstmtf.addValue("String", shainNo);
 
-	        pstmt = con.prepareStatement(sql.toString());
-	        pstmtf.setPreparedStatement(pstmt);
-	        pstmt.execute();
-	        pstmt.close();
+			pstmt = con.prepareStatement(sql.toString());
+			pstmtf.setPreparedStatement(pstmt);
+			pstmt.execute();
+			pstmt.close();
 
-	     //=====================================================================
-	     // ② MST_SHAIN_EIGYOSHO 差分更新（複数）
-	     //=====================================================================
-	   	 // 入力が「全て空」の場合の判定フラグ
-		 boolean noInput = (shoriKanoEigyoshoCodes == null
+		//=====================================================================
+		// ② MST_SHAIN_EIGYOSHO 差分更新（複数）
+		//=====================================================================
+		// 入力が「全て空」の場合の判定フラグ
+		boolean noInput = (shoriKanoEigyoshoCodes == null
 			|| shoriKanoEigyoshoCodes.length == 0
 			|| Arrays.stream(shoriKanoEigyoshoCodes)
 				.allMatch(s -> s == null || s.trim().isEmpty()));
-		
-		 // 既存の営業所コードを取得
-		 List<String> existingCodes = new ArrayList<>();
-		 sql.setLength(0);
-		 sql.append("SELECT EigyoshoCode FROM MST_SHAIN_EIGYOSHO WHERE ShainNO = ?");
-		 pstmtf.clear();
-		 pstmtf.addValue("String", shainNo);
-		 pstmt = con.prepareStatement(sql.toString());
-		 pstmtf.setPreparedStatement(pstmt);
-		 ResultSet rs = pstmt.executeQuery();
-		 while (rs.next()) {
-		     existingCodes.add(rs.getString("EigyoshoCode"));
-		 }
-		 rs.close();
-		 pstmt.close();
-		
-		 if (noInput) {
-		     // 全削除
-		     if (!existingCodes.isEmpty()) {
-		         sql.setLength(0);
-		         sql.append("DELETE FROM MST_SHAIN_EIGYOSHO WHERE ShainNO = ?");
-		         pstmt = con.prepareStatement(sql.toString());
-		         pstmt.setString(1, shainNo);
-		         pstmt.executeUpdate();
-		         pstmt.close();
-		     }
-		 } else {
-		     // 新規追加対象
-		     List<String> toInsert = new ArrayList<>();
-		     for (String code : shoriKanoEigyoshoCodes) {
-		         if (code != null && !code.trim().isEmpty() && !existingCodes.contains(code)) {
-		             toInsert.add(code);
-		         }
-		     }
-		
-		     // 削除対象（既存だが送られてこなかったもの）
-		     List<String> toDelete = new ArrayList<>();
-		     for (String code : existingCodes) {
-		         if (!Arrays.asList(shoriKanoEigyoshoCodes).contains(code)) {
-		             toDelete.add(code);
-		         }
-		     }
-		
-		     // 削除
-		     if (!toDelete.isEmpty()) {
-		         sql.setLength(0);
-		         sql.append("DELETE FROM MST_SHAIN_EIGYOSHO WHERE ShainNO = ? AND EigyoshoCode = ?");
-		         pstmt = con.prepareStatement(sql.toString());
-		
-		         for (String code : toDelete) {
-		             pstmt.setString(1, shainNo);
-		             pstmt.setString(2, code);
-		             pstmt.addBatch();
-		         }
-		
-		         pstmt.executeBatch();
-		         pstmt.close();
-		     }
-		
-		     // 新規追加
-		     if (!toInsert.isEmpty()) {
-		         sql.setLength(0);
-		         sql.append("INSERT INTO MST_SHAIN_EIGYOSHO (ShainNO, EigyoshoCode, SaishuKoshinShainNO, SaishuKoshinDate, SaishuKoshinJikan) ");
-		         sql.append("VALUES (?, ?, ?, ?, ?)");
-		         pstmt = con.prepareStatement(sql.toString());
-		
-		         for (String code : toInsert) {
-		             pstmt.setString(1, shainNo);
-		             pstmt.setString(2, code);
-		             pstmt.setString(3, userInformation.getShainNO());
-		             pstmt.setString(4, PJActionBase.getNowDate());
-		             pstmt.setString(5, PJActionBase.getNowTime());
-		             pstmt.addBatch();
-		         }
-		
-		         pstmt.executeBatch();
-		         pstmt.close();
-		     }
-		 }
-	    } catch (Exception exp){
+
+		// 既存の営業所コードを取得
+		List<String> existingCodes = new ArrayList<>();
+		sql.setLength(0);
+		sql.append("SELECT EigyoshoCode FROM MST_SHAIN_EIGYOSHO WHERE ShainNO = ?");
+		pstmtf.clear();
+		pstmtf.addValue("String", shainNo);
+		pstmt = con.prepareStatement(sql.toString());
+		pstmtf.setPreparedStatement(pstmt);
+		ResultSet rs = pstmt.executeQuery();
+		while (rs.next()) {
+			existingCodes.add(rs.getString("EigyoshoCode"));
+		}
+		rs.close();
+		pstmt.close();
+
+		if (noInput) {
+			// 全削除
+			if (!existingCodes.isEmpty()) {
+				sql.setLength(0);
+				sql.append("DELETE FROM MST_SHAIN_EIGYOSHO WHERE ShainNO = ?");
+				pstmt = con.prepareStatement(sql.toString());
+				pstmt.setString(1, shainNo);
+				pstmt.executeUpdate();
+				pstmt.close();
+			}
+		} else {
+			// 新規追加対象
+			List<String> toInsert = new ArrayList<>();
+			for (String code : shoriKanoEigyoshoCodes) {
+				if (code != null && !code.trim().isEmpty() && !existingCodes.contains(code)) {
+					toInsert.add(code);
+				}
+			}
+
+			// 削除対象（既存だが送られてこなかったもの）
+			List<String> toDelete = new ArrayList<>();
+			for (String code : existingCodes) {
+				if (!Arrays.asList(shoriKanoEigyoshoCodes).contains(code)) {
+					toDelete.add(code);
+				}
+			}
+
+			// 削除
+			if (!toDelete.isEmpty()) {
+				sql.setLength(0);
+				sql.append("DELETE FROM MST_SHAIN_EIGYOSHO WHERE ShainNO = ? AND EigyoshoCode = ?");
+			pstmt = con.prepareStatement(sql.toString());
+
+				for (String code : toDelete) {
+					pstmt.setString(1, shainNo);
+					pstmt.setString(2, code);
+					pstmt.addBatch();
+				}
+
+				pstmt.executeBatch();
+				pstmt.close();
+			}
+
+			// 新規追加
+			if (!toInsert.isEmpty()) {
+				sql.setLength(0);
+				sql.append("INSERT INTO MST_SHAIN_EIGYOSHO (ShainNO, EigyoshoCode, SaishuKoshinShainNO, SaishuKoshinDate, SaishuKoshinJikan) ");
+				sql.append("VALUES (?, ?, ?, ?, ?)");
+				pstmt = con.prepareStatement(sql.toString());
+
+				for (String code : toInsert) {
+					pstmt.setString(1, shainNo);
+					pstmt.setString(2, code);
+					pstmt.setString(3, userInformation.getShainNO());
+					pstmt.setString(4, PJActionBase.getNowDate());
+					pstmt.setString(5, PJActionBase.getNowTime());
+					pstmt.addBatch();
+				}
+
+				pstmt.executeBatch();
+				pstmt.close();
+			}
+		}
+		} catch (Exception exp){
 			exp.printStackTrace();
 		} finally {
 			if (pstmt != null){ try { pstmt.close(); } catch (Exception exp){}}
 		}
 	}
-	
+
 	public void copy_(HttpServletRequest req, HttpServletResponse res) throws Exception {
 		// やりたい処理自体は登録処理と同一のため、insert_を呼び出すことで実施される。
 		insert_(req, res);
 	}
 
-	
 }

@@ -6,44 +6,43 @@
 //
 //****************************************************************************
 function getMstShain() {
-	
 	// 処理可能営業所リスト初期化、表示クリア
 	eigyoshoList = [];
-    $("#ShoriKanoEigyoshoResult").children().remove();
+	$("#ShoriKanoEigyoshoResult").children().remove();
 
     proc("search", {}, function(data) {
-		
-        if (data == undefined) { return; }
-        if (data["contents"] == undefined) { return; }
 
-        var contents 		= data["contents"];
-        if (contents["isNew"] == undefined || contents["mstDatas"] == undefined){ return; }
-		
+		if (data == undefined) { return; }
+		if (data["contents"] == undefined) { return; }
+
+		var contents = data["contents"];
+		if (contents["isNew"] == undefined || contents["mstDatas"] == undefined){ return; }
+
 		// 取得した値の格納
 		var isNew = contents["isNew"];
 		$("#hdnIsNew").val(isNew);
-		
+
 		// mainAreaを表示する。
 		$("#mainArea").css("visibility", "visible");
 		$("#buttonArea").css("visibility", "visible");
-		
+
 		// 既に背景色が設定されている場合は一旦削除
 		$("#mainArea").removeClass('ins');
 		$("#mainArea").removeClass('upd');
-		
+
 		// 背景色を設定
 		if (isNew == "1") {
 			$("#mainArea").addClass("ins");
 		} else {
 			$("#mainArea").addClass("upd");
 		}
-		
+
 		// 新規の時は社員NOを非活性
 		$("#txtShainNO").prop('readonly', false);
 		if (isNew == "1") {
 			$("#txtShainNO").prop('readonly', true);
 		}
-		
+
 		// 新規の時は削除ボタンは非活性
 		$("#btnDelete").prop('disabled', false);
 		if (isNew == "1") {
@@ -63,8 +62,8 @@ function getMstShain() {
 			$("#txtEigyoshoCode").val(mstDatas[i]["EigyoshoCode"]);
 			$("#txtBushoCode").val(mstDatas[i]["BushoCode"]);
 			$("#txtYukyuKyukaFuyoNissu").val(mstDatas[i]["YukyuKyukaFuyoNissu"]);
-			$("#txtJikyuNikkyuKbn").val(mstDatas[i]["JikyuNikkyuKbn"]);		
-			$("#txtKinmuKaishiJiKbnName").val(mstDatas[i]["KinmuKaishiJi"]);			
+			$("#txtJikyuNikkyuKbn").val(mstDatas[i]["JikyuNikkyuKbn"]);
+			$("#txtKinmuKaishiJiKbnName").val(mstDatas[i]["KinmuKaishiJi"]);
 			$("#txtKinmuKaishiFunKbnName").val(mstDatas[i]["KinmuKaishiFun"]);
 			$("#txtKinmuShuryoJiKbnName").val(mstDatas[i]["KinmuShuryoJi"]);
 			$("#txtKinmuShuryoFunKbnName").val(mstDatas[i]["KinmuShuryoFun"]);
@@ -82,61 +81,56 @@ function getMstShain() {
 			$("#txtShinseiTanka11").val(mstDatas[i]["ShinseiTanka11"]);
 			$("#txtTsukinHiKbn").val(mstDatas[i]["TsukinHiKbn"]);
 			$("#txtTaisyokuDate").val(mstDatas[i]["TaisyokuDate"]);
-			
+
 			if (isNew == "1") {
 				// 新規登録 → 空リストにする
 				eigyoshoList = [];
 			} else {
-				// 既存データ → サーバーの営業所リストを利用	
+				// 既存データ → サーバーの営業所リストを利用
 				eigyoshoList = mstDatas[i]["ShoriKanoEigyoshos"] || []; 
 			}
-				
+
 			$("#hdnSaishuKoshinShainNO").val(mstDatas[i]["SaishuKoshinShainNO"]);
 			$("#hdnSaishuKoshinShainName").val(mstDatas[i]["SaishuKoshinShainName"]);
 			$("#hdnSaishuKoshinDate").val(mstDatas[i]["SaishuKoshinDate"]);
 			$("#hdnSaishuKoshinJikan").val(mstDatas[i]["SaishuKoshinJikan"]);
-			// $("#lblSaishuKoshinShainNO").html(mstDatas[i]["SaishuKoshinShainNO"]);
 			$("#lblSaishuKoshinShainName").html(mstDatas[i]["SaishuKoshinShainName"]);
 			$("#lblSaishuKoshinDate").html(mstDatas[i]["SaishuKoshinDate"]);
 			$("#lblSaishuKoshinJikan").html(mstDatas[i]["SaishuKoshinJikan"]);
 		}
-		
+
 		// 処理可能営業所描画
 		getShoriKanoEigyoshos();
-		
-		console.log("処理可能営業所リスト:", eigyoshoList);
 		// ユーザ区分名
-		setSelectFromInput('txtUserKbn','selectUserKbnName');
+		setSelectFromInput('txtUserKbn','selUserKbnName');
 		// 社員区分名
-		setSelectFromInput('txtShainKbn','selectShainKbnName');
+		setSelectFromInput('txtShainKbn','selShainKbnName');
 		// 出勤簿入力区分名
-		setSelectFromInput('txtShukinboKbn','selectShukinboKbnName');
+		setSelectFromInput('txtShukinboKbn','selShukinboKbnName');
 		// 営業所名
 		getEigyoshoName('txtEigyoshoCode', 'txtEigyoshoName');
 		// 部署名
 		getBushoName('txtBushoCode', 'txtBushoName');
 		// 時給日給区分名
-		setSelectFromInput('txtJikyuNikkyuKbn','selectJikyuNikkyuKbnName');
+		setSelectFromInput('txtJikyuNikkyuKbn','selJikyuNikkyuKbnName');
 		// 勤務開始時刻（時）
-		setSelectKinmuFromInput('txtKinmuKaishiJiKbnName','selectKinmuKaishiJiKbnName');
-		getCodeFromKbnName('txtKinmuKaishiJiKbnName','txtKinmuKaishiJiKbn','selectKinmuKaishiJiKbnName');
+		setSelectKinmuFromInput('txtKinmuKaishiJiKbnName','selKinmuKaishiJiKbnName');
+		getCodeFromKbnName('txtKinmuKaishiJiKbnName','txtKinmuKaishiJiKbn','selKinmuKaishiJiKbnName');
 		// 勤務開始時刻（分）
-		setSelectKinmuFromInput('txtKinmuKaishiFunKbnName','selectKinmuKaishiFunKbnName');
-		getCodeFromKbnName('txtKinmuKaishiFunKbnName','txtKinmuKaishiFunKbn','selectKinmuKaishiFunKbnName');
+		setSelectKinmuFromInput('txtKinmuKaishiFunKbnName','selKinmuKaishiFunKbnName');
+		getCodeFromKbnName('txtKinmuKaishiFunKbnName','txtKinmuKaishiFunKbn','selKinmuKaishiFunKbnName');
 		// 勤務終了時刻（時）
-		setSelectKinmuFromInput('txtKinmuShuryoJiKbnName','selectKinmuShuryoJiKbnName');
-		getCodeFromKbnName('txtKinmuShuryoJiKbnName','txtKinmuShuryoJiKbn','selectKinmuShuryoJiKbnName');
+		setSelectKinmuFromInput('txtKinmuShuryoJiKbnName','selKinmuShuryoJiKbnName');
+		getCodeFromKbnName('txtKinmuShuryoJiKbnName','txtKinmuShuryoJiKbn','selKinmuShuryoJiKbnName');
 		// 勤務終了時刻（分）
-		setSelectKinmuFromInput('txtKinmuShuryoFunKbnName','selectKinmuShuryoFunKbnName');	
-		getCodeFromKbnName('txtKinmuShuryoFunKbnName','txtKinmuShuryoFunKbn','selectKinmuShuryoFunKbnName');
+		setSelectKinmuFromInput('txtKinmuShuryoFunKbnName','selKinmuShuryoFunKbnName');	
+		getCodeFromKbnName('txtKinmuShuryoFunKbnName','txtKinmuShuryoFunKbn','selKinmuShuryoFunKbnName');
 		// 通勤費精算区分名
-		setSelectFromInput('txtTsukinHiKbn','selectTsukinHiKbnName');		
+		setSelectFromInput('txtTsukinHiKbn','selTsukinHiKbnName');		
 		// 処理可能営業所名
 		getEigyoshoName('txtShoriKanoEigyoshoCode', 'txtShoriKanoEigyoshoName');
-		
-		//活性・非活性切り替え
+		// 活性・非活性切り替え
 		updateActiveSwitch();
-		
 	});
 }
 
@@ -156,30 +150,30 @@ function setSelectFromInput(inputId, selectId) {
 
 // 勤務開始・終了時刻プルダウン
 function setSelectKinmuFromInput(inputId, selectId) {
-    var val = $("#" + inputId).val();
+	var val = $("#" + inputId).val();
 	var $sel = $("#" + selectId);
 	var found = false;
 
 	$sel.find("option").each(function() {
-	    if ($(this).text() === val) {
-	        $sel.val($(this).val());
-	        found = true;
-	        return false;
-	    }
+		if ($(this).text() === val) {
+			$sel.val($(this).val());
+			found = true;
+			return false;
+		}
 	});
 
 	if (!found) {
-	    $sel.val("");
+		$sel.val("");
 	}
 	// 名称 input も更新
-	var nameInputId = inputId + "Name"; // txtKinmuKaishiJiKbn → txtKinmuKaishiJiKbnName
+	var nameInputId = inputId + "Name";
 	$("#" + nameInputId).val(val);
 }
 
 // プルダウンから入力欄に同期
 function setInputFromSelect(selectId, inputId) {
-    var val = $("#" + selectId).val();
-    $("#" + inputId).val(val).trigger("change");
+	var val = $("#" + selectId).val();
+	$("#" + inputId).val(val).trigger("change");
 }
 
 //****************************************************************************
@@ -190,45 +184,46 @@ function setInputFromSelect(selectId, inputId) {
 //
 //****************************************************************************
 function getShoriKanoEigyoshos() {
-    proc("getShoriKanoEigyoshoList", {}, function(data){
-        if (data == undefined){ return; }
-        if (data["contents"] == undefined){ return; }
-        
-        var contents = data["contents"];
-        if (contents["result"] == undefined){ return; }
-        
-        var result = contents["result"];
-        eigyoshoList = result;
-        
-        // 検索結果エリアをクリア
-        $("#ShoriKanoEigyoshoResult").children().remove();
-        
-        for (var count = 0 ; count < result.length ; count++) {
-            var item = result[count];
-            var code = item.EigyoshoCode || "";
-            var row = 
-                "<tr>" +
-                    "<td class=\"title center w150 req\">" +
-                        "<a href=\"#\" onclick=\"opnDialog('srhMstEigyosho','eigyoshoCode_" + count + "','eigyoshoName_" + count + "'); return false;\">" +
-                            "処理可能営業所" +
-                        "</a>" +
-                    "</td>" +
-                    "<td class=\"value w500\">" +
-                        "<input type=\"text\" class=\"w80\" maxlength=\"3\" id=\"eigyoshoCode_" + count + "\" name=\"eigyoshoCode[]\" value=\"" + code + "\" " +
-                               "onblur=\"getEigyoshoName('eigyoshoCode_" + count + "','eigyoshoName_" + count + "');\">" +
-                        "<input type=\"text\" class=\"w200\" id=\"eigyoshoName_" + count + "\" name=\"eigyoshoName[]\" value=\"\" readonly>" +
-                        "<button type=\"button\" style=\"font-weight: bold;\" onclick=\"removeShoriKanoEigyosho(" + count + ")\">×</button>" +
-                    "</td>" +
-                "</tr>";
-            
-            $("#ShoriKanoEigyoshoResult").append(row);
-            
+	proc("getShoriKanoEigyoshoList", {}, function(data){
+		if (data == undefined){ return; }
+		if (data["contents"] == undefined){ return; }
+
+		var contents = data["contents"];
+		if (contents["result"] == undefined){ return; }
+
+		var result = contents["result"];
+		eigyoshoList = result;
+
+		// 検索結果エリアをクリア
+		$("#ShoriKanoEigyoshoResult").children().remove();
+
+		for (var count = 0 ; count < result.length ; count++) {
+			var item = result[count];
+			var code = item.EigyoshoCode || "";
+			var row = 
+				"<tr>" +
+					"<td class=\"title center w150 req\">" +
+						"<a href=\"#\" onclick=\"opnDialog('srhMstEigyosho','eigyoshoCode_" + count + "','eigyoshoName_" + count + "'); return false;\">" +
+							"処理可能営業所" +
+						"</a>" +
+					"</td>" +
+					"<td class=\"value w500\">" +
+						"<input type=\"text\" class=\"w80\" maxlength=\"3\" id=\"eigyoshoCode_" + count + "\" name=\"eigyoshoCode[]\" value=\"" + code + "\" " +
+							"onblur=\"getEigyoshoName('eigyoshoCode_" + count + "','eigyoshoName_" + count + "');\">" +
+						"<img class=\"img border\" src=\"./images/search.png\" onclick=\"opnDialog('srhMstEigyosho','eigyoshoCode_" + count + "','eigyoshoName_" + count + "'); return false;\">" +
+						"<input type=\"text\" class=\"w200\" id=\"eigyoshoName_" + count + "\" name=\"eigyoshoName[]\" value=\"\" readonly>" +
+						"<img src=\"./images/close2.png\" onclick=\"removeShoriKanoEigyosho(" + count + ");\">" +
+					"</td>" +
+				"</tr>";
+
+			$("#ShoriKanoEigyoshoResult").append(row);
+
             // コードがあれば営業所名を取得してセット
-            if (code) {
-                getEigyoshoName('eigyoshoCode_' + count, 'eigyoshoName_' + count);
-            }
-        }
-    });
+			if (code) {
+				getEigyoshoName('eigyoshoCode_' + count, 'eigyoshoName_' + count);
+			}
+		}
+	});
 }
 
 //****************************************************************************
@@ -240,8 +235,8 @@ function getShoriKanoEigyoshos() {
 //****************************************************************************
 function addShoriKanoEigyosho() {
 	reflectShoriKanoEigyosho();
-    eigyoshoList.push({ EigyoshoCode: "" });
-    renderEigyoshoTable();
+	eigyoshoList.push({ EigyoshoCode: "" });
+	renderEigyoshoTable();
 }
 
 //****************************************************************************
@@ -253,8 +248,8 @@ function addShoriKanoEigyosho() {
 //****************************************************************************
 function removeShoriKanoEigyosho(index) {
 	reflectShoriKanoEigyosho()
-    eigyoshoList.splice(index, 1);   // 配列から削除
-    renderEigyoshoTable();           // 再描画
+	eigyoshoList.splice(index, 1);   // 配列から削除
+	renderEigyoshoTable();           // 再描画
 }
 
 //****************************************************************************
@@ -265,10 +260,10 @@ function removeShoriKanoEigyosho(index) {
 //
 //****************************************************************************
 function reflectShoriKanoEigyosho() {
-    $("#ShoriKanoEigyoshoResult tr").each(function(index) {
-        var code = $("#eigyoshoCode_" + index).val();
-        eigyoshoList[index].EigyoshoCode = code;
-    });
+	$("#ShoriKanoEigyoshoResult tr").each(function(index) {
+		var code = $("#eigyoshoCode_" + index).val();
+		eigyoshoList[index].EigyoshoCode = code;
+	});
 }
 
 //****************************************************************************
@@ -279,32 +274,33 @@ function reflectShoriKanoEigyosho() {
 //
 //****************************************************************************
 function renderEigyoshoTable() {
-    $("#ShoriKanoEigyoshoResult").children().remove();
-    
-    for (var count = 0; count < eigyoshoList.length; count++) {
-        var item = eigyoshoList[count];
-        var code = item.EigyoshoCode || "";
-        var row =
-            "<tr>" +
-                "<td class=\"title center w150 req\">" +
-                    "<a href=\"#\" onclick=\"opnDialog('srhMstEigyosho','eigyoshoCode_" + count + "','eigyoshoName_" + count + "'); return false;\">" +
-                        "処理可能営業所" +
-                    "</a>" +
-                "</td>" +
-                "<td class=\"value w500\">" +
-                    "<input type=\"text\" class=\"w80\" maxlength=\"3\" id=\"eigyoshoCode_" + count + "\" name=\"eigyoshoCode[]\" value=\"" + code + "\" " +
-                           "onblur=\"getEigyoshoName('eigyoshoCode_" + count + "','eigyoshoName_" + count + "');\">" +
-                    "<input type=\"text\" class=\"w200\" id=\"eigyoshoName_" + count + "\" name=\"eigyoshoName[]\" value=\"\" readonly>" +
-                    "<button type=\"button\" style=\"font-weight: bold;\" onclick=\"removeShoriKanoEigyosho(" + count + ")\">×</button>" +
-                "</td>" +
-            "</tr>";
-        
-        $("#ShoriKanoEigyoshoResult").append(row);
-        
-        if (code) {
-            getEigyoshoName('eigyoshoCode_' + count, 'eigyoshoName_' + count);
-        }
-    }
+	$("#ShoriKanoEigyoshoResult").children().remove();
+
+	for (var count = 0; count < eigyoshoList.length; count++) {
+		var item = eigyoshoList[count];
+		var code = item.EigyoshoCode || "";
+		var row =
+			"<tr>" +
+				"<td class=\"title center w150 req\">" +
+					"<a href=\"#\" onclick=\"opnDialog('srhMstEigyosho','eigyoshoCode_" + count + "','eigyoshoName_" + count + "'); return false;\">" +
+						"処理可能営業所" +
+					"</a>" +
+				"</td>" +
+				"<td class=\"value w500\">" +
+					"<input type=\"text\" class=\"w80\" maxlength=\"3\" id=\"eigyoshoCode_" + count + "\" name=\"eigyoshoCode[]\" value=\"" + code + "\" " +
+						"onblur=\"getEigyoshoName('eigyoshoCode_" + count + "','eigyoshoName_" + count + "');\">" +
+					"<img class=\"img border\" src=\"./images/search.png\" onclick=\"opnDialog('srhMstEigyosho','eigyoshoCode_" + count + "','eigyoshoName_" + count + "'); return false;\">" +
+					"<input type=\"text\" class=\"w200\" id=\"eigyoshoName_" + count + "\" name=\"eigyoshoName[]\" value=\"\" readonly>" +
+					"<img src=\"./images/close2.png\" onclick=\"removeShoriKanoEigyosho(" + count + ");\">" +
+				"</td>" +
+			"</tr>";
+
+		$("#ShoriKanoEigyoshoResult").append(row);
+
+		if (code) {
+			getEigyoshoName('eigyoshoCode_' + count, 'eigyoshoName_' + count);
+		}
+	}
 }
 
 //****************************************************************************
@@ -315,7 +311,6 @@ function renderEigyoshoTable() {
 //
 //****************************************************************************
 function onDelete() {
-	
 	proc("delete",{}, function(data){
 		// 確認メッセージ
 		if(!confirm("データの削除を行います。\nよろしいですか？")) { return; }
@@ -327,7 +322,6 @@ function onDelete() {
 			// 画面のクリアなど何かしらの処理
 			getMstShain();
 		});
-		
 	});
 }
 
@@ -339,14 +333,14 @@ function onDelete() {
 //
 //****************************************************************************
 function onUpdate() {
-	
+
 	// 新規モードと更新モードで分岐
 	var isNew = $("#hdnIsNew").val();
-	
+
 	// 更新モード時の切り替えに必要
 	var txtShainNO = $("#txtShainNO").val();
 	var hdnShainNO = $("#hdnShainNO").val();
-	
+
 	if (isNew == "1") {
 		// 新規モード
 		proc("insert",{}, function(data){
@@ -400,71 +394,30 @@ function onUpdate() {
 
 //****************************************************************************
 // updateActiveSwitch
-// 各区分に応じて入力欄活性切り替え
-// 一旦現行システムと合わせるためコメントアウト
-// そもそも入力をさせないようにするならコメントを解除し、
-// 下部のupdateActiveSwitchと置き換え
-//****************************************************************************
-/*
-function updateActiveSwitch() {
-    var shainboVal   = $("#txtShainKbn").val();     // 社員区分
-    var shukinboVal  = $("#txtShukinboKbn").val();  // 出勤簿入力区分
-
-    var shainDisable    = (shainboVal === "00");    // 社員区分が00なら無効
-    var shukinboEnable  = (shukinboVal === "01");   // 出勤簿入力区分が01なら有効
-
-    // --- 時給日給区分 ---
-    // 社員区分が00でなく、かつ出勤簿区分が01のときだけ活性
-    var jikyuEnable = !shainDisable && shukinboEnable;
-    $("#txtJikyuNikkyuKbn").prop("disabled", !jikyuEnable);
-    $("#selectJikyuNikkyuKbnName").prop("disabled", !jikyuEnable);
-
-    // --- 勤務開始・終了時刻 ---
-    $("#selectKinmuKaishiJiKbnName").prop("disabled", shainDisable);
-    $("#selectKinmuKaishiFunKbnName").prop("disabled", shainDisable);
-    $("#selectKinmuShuryoJiKbnName").prop("disabled", shainDisable);
-    $("#selectKinmuShuryoFunKbnName").prop("disabled", shainDisable);
-
-    // --- 勤務実働時間 ---
-    $("#txtKeiyakuJitsudoJikan").prop("disabled", !shukinboEnable);
-
-    // --- 単価01～11 ---
-    for (var i = 1; i <= 11; i++) {
-        $("#txtShinseiTanka" + (i < 10 ? "0" + i : i)).prop("disabled", !shukinboEnable);
-    }
-
-    // --- 通勤費精算区分 ---
-    $("#txtTsukinHiKbn").prop("disabled", !shukinboEnable);
-    $("#selectTsukinHiKbnName").prop("disabled", !shukinboEnable);
-}
-*/
-
-//****************************************************************************
-// updateActiveSwitch
 // 出勤簿入力関連活性切り替え
 //
 //
 //
 //****************************************************************************
 function updateActiveSwitch() {
-    var shukinboVal = $("#txtShukinboKbn").val(); // 出勤簿入力区分の値
-    var enable = (shukinboVal === "01");          // 01 のときだけ活性
+	var shukinboVal = $("#txtShukinboKbn").val();	// 出勤簿入力区分の値
+	var enable = (shukinboVal === "01");			// 01 のときだけ活性
 
-    // 時給日給区分
-    $("#txtJikyuNikkyuKbn").prop("disabled", !enable);
-    $("#selectJikyuNikkyuKbnName").prop("disabled", !enable);
+	// 時給日給区分
+	$("#txtJikyuNikkyuKbn").prop("disabled", !enable);
+	$("#selJikyuNikkyuKbnName").prop("disabled", !enable);
 
-    // 勤務実働時間
-    $("#txtKeiyakuJitsudoJikan").prop("disabled", !enable);
+	// 勤務実働時間
+	$("#txtKeiyakuJitsudoJikan").prop("disabled", !enable);
 
 	// 単価01～11
 	for (var i = 1; i <= 11; i++) {
-	    $("#txtShinseiTanka" + (i < 10 ? "0" + i : i)).prop("disabled", !enable);
+		$("#txtShinseiTanka" + (i < 10 ? "0" + i : i)).prop("disabled", !enable);
 	}
-	
+
 	// 通勤費精算区分
 	$("#txtTsukinHiKbn").prop("disabled", !enable);
-	$("#selectTsukinHiKbnName").prop("disabled", !enable);
+	$("#selTsukinHiKbnName").prop("disabled", !enable);
 }
 
 //****************************************************************************
@@ -475,15 +428,15 @@ function updateActiveSwitch() {
 //
 //****************************************************************************
 function getCodeFromKbnName(inputId, hiddenId, selectId) {
-    var name = $("#" + inputId).val(); // 入力された名称
-    var code = "";
-    $("#" + selectId + " option").each(function() {
-        if ($(this).text() === name) {
-            code = $(this).val(); // option の value がコード
-            return false; // break
-        }
-    });
-    $("#" + hiddenId).val(code);
+	var name = $("#" + inputId).val(); // 入力された名称
+	var code = "";
+	$("#" + selectId + " option").each(function() {
+		if ($(this).text() === name) {
+			code = $(this).val(); // option の value がコード
+			return false; // break
+		}
+	});
+	$("#" + hiddenId).val(code);
 }
 
 //****************************************************************************
@@ -494,10 +447,10 @@ function getCodeFromKbnName(inputId, hiddenId, selectId) {
 //
 //****************************************************************************
 function onKeyEventF09() {
-	
+
 	// mainAreaの表示状態を取得
 	var display = $("#buttonArea").css("visibility");
-	
+
 	// mainAreaが非表示(初期表示時)はスキップする。
 	if (display == "visible") {
 		// 該当の処理を呼び出す。
@@ -513,11 +466,11 @@ function onKeyEventF09() {
 //
 //****************************************************************************
 function onKeyEventF02() {
-	
+
 	//ボタンaの表示状態を取得
 	var display = $("#buttonArea").css("visibility");
 	var isNew = $("#hdnIsNew").val();
-	
+
 	// mainAreaが非表示(初期表示時)はスキップする。
 	if (display == "visible"&& isNew != "1") {
 			// 該当の処理を呼び出す。
