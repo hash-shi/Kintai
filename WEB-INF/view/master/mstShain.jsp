@@ -25,7 +25,7 @@ ArrayList<HashMap<String, String>> mstKubun0013 = (ArrayList<HashMap<String, Str
 			</table>
 			<table>
 				<tr>
-					<td class="title center w80">
+					<td class="title center w100">
 						<a href="#" onclick="opnDialog('srhMstShain','srhTxtShainNO'); return false;">社員NO</a>
 					</td>
 					<td class="value w165">
