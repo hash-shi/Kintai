@@ -156,7 +156,7 @@
 				<param name="length">2</param>
 			</check>
 		</variable>
-		<variable name="seJikyuNikkyuKbnName" dispName="時給日給区分名">
+		<variable name="selJikyuNikkyuKbnName" dispName="時給日給区分名">
 			<check class="IsRequiredIf" message="該当する時給日給区分コードが存在しません。" itemName="{dispName}">
 				<param name="targetvalue">txtJikyuNikkyuKbn</param>
 			</check>
