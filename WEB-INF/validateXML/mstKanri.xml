@@ -55,7 +55,7 @@
 				<param name="comparisonoperator">&lt;=</param>
 			</check>
 			<check class="MaxNumberLimit" message="!#itemName#!の桁数が不正です。(XX.XX)" itemName="{dispName}">
-				<param name="length">99.59</param>
+				<param name="length">99.99</param>
 				<param name="comparisonoperator">&gt;=</param>
 			</check>
 		</variable>
