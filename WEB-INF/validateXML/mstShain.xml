@@ -36,6 +36,9 @@
 	<!-- パスワード -->	
 		<variable name="txtPassword" dispName="パスワード">
 			<check class="IsRequired" message="!#itemName#!が入力されていません。" itemName="{dispName}"></check>
+			<check class="IsRegex" message="!#itemName#!は英字、数字、記号(_-.+$#!/@)で入力してください。" itemName="{dispName}">
+		        <param name="format">^[A-Za-z0-9_\-\.\+\$#!/@]{1,50}$</param>
+		    </check>
 			<check class="MinLength" message="!#itemName#!は1文字以上、50文字以下で入力してください。" itemName="{dispName}">
 				<param name="type">half</param>
 				<param name="length">1</param>
@@ -44,9 +47,6 @@
 				<param name="type">half</param>
 				<param name="length">50</param>
 			</check>
-    		<check class="IsRegex" message="!#itemName#!は英字、数字、記号(_-.+$#!/@)で入力してください。" itemName="{dispName}">
-		        <param name="format">^[A-Za-z0-9_\-\.\+\$#!/@]{1,50}$</param>
-		    </check>
 		    <check class="IsRegex" message="!#itemName#!は英字、数字、記号(_-.+$#!/@)を2種類以上含めて入力してください。" itemName="{dispName}">
 		        <param name="format">^((?=.*[A-Za-z])(?=.*[0-9])|(?=.*[A-Za-z])(?=.*[\-\.\+\$#!/@])|(?=.*[0-9])(?=.*[\-\.\+\$#!/@]))([A-Za-z0-9_\-\.\+\$#!/@]){1,50}$</param>
 		    </check>		    
