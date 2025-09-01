@@ -502,7 +502,7 @@ public class KinShukkinBoValidate extends ValidateBase {
 			this.params.put("length", "40");
 			lengthValidate.setParams(this.params);
 			if(lengthValidate.doValidate(req, res, biko, info) == false) {
-				this.addValidateMessage("備考が40バイトを超えています。");
+				this.addValidateMessage("備考が40バイトを超えています。(40バイト = 全角40/2文字, 半角40文字)");
 				return false;
 			}
 

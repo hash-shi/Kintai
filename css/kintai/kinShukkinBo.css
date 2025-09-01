@@ -31,7 +31,9 @@
 *
 */
 .shukkinboArea{
+/*
 	overflow: auto;
+*/
 }
 
 .w10 { min-width: 10px !important; max-width: 10px !important; }

@@ -155,12 +155,12 @@ function right(str, n) {
 */
 function onSearchKinShukkinBo(){
 	//更新処理に備え、検索条件を保持
-	$("#txtSearchedTaishoYM").val($("#txtTaishoYM").val());
-	$("#txtSearchedShainNO").val($("#txtShainNO").val());
+//	$("#txtSearchedTaishoYM").val($("#txtTaishoYM").val());
+//	$("#txtSearchedShainNO").val($("#txtShainNO").val());
 
-	//検索結果が0の時のため、画面非表示
-	$("#nyuryokuArea").css("visibility", "hidden");
-	$("#buttonArea").css("visibility", "hidden");
+//	//検索結果が0の時のため、画面非表示
+//	$("#nyuryokuArea").css("visibility", "hidden");
+//	$("#buttonArea").css("visibility", "hidden");
 	document.getElementById("btnDelete").disabled = true;
 	document.getElementById("btnUpdate").disabled = true;
 	
@@ -175,6 +175,10 @@ function onSearchKinShukkinBo(){
 		let contents		= data["contents"];
 		if (contents["result"] == undefined){ return; }
 		
+		//更新処理に備え、検索条件を保持
+		$("#txtSearchedTaishoYM").val($("#txtTaishoYM").val());
+		$("#txtSearchedShainNO").val($("#txtShainNO").val());
+
 		//検索結果があれば入力項目表示
 		$("#nyuryokuArea").css("visibility", "");
 
@@ -752,14 +756,14 @@ function onDelete(){
 
 		if(result == true){
 			alert("正常に削除しました。");
+			document.getElementById("txtTaishoYM").focus();
+			//画面表示を初期状態に戻す
+			$("#nyuryokuArea").css("visibility", "hidden");
+			$("#buttonArea").css("visibility", "hidden");
 		}
 		else{
 			alert("このデータはすでに、別のユーザーに更新されています。\r\nもう一度データを確認してください。");
 		}
-		document.getElementById("txtTaishoYM").focus();
-		//画面表示を初期状態に戻す
-		$("#nyuryokuArea").css("visibility", "hidden");
-		$("#buttonArea").css("visibility", "hidden");
 	});
 }
 
@@ -790,13 +794,13 @@ function onUpdate(){
 		}
 		else if(result == 2){
 			alert("正常に更新しました。");
+			document.getElementById("txtTaishoYM").focus();
+			//画面表示を初期状態に戻す
+			$("#nyuryokuArea").css("visibility", "hidden");
+			$("#buttonArea").css("visibility", "hidden");
 		}
 		else{
 			alert("このデータはすでに、別のユーザーに更新されています。\r\nもう一度データを確認してください。");
 		}
-		document.getElementById("txtTaishoYM").focus();
-		//画面表示を初期状態に戻す
-		$("#nyuryokuArea").css("visibility", "hidden");
-		$("#buttonArea").css("visibility", "hidden");
 	});
 }

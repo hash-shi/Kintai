@@ -90,31 +90,7 @@ public class KinShukkinBoAction extends PJActionBase {
 		UserInformation userInformation = (UserInformation)req.getSession().getAttribute(Define.SESSION_ID);
 		String loginShainNo = userInformation.getShainNO();
 		
-		// DB接続
-		Connection con		= this.getConnection("kintai", req);
-		StringBuffer sql				= new StringBuffer();
-		PreparedStatement pstmt			= null;
-		PreparedStatementFactory pstmtf	= new PreparedStatementFactory();
-		ResultSet rset					= null;
-		
-		sql.append(" SELECT ShainNO AS code, ShainName AS code_name FROM MST_SHAIN WHERE ShukinboKbn = '00' AND ShainNO = ? ORDER BY ShainNO");
-		pstmtf.addValue("String", loginShainNo);
-		
-		try {
-			// SQL文の生成
-			pstmt = con.prepareStatement(sql.toString());
-			// パラメータの設定
-			pstmtf.setPreparedStatement(pstmt);
-			// 実行
-			rset = pstmt.executeQuery();
-			// 結果取得
-			if(rset.next()) {
-				result = StringUtils.stripToEmpty(rset.getString("code"));
-			}
-		} finally {
-			if (rset != null){ try { rset.close(); } catch (Exception exp){}}
-			if (pstmt != null){ try { pstmt.close(); } catch (Exception exp){}}
-		}
+		result = StringUtils.stripToEmpty(loginShainNo);
 		
 		//=====================================================================
 		// 結果返却
@@ -223,32 +199,13 @@ public class KinShukkinBoAction extends PJActionBase {
 		 */
 		
 		//=====================================================================
-		// DB接続
-		//=====================================================================
-		Connection con	= this.getConnection("kintai", req);
-		
-		//=====================================================================
-		// パラメータ取得
-		//=====================================================================
 		// チェック対象の社員NO
 		UserInformation userInformation = (UserInformation)req.getSession().getAttribute(Define.SESSION_ID);
-		String shainNo = userInformation.getShainNO();
 		
-		//=====================================================================
-		// 処理
-		//=====================================================================
-		// チェック対象の社員の存在確認、区分取得
-		ArrayList<HashMap<String, String>> mstShains = PJActionBase.getMstShains(con, shainNo, null, null, null, null, null, null, null);
-		
-		//社員が存在しなければ処理終了
-		if (0 >= mstShains.size()){ return; }
-		
-		HashMap<String, String> mstShain = mstShains.get(0);
-
 		//=====================================================================
 		// 結果返却
 		//=====================================================================
-		this.addContent("result", mstShain.get("ShainKbn"));
+		this.addContent("result", userInformation.getUserKbn());
 	}
 	
 	/**
@@ -260,8 +217,10 @@ public class KinShukkinBoAction extends PJActionBase {
 	 */
 	public void honshaKakuteizumiCheck(HttpServletRequest req, HttpServletResponse res) throws Exception {
 		// 検索条件取得
-		String taishoYM			= this.getParameter("txtSearchedTaishoYM");
-		String taishoShainNo	= this.getParameter("txtSearchedShainNO");
+//		String taishoYM			= this.getParameter("txtSearchedTaishoYM");
+//		String taishoShainNo	= this.getParameter("txtSearchedShainNO");
+		String taishoYM			= this.getParameter("txtTaishoYM");
+		String taishoShainNo	= this.getParameter("txtShainNO");
 		
 		// DB接続
 		Connection con		= this.getConnection("kintai", req);
@@ -378,8 +337,10 @@ public class KinShukkinBoAction extends PJActionBase {
 	public void search(HttpServletRequest req, HttpServletResponse res) throws Exception {
 		
 		// 検索条件取得
-		String taishoYM			= this.getParameter("txtSearchedTaishoYM");
-		String taishoShainNo	= this.getParameter("txtSearchedShainNO");
+//		String taishoYM			= this.getParameter("txtSearchedTaishoYM");
+//		String taishoShainNo	= this.getParameter("txtSearchedShainNO");
+		String taishoYM			= this.getParameter("txtTaishoYM");
+		String taishoShainNo	= this.getParameter("txtShainNO");
 
 		//検索結果0件の時のため、デフォルトのデータを作成
 		ArrayList<HashMap<String, String>> ResultDatas = getResultDatas(taishoYM);

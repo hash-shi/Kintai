@@ -22,7 +22,7 @@
 		</variable>
 
 		<variable name="dummy" dispName="">
-			<check class="ShainAuthorityValidate" message="ログインしたユーザIDでは処理できません。">
+			<check class="ShainAuthorityValidate" message="ログインした社員Noでは処理できません。">
 				<param name="shainNo">txtSearchedShainNO</param>
 			</check>
 		</variable>
@@ -49,7 +49,7 @@
 		
 		
 		<variable name="dummy" dispName="">
-			<check class="ShainAuthorityValidate" message="ログインしたユーザIDでは処理できません。">
+			<check class="ShainAuthorityValidate" message="ログインした社員Noでは処理できません。">
 				<param name="shainNo">txtSearchedShainNO</param>
 			</check>
 
@@ -109,7 +109,7 @@
 		</variable>
 
 		<variable name="dummy" dispName="">
-			<check class="ShainAuthorityValidate" message="ログインしたユーザIDでは処理できません。">
+			<check class="ShainAuthorityValidate" message="ログインした社員Noでは処理できません。">
 				<param name="shainNo">txtSearchedShainNO</param>
 			</check>
 
