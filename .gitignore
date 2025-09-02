@@ -17,4 +17,3 @@ WEB-INF/lib/**
 # ただし lib フォルダ自体と TJSJavaFramework.jar は除外しない
 !WEB-INF/lib/
 !WEB-INF/lib/TJSJavaFramework.jar
-!WEB-INF/lib/Spire.Xls.jar
