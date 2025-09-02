@@ -46,6 +46,10 @@
 		<action id="kintaiList"  group="public"  class="action.kintai.KintaiListAction"  title="勤怠リスト"  header=""  footer=""  script="./script/kintai/kintaiList.js"  style="./css/kintai/kintaiList.css"  authority=""  meta=""  requiredParam="" >
 			<view return="success" path="kintai/kintaiList.jsp" />
 		</action>
+
+		<action id="kintaiKakutei"  group="public"  class="action.kintai.KintaiKakuteiAction"  title="月次確定入力"  header=""  footer=""  script="./script/kintai/kintaiKakutei.js"  style="./css/kintai/kintaiKakutei.css"  authority=""  meta=""  requiredParam="" >
+			<view return="success" path="kintai/kintaiKakutei.jsp" />
+		</action>
 		
 		<action id="kintaiOutData"  group="public"  class="action.kintai.KintaiOutDataAction"  title="データ出力"  header=""  footer=""  script="./script/kintai/kintaiOutData.js"  style="./css/kintai/kintaiOutData.css"  authority=""  meta=""  requiredParam="" >
 			<view return="success" path="kintai/kintaiOutData.jsp" />

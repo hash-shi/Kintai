@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<validate>
+	<proc func="searchKintaiKakutei">
+		<variable name="srhTxtTaishoYM" dispName="対象年月">
+			<check class="IsRequired" message="!#itemName#!が入力されていません。" itemName="{dispName}"></check>
+			<check class="IsDate" message="!#itemName#!の指定が不正です(YYYY/MM)" itemName="{dispName}">
+				<param name="format">yyyy/MM</param>
+			</check>
+		</variable>
+	</proc>
+	
+	<proc func="kakutei">
+		<variable name="dummy" dispName="">
+			<check class="KintaiKakuteiValidate" message="更新処理でエラーが発生しました。">
+				<param name="count">kakuteiCount</param>
+			</check>
+			<check class="KintaiKakuteiHonshaValidate" message="更新処理でエラーが発生しました。">
+				<param name="count">kakuteiCount</param>
+			</check>
+		</variable>
+	</proc>
+
+	<proc func="kaijo">
+		<variable name="dummy" dispName="">
+			<check class="ShainHonshaValidate" message="確定解除は本社ユーザのみ可能です。"></check>
+			<check class="KintaiKakuteiValidate" message="更新処理でエラーが発生しました。">
+				<param name="count">kakuteiCount</param>
+			</check>
+		</variable>
+	</proc>
+
+</validate>
