@@ -29,6 +29,10 @@ public class CsvKyuyokeisanDataDownload extends DownloadBase {
 	@Override
 	public void doRun(HttpServletRequest req, HttpServletResponse res) throws Exception {
 		
+		//=====================================================================
+		// パラメータ取得
+		//=====================================================================
+		int count = 0;
 		ArrayList<HashMap<String, String>> data = new ArrayList<>();
 		String taishoNengetsuF	= req.getParameter("srhTxtTaishoNengetsuF");
 		String taishoNengetsuT	= req.getParameter("srhTxtTaishoNengetsuT");
@@ -52,7 +56,7 @@ public class CsvKyuyokeisanDataDownload extends DownloadBase {
 		StringBuffer sql				= new StringBuffer();
 		PreparedStatementFactory pstmtf	= new PreparedStatementFactory();
 		ResultSet rset					= null;
-		
+
 		//=====================================================================
 		// データ取得
 		//=====================================================================
@@ -154,7 +158,8 @@ public class CsvKyuyokeisanDataDownload extends DownloadBase {
 		// データ格納
 		csvString.append(csvStringTitle.getLine() + newLine);
 		
-		for (int i = 0; i < data.size(); i++) {
+		count = data.size();
+		for (int i = 0; i < count; i++) {
 			// CSVデータ1レコード分
 			CSVLine csvStringRecord = new CSVLine();
 			

@@ -58,12 +58,33 @@ function onCsvDownload(){
 	
 	if (value == "01") {
 		proc("kyuyokeisanData",{}, function(data, dataType){
-			onDownloadPost("csvKyuyokeisanData");
+			if (data == undefined){ return; }
+			if (data["contents"] == undefined){ return; }
+			var contents		= data["contents"];
+			if (contents["result"] == undefined){ return; }
+			var result   = contents["result"];
+
+			if(result){
+				onDownloadPost("csvKyuyokeisanData");
+			} else {
+				if(contents["message"] == undefined){ return; }
+				alert(contents["message"]);
+			}	
 		});
-	}
-	else if (value == "02") {
+	} else {
 		proc("chinginkeisanshoData",{}, function(data, dataType){
-			onDownloadPost("csvChinginkeisanshoData");
+			if (data == undefined){ return; }
+			if (data["contents"] == undefined){ return; }
+			var contents		= data["contents"];
+			if (contents["result"] == undefined){ return; }
+			var result   = contents["result"];
+
+			if(result){
+				onDownloadPost("csvChinginkeisanshoData");
+			} else {
+				if(contents["message"] == undefined){ return; }
+				alert(contents["message"]);
+			}
 		});	
 	}
 }
