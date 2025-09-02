@@ -34,26 +34,24 @@ public class CsvChinginkeisanshoDataDownload extends DownloadBase {
 		String taishoNengetsuT	= req.getParameter("srhTxtTaishoNengetsuT");
 		
 		// 現在日時を取得
-		LocalDateTime now = LocalDateTime.now();
+		LocalDateTime now 					= LocalDateTime.now();
 		
 		// フォーマットを指定
-		DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy/MM/dd");
-		
-		DateTimeFormatter filenameformat = DateTimeFormatter.ofPattern("yyyyMMddHHmmss");
+		DateTimeFormatter formatter 		= DateTimeFormatter.ofPattern("yyyy/MM/dd");
+		DateTimeFormatter filenameformat 	= DateTimeFormatter.ofPattern("yyyyMMddHHmmss");
 		
 		// フォーマットに従って日時を文字列に変換
-		String formattedDateTime = now.format(formatter);
-		
-		String filenameformattedDateTime = now.format(filenameformat);
+		String formattedDateTime 			= now.format(formatter);
+		String filenameformattedDateTime 	= now.format(filenameformat);
 		
 		//=====================================================================
 		// DB接続
 		//=====================================================================
-		Connection con	= this.getConnection("kintai", req);
-		PreparedStatement pstmt			= null;
-		StringBuffer sql				= new StringBuffer();
-		PreparedStatementFactory pstmtf	= new PreparedStatementFactory();
-		ResultSet rset					= null;
+		Connection con 					= this.getConnection("kintai", req);
+		PreparedStatement pstmt 		= null;
+		StringBuffer sql 				= new StringBuffer();
+		PreparedStatementFactory pstmtf = new PreparedStatementFactory();
+		ResultSet rset 					= null;
 		
 		//=====================================================================
 	    // データ取得
@@ -83,13 +81,13 @@ public class CsvChinginkeisanshoDataDownload extends DownloadBase {
 		sql.append("WHERE 1 = 1 ");
 
 		if (StringUtils.isNotBlank(taishoNengetsuF)) {
-		    sql.append(" AND kihon.TaishoNenGetsudo >= ? ");
-		    pstmtf.addValue("String", taishoNengetsuF);
+			sql.append(" AND kihon.TaishoNenGetsudo >= ? ");
+			pstmtf.addValue("String", taishoNengetsuF);
 		}
 
 		if (StringUtils.isNotBlank(taishoNengetsuT)) {
-		    sql.append(" AND kihon.TaishoNenGetsudo <= ? ");
-		    pstmtf.addValue("String", taishoNengetsuT);
+			sql.append(" AND kihon.TaishoNenGetsudo <= ? ");
+			pstmtf.addValue("String", taishoNengetsuT);
 		}
 		
 		try {
@@ -214,9 +212,9 @@ public class CsvChinginkeisanshoDataDownload extends DownloadBase {
 			
 			// 合計日数処理 + 出力
 			String[] nissuKeys = {
-				    "ShinseiNissu01", "ShinseiNissu04", "ShinseiNissu02",
-				    "ShinseiNissu03", "ShinseiNissu05", "ShinseiNissu11",
-				    "ShinseiNissu06", "ShinseiNissu07", "kyujitsuNissu"
+					"ShinseiNissu01", "ShinseiNissu04", "ShinseiNissu02",
+					"ShinseiNissu03", "ShinseiNissu05", "ShinseiNissu11",
+					"ShinseiNissu06", "ShinseiNissu07", "kyujitsuNissu"
 				};
 
 			for (String key : nissuKeys) {
@@ -227,11 +225,11 @@ public class CsvChinginkeisanshoDataDownload extends DownloadBase {
 					} catch (NumberFormatException e) {
 					}
 				}
-		        csvStringRecord.addItem(
-		                StringUtils.isNotBlank(val) ?
-		                    String.format("%.2f",new BigDecimal(val)) :
-		                    "0.00"
-		            );
+				csvStringRecord.addItem(
+						StringUtils.isNotBlank(val) ?
+								String.format("%.2f",new BigDecimal(val)) :
+									"0.00"
+				);
 			}
 			
 			csvStringRecord.addItem(String.format("%.2f", goukeiNissu));
@@ -251,11 +249,11 @@ public class CsvChinginkeisanshoDataDownload extends DownloadBase {
 					} catch (NumberFormatException e) {
 					}
 				}
-		        csvStringRecord.addItem(
-		                StringUtils.isNotBlank(val) ?
-		                	String.format("%.2f",new BigDecimal(val)) :
-		                	"0.00"
-		            );
+				csvStringRecord.addItem(
+						StringUtils.isNotBlank(val) ?
+								String.format("%.2f",new BigDecimal(val)) :
+									"0.00"
+				);
 			}
 			
 			csvStringRecord.addItem(String.format("%.2f", goukeiJikan));

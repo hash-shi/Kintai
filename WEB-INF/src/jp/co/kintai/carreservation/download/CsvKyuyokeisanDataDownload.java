@@ -37,26 +37,24 @@ public class CsvKyuyokeisanDataDownload extends DownloadBase {
 		LocalDateTime now = LocalDateTime.now();
 		
 		// フォーマットを指定
-		DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy/MM/dd");
-		
-		DateTimeFormatter filenameformat = DateTimeFormatter.ofPattern("yyyyMMddHHmmss");
+		DateTimeFormatter formatter 		= DateTimeFormatter.ofPattern("yyyy/MM/dd");
+		DateTimeFormatter filenameformat 	= DateTimeFormatter.ofPattern("yyyyMMddHHmmss");
 		
 		// フォーマットに従って日時を文字列に変換
-		String formattedDateTime = now.format(formatter);
-		
-		String filenameformattedDateTime = now.format(filenameformat);
+		String formattedDateTime 			= now.format(formatter);
+		String filenameformattedDateTime 	= now.format(filenameformat);
 		
 		//=====================================================================
 		// DB接続
 		//=====================================================================
-		Connection con	= this.getConnection("kintai", req);
+		Connection con					= this.getConnection("kintai", req);
 		PreparedStatement pstmt			= null;
 		StringBuffer sql				= new StringBuffer();
 		PreparedStatementFactory pstmtf	= new PreparedStatementFactory();
 		ResultSet rset					= null;
 		
 		//=====================================================================
-	    // データ取得
+		// データ取得
 		//=====================================================================
 		
 		String[] targetCols = {"01", "03", "04", "06", "07", "08", "09", "10", "11", "12"};
@@ -67,10 +65,10 @@ public class CsvKyuyokeisanDataDownload extends DownloadBase {
 		sql.append("	shain.EigyoshoCode, ");
 		sql.append("	( ");
 		for (int idx = 0; idx < targetCols.length; idx++) {
-		    if (idx > 0) {
-		        sql.append(" + ");
-		    }
-		    sql.append("COALESCE(skihon.ShinseiNissu").append(targetCols[idx]).append(", 0)");
+			if (idx > 0) {
+				sql.append(" + ");
+			}
+			sql.append("COALESCE(skihon.ShinseiNissu").append(targetCols[idx]).append(", 0)");
 		}
 		sql.append("	) AS GoukeiNissu ");
 		sql.append("FROM KIN_SHUKKINBO_KIHON skihon ");
@@ -78,13 +76,13 @@ public class CsvKyuyokeisanDataDownload extends DownloadBase {
 		sql.append("WHERE 1 = 1 ");
 
 		if (StringUtils.isNotBlank(taishoNengetsuF)) {
-		    sql.append(" AND skihon.TaishoNenGetsudo >= ? ");
-		    pstmtf.addValue("String", taishoNengetsuF);
+			sql.append(" AND skihon.TaishoNenGetsudo >= ? ");
+			pstmtf.addValue("String", taishoNengetsuF);
 		}
 
 		if (StringUtils.isNotBlank(taishoNengetsuT)) {
-		    sql.append(" AND skihon.TaishoNenGetsudo <= ? ");
-		    pstmtf.addValue("String", taishoNengetsuT);
+			sql.append(" AND skihon.TaishoNenGetsudo <= ? ");
+			pstmtf.addValue("String", taishoNengetsuT);
 		}
 		
 		try {
@@ -192,16 +190,16 @@ public class CsvKyuyokeisanDataDownload extends DownloadBase {
 				};
 
 			for (String key : nissuKeys) {
-			    String val = data.get(i).get(key);
-			    if (StringUtils.isNotBlank(val)) {
-			        try {
-			            csvStringRecord.addItem(String.format("%.2f", new BigDecimal(val)));
-			        } catch (NumberFormatException e) {
-			            csvStringRecord.addItem("0.00");
-			        }
-			    } else {
-			        csvStringRecord.addItem("0.00");
-			    }
+				String val = data.get(i).get(key);
+				if (StringUtils.isNotBlank(val)) {
+					try {
+						csvStringRecord.addItem(String.format("%.2f", new BigDecimal(val)));
+					} catch (NumberFormatException e) {
+						csvStringRecord.addItem("0.00");
+					}
+				} else {
+				csvStringRecord.addItem("0.00");
+				}
 			}
 			
 			// 時間処理 + 出力
