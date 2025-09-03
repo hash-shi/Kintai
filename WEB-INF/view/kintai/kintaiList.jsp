@@ -138,7 +138,7 @@ ArrayList<HashMap<String, String>> mstKubun0050 = (ArrayList<HashMap<String, Str
 					<td class="title center w100">条件</td>
 					<td class="value w600">
 						<select name="srhSelJoken"  id="srhSelJoken" >
-							<option value="00"></option>
+							<option value=""></option>
 							<% for (int count = 0 ; count < mstKubun0050.size() ; count++){ HashMap<String, String> record = mstKubun0050.get(count);%>
 								<option value="<%=UtilEscape.htmlspecialchars(record.get("Code")) %>"><%=UtilEscape.htmlspecialchars(record.get("KbnName")) %></option>
 							<% } %>

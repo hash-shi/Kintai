@@ -105,6 +105,13 @@
 	<!-- ダウンロード定義 -->
 	<downloads>
 	
+		<download id="pdfKinShukkinBo"  class="download.PdfKinShukkinBoDownload" />
+		<download id="csvKinShukkinBo"  class="download.CsvKinShukkinBoDownload" />
+		<download id="pdfChiChinginkeisansho"  class="download.PdfChiChinginkeisanshoDownload" />
+		<download id="csvChiChinginkeisansho"  class="download.CsvChiChinginkeisanshoDownload" />
+		<download id="pdfKinYukyuKyukaDaicho"  class="download.PdfKinYukyuKyukaDaichoDownload" />
+		<download id="csvKinYukyuKyukaDaicho"  class="download.CsvKinYukyuKyukaDaichoDownload" />
+	
 		<download id="csvKyuyokeisanData"  class="download.CsvKyuyokeisanDataDownload" />
 		<download id="csvChinginkeisanshoData"  class="download.CsvChinginkeisanshoDataDownload" />
 		

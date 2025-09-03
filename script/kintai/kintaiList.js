@@ -160,31 +160,67 @@ function onPdfCsvDownload(){
 	
 	if (value == "01") {
 		proc("kinShukkinBo",{}, function(data, dataType){
-			if (pdfcsv == "01") {
-				onDownloadPost("pdfKinShukkinBo");
-			}
-			else if (pdfcsv == "02") {
-				onDownloadPost("csvKinShukkinBo");
+			
+			if (data == undefined){ return; }
+			if (data["contents"] == undefined){ return; }
+			var contents		= data["contents"];
+			if (contents["result"] == undefined){ return; }
+			var result   = contents["result"];
+			
+			if(result){
+				if (pdfcsv == "01") {
+					onDownloadPost("pdfKinShukkinBo");
+				}
+				else if (pdfcsv == "02") {
+					onDownloadPost("csvKinShukkinBo");
+				}
+			} else {
+				if(contents["message"] == undefined){ return; }
+				alert(contents["message"]);
 			}
 		});
 	}
 	else if (value == "02") {
 		proc("chiChinginkeisansho",{}, function(data, dataType){
-			if (pdfcsv == "01") {
-				onDownloadPost("pdfChiChinginkeisansho");
-			}
-			else if (pdfcsv == "02") {
-				onDownloadPost("csvChiChinginkeisansho");
+			
+			if (data == undefined){ return; }
+			if (data["contents"] == undefined){ return; }
+			var contents		= data["contents"];
+			if (contents["result"] == undefined){ return; }
+			var result   = contents["result"];
+			
+			if(result){
+				if (pdfcsv == "01") {
+					onDownloadPost("pdfChiChinginkeisansho");
+				}
+				else if (pdfcsv == "02") {
+					onDownloadPost("csvChiChinginkeisansho");
+				}
+			} else {
+				if(contents["message"] == undefined){ return; }
+				alert(contents["message"]);
 			}
 		});	
 	}
 	else if (value == "03") {
 		proc("kinYukyuKyukaDaicho",{}, function(data, dataType){
-			if (pdfcsv == "01") {
-				onDownloadPost("pdfKinYukyuKyukaDaicho");
-			}
-			else if (pdfcsv == "02") {
-				onDownloadPost("csvKinYukyuKyukaDaicho");
+			
+			if (data == undefined){ return; }
+			if (data["contents"] == undefined){ return; }
+			var contents		= data["contents"];
+			if (contents["result"] == undefined){ return; }
+			var result   = contents["result"];
+
+			if(result){
+				if (pdfcsv == "01") {
+					onDownloadPost("pdfKinYukyuKyukaDaicho");
+				}
+				else if (pdfcsv == "02") {
+					onDownloadPost("csvKinYukyuKyukaDaicho");
+				}
+			} else {
+				if(contents["message"] == undefined){ return; }
+				alert(contents["message"]);
 			}
 		});	
 	}
