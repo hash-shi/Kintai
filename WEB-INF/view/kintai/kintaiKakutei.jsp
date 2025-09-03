@@ -47,9 +47,9 @@
 					<thead>
 						<tr>
 							<th class="title center">	<input type="checkbox" id="cbxKakuteiAll" class="kintaiKakuteiText" name="option" value="" onclick="onSentakuAll();"></th>
-							<th class="title center" colspan="2">	<a class="kintaiKakuteiText">営業所</a></th>
-							<th class="title center">				<a class="kintaiKakuteiText">月給制</a></th>
-							<th class="title center">				<a class="kintaiKakuteiText">時給日給制</a></th>
+							<th class="title center w210" colspan="2">	<a class="kintaiKakuteiText">営業所</a></th>
+							<th class="title center w140">				<a class="kintaiKakuteiText">月給制</a></th>
+							<th class="title center w140">				<a class="kintaiKakuteiText">時給日給制</a></th>
 						</tr>
 					</thead>
 					<tbody id="kihonNyuryokuArea">

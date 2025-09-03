@@ -11,6 +11,7 @@
 	
 	<proc func="kakutei">
 		<variable name="dummy" dispName="">
+			<check class="ShainHonshaValidate" message="確定は本社ユーザのみ可能です。"></check>
 			<check class="KintaiKakuteiValidate" message="更新処理でエラーが発生しました。">
 				<param name="count">kakuteiCount</param>
 			</check>
