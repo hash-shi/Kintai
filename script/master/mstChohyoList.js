@@ -69,17 +69,6 @@ function setShoriSentaku(){
 	let eigyoshoCodeF = $("#hidEigyoshoCodeF").val();
 	let eigyoshoCodeT = $("#hidEigyoshoCodeT").val();
 	
-	// 最終更新日にシステム日付を格納する
-	// 	システム日付が15日までの場合、その年月。
-	//  システム日付が16日以降の場合、その翌月の年月
-	var dateTime = new Date();
-	var date = new Date();
-	if (dateTime.getDate() <= 15) {
-		date = new Date(dateTime.getFullYear(), dateTime.getMonth(), dateTime.getDate());
-	} else {
-		date = new Date(dateTime.getFullYear(), (dateTime.getMonth() + 1), dateTime.getDate());
-	}
-	
 	// コードセット/名称取得
 	// 営業所
 	$("#srhTxtEigyoshoCodeF").val(eigyoshoCodeF);
@@ -100,8 +89,9 @@ function setShoriSentaku(){
 	$("#srhTxtKbnCodeF").val("");
 	$("#srhTxtKbnCodeT").val("");
 	// 最終更新日
-	$("#srhTxtSaishuKoshinDateF").val(formatDateYYYYMM(date, "/"));
-	$("#srhTxtSaishuKoshinDateT").val(formatDateYYYYMM(date, "/"));
+	var date = new Date();
+	$("#srhTxtSaishuKoshinDateF").val(formatDateYYYYMMDD(date, "/"));
+	$("#srhTxtSaishuKoshinDateT").val(formatDateYYYYMMDD(date, "/"));
 	
 }
 
