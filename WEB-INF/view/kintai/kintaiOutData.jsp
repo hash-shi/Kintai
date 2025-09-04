@@ -49,7 +49,7 @@ ArrayList<HashMap<String, String>> mstKubun			= (ArrayList<HashMap<String, Strin
 		<div class="inputArea">
 			<table>
 				<tr>
-					<td class="title center w100 req">対象年月</td>
+					<td class="title center w100 req">対象年月度</td>
 					<td class="value w600">
 						<input type="text" class="w60 right" maxlength="7" name="srhTxtTaishoNengetsuF" id="srhTxtTaishoNengetsuF" value="">
 						-

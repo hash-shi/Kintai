@@ -1,20 +1,22 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <validate>
 	<proc func="kyuyokeisanData,chinginkeisanshoData">
-		<variable name="srhTxtTaishoNengetsuF" dispName="対象年月度(自)">
+		<variable name="srhTxtTaishoNengetsuF" dispName="対象年月度FROM">
 			<check class="IsRequired" message="!#itemName#!が入力されていません。" itemName="{dispName}"></check>
-			<check class="IsDate" message="!#itemName#!は日付フォーマットで入力してください。" itemName="{dispName}">
+			<check class="IsHalf" message="!#itemName#!には全角文字は入力できません。" itemName="{dispName}"></check>
+			<check class="IsDate" message="!#itemName#!の指定が不正です(YYYY/MM)" itemName="{dispName}">
 				<param name="format">yyyy/MM</param>
 			</check>
 		</variable>
-		<variable name="srhTxtTaishoNengetsuT" dispName="対象年月度(至)">
+		<variable name="srhTxtTaishoNengetsuT" dispName="対象年月度TO">
 			<check class="IsRequired" message="!#itemName#!が入力されていません。" itemName="{dispName}"></check>
-			<check class="IsDate" message="!#itemName#!は日付フォーマットで入力してください。" itemName="{dispName}">
+			<check class="IsHalf" message="!#itemName#!には全角文字は入力できません。" itemName="{dispName}"></check>
+			<check class="IsDate" message="!#itemName#!の指定が不正です(YYYY/MM)" itemName="{dispName}">
 				<param name="format">yyyy/MM</param>
 			</check>
 		</variable>
 		<variable name="dummy" dispName="">
-			<check class="SizeComparison" message="対象年月度(自)(至)の大小が不正です。" itemName="{dispName}">
+			<check class="SizeComparison" message="対象年月度FROM-TOの大小が不正です。" itemName="{dispName}">
 				<param name="from">srhTxtTaishoNengetsuF</param>
 				<param name="to">srhTxtTaishoNengetsuT</param>
 				<param name="include">1</param>
