@@ -75,6 +75,18 @@ public class CsvKinShukkinBoDownload extends DownloadBase {
 		sql.append(" 	 LEFT(K.TaishoNenGetsudo, 4) AS TaishoNendo ");
 		sql.append(" 	,RIGHT(K.TaishoNenGetsudo, 2) AS TaishoGetsudo ");
 		sql.append(" 	,CONVERT(NVARCHAR, CURRENT_TIMESTAMP ,111) AS SakuseiDate ");
+		
+		sql.append(" 	,CASE ");
+		sql.append(" 		WHEN M.ShusshaJi NOT IN ('', '00') ");
+		sql.append(" 		THEN M.ShusshaJi + ':' + M.ShusshaFun ");
+		sql.append(" 		ELSE '' ");
+		sql.append(" 	 END AS KinmuKaishiJikoku ");
+		sql.append(" 	,CASE ");
+		sql.append(" 		WHEN M.TaishaJi NOT IN ('', '00') ");		
+		sql.append(" 		THEN M.TaishaJi + ':' + M.TaishaFun ");
+		sql.append(" 		ELSE '' ");
+		sql.append(" 	 END AS KinmuShuryoJikoku ");
+		
 		sql.append(" 	,M.ShainNO AS ShainNO ");
 		sql.append(" 	,S.ShainName AS ShainName ");
 		sql.append(" 	,RIGHT(M.TaishoNengappi, 5) AS TsukiHi ");
@@ -316,6 +328,8 @@ public class CsvKinShukkinBoDownload extends DownloadBase {
 		csvStringTitle.addItem( "対象年度");
 		csvStringTitle.addItem( "対象月度");
 		csvStringTitle.addItem( "作成日付");
+		csvStringTitle.addItem( "勤務開始時刻");
+		csvStringTitle.addItem( "勤務終了時刻");
 		csvStringTitle.addItem( "社員NO");
 		csvStringTitle.addItem( "社員名");
 		csvStringTitle.addItem( "月日");
@@ -349,6 +363,8 @@ public class CsvKinShukkinBoDownload extends DownloadBase {
 			csvStringRecord.addItem(data.get(i).get("TaishoNendo"));
 			csvStringRecord.addItem(data.get(i).get("TaishoGetsudo"));
 			csvStringRecord.addItem(data.get(i).get("SakuseiDate"));
+			csvStringRecord.addItem(data.get(i).get("KinmuKaishiJikoku"));
+			csvStringRecord.addItem(data.get(i).get("KinmuShuryoJikoku"));
 			csvStringRecord.addItem(data.get(i).get("ShainNO"));
 			csvStringRecord.addItem(data.get(i).get("ShainName"));
 			csvStringRecord.addItem(data.get(i).get("TsukiHi"));
