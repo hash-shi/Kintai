@@ -31,25 +31,25 @@ public class CsvMstEigyoshoDownload extends DownloadBase {
 		//=====================================================================
 		// パラメータ取得
 		//=====================================================================
-		int count = 0;
 		ArrayList<HashMap<String, String>> data = new ArrayList<>();
-		String fromEigyoshoCode	= req.getParameter("srhTxtEigyoshoCodeF");
-		String toEigyoshoCode	= req.getParameter("srhTxtEigyoshoCodeT");
-		String fromSaishuKoshinDate	= req.getParameter("srhTxtSaishuKoshinDateF");
-		String toSaishuKoshinDate	= req.getParameter("srhTxtSaishuKoshinDateT");
+		String eigyoshoCodeF		= req.getParameter("srhTxtEigyoshoCodeF");
+		String eigyoshoCodeT		= req.getParameter("srhTxtEigyoshoCodeT");
+		String saishuKoshinDateF	= req.getParameter("srhTxtSaishuKoshinDateF");
+		String saishuKoshinDateT	= req.getParameter("srhTxtSaishuKoshinDateT");
+		
 		// 現在日時を取得
-        LocalDateTime now = LocalDateTime.now();
-
-        // フォーマットを指定
-        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyyMMddHHmmss");
-
-        // フォーマットに従って日時を文字列に変換
-        String formattedDateTime = now.format(formatter);
+		LocalDateTime now = LocalDateTime.now();
+		
+		// フォーマットを指定
+		DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyyMMddHHmmss");
+		
+		// フォーマットに従って日時を文字列に変換
+		String formattedDateTime = now.format(formatter);
 		
 		//=====================================================================
 		// DB接続
 		//=====================================================================
-		Connection con	= this.getConnection("kintai", req);
+		Connection con					= this.getConnection("kintai", req);
 		PreparedStatement pstmt			= null;
 		StringBuffer sql				= new StringBuffer();
 		PreparedStatementFactory pstmtf	= new PreparedStatementFactory();
@@ -65,24 +65,24 @@ public class CsvMstEigyoshoDownload extends DownloadBase {
 		sql.append(" WHERE ");
 		sql.append(" 	1 = 1 ");
 
-		if (StringUtils.isNotBlank(fromEigyoshoCode)) {
-		 sql.append(" AND CAST(EigyoshoCode AS int) >= ? ");
-	     pstmtf.addValue("String", fromEigyoshoCode);
+		if (StringUtils.isNotBlank(eigyoshoCodeF)) {
+			sql.append(" AND CAST(EigyoshoCode AS int) >= ? ");
+			pstmtf.addValue("String", eigyoshoCodeF);
 		}
 		
-		if (StringUtils.isNotBlank(toEigyoshoCode)) {
-	     sql.append(" AND CAST(EigyoshoCode AS int) <= ? ");
-		 pstmtf.addValue("String", toEigyoshoCode);
+		if (StringUtils.isNotBlank(eigyoshoCodeT)) {
+			sql.append(" AND CAST(EigyoshoCode AS int) <= ? ");
+			pstmtf.addValue("String", eigyoshoCodeT);
 		}
 		
-		if(StringUtils.isNotBlank(fromSaishuKoshinDate)) {
-		 sql.append(" AND SaishuKoshinDate >= ?");
-		 pstmtf.addValue("String", fromSaishuKoshinDate);
+		if(StringUtils.isNotBlank(saishuKoshinDateF)) {
+			sql.append(" AND SaishuKoshinDate >= ?");
+			pstmtf.addValue("String", saishuKoshinDateF);
 		}
 		
-		if(StringUtils.isNotBlank(toSaishuKoshinDate)) {
-		 sql.append(" AND SaishuKoshinDate <= ?");
-		 pstmtf.addValue("String", toSaishuKoshinDate);
+		if(StringUtils.isNotBlank(saishuKoshinDateT)) {
+			sql.append(" AND SaishuKoshinDate <= ?");
+			pstmtf.addValue("String", saishuKoshinDateT);
 		}
 		
 		try {
@@ -122,18 +122,17 @@ public class CsvMstEigyoshoDownload extends DownloadBase {
 		
 		// CSVデータヘッダ
 		CSVLine csvStringTitle = new CSVLine();
-			csvStringTitle.addItem( "営業所コード");
-			csvStringTitle.addItem( "営業所名");
-			csvStringTitle.addItem( "最終更新社員NO");
-			csvStringTitle.addItem( "最終更新日");
-			csvStringTitle.addItem( "最終更新時刻");
-
+		csvStringTitle.addItem("営業所コード");
+		csvStringTitle.addItem("営業所名");
+		csvStringTitle.addItem("最終更新社員NO");
+		csvStringTitle.addItem("最終更新日");
+		csvStringTitle.addItem("最終更新時刻");
+		
 		// データ格納
 		csvString.append(csvStringTitle.getLine() + newLine);
 		
 		// 明細部の設定
-		count = data.size();
-		for (int i = 0; i < count; i++) {
+		for (int i = 0; i < data.size(); i++) {
 			// CSVデータ1レコード分
 			CSVLine csvStringRecord = new CSVLine();
 			csvStringRecord.addItem(data.get(i).get("EigyoshoCode"));
@@ -146,7 +145,7 @@ public class CsvMstEigyoshoDownload extends DownloadBase {
 		}
 		
 		// CSVデータの格納
-		this.setData(csvString.toString().getBytes());
+		this.setData(csvString.toString().getBytes("Shift_JIS"));
 		// 名前を付けて保存
 		this.setFilename("CsvMstEigyosho_" + formattedDateTime + ".csv");
 	}

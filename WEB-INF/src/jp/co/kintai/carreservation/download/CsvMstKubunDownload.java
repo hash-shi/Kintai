@@ -31,25 +31,25 @@ public class CsvMstKubunDownload extends DownloadBase {
 		//=====================================================================
 		// パラメータ取得
 		//=====================================================================
-		int count = 0;
 		ArrayList<HashMap<String, String>> data = new ArrayList<>();
-		String fromKbnCode	= req.getParameter("srhTxtKbnCodeF");
-		String toKbnCode	= req.getParameter("srhTxtKbnCodeT");
-		String fromSaishuKoshinDate	= req.getParameter("srhTxtSaishuKoshinDateF");
-		String toSaishuKoshinDate	= req.getParameter("srhTxtSaishuKoshinDateT");
+		String kbnCodeF				= req.getParameter("srhTxtKbnCodeF");
+		String kbnCodeT				= req.getParameter("srhTxtKbnCodeT");
+		String saishuKoshinDateF	= req.getParameter("srhTxtSaishuKoshinDateF");
+		String saishuKoshinDateT	= req.getParameter("srhTxtSaishuKoshinDateT");
+		
 		// 現在日時を取得
-        LocalDateTime now = LocalDateTime.now();
-
-        // フォーマットを指定
-        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyyMMddHHmmss");
-
-        // フォーマットに従って日時を文字列に変換
-        String formattedDateTime = now.format(formatter);
+		LocalDateTime now = LocalDateTime.now();
+		
+		// フォーマットを指定
+		DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyyMMddHHmmss");
+		
+		// フォーマットに従って日時を文字列に変換
+		String formattedDateTime = now.format(formatter);
 		
 		//=====================================================================
 		// DB接続
 		//=====================================================================
-		Connection con	= this.getConnection("kintai", req);
+		Connection con					= this.getConnection("kintai", req);
 		PreparedStatement pstmt			= null;
 		StringBuffer sql				= new StringBuffer();
 		PreparedStatementFactory pstmtf	= new PreparedStatementFactory();
@@ -65,24 +65,24 @@ public class CsvMstKubunDownload extends DownloadBase {
 		sql.append(" WHERE ");
 		sql.append(" 	1 = 1 ");
 
-		if (StringUtils.isNotBlank(fromKbnCode)) {
-		 sql.append(" AND CAST(KbnCode AS int) >= ? ");
-	     pstmtf.addValue("String", fromKbnCode);
+		if (StringUtils.isNotBlank(kbnCodeF)) {
+			sql.append(" AND CAST(KbnCode AS int) >= ? ");
+			pstmtf.addValue("String", kbnCodeF);
 		}
 		
-		if (StringUtils.isNotBlank(toKbnCode)) {
-	     sql.append(" AND CAST(KbnCode AS int) <= ? ");
-		 pstmtf.addValue("String", toKbnCode);
+		if (StringUtils.isNotBlank(kbnCodeT)) {
+			sql.append(" AND CAST(KbnCode AS int) <= ? ");
+			pstmtf.addValue("String", kbnCodeT);
 		}
 		
-		if(StringUtils.isNotBlank(fromSaishuKoshinDate)) {
-		 sql.append(" AND SaishuKoshinDate >= ?");
-		 pstmtf.addValue("String", fromSaishuKoshinDate);
+		if(StringUtils.isNotBlank(saishuKoshinDateF)) {
+			sql.append(" AND SaishuKoshinDate >= ?");
+			pstmtf.addValue("String", saishuKoshinDateF);
 		}
 		
-		if(StringUtils.isNotBlank(toSaishuKoshinDate)) {
-		 sql.append(" AND SaishuKoshinDate <= ?");
-		 pstmtf.addValue("String", toSaishuKoshinDate);
+		if(StringUtils.isNotBlank(saishuKoshinDateT)) {
+			sql.append(" AND SaishuKoshinDate <= ?");
+			pstmtf.addValue("String", saishuKoshinDateT);
 		}
 		
 		try {
@@ -122,31 +122,29 @@ public class CsvMstKubunDownload extends DownloadBase {
 		
 		// CSVデータヘッダ
 		CSVLine csvStringTitle = new CSVLine();
-			csvStringTitle.addItem( "区分コード");
-			csvStringTitle.addItem( "コード");
-			csvStringTitle.addItem( "区分名称");
-			csvStringTitle.addItem( "区分略称");
-		    csvStringTitle.addItem( "グループコード1");
-			csvStringTitle.addItem( "グループコード2");
-
-			csvStringTitle.addItem( "最終更新社員NO");
-			csvStringTitle.addItem( "最終更新日");
-			csvStringTitle.addItem( "最終更新時刻");
+		csvStringTitle.addItem("区分コード");
+		csvStringTitle.addItem("コード");
+		csvStringTitle.addItem("区分名称");
+		csvStringTitle.addItem("区分略称");
+		csvStringTitle.addItem("グループコード1");
+		csvStringTitle.addItem("グループコード2");
+		csvStringTitle.addItem("最終更新社員NO");
+		csvStringTitle.addItem("最終更新日");
+		csvStringTitle.addItem("最終更新時刻");
 
 		// データ格納
 		csvString.append(csvStringTitle.getLine() + newLine);
 		
 		// 明細部の設定
-		count = data.size();
-		for (int i = 0; i < count; i++) {
+		for (int i = 0; i < data.size(); i++) {
 			// CSVデータ1レコード分
 			CSVLine csvStringRecord = new CSVLine();
-			csvStringRecord.addItem(data.get(i).get( "KbnCode"));
-			csvStringRecord.addItem(data.get(i).get( "Code"));
-			csvStringRecord.addItem(data.get(i).get( "KbnName"));
-			csvStringRecord.addItem(data.get(i).get( "KbnRyaku"));
-			csvStringRecord.addItem(data.get(i).get( "GroupCode1"));
-			csvStringRecord.addItem(data.get(i).get( "GroupCode2"));
+			csvStringRecord.addItem(data.get(i).get("KbnCode"));
+			csvStringRecord.addItem(data.get(i).get("Code"));
+			csvStringRecord.addItem(data.get(i).get("KbnName"));
+			csvStringRecord.addItem(data.get(i).get("KbnRyaku"));
+			csvStringRecord.addItem(data.get(i).get("GroupCode1"));
+			csvStringRecord.addItem(data.get(i).get("GroupCode2"));
 			csvStringRecord.addItem(data.get(i).get("SaishuKoshinShainNO"));
 			csvStringRecord.addItem(data.get(i).get("SaishuKoshinDate"));
 			csvStringRecord.addItem(data.get(i).get("SaishuKoshinJikan"));
@@ -155,9 +153,8 @@ public class CsvMstKubunDownload extends DownloadBase {
 		}
 		
 		// CSVデータの格納
-		this.setData(csvString.toString().getBytes());
+		this.setData(csvString.toString().getBytes("Shift_JIS"));
 		// 名前を付けて保存
 		this.setFilename("CsvMstKubun_" + formattedDateTime + ".csv");
 	}
-	
 }

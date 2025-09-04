@@ -23,11 +23,9 @@ public class MstChohyoListAction extends PJActionBase {
 	
 	@Override
 	public void doRun(HttpServletRequest req, HttpServletResponse res) throws Exception {
-		// 検索条件取得
-		String kbnCode	= "0501";
-				
+		
 		// DB接続
-		Connection con		= this.getConnection("kintai", req);
+		Connection con					= this.getConnection("kintai", req);
 		StringBuffer sql				= new StringBuffer();
 		PreparedStatement pstmt			= null;
 		ResultSet rset					= null;
@@ -35,8 +33,8 @@ public class MstChohyoListAction extends PJActionBase {
 		//営業所初期値取得
 		ArrayList<HashMap<String, String>> mstDatas = new ArrayList<>();
 		sql.append(" SELECT ");
-		sql.append(" 	 MIN(EigyoshoCode) AS Saisho ");
-		sql.append(" 	,MAX(EigyoshoCode) AS Saidai ");
+		sql.append(" 	 MIN(EigyoshoCode) AS eigyoshoCodeF ");
+		sql.append(" 	,MAX(EigyoshoCode) AS eigyoshoCodeT ");
 		sql.append(" FROM");
 		sql.append("   MST_EIGYOSHO");
 		
@@ -52,6 +50,7 @@ public class MstChohyoListAction extends PJActionBase {
 			int colCount = metaData.getColumnCount(); 
 			
 			rset.next();
+			
 			// 1レコード分の配列を用意
 			HashMap<String, String> record = new HashMap<String, String>();
 			// カラム名をkeyとして値を格納
@@ -66,56 +65,58 @@ public class MstChohyoListAction extends PJActionBase {
 		}
 		
 		// 処理選択取得
-		ArrayList<HashMap<String, String>> shoriSentaku = PJActionBase.getMstKubuns(con, kbnCode, "", "");
-				
+		ArrayList<HashMap<String, String>> mstKubun0501 = PJActionBase.getMstKubuns(con, "0501", "", "");
+		
 		//=====================================================================
 		// 結果返却
 		//=====================================================================
-		req.setAttribute("shoriSentaku", shoriSentaku);
-		req.setAttribute("eigyosho", mstDatas);
-		//this.addContent("name", kbnName);
+		req.setAttribute("mstDatas", mstDatas);
+		req.setAttribute("mstKubun0501", mstKubun0501);
+		
 		// 画面表示
 		this.setView("success");
 	}
 	
 	public void eigyosho(HttpServletRequest req, HttpServletResponse res) throws Exception {
+		
 		// DB接続
-		Connection con		= this.getConnection("kintai", req);
+		Connection con					= this.getConnection("kintai", req);
 		StringBuffer sql				= new StringBuffer();
 		PreparedStatement pstmt			= null;
 		PreparedStatementFactory pstmtf	= new PreparedStatementFactory();
 		ResultSet rset					= null;
+		
 		// 画面パラメータの取得
-		int count = 0;
-		String fromEigyoshoCode	= req.getParameter("srhTxtEigyoshoCodeF");
-		String toEigyoshoCode	= req.getParameter("srhTxtEigyoshoCodeT");
-		String fromSaishuKoshinDate	= req.getParameter("srhTxtSaishuKoshinDateF");
-		String toSaishuKoshinDate	= req.getParameter("srhTxtSaishuKoshinDateT");
+		String eigyoshoCodeF		= req.getParameter("srhTxtEigyoshoCodeF");
+		String eigyoshoCodeT		= req.getParameter("srhTxtEigyoshoCodeT");
+		String saishuKoshinDateF	= req.getParameter("srhTxtSaishuKoshinDateF");
+		String saishuKoshinDateT	= req.getParameter("srhTxtSaishuKoshinDateT");
+		
 		sql.append(" SELECT ");
-		sql.append(" 	COUNT(*) AS CNT ");
+		sql.append(" 	* ");
 		sql.append(" FROM ");
 		sql.append(" 	MST_EIGYOSHO ");
 		sql.append(" WHERE ");
 		sql.append(" 	1 = 1 ");
 
-		if (StringUtils.isNotBlank(fromEigyoshoCode)) {
-		 sql.append(" AND CAST(EigyoshoCode AS int) >= ? ");
-	     pstmtf.addValue("String", fromEigyoshoCode);
+		if (StringUtils.isNotBlank(eigyoshoCodeF)) {
+			sql.append(" AND CAST(EigyoshoCode AS int) >= ? ");
+			pstmtf.addValue("String", eigyoshoCodeF);
 		}
 		
-		if (StringUtils.isNotBlank(toEigyoshoCode)) {
-	     sql.append(" AND CAST(EigyoshoCode AS int) <= ? ");
-		 pstmtf.addValue("String", toEigyoshoCode);
+		if (StringUtils.isNotBlank(eigyoshoCodeT)) {
+			sql.append(" AND CAST(EigyoshoCode AS int) <= ? ");
+			pstmtf.addValue("String", eigyoshoCodeT);
 		}
 		
-		if(StringUtils.isNotBlank(fromSaishuKoshinDate)) {
-		 sql.append(" AND SaishuKoshinDate >= ?");
-		 pstmtf.addValue("String", fromSaishuKoshinDate);
+		if(StringUtils.isNotBlank(saishuKoshinDateF)) {
+			sql.append(" AND SaishuKoshinDate >= ?");
+			pstmtf.addValue("String", saishuKoshinDateF);
 		}
 		
-		if(StringUtils.isNotBlank(toSaishuKoshinDate)) {
-		 sql.append(" AND SaishuKoshinDate <= ?");
-		 pstmtf.addValue("String", toSaishuKoshinDate);
+		if(StringUtils.isNotBlank(saishuKoshinDateT)) {
+			sql.append(" AND SaishuKoshinDate <= ?");
+			pstmtf.addValue("String", saishuKoshinDateT);
 		}
 		
 		try {
@@ -126,71 +127,70 @@ public class MstChohyoListAction extends PJActionBase {
 			// 実行
 			rset = pstmt.executeQuery();
 			// 結果取得
-			rset.next();
-			count = rset.getInt("CNT");
+			if (rset.next()) {
+				this.addContent("result", true);
+			} else {
+		    	this.addContent("result", false);
+				this.addContent("message","対象データが存在しません。");
+			}
 		} finally {
 			if (rset != null){ try { rset.close(); } catch (Exception exp){}}
 			if (pstmt != null){ try { pstmt.close(); } catch (Exception exp){}}
 		}
-		
-		if(count == 0) {
-	    	this.addContent("result", false);
-			this.addContent("message","対象データが存在しません。");
-	    } else {
-	    	this.addContent("result", true);
-	    }
 	}
 	
 	public void busho(HttpServletRequest req, HttpServletResponse res) throws Exception {
+		
 		// DB接続
-		Connection con		= this.getConnection("kintai", req);
+		Connection con					= this.getConnection("kintai", req);
 		StringBuffer sql				= new StringBuffer();
 		PreparedStatement pstmt			= null;
 		PreparedStatementFactory pstmtf	= new PreparedStatementFactory();
 		ResultSet rset					= null;
+		
 		// 画面パラメータの取得
-		int count = 0;
-		String fromEigyoshoCode	= req.getParameter("srhTxtEigyoshoCodeF");
-		String toEigyoshoCode	= req.getParameter("srhTxtEigyoshoCodeT");
-		String fromBushoCode	= req.getParameter("srhTxtBushoCodeF");
-		String toBushoCode	= req.getParameter("srhTxtBushoCodeT");
-		String fromSaishuKoshinDate	= req.getParameter("srhTxtSaishuKoshinDateF");
-		String toSaishuKoshinDate	= req.getParameter("srhTxtSaishuKoshinDateT");
+		String eigyoshoCodeF		= req.getParameter("srhTxtEigyoshoCodeF");
+		String eigyoshoCodeT		= req.getParameter("srhTxtEigyoshoCodeT");
+		String bushoCodeF			= req.getParameter("srhTxtBushoCodeF");
+		String bushoCodeT			= req.getParameter("srhTxtBushoCodeT");
+		String saishuKoshinDateF	= req.getParameter("srhTxtSaishuKoshinDateF");
+		String saishuKoshinDateT	= req.getParameter("srhTxtSaishuKoshinDateT");
+		
 		sql.append(" SELECT ");
-		sql.append(" 	COUNT(*) AS CNT ");
+		sql.append(" 	* ");
 		sql.append(" FROM ");
 		sql.append(" 	MST_BUSHO ");
 		sql.append(" WHERE ");
 		sql.append(" 	1 = 1 ");
 
-		if (StringUtils.isNotBlank(fromEigyoshoCode)) {
-		 sql.append(" AND CAST(EigyoshoCode AS int) >= ? ");
-	     pstmtf.addValue("String", fromEigyoshoCode);
+		if (StringUtils.isNotBlank(eigyoshoCodeF)) {
+			sql.append(" AND CAST(EigyoshoCode AS int) >= ? ");
+			pstmtf.addValue("String", eigyoshoCodeF);
 		}
 		
-		if (StringUtils.isNotBlank(toEigyoshoCode)) {
-	     sql.append(" AND CAST(EigyoshoCode AS int) <= ? ");
-		 pstmtf.addValue("String", toEigyoshoCode);
+		if (StringUtils.isNotBlank(eigyoshoCodeT)) {
+			sql.append(" AND CAST(EigyoshoCode AS int) <= ? ");
+			pstmtf.addValue("String", eigyoshoCodeT);
 		}
 		
-		if (StringUtils.isNotBlank(fromBushoCode)) {
-	     sql.append(" AND CAST(BushoCode AS int) >= ? ");
-		 pstmtf.addValue("String", fromBushoCode);
+		if (StringUtils.isNotBlank(bushoCodeF)) {
+			sql.append(" AND CAST(BushoCode AS int) >= ? ");
+			pstmtf.addValue("String", bushoCodeF);
 		}
 			
-		if (StringUtils.isNotBlank(toBushoCode)) {
-		 sql.append(" AND CAST(BushoCode AS int) <= ? ");
-		 pstmtf.addValue("String", toBushoCode);
+		if (StringUtils.isNotBlank(bushoCodeT)) {
+			sql.append(" AND CAST(BushoCode AS int) <= ? ");
+			pstmtf.addValue("String", bushoCodeT);
 		}
 		
-		if(StringUtils.isNotBlank(fromSaishuKoshinDate)) {
-		 sql.append(" AND SaishuKoshinDate >= ?");
-		 pstmtf.addValue("String", fromSaishuKoshinDate);
+		if(StringUtils.isNotBlank(saishuKoshinDateF)) {
+			sql.append(" AND SaishuKoshinDate >= ?");
+			pstmtf.addValue("String", saishuKoshinDateF);
 		}
 		
-		if(StringUtils.isNotBlank(toSaishuKoshinDate)) {
-		 sql.append(" AND SaishuKoshinDate <= ?");
-		 pstmtf.addValue("String", toSaishuKoshinDate);
+		if(StringUtils.isNotBlank(saishuKoshinDateT)) {
+			sql.append(" AND SaishuKoshinDate <= ?");
+			pstmtf.addValue("String", saishuKoshinDateT);
 		}
 		
 		try {
@@ -201,71 +201,70 @@ public class MstChohyoListAction extends PJActionBase {
 			// 実行
 			rset = pstmt.executeQuery();
 			// 結果取得
-			rset.next();
-			count = rset.getInt("CNT");
+			if (rset.next()) {
+				this.addContent("result", true);
+			} else {
+		    	this.addContent("result", false);
+				this.addContent("message","対象データが存在しません。");
+			}
 		} finally {
 			if (rset != null){ try { rset.close(); } catch (Exception exp){}}
 			if (pstmt != null){ try { pstmt.close(); } catch (Exception exp){}}
 		}
-		
-		if(count == 0) {
-	    	this.addContent("result", false);
-			this.addContent("message","対象データが存在しません。");
-	    } else {
-	    	this.addContent("result", true);
-	    }
 	}
 	
 	public void shain(HttpServletRequest req, HttpServletResponse res) throws Exception {
+		
 		// DB接続
-		Connection con		= this.getConnection("kintai", req);
+		Connection con					= this.getConnection("kintai", req);
 		StringBuffer sql				= new StringBuffer();
 		PreparedStatement pstmt			= null;
 		PreparedStatementFactory pstmtf	= new PreparedStatementFactory();
 		ResultSet rset					= null;
+		
 		// 画面パラメータの取得
-		int count = 0;
-		String fromEigyoshoCode	= req.getParameter("srhTxtEigyoshoCodeF");
-		String toEigyoshoCode	= req.getParameter("srhTxtEigyoshoCodeT");
-		String fromShainNO	= req.getParameter("srhTxtShainNOF");
-		String toShainNO	= req.getParameter("srhTxtShainNOT");
-		String fromSaishuKoshinDate	= req.getParameter("srhTxtSaishuKoshinDateF");
-	    String toSaishuKoshinDate	= req.getParameter("srhTxtSaishuKoshinDateT");
+		String eigyoshoCodeF		= req.getParameter("srhTxtEigyoshoCodeF");
+		String eigyoshoCodeT		= req.getParameter("srhTxtEigyoshoCodeT");
+		String shainNoF				= req.getParameter("srhTxtShainNOF");
+		String shainNoT				= req.getParameter("srhTxtShainNOT");
+		String saishuKoshinDateF	= req.getParameter("srhTxtSaishuKoshinDateF");
+		String saishuKoshinDateT	= req.getParameter("srhTxtSaishuKoshinDateT");
+		
 	    sql.append(" SELECT ");
-		sql.append(" 	COUNT(*) AS CNT ");
+		sql.append(" 	* ");
 		sql.append(" FROM ");
 		sql.append(" 	MST_SHAIN ");
 		sql.append(" WHERE ");
 		sql.append(" 	1 = 1 ");
 
-		if (StringUtils.isNotBlank(fromEigyoshoCode)) {
-		 sql.append(" AND CAST(EigyoshoCode AS int) >= ? ");
-	     pstmtf.addValue("String", fromEigyoshoCode);
+		if (StringUtils.isNotBlank(eigyoshoCodeF)) {
+			sql.append(" AND CAST(EigyoshoCode AS int) >= ? ");
+			pstmtf.addValue("String", eigyoshoCodeF);
 		}
 		
-		if (StringUtils.isNotBlank(toEigyoshoCode)) {
-	     sql.append(" AND CAST(EigyoshoCode AS int) <= ? ");
-		 pstmtf.addValue("String", toEigyoshoCode);
+		if (StringUtils.isNotBlank(eigyoshoCodeT)) {
+			sql.append(" AND CAST(EigyoshoCode AS int) <= ? ");
+			pstmtf.addValue("String", eigyoshoCodeT);
 		}
 		
-		if (StringUtils.isNotBlank(fromShainNO)) {
-	     sql.append(" AND CAST(ShainNO AS int) >= ? ");
-		 pstmtf.addValue("String", fromShainNO);
+		if (StringUtils.isNotBlank(shainNoF)) {
+			sql.append(" AND CAST(ShainNO AS int) >= ? ");
+			pstmtf.addValue("String", shainNoF);
 		}
 			
-		if (StringUtils.isNotBlank(toShainNO)) {
-		 sql.append(" AND CAST(ShainNO AS int) <= ? ");
-		 pstmtf.addValue("String", toShainNO);
+		if (StringUtils.isNotBlank(shainNoT)) {
+			sql.append(" AND CAST(ShainNO AS int) <= ? ");
+			pstmtf.addValue("String", shainNoT);
 		}
 		
-		if(StringUtils.isNotBlank(fromSaishuKoshinDate)) {
-		 sql.append(" AND SaishuKoshinDate >= ?");
-		 pstmtf.addValue("String", fromSaishuKoshinDate);
+		if(StringUtils.isNotBlank(saishuKoshinDateF)) {
+			sql.append(" AND SaishuKoshinDate >= ?");
+			pstmtf.addValue("String", saishuKoshinDateF);
 		}
 		
-		if(StringUtils.isNotBlank(toSaishuKoshinDate)) {
-		 sql.append(" AND SaishuKoshinDate <= ?");
-		 pstmtf.addValue("String", toSaishuKoshinDate);
+		if(StringUtils.isNotBlank(saishuKoshinDateT)) {
+			sql.append(" AND SaishuKoshinDate <= ?");
+			pstmtf.addValue("String", saishuKoshinDateT);
 		}
 		
 		try {
@@ -276,59 +275,58 @@ public class MstChohyoListAction extends PJActionBase {
 			// 実行
 			rset = pstmt.executeQuery();
 			// 結果取得
-			rset.next();
-			count = rset.getInt("CNT");
+			if (rset.next()) {
+				this.addContent("result", true);
+			} else {
+		    	this.addContent("result", false);
+				this.addContent("message","対象データが存在しません。");
+			}
 		} finally {
 			if (rset != null){ try { rset.close(); } catch (Exception exp){}}
 			if (pstmt != null){ try { pstmt.close(); } catch (Exception exp){}}
 		}
-	    
-		if(count == 0) {
-	    	this.addContent("result", false);
-			this.addContent("message","対象データが存在しません。");
-	    } else {
-	    	this.addContent("result", true);
-	    }
 	}
 	
 	public void kbn(HttpServletRequest req, HttpServletResponse res) throws Exception {
+		
 		// DB接続
-		Connection con		= this.getConnection("kintai", req);
+		Connection con					= this.getConnection("kintai", req);
 		StringBuffer sql				= new StringBuffer();
 		PreparedStatement pstmt			= null;
 		PreparedStatementFactory pstmtf	= new PreparedStatementFactory();
 		ResultSet rset					= null;
+		
 		// 画面パラメータの取得
-		int count = 0;
-		String fromKbnCode	= req.getParameter("srhTxtKbnCodeF");
-		String toKbnCode	= req.getParameter("srhTxtKbnCodeT");
-		String fromSaishuKoshinDate	= req.getParameter("srhTxtSaishuKoshinDateF");
-		String toSaishuKoshinDate	= req.getParameter("srhTxtSaishuKoshinDateT");
+		String kbnCodeF				= req.getParameter("srhTxtKbnCodeF");
+		String kbnCodeT				= req.getParameter("srhTxtKbnCodeT");
+		String saishuKoshinDateF	= req.getParameter("srhTxtSaishuKoshinDateF");
+		String saishuKoshinDateT	= req.getParameter("srhTxtSaishuKoshinDateT");
+		
 		sql.append(" SELECT ");
-		sql.append(" 	COUNT(*) AS CNT ");
+		sql.append(" 	* ");
 		sql.append(" FROM ");
 		sql.append(" 	MST_KUBUN ");
 		sql.append(" WHERE ");
 		sql.append(" 	1 = 1 ");
 
-		if (StringUtils.isNotBlank(fromKbnCode)) {
-		 sql.append(" AND CAST(KbnCode AS int) >= ? ");
-	     pstmtf.addValue("String", fromKbnCode);
+		if (StringUtils.isNotBlank(kbnCodeF)) {
+			sql.append(" AND CAST(KbnCode AS int) >= ? ");
+			pstmtf.addValue("String", kbnCodeF);
 		}
 		
-		if (StringUtils.isNotBlank(toKbnCode)) {
-	     sql.append(" AND CAST(KbnCode AS int) <= ? ");
-		 pstmtf.addValue("String", toKbnCode);
+		if (StringUtils.isNotBlank(kbnCodeT)) {
+			sql.append(" AND CAST(KbnCode AS int) <= ? ");
+			pstmtf.addValue("String", kbnCodeT);
 		}
 		
-		if(StringUtils.isNotBlank(fromSaishuKoshinDate)) {
-		 sql.append(" AND SaishuKoshinDate >= ?");
-		 pstmtf.addValue("String", fromSaishuKoshinDate);
+		if(StringUtils.isNotBlank(saishuKoshinDateF)) {
+			sql.append(" AND SaishuKoshinDate >= ?");
+			pstmtf.addValue("String", saishuKoshinDateF);
 		}
 		
-		if(StringUtils.isNotBlank(toSaishuKoshinDate)) {
-		 sql.append(" AND SaishuKoshinDate <= ?");
-		 pstmtf.addValue("String", toSaishuKoshinDate);
+		if(StringUtils.isNotBlank(saishuKoshinDateT)) {
+			sql.append(" AND SaishuKoshinDate <= ?");
+			pstmtf.addValue("String", saishuKoshinDateT);
 		}
 		
 		try {
@@ -339,18 +337,15 @@ public class MstChohyoListAction extends PJActionBase {
 			// 実行
 			rset = pstmt.executeQuery();
 			// 結果取得
-			rset.next();
-			count = rset.getInt("CNT");
+			if (rset.next()) {
+				this.addContent("result", true);
+			} else {
+		    	this.addContent("result", false);
+				this.addContent("message","対象データが存在しません。");
+			}
 		} finally {
 			if (rset != null){ try { rset.close(); } catch (Exception exp){}}
 			if (pstmt != null){ try { pstmt.close(); } catch (Exception exp){}}
 		}
-		
-		if(count == 0) {
-	    	this.addContent("result", false);
-			this.addContent("message","対象データが存在しません。");
-	    } else {
-	    	this.addContent("result", true);
-	    }
 	}
 }

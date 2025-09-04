@@ -31,27 +31,27 @@ public class CsvMstShainDownload extends DownloadBase {
 		//=====================================================================
 		// パラメータ取得
 		//=====================================================================
-		int count = 0;
 		ArrayList<HashMap<String, String>> data = new ArrayList<>();
-		String fromEigyoshoCode	= req.getParameter("srhTxtEigyoshoCodeF");
-		String toEigyoshoCode	= req.getParameter("srhTxtEigyoshoCodeT");
-		String fromShainNO	= req.getParameter("srhTxtShainNOF");
-		String toShainNO	= req.getParameter("srhTxtShainNOT");
-		String fromSaishuKoshinDate	= req.getParameter("srhTxtSaishuKoshinDateF");
-	    String toSaishuKoshinDate	= req.getParameter("srhTxtSaishuKoshinDateT");
-	    // 現在日時を取得
-        LocalDateTime now = LocalDateTime.now();
-
-        // フォーマットを指定
-        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyyMMddHHmmss");
-
-        // フォーマットに従って日時を文字列に変換
-        String formattedDateTime = now.format(formatter);
+		String eigyoshoCodeF		= req.getParameter("srhTxtEigyoshoCodeF");
+		String eigyoshoCodeT		= req.getParameter("srhTxtEigyoshoCodeT");
+		String shainNoF				= req.getParameter("srhTxtShainNOF");
+		String shainNoT				= req.getParameter("srhTxtShainNOT");
+		String saishuKoshinDateF	= req.getParameter("srhTxtSaishuKoshinDateF");
+		String saishuKoshinDateT	= req.getParameter("srhTxtSaishuKoshinDateT");
+		
+		// 現在日時を取得
+		LocalDateTime now = LocalDateTime.now();
+		
+		// フォーマットを指定
+		DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyyMMddHHmmss");
+		
+		// フォーマットに従って日時を文字列に変換
+		String formattedDateTime = now.format(formatter);
 		
 		//=====================================================================
 		// DB接続
 		//=====================================================================
-		Connection con	= this.getConnection("kintai", req);
+		Connection con					= this.getConnection("kintai", req);
 		PreparedStatement pstmt			= null;
 		StringBuffer sql				= new StringBuffer();
 		PreparedStatementFactory pstmtf	= new PreparedStatementFactory();
@@ -67,34 +67,34 @@ public class CsvMstShainDownload extends DownloadBase {
 		sql.append(" WHERE ");
 		sql.append(" 	1 = 1 ");
 
-		if (StringUtils.isNotBlank(fromEigyoshoCode)) {
-		 sql.append(" AND CAST(EigyoshoCode AS int) >= ? ");
-	     pstmtf.addValue("String", fromEigyoshoCode);
+		if (StringUtils.isNotBlank(eigyoshoCodeF)) {
+			sql.append(" AND CAST(EigyoshoCode AS int) >= ? ");
+			pstmtf.addValue("String", eigyoshoCodeF);
 		}
 		
-		if (StringUtils.isNotBlank(toEigyoshoCode)) {
-	     sql.append(" AND CAST(EigyoshoCode AS int) <= ? ");
-		 pstmtf.addValue("String", toEigyoshoCode);
+		if (StringUtils.isNotBlank(eigyoshoCodeT)) {
+			sql.append(" AND CAST(EigyoshoCode AS int) <= ? ");
+			pstmtf.addValue("String", eigyoshoCodeT);
 		}
 		
-		if (StringUtils.isNotBlank(fromShainNO)) {
-	     sql.append(" AND CAST(ShainNO AS int) >= ? ");
-		 pstmtf.addValue("String", fromShainNO);
+		if (StringUtils.isNotBlank(shainNoF)) {
+			sql.append(" AND CAST(ShainNO AS int) >= ? ");
+			pstmtf.addValue("String", shainNoF);
 		}
 			
-		if (StringUtils.isNotBlank(toShainNO)) {
-		 sql.append(" AND CAST(ShainNO AS int) <= ? ");
-		 pstmtf.addValue("String", toShainNO);
+		if (StringUtils.isNotBlank(shainNoT)) {
+			sql.append(" AND CAST(ShainNO AS int) <= ? ");
+			pstmtf.addValue("String", shainNoT);
 		}
 		
-		if(StringUtils.isNotBlank(fromSaishuKoshinDate)) {
-		 sql.append(" AND SaishuKoshinDate >= ?");
-		 pstmtf.addValue("String", fromSaishuKoshinDate);
+		if(StringUtils.isNotBlank(saishuKoshinDateF)) {
+			sql.append(" AND SaishuKoshinDate >= ?");
+			pstmtf.addValue("String", saishuKoshinDateF);
 		}
 		
-		if(StringUtils.isNotBlank(toSaishuKoshinDate)) {
-		 sql.append(" AND SaishuKoshinDate <= ?");
-		 pstmtf.addValue("String", toSaishuKoshinDate);
+		if(StringUtils.isNotBlank(saishuKoshinDateT)) {
+			sql.append(" AND SaishuKoshinDate <= ?");
+			pstmtf.addValue("String", saishuKoshinDateT);
 		}
 		
 		try {
@@ -134,74 +134,73 @@ public class CsvMstShainDownload extends DownloadBase {
 		
 		// CSVデータヘッダ
 		CSVLine csvStringTitle = new CSVLine();
-			csvStringTitle.addItem( "社員NO");
-		    csvStringTitle.addItem( "社員名");
-		    csvStringTitle.addItem( "パスワード");
-		    csvStringTitle.addItem( "ユーザ区分");
-			csvStringTitle.addItem( "社員区分");
-			csvStringTitle.addItem( "出勤簿入力区分");
-			csvStringTitle.addItem( "営業所コード");
-			csvStringTitle.addItem( "部署コード");
-			csvStringTitle.addItem( "有給休暇付与日数");
-			csvStringTitle.addItem( "時給日給区分");
-			csvStringTitle.addItem( "勤務開始時刻（時）");
-			csvStringTitle.addItem( "勤務開始時刻（分）");
-			csvStringTitle.addItem( "勤務終了時刻（時）");
-			csvStringTitle.addItem( "勤務終了時刻（分）");
-			csvStringTitle.addItem( "勤務実働時間");
-			csvStringTitle.addItem( "01勤務時間単価");
-			csvStringTitle.addItem( "02時間外勤務単価");
-			csvStringTitle.addItem( "03深夜勤務単価");
-			csvStringTitle.addItem( "04休日勤務単価");
-			csvStringTitle.addItem( "05有給休暇単価");
-			csvStringTitle.addItem( "06半日有給単価");
-			csvStringTitle.addItem( "07控除単価");
-			csvStringTitle.addItem( "08単価");
-			csvStringTitle.addItem( "09通勤費単価/月給");
-			csvStringTitle.addItem( "10時間外勤務単価");
-			csvStringTitle.addItem( "11特別有給休暇単価");
-			csvStringTitle.addItem( "通勤費精算区分");
-			csvStringTitle.addItem( "退職年月日");
-			csvStringTitle.addItem( "最終更新社員NO");
-			csvStringTitle.addItem( "最終更新日");
-			csvStringTitle.addItem( "最終更新時刻");
+		csvStringTitle.addItem("社員NO");
+		csvStringTitle.addItem("社員名");
+		csvStringTitle.addItem("パスワード");
+		csvStringTitle.addItem("ユーザ区分");
+		csvStringTitle.addItem("社員区分");
+		csvStringTitle.addItem("出勤簿入力区分");
+		csvStringTitle.addItem("営業所コード");
+		csvStringTitle.addItem("部署コード");
+		csvStringTitle.addItem("有給休暇付与日数");
+		csvStringTitle.addItem("時給日給区分");
+		csvStringTitle.addItem("勤務開始時刻（時）");
+		csvStringTitle.addItem("勤務開始時刻（分）");
+		csvStringTitle.addItem("勤務終了時刻（時）");
+		csvStringTitle.addItem("勤務終了時刻（分）");
+		csvStringTitle.addItem("勤務実働時間");
+		csvStringTitle.addItem("01勤務時間単価");
+		csvStringTitle.addItem("02時間外勤務単価");
+		csvStringTitle.addItem("03深夜勤務単価");
+		csvStringTitle.addItem("04休日勤務単価");
+		csvStringTitle.addItem("05有給休暇単価");
+		csvStringTitle.addItem("06半日有給単価");
+		csvStringTitle.addItem("07控除単価");
+		csvStringTitle.addItem("08単価");
+		csvStringTitle.addItem("09通勤費単価/月給");
+		csvStringTitle.addItem("10時間外勤務単価");
+		csvStringTitle.addItem("11特別有給休暇単価");
+		csvStringTitle.addItem("通勤費精算区分");
+		csvStringTitle.addItem("退職年月日");
+		csvStringTitle.addItem("最終更新社員NO");
+		csvStringTitle.addItem("最終更新日");
+		csvStringTitle.addItem("最終更新時刻");
 
 		// データ格納
 		csvString.append(csvStringTitle.getLine() + newLine);
 		
 		// 明細部の設定
-		count = data.size();
-		for (int i = 0; i < count; i++) {
+		for (int i = 0; i < data.size(); i++) {
 			// CSVデータ1レコード分
 			CSVLine csvStringRecord = new CSVLine();
-			csvStringRecord.addItem(data.get(i).get( "ShainNO"));
-			csvStringRecord.addItem(data.get(i).get( "ShainName"));
-			csvStringRecord.addItem(data.get(i).get( "Password"));
-			csvStringRecord.addItem(data.get(i).get( "UserKbn"));
-			csvStringRecord.addItem(data.get(i).get( "ShainKbn"));
-			csvStringRecord.addItem(data.get(i).get( "ShukinboKbn"));
-			csvStringRecord.addItem(data.get(i).get( "EigyoshoCode"));
-			csvStringRecord.addItem(data.get(i).get( "BushoCode"));
-			csvStringRecord.addItem(data.get(i).get( "YukyuKyukaFuyoNissu"));
-			csvStringRecord.addItem(data.get(i).get( "JikyuNikkyuKbn"));
-			csvStringRecord.addItem(data.get(i).get( "KinmuKaishiJi"));
-			csvStringRecord.addItem(data.get(i).get( "KinmuKaishiFun"));
-			csvStringRecord.addItem(data.get(i).get( "KinmuShuryoJi"));
-			csvStringRecord.addItem(data.get(i).get( "KinmuShuryoFun"));
-			csvStringRecord.addItem(data.get(i).get( "KeiyakuJitsudoJikan"));
-			csvStringRecord.addItem(data.get(i).get( "ShinseiTanka01"));
-			csvStringRecord.addItem(data.get(i).get( "ShinseiTanka02"));
-			csvStringRecord.addItem(data.get(i).get( "ShinseiTanka03"));
-			csvStringRecord.addItem(data.get(i).get( "ShinseiTanka04"));
-			csvStringRecord.addItem(data.get(i).get( "ShinseiTanka05"));
-			csvStringRecord.addItem(data.get(i).get( "ShinseiTanka06"));
-			csvStringRecord.addItem(data.get(i).get( "ShinseiTanka07"));
-			csvStringRecord.addItem(data.get(i).get( "ShinseiTanka08"));
-			csvStringRecord.addItem(data.get(i).get( "ShinseiTanka09"));
-			csvStringRecord.addItem(data.get(i).get( "ShinseiTanka10"));
-			csvStringRecord.addItem(data.get(i).get( "ShinseiTanka11"));
-			csvStringRecord.addItem(data.get(i).get( "TsukinHiKbn"));
-			csvStringRecord.addItem(data.get(i).get( "TaisyokuDate"));
+			csvStringRecord.addItem(data.get(i).get("ShainNO"));
+			csvStringRecord.addItem(data.get(i).get("ShainName"));
+			csvStringRecord.addItem(data.get(i).get("Password"));
+			csvStringRecord.addItem(data.get(i).get("UserKbn"));
+			csvStringRecord.addItem(data.get(i).get("ShainKbn"));
+			csvStringRecord.addItem(data.get(i).get("ShukinboKbn"));
+			csvStringRecord.addItem(data.get(i).get("EigyoshoCode"));
+			csvStringRecord.addItem(data.get(i).get("BushoCode"));
+			csvStringRecord.addItem(data.get(i).get("YukyuKyukaFuyoNissu"));
+			csvStringRecord.addItem(data.get(i).get("JikyuNikkyuKbn"));
+			csvStringRecord.addItem(data.get(i).get("KinmuKaishiJi"));
+			csvStringRecord.addItem(data.get(i).get("KinmuKaishiFun"));
+			csvStringRecord.addItem(data.get(i).get("KinmuShuryoJi"));
+			csvStringRecord.addItem(data.get(i).get("KinmuShuryoFun"));
+			csvStringRecord.addItem(data.get(i).get("KeiyakuJitsudoJikan"));
+			csvStringRecord.addItem(data.get(i).get("ShinseiTanka01"));
+			csvStringRecord.addItem(data.get(i).get("ShinseiTanka02"));
+			csvStringRecord.addItem(data.get(i).get("ShinseiTanka03"));
+			csvStringRecord.addItem(data.get(i).get("ShinseiTanka04"));
+			csvStringRecord.addItem(data.get(i).get("ShinseiTanka05"));
+			csvStringRecord.addItem(data.get(i).get("ShinseiTanka06"));
+			csvStringRecord.addItem(data.get(i).get("ShinseiTanka07"));
+			csvStringRecord.addItem(data.get(i).get("ShinseiTanka08"));
+			csvStringRecord.addItem(data.get(i).get("ShinseiTanka09"));
+			csvStringRecord.addItem(data.get(i).get("ShinseiTanka10"));
+			csvStringRecord.addItem(data.get(i).get("ShinseiTanka11"));
+			csvStringRecord.addItem(data.get(i).get("TsukinHiKbn"));
+			csvStringRecord.addItem(data.get(i).get("TaisyokuDate"));
 			csvStringRecord.addItem(data.get(i).get("SaishuKoshinShainNO"));
 			csvStringRecord.addItem(data.get(i).get("SaishuKoshinDate"));
 			csvStringRecord.addItem(data.get(i).get("SaishuKoshinJikan"));
@@ -210,9 +209,8 @@ public class CsvMstShainDownload extends DownloadBase {
 		}
 		
 		// CSVデータの格納
-		this.setData(csvString.toString().getBytes());
+		this.setData(csvString.toString().getBytes("Shift_JIS"));
 		// 名前を付けて保存
 		this.setFilename("CsvMstShain_" + formattedDateTime + ".csv");
 	}
-	
 }
