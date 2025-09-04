@@ -29,6 +29,9 @@ public class CsvChinginkeisanshoDataDownload extends DownloadBase {
 	@Override
 	public void doRun(HttpServletRequest req, HttpServletResponse res) throws Exception {
 		
+		//=====================================================================
+		// パラメータ取得
+		//=====================================================================
 		ArrayList<HashMap<String, String>> data = new ArrayList<>();
 		String taishoNengetsuF	= req.getParameter("srhTxtTaishoNengetsuF");
 		String taishoNengetsuT	= req.getParameter("srhTxtTaishoNengetsuT");
@@ -54,7 +57,7 @@ public class CsvChinginkeisanshoDataDownload extends DownloadBase {
 		ResultSet rset 					= null;
 		
 		//=====================================================================
-	    // データ取得
+		// データ取得
 		//=====================================================================
 		sql.append("SELECT ");
 		sql.append("	kihon.*, ");

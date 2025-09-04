@@ -25,7 +25,7 @@ public class KintaiOutDataAction extends PJActionBase {
 		
 		// DB接続
 		Connection con		= this.getConnection("kintai", req);
-				
+		
 		//=====================================================================
 		// 結果返却
 		//=====================================================================
@@ -85,11 +85,11 @@ public class KintaiOutDataAction extends PJActionBase {
 		}
 		
 		if(count == 0) {
-	    	this.addContent("result", false);
+			this.addContent("result", false);
 			this.addContent("message","対象データが存在しません。");
-	    } else {
-	    	this.addContent("result", true);
-	    }
+		} else {
+			this.addContent("result", true);
+		}
 		
 	}
 	
@@ -142,10 +142,10 @@ public class KintaiOutDataAction extends PJActionBase {
 		}
 		
 		if(count == 0) {
-	    	this.addContent("result", false);
+			this.addContent("result", false);
 			this.addContent("message","対象データが存在しません。");
-	    } else {
-	    	this.addContent("result", true);
-	    }
+		} else {
+			this.addContent("result", true);
+		}
 	}
 }

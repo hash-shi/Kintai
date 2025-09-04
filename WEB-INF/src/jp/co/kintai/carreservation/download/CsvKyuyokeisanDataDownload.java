@@ -32,13 +32,12 @@ public class CsvKyuyokeisanDataDownload extends DownloadBase {
 		//=====================================================================
 		// パラメータ取得
 		//=====================================================================
-		int count = 0;
 		ArrayList<HashMap<String, String>> data = new ArrayList<>();
 		String taishoNengetsuF	= req.getParameter("srhTxtTaishoNengetsuF");
 		String taishoNengetsuT	= req.getParameter("srhTxtTaishoNengetsuT");
 		
 		// 現在日時を取得
-		LocalDateTime now = LocalDateTime.now();
+		LocalDateTime now 					= LocalDateTime.now();
 		
 		// フォーマットを指定
 		DateTimeFormatter formatter 		= DateTimeFormatter.ofPattern("yyyy/MM/dd");
@@ -158,8 +157,7 @@ public class CsvKyuyokeisanDataDownload extends DownloadBase {
 		// データ格納
 		csvString.append(csvStringTitle.getLine() + newLine);
 		
-		count = data.size();
-		for (int i = 0; i < count; i++) {
+		for (int i = 0; i < data.size(); i++) {
 			// CSVデータ1レコード分
 			CSVLine csvStringRecord = new CSVLine();
 			
