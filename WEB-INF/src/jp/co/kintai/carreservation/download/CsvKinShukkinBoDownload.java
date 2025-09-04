@@ -322,19 +322,19 @@ public class CsvKinShukkinBoDownload extends DownloadBase {
 		csvStringTitle.addItem( "出勤予定区分");
 		csvStringTitle.addItem( "勤怠区分");
 		csvStringTitle.addItem( "勤怠申請区分1");
-		csvStringTitle.addItem( "勤怠申請開始時刻1");
-		csvStringTitle.addItem( "勤怠申請終了時刻1");
-		csvStringTitle.addItem( "勤怠申請時間1");
+		csvStringTitle.addItem( "勤怠申請開始時間1");
+		csvStringTitle.addItem( "勤怠申請終了時間1");
+		csvStringTitle.addItem( "勤怠申請申請時間1");
 		csvStringTitle.addItem( "勤怠申請休憩時間1");
 		csvStringTitle.addItem( "勤怠申請区分2");
-		csvStringTitle.addItem( "勤怠申請開始時刻2");
-		csvStringTitle.addItem( "勤怠申請終了時刻2");
-		csvStringTitle.addItem( "勤怠申請時間2");
+		csvStringTitle.addItem( "勤怠申請開始時間2");
+		csvStringTitle.addItem( "勤怠申請終了時間2");
+		csvStringTitle.addItem( "勤怠申請申請時間2");
 		csvStringTitle.addItem( "勤怠申請休憩時間2");
 		csvStringTitle.addItem( "勤怠申請区分3");
-		csvStringTitle.addItem( "勤怠申請開始時刻3");
-		csvStringTitle.addItem( "勤怠申請終了時刻3");
-		csvStringTitle.addItem( "勤怠申請時間3");
+		csvStringTitle.addItem( "勤怠申請開始時間3");
+		csvStringTitle.addItem( "勤怠申請終了時間3");
+		csvStringTitle.addItem( "勤怠申請申請時間3");
 		csvStringTitle.addItem( "勤怠申請休憩時間3");
 		csvStringTitle.addItem( "勤怠申請備考");
 			

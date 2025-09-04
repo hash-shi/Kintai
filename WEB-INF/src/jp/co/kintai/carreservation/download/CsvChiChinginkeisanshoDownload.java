@@ -92,7 +92,8 @@ public class CsvChiChinginkeisanshoDownload extends DownloadBase {
 		sql.append(" 		THEN S.KinmuShuryoJi + ':' + S.KinmuShuryoFun ");
 		sql.append(" 		ELSE '' ");
 		sql.append(" 	 END AS KinmuShuryoJikoku ");
-		sql.append(" 	,TaishoNengappi AS TaishoNengappi ");
+		sql.append(" 	,S.KeiyakuJitsudoJikan AS KeiyakuJitsudoJikan ");
+		sql.append(" 	,M.TaishoNengappi AS TaishoNengappi ");
 		sql.append(" 	,M.YobiKbn AS YobiKbn ");
 		
 		sql.append(" 	,CASE ");
@@ -124,6 +125,13 @@ public class CsvChiChinginkeisanshoDownload extends DownloadBase {
 		sql.append(" 		THEN M.ChinginShinseiJikan2 ");
 		sql.append(" 		ELSE 0 ");
 		sql.append(" 	 END AS ChinginShinseiJikan2 ");
+		
+		sql.append(" 	,COALESCE(K0201B.KbnName, '') AS ChinginShinseiKbn3 ");
+		sql.append(" 	,CASE ");
+		sql.append(" 		WHEN M.ChinginShinseiKbn3 NOT IN ('', '00') ");		
+		sql.append(" 		THEN M.ChinginShinseiJikan3 ");
+		sql.append(" 		ELSE 0 ");
+		sql.append(" 	 END AS ChinginShinseiJikan3 ");
 		
 		sql.append(" 	,CAST(K.ShinseiNissu09 AS VARCHAR) AS TsukinhiNissu ");
 		sql.append(" 	,CAST(K.ShinseiTanka09 AS VARCHAR) AS TsukinhiTanka ");
@@ -293,17 +301,20 @@ public class CsvChiChinginkeisanshoDownload extends DownloadBase {
 		csvStringTitle.addItem( "社員名");
 		csvStringTitle.addItem( "勤務開始時刻");
 		csvStringTitle.addItem( "勤務終了時刻");
-		csvStringTitle.addItem( "対象年月日");
-		csvStringTitle.addItem( "曜日区分");
-		csvStringTitle.addItem( "出社時刻");
-		csvStringTitle.addItem( "退社時刻");
-		csvStringTitle.addItem( "実働時刻");
+		csvStringTitle.addItem( "勤務実働時間");
+		csvStringTitle.addItem( "年月日");
+		csvStringTitle.addItem( "曜日");
+		csvStringTitle.addItem( "出社時間");
+		csvStringTitle.addItem( "退社時間");
+		csvStringTitle.addItem( "実働時間");
 		csvStringTitle.addItem( "賃金申請区分1");
 		csvStringTitle.addItem( "賃金申請時間1");
 		csvStringTitle.addItem( "賃金申請区分2");
 		csvStringTitle.addItem( "賃金申請時間2");
-		csvStringTitle.addItem( "通勤日日数");
-		csvStringTitle.addItem( "通勤日単価");
+		csvStringTitle.addItem( "賃金申請区分3");
+		csvStringTitle.addItem( "賃金申請時間3");
+		csvStringTitle.addItem( "通勤費日数");
+		csvStringTitle.addItem( "通勤費単価");
 		csvStringTitle.addItem( "特記事項");
 			
 		// データ格納
@@ -325,6 +336,7 @@ public class CsvChiChinginkeisanshoDownload extends DownloadBase {
 			csvStringRecord.addItem(data.get(i).get("ShainName"));
 			csvStringRecord.addItem(data.get(i).get("KinmuKaishiJikoku"));
 			csvStringRecord.addItem(data.get(i).get("KinmuShuryoJikoku"));
+			csvStringRecord.addItem(data.get(i).get("KeiyakuJitsudoJikan"));
 			csvStringRecord.addItem(data.get(i).get("TaishoNengappi"));
 			csvStringRecord.addItem(data.get(i).get("YobiKbn"));
 			csvStringRecord.addItem(data.get(i).get("ShusshaJikoku"));
@@ -334,6 +346,8 @@ public class CsvChiChinginkeisanshoDownload extends DownloadBase {
 			csvStringRecord.addItem(data.get(i).get("ChinginShinseiJikan1"));
 			csvStringRecord.addItem(data.get(i).get("ChinginShinseiKbn2"));
 			csvStringRecord.addItem(data.get(i).get("ChinginShinseiJikan2"));
+			csvStringRecord.addItem(data.get(i).get("ChinginShinseiKbn3"));
+			csvStringRecord.addItem(data.get(i).get("ChinginShinseiJikan3"));
 			csvStringRecord.addItem(data.get(i).get("TsukinhiNissu"));
 			csvStringRecord.addItem(data.get(i).get("TsukinhiTanka"));
 			csvStringRecord.addItem(data.get(i).get("TokkiJiko"));
