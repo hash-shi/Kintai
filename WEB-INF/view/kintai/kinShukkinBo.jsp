@@ -89,7 +89,7 @@
 							<th class="w10">
 							</th>
 							<td class="title center w100">
-								<a >営業日当手当</a>
+								<a >その他</a>
 							</td>
 							<td class="value w100">
 								<input type="text" class="" maxlength="7" style="width: 80px; text-align: right;" name="txtShinseiKingaku02" id="txtShinseiKingaku02" value="" onblur="setShinseiKingaku02();">

@@ -322,7 +322,7 @@ function onDisplayNyuryokuArea(firstHalfFlg){
 		else{
 			yoteiSelectBox += 		"style = \"COLOR: black\" ";
 		}
-		yoteiSelectBox += 		"onchange=\"yoteiChangeColor(this);setShukkinBo('ShukkinYoteiKbn', " + i + ");\" >" ;
+		yoteiSelectBox += 		"onchange=\"yoteiChangeColor(this);changeShukkinYotei(" + i + ");setShukkinBo('ShukkinYoteiKbn', " + i + ");\" >" ;
 
 		for(let yoteiRecord of yoteiList){
 			yoteiSelectBox += 		"<option value=\"" + yoteiRecord["Code"] + "\" ";
@@ -571,6 +571,97 @@ function onDisplayNyuryokuArea(firstHalfFlg){
 
 }
 
+function changeShukkinYotei(nowRow){
+	//予定区分をクリアしたら、同行の項目をクリア
+	if(
+		$("#ShukkinYoteiKbn" + nowRow).val() == "" ||
+		$("#ShukkinYoteiKbn" + nowRow).val() == "00"
+	){
+		let fieldName = "KintaiKbn";
+		$("#" + fieldName + nowRow).val("00");
+		setShukkinBo(fieldName, nowRow);
+		
+		fieldName = "ShusshaJi";
+		$("#" + fieldName + nowRow).val("");
+		setShukkinBo(fieldName, nowRow);
+		fieldName = "ShusshaFun";
+		$("#" + fieldName + nowRow).val("");
+		setShukkinBo(fieldName, nowRow);
+		fieldName = "TaishaJi";
+		$("#" + fieldName + nowRow).val("");
+		setShukkinBo(fieldName, nowRow);
+		fieldName = "TaishaFun";
+		$("#" + fieldName + nowRow).val("");
+		setShukkinBo(fieldName, nowRow);
+		fieldName = "JitsudoJikan";
+		$("#" + fieldName + nowRow).val("0.00");
+		setShukkinBo(fieldName, nowRow);
+		
+		fieldName = "KintaiShinseiBiko";
+		$("#" + fieldName + nowRow).val("");
+		setShukkinBo(fieldName, nowRow);
+		
+		fieldName = "KintaiShinseiKbn1";
+		$("#" + fieldName + nowRow).val("00");
+		setShukkinBo(fieldName, nowRow);
+		fieldName = "KintaiShinseiKaishiJi1";
+		$("#" + fieldName + nowRow).val("");
+		setShukkinBo(fieldName, nowRow);
+		fieldName = "KintaiShinseiKaishiFun1";
+		$("#" + fieldName + nowRow).val("");
+		setShukkinBo(fieldName, nowRow);
+		fieldName = "KintaiShinseiShuryoJi1";
+		$("#" + fieldName + nowRow).val("");
+		setShukkinBo(fieldName, nowRow);
+		fieldName = "KintaiShinseiShuryoFun1";
+		$("#" + fieldName + nowRow).val("");
+		setShukkinBo(fieldName, nowRow);
+		fieldName = "KintaiShinseiJikan1";
+		$("#" + fieldName + nowRow).val("0.00");
+		setShukkinBo(fieldName, nowRow);
+		
+		fieldName = "KintaiShinseiKbn2";
+		$("#" + fieldName + nowRow).val("00");
+		setShukkinBo(fieldName, nowRow);
+		fieldName = "KintaiShinseiKaishiJi2";
+		$("#" + fieldName + nowRow).val("");
+		setShukkinBo(fieldName, nowRow);
+		fieldName = "KintaiShinseiKaishiFun2";
+		$("#" + fieldName + nowRow).val("");
+		setShukkinBo(fieldName, nowRow);
+		fieldName = "KintaiShinseiShuryoJi2";
+		$("#" + fieldName + nowRow).val("");
+		setShukkinBo(fieldName, nowRow);
+		fieldName = "KintaiShinseiShuryoFun2";
+		$("#" + fieldName + nowRow).val("");
+		setShukkinBo(fieldName, nowRow);
+		fieldName = "KintaiShinseiJikan2";
+		$("#" + fieldName + nowRow).val("0.00");
+		setShukkinBo(fieldName, nowRow);
+		
+		fieldName = "KintaiShinseiKbn3";
+		$("#" + fieldName + nowRow).val("00");
+		setShukkinBo(fieldName, nowRow);
+		fieldName = "KintaiShinseiKaishiJi3";
+		$("#" + fieldName + nowRow).val("");
+		setShukkinBo(fieldName, nowRow);
+		fieldName = "KintaiShinseiKaishiFun3";
+		$("#" + fieldName + nowRow).val("");
+		setShukkinBo(fieldName, nowRow);
+		fieldName = "KintaiShinseiShuryoJi3";
+		$("#" + fieldName + nowRow).val("");
+		setShukkinBo(fieldName, nowRow);
+		fieldName = "KintaiShinseiShuryoFun3";
+		$("#" + fieldName + nowRow).val("");
+		setShukkinBo(fieldName, nowRow);
+		fieldName = "KintaiShinseiJikan3";
+		$("#" + fieldName + nowRow).val("0.00");
+		setShukkinBo(fieldName, nowRow);
+		
+	}
+	
+}
+
 /*
 *
 * 入力した値を内部的な配列に取得
@@ -658,7 +749,7 @@ function calcJitsudoJikan(nowRow){
 		let kaishiFunNum = Number(kaishiFun);
 		let shuryoJiNum = Number(shuryoJi);
 		let shuryoFunNum = Number(shuryoFun);
-		//すべて時や分に合う　かつ　開始時分＜終了時分の場合のみ自動計算する
+		//すべて時や分に合う　かつ　開始時分＜＝終了時分の場合のみ自動計算する
 		if(
 			kaishiJiNum < 24 &&
 			kaishiFunNum < 60 &&
@@ -673,7 +764,8 @@ function calcJitsudoJikan(nowRow){
 			//3.勤怠申請時間の分部分を計算
 			let jikanFun = jikanWk % 60;
 			//4.実際に項目に表示する値を計算
-			let jikanDisp = (Math.floor((jikanJi + (jikanFun / 60)) * 100) / 100).toFixed(2);
+//			let jikanDisp = (Math.floor((jikanJi + (jikanFun / 60)) * 100) / 100).toFixed(2);
+			let jikanDisp = (Math.floor((jikanJi + (jikanFun / 100)) * 100) / 100).toFixed(2);
 			
 			kinShukkinBoResultAll[nowRow]["JitsudoJikan"] = jikanDisp;
 			$("#JitsudoJikan" + nowRow).val(jikanDisp);
@@ -709,7 +801,7 @@ function calcShinseiJikan(nowCol, nowRow){
 		let kaishiFunNum = Number(kaishiFun);
 		let shuryoJiNum = Number(shuryoJi);
 		let shuryoFunNum = Number(shuryoFun);
-		//すべて時や分に合う　かつ　開始時分＜終了時分の場合のみ自動計算する
+		//すべて時や分に合う　かつ　開始時分＜＝終了時分の場合のみ自動計算する
 		if(
 			kaishiJiNum < 24 &&
 			kaishiFunNum < 60 &&
@@ -724,7 +816,8 @@ function calcShinseiJikan(nowCol, nowRow){
 			//3.勤怠申請時間の分部分を計算
 			let jikanFun = jikanWk % 60;
 			//4.実際に項目に表示する値を計算
-			let jikanDisp = (Math.floor((jikanJi + (jikanFun / 60)) * 100) / 100).toFixed(2);
+//			let jikanDisp = (Math.floor((jikanJi + (jikanFun / 60)) * 100) / 100).toFixed(2);
+			let jikanDisp = (Math.floor((jikanJi + (jikanFun / 100)) * 100) / 100).toFixed(2);
 			
 			kinShukkinBoResultAll[nowRow]["KintaiShinseiJikan" + nowCol] = jikanDisp;
 			$("#KintaiShinseiJikan" + nowCol + nowRow).val(jikanDisp);
@@ -789,15 +882,22 @@ function onUpdate(){
 		
 		let result			= contents["result"];
 
-		if(result == 1){
-			alert("正常に登録しました。");
-		}
-		else if(result == 2){
-			alert("正常に更新しました。");
-			document.getElementById("txtTaishoYM").focus();
-			//画面表示を初期状態に戻す
+		if((result == 1) || (result == 2)){
+			if(result == 1){
+				alert("正常に登録しました。");
+			}
+			if(result == 2){
+				alert("正常に更新しました。");
+			}
+			//再検索する
+			//更新処理に備え、検索条件を保持
+			$("#txtTaishoYM").val($("#txtSearchedTaishoYM").val());
+			$("#txtShainNO").val($("#txtSearchedShainNO").val());
+
+			//検索結果が0の時のため、画面非表示
 			$("#nyuryokuArea").css("visibility", "hidden");
 			$("#buttonArea").css("visibility", "hidden");
+			onSearchKinShukkinBo();
 		}
 		else{
 			alert("このデータはすでに、別のユーザーに更新されています。\r\nもう一度データを確認してください。");

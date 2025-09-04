@@ -4,6 +4,8 @@ import java.math.BigDecimal;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
+import java.util.ArrayList;
+import java.util.Arrays;
 
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
@@ -59,13 +61,13 @@ public class KinShukkinBoValidate extends ValidateBase {
 			}
 
 			//各日ごとに入力チェックを呼び出す
+			StringBuilder shukkinYoteiKbnKeySb	= new StringBuilder();
+			shukkinYoteiKbnKeySb	.append("ShukkinYoteiKbn")	.append(String.valueOf(i));
+			String shukkinYoteiKbn		= this.getParameter(shukkinYoteiKbnKeySb.toString());
+
 			StringBuilder kintaiKbnKeySb	= new StringBuilder();
 			kintaiKbnKeySb	.append("KintaiKbn")	.append(String.valueOf(i));
 			String kintaiKbn		= this.getParameter(kintaiKbnKeySb.toString());
-			if(StringUtils.isEmpty(kintaiKbn) || "00".equals(kintaiKbn)) {
-				//勤怠区分が空の場合、その行の入力チェックをしない
-				continue;
-			}
 			
 			StringBuilder shusshaJiKeySb	= new StringBuilder();
 			StringBuilder shusshaFunKeySb	= new StringBuilder();
@@ -91,6 +93,53 @@ public class KinShukkinBoValidate extends ValidateBase {
 			BigDecimal dcmJitsudoJikan	= BigDecimal.ZERO;
 			
 
+			if((StringUtils.isEmpty(kintaiKbn) || "00".equals(kintaiKbn)) == false) {
+				//勤怠区分が空でない場合のみ、出勤予定区分の未入力チェックを行う
+				if(StringUtils.isEmpty(shukkinYoteiKbn) || "00".equals(shukkinYoteiKbn)) {
+					this.addValidateMessage("出勤予定区分が入力されていません。");
+					return false;
+				}
+			}
+
+			double wkJitsudoJikan = 0;
+			try {
+				wkJitsudoJikan = Double.parseDouble(jitsudoJikan);
+			}
+			catch(Exception e) {}
+			if(
+					("".equals(shusshaJi) == false) ||
+					("".equals(shusshaFun) == false) ||
+					("".equals(taishaJi) == false) ||
+					("".equals(taishaFun) == false) ||
+					(("".equals(jitsudoJikan) || wkJitsudoJikan <= 0)== false)
+				){
+				//時間が入力されているとき、勤怠区分が空だとエラー
+				if(StringUtils.isEmpty(kintaiKbn) || "00".equals(kintaiKbn)) {
+					this.addValidateMessage("勤怠区分が入力されていません。");
+					return false;
+				}
+			}
+
+			if(
+					(
+							StringUtils.isEmpty(kintaiKbn) || 
+							"00".equals(kintaiKbn) ||	//未設定
+							"03".equals(kintaiKbn) ||	//欠勤
+							"04".equals(kintaiKbn) ||	//有休
+							"06".equals(kintaiKbn) ||	//積立有休
+							"07".equals(kintaiKbn) ||	//特別休暇
+							"08".equals(kintaiKbn) ||	//休日
+							"09".equals(kintaiKbn) ||	//代休
+							"10".equals(kintaiKbn)		//振替休日
+							) == false
+					) {
+				//(勤怠区分が空または休日)でない場合のみ、未入力や0のチェックを行う
+				isRequiredValidate.setParams(this.params);
+				if(isRequiredValidate.doValidate(req, res, shusshaJi, info) == false) {
+					this.addValidateMessage("出社（時）が入力されていません。");
+					return false;
+				}
+			}
 
 			isNumberValidate.setParams(this.params);
 			if(isNumberValidate.doValidate(req, res, shusshaJi, info) == false) {
@@ -120,6 +169,27 @@ public class KinShukkinBoValidate extends ValidateBase {
 				return false;
 			}
 			
+			if(
+					(
+							StringUtils.isEmpty(kintaiKbn) || 
+							"00".equals(kintaiKbn) ||	//未設定
+							"03".equals(kintaiKbn) ||	//欠勤
+							"04".equals(kintaiKbn) ||	//有休
+							"06".equals(kintaiKbn) ||	//積立有休
+							"07".equals(kintaiKbn) ||	//特別休暇
+							"08".equals(kintaiKbn) ||	//休日
+							"09".equals(kintaiKbn) ||	//代休
+							"10".equals(kintaiKbn)		//振替休日
+							) == false
+					) {
+				//(勤怠区分が空または休日)でない場合のみ、未入力や0のチェックを行う
+				isRequiredValidate.setParams(this.params);
+				if(isRequiredValidate.doValidate(req, res, shusshaFun, info) == false) {
+					this.addValidateMessage("出社（分）が入力されていません。");
+					return false;
+				}
+			}
+
 			isNumberValidate.setParams(this.params);
 			if(isNumberValidate.doValidate(req, res, shusshaFun, info) == false) {
 				this.addValidateMessage("出社（分）には数値を入力してください。");
@@ -146,6 +216,27 @@ public class KinShukkinBoValidate extends ValidateBase {
 			if(maxNumberLimitValidate.doValidate(req, res, shusshaFun, info) == false) {
 				this.addValidateMessage("分は00～59の値で入力してください。");
 				return false;
+			}
+
+			if(
+					(
+							StringUtils.isEmpty(kintaiKbn) || 
+							"00".equals(kintaiKbn) ||	//未設定
+							"03".equals(kintaiKbn) ||	//欠勤
+							"04".equals(kintaiKbn) ||	//有休
+							"06".equals(kintaiKbn) ||	//積立有休
+							"07".equals(kintaiKbn) ||	//特別休暇
+							"08".equals(kintaiKbn) ||	//休日
+							"09".equals(kintaiKbn) ||	//代休
+							"10".equals(kintaiKbn)		//振替休日
+							) == false
+					) {
+				//(勤怠区分が空または休日)でない場合のみ、未入力や0のチェックを行う
+				isRequiredValidate.setParams(this.params);
+				if(isRequiredValidate.doValidate(req, res, taishaJi, info) == false) {
+					this.addValidateMessage("退社（時）が入力されていません。");
+					return false;
+				}
 			}
 
 			isNumberValidate.setParams(this.params);
@@ -176,6 +267,27 @@ public class KinShukkinBoValidate extends ValidateBase {
 				return false;
 			}
 			
+			if(
+					(
+							StringUtils.isEmpty(kintaiKbn) || 
+							"00".equals(kintaiKbn) ||	//未設定
+							"03".equals(kintaiKbn) ||	//欠勤
+							"04".equals(kintaiKbn) ||	//有休
+							"06".equals(kintaiKbn) ||	//積立有休
+							"07".equals(kintaiKbn) ||	//特別休暇
+							"08".equals(kintaiKbn) ||	//休日
+							"09".equals(kintaiKbn) ||	//代休
+							"10".equals(kintaiKbn)		//振替休日
+							) == false
+					) {
+				//(勤怠区分が空または休日)でない場合のみ、未入力や0のチェックを行う
+				isRequiredValidate.setParams(this.params);
+				if(isRequiredValidate.doValidate(req, res, taishaFun, info) == false) {
+					this.addValidateMessage("退社（分）が入力されていません。");
+					return false;
+				}
+			}
+
 			isNumberValidate.setParams(this.params);
 			if(isNumberValidate.doValidate(req, res, taishaFun, info) == false) {
 				this.addValidateMessage("退社（分）には数値を入力してください。");
@@ -233,10 +345,25 @@ public class KinShukkinBoValidate extends ValidateBase {
 				return false;
 			}
 
-			isRequiredValidate.setParams(this.params);
-			if(isRequiredValidate.doValidate(req, res, jitsudoJikan, info) == false) {
-				this.addValidateMessage("実働時間が入力されていません。");
-				return false;
+			if(
+					(
+							StringUtils.isEmpty(kintaiKbn) || 
+							"00".equals(kintaiKbn) ||	//未設定
+							"03".equals(kintaiKbn) ||	//欠勤
+							"04".equals(kintaiKbn) ||	//有休
+							"06".equals(kintaiKbn) ||	//積立有休
+							"07".equals(kintaiKbn) ||	//特別休暇
+							"08".equals(kintaiKbn) ||	//休日
+							"09".equals(kintaiKbn) ||	//代休
+							"10".equals(kintaiKbn)		//振替休日
+							) == false
+					) {
+				//(勤怠区分が空または休日)でない場合のみ、未入力や0のチェックを行う
+				isRequiredValidate.setParams(this.params);
+				if(isRequiredValidate.doValidate(req, res, jitsudoJikan, info) == false) {
+					this.addValidateMessage("実働時間が入力されていません。");
+					return false;
+				}
 			}
 			
 			isNumberValidate.setParams(this.params);
@@ -251,12 +378,27 @@ public class KinShukkinBoValidate extends ValidateBase {
 				return false;
 			}
 
-			this.params.put("length", "0");
-			this.params.put("comparisonoperator", "<");
-			numberLimitValidate.setParams(this.params);
-			if(numberLimitValidate.doValidate(req, res, jitsudoJikan, info) == false) {
-				this.addValidateMessage("実働時間が入力されていません。");
-				return false;
+			if(
+					(
+							StringUtils.isEmpty(kintaiKbn) || 
+							"00".equals(kintaiKbn) ||	//未設定
+							"03".equals(kintaiKbn) ||	//欠勤
+							"04".equals(kintaiKbn) ||	//有休
+							"06".equals(kintaiKbn) ||	//積立有休
+							"07".equals(kintaiKbn) ||	//特別休暇
+							"08".equals(kintaiKbn) ||	//休日
+							"09".equals(kintaiKbn) ||	//代休
+							"10".equals(kintaiKbn)		//振替休日
+							) == false
+					) {
+				//(勤怠区分が空または休日)でない場合のみ、未入力や0のチェックを行う
+				this.params.put("length", "0");
+				this.params.put("comparisonoperator", "<");
+				numberLimitValidate.setParams(this.params);
+				if(numberLimitValidate.doValidate(req, res, jitsudoJikan, info) == false) {
+					this.addValidateMessage("実働時間が入力されていません。");
+					return false;
+				}
 			}
 
 			try {
@@ -271,23 +413,29 @@ public class KinShukkinBoValidate extends ValidateBase {
 				return false;
 			}
 			
+			ArrayList<String> kintaiShinseiKbnList = new ArrayList<String>(Arrays.asList("", "", ""));
+
 			for(int j = 1;j <= 3;j++){
 				StringBuilder kaishiJiKeySb		= new StringBuilder();
 				StringBuilder kaishiFunKeySb	= new StringBuilder();
 				StringBuilder shuryoJiKeySb		= new StringBuilder();
 				StringBuilder shuryoFunKeySb	= new StringBuilder();
 				StringBuilder jikanKeySb		= new StringBuilder();
+				StringBuilder kintaiShinseiKbnKeySb	= new StringBuilder();
 				kaishiJiKeySb	.append("KintaiShinseiKaishiJi")	.append(String.valueOf(j)).append(String.valueOf(i));
 				kaishiFunKeySb	.append("KintaiShinseiKaishiFun")	.append(String.valueOf(j)).append(String.valueOf(i));
 				shuryoJiKeySb	.append("KintaiShinseiShuryoJi")	.append(String.valueOf(j)).append(String.valueOf(i));
 				shuryoFunKeySb	.append("KintaiShinseiShuryoFun")	.append(String.valueOf(j)).append(String.valueOf(i));
 				jikanKeySb		.append("KintaiShinseiJikan")		.append(String.valueOf(j)).append(String.valueOf(i));
+				kintaiShinseiKbnKeySb	.append("KintaiShinseiKbn")	.append(String.valueOf(j)).append(String.valueOf(i));
 				
 				String kaishiJi			= this.getParameter(kaishiJiKeySb.toString());
 				String kaishiFun		= this.getParameter(kaishiFunKeySb.toString());
 				String shuryoJi			= this.getParameter(shuryoJiKeySb.toString());
 				String shuryoFun		= this.getParameter(shuryoFunKeySb.toString());
 				String jikan			= this.getParameter(jikanKeySb.toString());
+				String kintaiShinseiKbn		= this.getParameter(kintaiShinseiKbnKeySb.toString());
+				kintaiShinseiKbnList.set(j-1, kintaiShinseiKbn);
 				
 				int intKaishiJi		= 0;
 				int intKaishiFun	= 0;
@@ -297,6 +445,34 @@ public class KinShukkinBoValidate extends ValidateBase {
 				
 
 				
+				double wkJikan = 0;
+				try {
+					wkJikan = Double.parseDouble(jikan);
+				}
+				catch(Exception e) {}
+				if(
+						("".equals(kaishiJi) == false) ||
+						("".equals(kaishiFun) == false) ||
+						("".equals(shuryoJi) == false) ||
+						("".equals(shuryoFun) == false) ||
+						(("".equals(jikan) || wkJikan <= 0)== false)
+					){
+					//時間が入力されているとき、申請区分が空だとエラー
+					if(StringUtils.isEmpty(kintaiShinseiKbn) || "00".equals(kintaiShinseiKbn)) {
+						this.addValidateMessage("申請区分" + String.valueOf(j) + "が入力されていません。");
+						return false;
+					}
+				}
+
+				if((StringUtils.isEmpty(kintaiShinseiKbn) || "00".equals(kintaiShinseiKbn)) == false) {
+					//申請区分が空でない場合のみ、未入力や0のチェックを行う
+					isRequiredValidate.setParams(this.params);
+					if(isRequiredValidate.doValidate(req, res, kaishiJi, info) == false) {
+						this.addValidateMessage("勤怠申請区分開始（時）" + String.valueOf(j) + "が入力されていません。");
+						return false;
+					}
+				}
+
 				isNumberValidate.setParams(this.params);
 				if(isNumberValidate.doValidate(req, res, kaishiJi, info) == false) {
 					this.addValidateMessage("勤怠申請区分開始（時）" + String.valueOf(j) + "には数値を入力してください。");
@@ -325,6 +501,15 @@ public class KinShukkinBoValidate extends ValidateBase {
 					return false;
 				}
 				
+				if((StringUtils.isEmpty(kintaiShinseiKbn) || "00".equals(kintaiShinseiKbn)) == false) {
+					//申請区分が空でない場合のみ、未入力や0のチェックを行う
+					isRequiredValidate.setParams(this.params);
+					if(isRequiredValidate.doValidate(req, res, kaishiFun, info) == false) {
+						this.addValidateMessage("勤怠申請区分開始（分）" + String.valueOf(j) + "が入力されていません。");
+						return false;
+					}
+				}
+
 				isNumberValidate.setParams(this.params);
 				if(isNumberValidate.doValidate(req, res, kaishiFun, info) == false) {
 					this.addValidateMessage("勤怠申請区分開始（分）" + String.valueOf(j) + "には数値を入力してください。");
@@ -351,6 +536,15 @@ public class KinShukkinBoValidate extends ValidateBase {
 				if(maxNumberLimitValidate.doValidate(req, res, kaishiFun, info) == false) {
 					this.addValidateMessage("分は00～59の値で入力してください。");
 					return false;
+				}
+
+				if((StringUtils.isEmpty(kintaiShinseiKbn) || "00".equals(kintaiShinseiKbn)) == false) {
+					//申請区分が空でない場合のみ、未入力や0のチェックを行う
+					isRequiredValidate.setParams(this.params);
+					if(isRequiredValidate.doValidate(req, res, shuryoJi, info) == false) {
+						this.addValidateMessage("勤怠申請区分終了（時）" + String.valueOf(j) + "が入力されていません。");
+						return false;
+					}
 				}
 
 				isNumberValidate.setParams(this.params);
@@ -381,6 +575,15 @@ public class KinShukkinBoValidate extends ValidateBase {
 					return false;
 				}
 				
+				if((StringUtils.isEmpty(kintaiShinseiKbn) || "00".equals(kintaiShinseiKbn)) == false) {
+					//申請区分が空でない場合のみ、未入力や0のチェックを行う
+					isRequiredValidate.setParams(this.params);
+					if(isRequiredValidate.doValidate(req, res, shuryoFun, info) == false) {
+						this.addValidateMessage("勤怠申請区分終了（分）" + String.valueOf(j) + "が入力されていません。");
+						return false;
+					}
+				}
+
 				isNumberValidate.setParams(this.params);
 				if(isNumberValidate.doValidate(req, res, shuryoFun, info) == false) {
 					this.addValidateMessage("勤怠申請区分終了（分）" + String.valueOf(j) + "には数値を入力してください。");
@@ -437,10 +640,13 @@ public class KinShukkinBoValidate extends ValidateBase {
 					return false;
 				}
 
-				isRequiredValidate.setParams(this.params);
-				if(isRequiredValidate.doValidate(req, res, jitsudoJikan, info) == false) {
-					this.addValidateMessage("勤怠申請時間" + String.valueOf(j) + "が入力されていません。");
-					return false;
+				if((StringUtils.isEmpty(kintaiShinseiKbn) || "00".equals(kintaiShinseiKbn)) == false) {
+					//申請区分が空でない場合のみ、未入力や0のチェックを行う
+					isRequiredValidate.setParams(this.params);
+					if(isRequiredValidate.doValidate(req, res, jitsudoJikan, info) == false) {
+						this.addValidateMessage("勤怠申請時間" + String.valueOf(j) + "が入力されていません。");
+						return false;
+					}
 				}
 
 				isNumberValidate.setParams(this.params);
@@ -455,12 +661,15 @@ public class KinShukkinBoValidate extends ValidateBase {
 					return false;
 				}
 
-				this.params.put("length", "0");
-				this.params.put("comparisonoperator", "<");
-				numberLimitValidate.setParams(this.params);
-				if(numberLimitValidate.doValidate(req, res, jitsudoJikan, info) == false) {
-					this.addValidateMessage("勤怠申請時間" + String.valueOf(j) + "が入力されていません。");
-					return false;
+				if((StringUtils.isEmpty(kintaiShinseiKbn) || "00".equals(kintaiShinseiKbn)) == false) {
+					//申請区分が空でない場合のみ、未入力や0のチェックを行う
+					this.params.put("length", "0");
+					this.params.put("comparisonoperator", "<");
+					numberLimitValidate.setParams(this.params);
+					if(numberLimitValidate.doValidate(req, res, jitsudoJikan, info) == false) {
+						this.addValidateMessage("勤怠申請時間" + String.valueOf(j) + "が入力されていません。");
+						return false;
+					}
 				}
 				
 				try {
@@ -478,20 +687,13 @@ public class KinShukkinBoValidate extends ValidateBase {
 			}
 			
 			
-			// 賃金申請書入力区分("01"固定)、勤怠区分、勤怠申請区分1、勤怠申請区分2、勤怠申請区分3の組み合わせが、申請パターンマスタ(MST_SHINSEI_PATTERN)に登録されていない場合
-			StringBuilder kintaiShinseiKbn1KeySb	= new StringBuilder();
-			StringBuilder kintaiShinseiKbn2KeySb	= new StringBuilder();
-			StringBuilder kintaiShinseiKbn3KeySb	= new StringBuilder();
-			kintaiShinseiKbn1KeySb	.append("KintaiShinseiKbn1")	.append(String.valueOf(i));
-			kintaiShinseiKbn2KeySb	.append("KintaiShinseiKbn2")	.append(String.valueOf(i));
-			kintaiShinseiKbn3KeySb	.append("KintaiShinseiKbn3")	.append(String.valueOf(i));
-			String kintaiShinseiKbn1		= this.getParameter(kintaiShinseiKbn1KeySb.toString());
-			String kintaiShinseiKbn2		= this.getParameter(kintaiShinseiKbn2KeySb.toString());
-			String kintaiShinseiKbn3		= this.getParameter(kintaiShinseiKbn3KeySb.toString());
-
-			if(shinseiPatternCheck(con,kintaiKbn,kintaiShinseiKbn1,kintaiShinseiKbn2,kintaiShinseiKbn3) == false){
-				this.addValidateMessage("申請区分の組み合わせが正しくありません。");
-				return false;
+			if((StringUtils.isEmpty(kintaiKbn) || "00".equals(kintaiKbn)) == false) {
+				//勤怠区分が空でない場合のみ、申請パターンのチェックを行う
+				// 賃金申請書入力区分("01"固定)、勤怠区分、勤怠申請区分1,2,3の組み合わせが、申請パターンマスタ(MST_SHINSEI_PATTERN)に登録されていない場合
+				if(shinseiPatternCheck(con,kintaiKbn, kintaiShinseiKbnList.get(0), kintaiShinseiKbnList.get(1), kintaiShinseiKbnList.get(2)) == false){
+					this.addValidateMessage("申請区分の組み合わせが正しくありません。");
+					return false;
+				}
 			}
 
 			StringBuilder bikoKeySb	= new StringBuilder();

@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <validate>
 	<proc func="search">
-		<variable name="txtSearchedTaishoYM" dispName="対象年月">
+		<variable name="txtTaishoYM" dispName="対象年月">
 			<check class="IsRequired" message="!#itemName#!が入力されていません。" itemName="{dispName}"></check>
 			<check class="IsLength" message="!#itemName#!の指定が不正です。(YYYY/MM)" itemName="{dispName}">
 				<param name="type">half</param>
@@ -12,7 +12,7 @@
 				<param name="format">yyyy/MM</param>
 			</check>
 		</variable>
-		<variable name="txtSearchedShainNO" dispName="社員NO">
+		<variable name="txtShainNO" dispName="社員NO">
 			<check class="IsRequired" message="!#itemName#!が入力されていません。" itemName="{dispName}"></check>
 			<check class="IsHalfOnly" message="!#itemName#!には全角文字は入力できません。" itemName="{dispName}"></check>
 			<check class="IsNumeric" message="!#itemName#!には数字を入力してください。" itemName="{dispName}"></check>
@@ -23,7 +23,7 @@
 
 		<variable name="dummy" dispName="">
 			<check class="ShainAuthorityValidate" message="ログインした社員Noでは処理できません。">
-				<param name="shainNo">txtSearchedShainNO</param>
+				<param name="shainNo">txtShainNO</param>
 			</check>
 		</variable>
 	</proc>
@@ -76,7 +76,7 @@
 				<param name="length">0</param>
 			</check>
 		</variable>
-		<variable name="txtShinseiKingaku02" dispName="営業日当手当">
+		<variable name="txtShinseiKingaku02" dispName="その他">
 			<check class="IsNumber" message="!#itemName#!には数値を入力してください。" itemName="{dispName}">
 				<param name="isReplaceComma">true</param>
 			</check>
