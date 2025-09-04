@@ -821,7 +821,6 @@ public class KintaiKakuteiAction extends PJActionBase {
 			
 			// カラム数(列数)の取得
 			int colCount = metaData.getColumnCount(); 
-			System.out.println(colCount);
 			while (rset.next()){
 				// 1レコード分の配列を用意
 				HashMap<String, String> record = new HashMap<String, String>();
