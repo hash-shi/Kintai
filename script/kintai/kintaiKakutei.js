@@ -120,6 +120,9 @@ function onDisplayNyuryokuArea(result){
 		let record = kintaiKakuteiResultAll[i];
 		let eigyoshoCode = record["EigyoshoCode"];
 		let eigyoshoName = record["EigyoshoName"];
+		let kakuteiKbn01 = record["KakuteiKbn01"];
+		let kakuteiKbn02 = record["KakuteiKbn02"];
+		
 		let kakuteiKbnName01 = record["KakuteiKbnName01"];
 		let kakuteiKbnName02 = record["KakuteiKbnName02"];
 		//一部項目の表示色変更
@@ -144,8 +147,8 @@ function onDisplayNyuryokuArea(result){
 					"<td class=\"value w140\"><a name=\"txtKakuteiKbnName01" + i + "\" id = \"txtKakuteiKbnName01" + i + "\" class = \"" +mojiColorClass1+ "\" values= \"\">" + kakuteiKbnName01 + "</a></td>" +
 					"<td class=\"value w140\"><a name=\"txtKakuteiKbnName02" + i + "\" id = \"txtKakuteiKbnName02" + i + "\" class = \"" +mojiColorClass2+ "\" values= \"\">" + kakuteiKbnName02 + "</a></td>" +
 					"<td><input type=\"hidden\" name=\"hdnTxtEigyoshoCode" + i + "\" id=\"hdnTxtEigyoshoCode1" + i + "\" value=\"" + eigyoshoCode + "\"></td>" +
-					"<td><input type=\"hidden\" name=\"hdnTxtKakuteiKbnName01" + i + "\" id=\"hdnTxtKakuteiKbnName01" + i + "\" value=\"" + kakuteiKbnName01 + "\"></td>" +
-					"<td><input type=\"hidden\" name=\"hdnTxtKakuteiKbnName02" + i + "\" id=\"hdnTxtKakuteiKbnName02" + i + "\" value=\"" + kakuteiKbnName02 + "\"></td>" +
+					"<td><input type=\"hidden\" name=\"hdnTxtKakuteiKbn01" + i + "\" id=\"hdnTxtKakuteiKbn01" + i + "\" value=\"" + kakuteiKbn01 + "\"></td>" +
+					"<td><input type=\"hidden\" name=\"hdnTxtKakuteiKbn02" + i + "\" id=\"hdnTxtKakuteiKbn02" + i + "\" value=\"" + kakuteiKbn02 + "\"></td>" +
 				"</tr>";
 
 		$("#kihonNyuryokuArea").append(kihonNyuryokuAreaHtml);
@@ -235,7 +238,8 @@ function onKakuteiKaijo(){
 
 			if(result == true){
 				alert("正常に登録しました。");
-			} 	else {
+				onSearchKintaiKakutei();
+			} else {
 				alert("このデータはすでに、別のユーザに更新されています。もう一度データを確認してください。");
 			}
 			document.getElementById("txtTaishoYM").focus();
@@ -270,6 +274,7 @@ function onKakutei(){
 
 			if(result == true){
 				alert("正常に登録しました。");
+				onSearchKintaiKakutei();
 			} else {
 				alert("このデータはすでに、別のユーザに更新されています。もう一度データを確認してください。");
 			}

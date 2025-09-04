@@ -204,7 +204,12 @@ public class KintaiKakuteiAction extends PJActionBase {
 
 		// DB接続
 		Connection con		= this.getConnection("kintai", req);
-
+		
+		//=====================================================================
+		// ユーザー情報の取得
+		//=====================================================================
+		UserInformation userInformation = (UserInformation)req.getSession().getAttribute(Define.SESSION_ID);
+		String loginShainNo = userInformation.getShainNO();
 		//=====================================================================
 		// パラメータ取得
 		//=====================================================================
@@ -213,6 +218,10 @@ public class KintaiKakuteiAction extends PJActionBase {
 		int cnt						= Integer.parseInt(count);
 		//対象年月
 		String taishoYM			= this.getParameter("txtSearchedTaishoYM");
+		//最終更新日
+		String saishuKoshinDate	= PJActionBase.getNowDate();
+		//最終更新時刻
+		String saishuKoshinJikan	= PJActionBase.getNowTime();
 				
 		boolean result = false;
 		//トランザクション開始
@@ -243,12 +252,12 @@ public class KintaiKakuteiAction extends PJActionBase {
 		
 			if(result) {
 				//出勤簿基本の更新
-				result = updateShukkinbo(con, kakuteiKbn, taishoYM, eigyoshoCode);
+				result = updateShukkinbo(con, kakuteiKbn, loginShainNo, saishuKoshinDate, saishuKoshinJikan, taishoYM, eigyoshoCode);
 			}
 		
 			if(result) {
 				//賃金計算書基本の更新
-				result = updateChingin(con, kakuteiKbn, taishoYM, eigyoshoCode);
+				result = updateChingin(con, kakuteiKbn, loginShainNo, saishuKoshinDate, saishuKoshinJikan, taishoYM, eigyoshoCode);
 			}
 		}
 		
@@ -273,7 +282,12 @@ public class KintaiKakuteiAction extends PJActionBase {
 
 		// DB接続
 		Connection con		= this.getConnection("kintai", req);
-
+		
+		//=====================================================================
+		// ユーザー情報の取得
+		//=====================================================================
+		UserInformation userInformation = (UserInformation)req.getSession().getAttribute(Define.SESSION_ID);
+		String loginShainNo = userInformation.getShainNO();
 		//=====================================================================
 		// パラメータ取得
 		//=====================================================================
@@ -282,6 +296,10 @@ public class KintaiKakuteiAction extends PJActionBase {
 		int cnt						= Integer.parseInt(count);
 		//対象年月
 		String taishoYM			= this.getParameter("txtSearchedTaishoYM");
+		//最終更新日
+		String saishuKoshinDate	= PJActionBase.getNowDate();
+		//最終更新時刻
+		String saishuKoshinJikan	= PJActionBase.getNowTime();
 				
 		boolean result = false;
 		//トランザクション開始
@@ -306,7 +324,7 @@ public class KintaiKakuteiAction extends PJActionBase {
 		
 			if(result) {
 				//有給休暇台帳(月給)の追加
-				result = insertGekkyu(con, taishoYM, eigyoshoCode);
+				result = insertGekkyu(con, loginShainNo, saishuKoshinDate, saishuKoshinJikan, taishoYM, eigyoshoCode);
 			}
 
 			if(result) {
@@ -316,17 +334,17 @@ public class KintaiKakuteiAction extends PJActionBase {
 
 			if(result) {
 				//有給休暇台帳(時給日給)の追加
-				result = insertNikkyu(con, taishoYM, eigyoshoCode);
+				result = insertNikkyu(con, loginShainNo, saishuKoshinDate, saishuKoshinJikan, taishoYM, eigyoshoCode);
 			}
 		
 			if(result) {
 				//出勤簿基本の更新
-				result = updateShukkinbo(con, kakuteiKbn, taishoYM, eigyoshoCode);
+				result = updateShukkinbo(con, kakuteiKbn, loginShainNo, saishuKoshinDate, saishuKoshinJikan, taishoYM, eigyoshoCode);
 			}
 		
 			if(result) {
 				//賃金計算書基本の更新
-				result = updateChingin(con, kakuteiKbn, taishoYM, eigyoshoCode);
+				result = updateChingin(con, kakuteiKbn, loginShainNo, saishuKoshinDate, saishuKoshinJikan, taishoYM, eigyoshoCode);
 			}
 		}
 		
@@ -465,7 +483,7 @@ public class KintaiKakuteiAction extends PJActionBase {
 	 * @param res
 	 * @throws Exception
 	 */
-	private boolean updateShukkinbo(Connection con, String kakuteiKbn, String taishoYM, String eigyoshoCode) throws Exception {
+	private boolean updateShukkinbo(Connection con, String kakuteiKbn, String loginShainNo, String saishuKoshinDate, String saishuKoshinJikan, String taishoYM, String eigyoshoCode) throws Exception {
 		boolean result = false;
 
 		// DB接続
@@ -473,11 +491,6 @@ public class KintaiKakuteiAction extends PJActionBase {
 		PreparedStatement pstmt			= null;
 		PreparedStatementFactory pstmtf	= new PreparedStatementFactory();
 		ResultSet rset					= null;
-		//=====================================================================
-		// ユーザー情報の取得
-		//=====================================================================
-		UserInformation userInformation = (UserInformation)req.getSession().getAttribute(Define.SESSION_ID);
-		String loginShainNo = userInformation.getShainNO();
 		
 		//=====================================================================
 		// 画面.対象年月と画面.選択行の営業所コードに対応する社員NOの取得
@@ -499,8 +512,8 @@ public class KintaiKakuteiAction extends PJActionBase {
 		sql.append("  	1 <> 1");
 		pstmtf.addValue("String", kakuteiKbn);
 		pstmtf.addValue("String", loginShainNo);
-		pstmtf.addValue("String", PJActionBase.getNowDate());
-		pstmtf.addValue("String", PJActionBase.getNowTime());
+		pstmtf.addValue("String", saishuKoshinDate);
+		pstmtf.addValue("String", saishuKoshinJikan);
 		
 		if(shainNo.size() != 0) {
 			for (int i = 0; i < shainNo.size(); i++) {
@@ -543,7 +556,7 @@ public class KintaiKakuteiAction extends PJActionBase {
 	 * @param res
 	 * @throws Exception
 	 */
-	private boolean updateChingin(Connection con, String kakuteiKbn, String taishoYM, String eigyoshoCode) throws Exception {
+	private boolean updateChingin(Connection con, String kakuteiKbn, String loginShainNo, String saishuKoshinDate, String saishuKoshinJikan, String taishoYM, String eigyoshoCode) throws Exception {
 		boolean result = false;
 
 		// DB接続
@@ -551,11 +564,6 @@ public class KintaiKakuteiAction extends PJActionBase {
 		PreparedStatement pstmt			= null;
 		PreparedStatementFactory pstmtf	= new PreparedStatementFactory();
 		ResultSet rset					= null;
-		//=====================================================================
-		// ユーザー情報の取得
-		//=====================================================================
-		UserInformation userInformation = (UserInformation)req.getSession().getAttribute(Define.SESSION_ID);
-		String loginShainNo = userInformation.getShainNO();
 		
 		//=====================================================================
 		// 更新
@@ -573,8 +581,8 @@ public class KintaiKakuteiAction extends PJActionBase {
 		sql.append(" 　　 AND EigyoshoCode = ? ");
 		pstmtf.addValue("String", kakuteiKbn);
 		pstmtf.addValue("String", loginShainNo);
-		pstmtf.addValue("String", PJActionBase.getNowDate());
-		pstmtf.addValue("String", PJActionBase.getNowTime());
+		pstmtf.addValue("String", saishuKoshinDate);
+		pstmtf.addValue("String", saishuKoshinJikan);
 		pstmtf.addValue("String", taishoYM);
 		pstmtf.addValue("String", eigyoshoCode);
 
@@ -606,18 +614,13 @@ public class KintaiKakuteiAction extends PJActionBase {
 	 * @param res
 	 * @throws Exception
 	 */
-	private boolean insertGekkyu(Connection con, String taishoYM, String eigyoshoCode) throws Exception {
+	private boolean insertGekkyu(Connection con, String loginShainNo, String saishuKoshinDate, String saishuKoshinJikan, String taishoYM, String eigyoshoCode) throws Exception {
 		boolean result = false;
 		// DB接続
 		StringBuffer sql				= new StringBuffer();
 		PreparedStatement pstmt			= null;
 		PreparedStatementFactory pstmtf	= new PreparedStatementFactory();
 		ResultSet rset					= null;
-		//=====================================================================
-		// ユーザー情報の取得
-		//=====================================================================
-		UserInformation userInformation = (UserInformation)req.getSession().getAttribute(Define.SESSION_ID);
-		String loginShainNo = userInformation.getShainNO();
 		
 		//=====================================================================
 		// 更新
@@ -662,8 +665,8 @@ public class KintaiKakuteiAction extends PJActionBase {
 		sql.append("     M1.YukyuKyukaFuyoNissu  ");
 		pstmtf.addValue("String", "03");
 		pstmtf.addValue("String", loginShainNo);
-		pstmtf.addValue("String", PJActionBase.getNowDate());
-		pstmtf.addValue("String", PJActionBase.getNowTime());
+		pstmtf.addValue("String", saishuKoshinDate);
+		pstmtf.addValue("String", saishuKoshinJikan);
 		pstmtf.addValue("String", taishoYM);
 		pstmtf.addValue("String", eigyoshoCode);
 		
@@ -694,18 +697,13 @@ public class KintaiKakuteiAction extends PJActionBase {
 	 * @param res
 	 * @throws Exception
 	 */
-	private boolean insertNikkyu(Connection con, String taishoYM, String eigyoshoCode) throws Exception {
+	private boolean insertNikkyu(Connection con, String loginShainNo, String saishuKoshinDate, String saishuKoshinJikan, String taishoYM, String eigyoshoCode) throws Exception {
 		boolean result = false;
 		// DB接続
 		StringBuffer sql				= new StringBuffer();
 		PreparedStatement pstmt			= null;
 		PreparedStatementFactory pstmtf	= new PreparedStatementFactory();
 		ResultSet rset					= null;
-		//=====================================================================
-		// ユーザー情報の取得
-		//=====================================================================
-		UserInformation userInformation = (UserInformation)req.getSession().getAttribute(Define.SESSION_ID);
-		String loginShainNo = userInformation.getShainNO();
 		
 		//=====================================================================
 		// 更新
@@ -742,8 +740,8 @@ public class KintaiKakuteiAction extends PJActionBase {
 		sql.append("     M1.YukyuKyukaFuyoNissu  ");
 		pstmtf.addValue("String", "03");
 		pstmtf.addValue("String", loginShainNo);
-		pstmtf.addValue("String", PJActionBase.getNowDate());
-		pstmtf.addValue("String", PJActionBase.getNowTime());
+		pstmtf.addValue("String", saishuKoshinDate);
+		pstmtf.addValue("String", saishuKoshinJikan);
 		pstmtf.addValue("String", taishoYM);
 		pstmtf.addValue("String", eigyoshoCode);
 
@@ -821,6 +819,7 @@ public class KintaiKakuteiAction extends PJActionBase {
 			
 			// カラム数(列数)の取得
 			int colCount = metaData.getColumnCount(); 
+			
 			while (rset.next()){
 				// 1レコード分の配列を用意
 				HashMap<String, String> record = new HashMap<String, String>();
