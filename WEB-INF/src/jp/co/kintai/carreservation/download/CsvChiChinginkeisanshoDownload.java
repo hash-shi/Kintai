@@ -15,6 +15,7 @@ import jakarta.servlet.http.HttpServletResponse;
 import org.apache.commons.lang3.StringUtils;
 
 import jp.ac.wakhok.tomoharu.csv.CSVLine;
+import jp.co.kintai.carreservation.base.PJActionBase;
 import jp.co.kintai.carreservation.define.Define;
 import jp.co.kintai.carreservation.information.UserInformation;
 import jp.co.tjs_net.java.framework.base.DownloadBase;
@@ -34,6 +35,7 @@ public class CsvChiChinginkeisanshoDownload extends DownloadBase {
 		//=====================================================================
 		int count = 0;
 		ArrayList<HashMap<String, String>> data = new ArrayList<>();
+		HashMap<String, String> columns = new HashMap<String, String>();
 		String fromTaishoNengetsu	= req.getParameter("srhTxtTaishoNengetsuF");
 		String toTaishoNengetsu		= req.getParameter("srhTxtTaishoNengetsuT");
 		String fromEigyoshoCode		= req.getParameter("srhTxtEigyoshoCodeF");
@@ -261,7 +263,7 @@ public class CsvChiChinginkeisanshoDownload extends DownloadBase {
 			// 実行
 			rset = pstmt.executeQuery();
 			// 結果取得
-			ResultSetMetaData metaData = rset.getMetaData(); 
+			ResultSetMetaData metaData = rset.getMetaData();
 			
 			// カラム数(列数)の取得
 			int colCount = metaData.getColumnCount(); 
@@ -270,12 +272,16 @@ public class CsvChiChinginkeisanshoDownload extends DownloadBase {
 			while (rset.next()){
 				// 1レコード分の配列を用意
 				HashMap<String, String> record = new HashMap<String, String>();
+				HashMap<String, String> recordc = new HashMap<String, String>();
 				// カラム名をkeyとして値を格納
 				for (int i = 1; i <= colCount; i++) {
 					record.put(metaData.getColumnLabel(i), StringUtils.stripToEmpty(rset.getString(i)));
+					// カラムのSQLデータ型を取得
+					recordc.put(metaData.getColumnLabel(i), metaData.getColumnTypeName(i));
 				}
 				// 配列の格納
 				data.add(record);
+				columns = recordc;
 			}
 		} finally {
 			if (rset != null){ try { rset.close(); } catch (Exception exp){}}
@@ -290,32 +296,32 @@ public class CsvChiChinginkeisanshoDownload extends DownloadBase {
 		
 		// CSVデータヘッダ
 		CSVLine csvStringTitle = new CSVLine();
-		csvStringTitle.addItem( "対象年度");
-		csvStringTitle.addItem( "対象月度");
-		csvStringTitle.addItem( "作成日付");
-		csvStringTitle.addItem( "営業所コード");
-		csvStringTitle.addItem( "営業所名");
-		csvStringTitle.addItem( "部署コード");
-		csvStringTitle.addItem( "部署名");
-		csvStringTitle.addItem( "社員NO");
-		csvStringTitle.addItem( "社員名");
-		csvStringTitle.addItem( "勤務開始時刻");
-		csvStringTitle.addItem( "勤務終了時刻");
-		csvStringTitle.addItem( "勤務実働時間");
-		csvStringTitle.addItem( "年月日");
-		csvStringTitle.addItem( "曜日");
-		csvStringTitle.addItem( "出社時間");
-		csvStringTitle.addItem( "退社時間");
-		csvStringTitle.addItem( "実働時間");
-		csvStringTitle.addItem( "賃金申請区分1");
-		csvStringTitle.addItem( "賃金申請時間1");
-		csvStringTitle.addItem( "賃金申請区分2");
-		csvStringTitle.addItem( "賃金申請時間2");
-		csvStringTitle.addItem( "賃金申請区分3");
-		csvStringTitle.addItem( "賃金申請時間3");
-		csvStringTitle.addItem( "通勤費日数");
-		csvStringTitle.addItem( "通勤費単価");
-		csvStringTitle.addItem( "特記事項");
+		csvStringTitle.addItem( "対象年度",true);
+		csvStringTitle.addItem( "対象月度",true);
+		csvStringTitle.addItem( "作成日付",true);
+		csvStringTitle.addItem( "営業所コード",true);
+		csvStringTitle.addItem( "営業所名",true);
+		csvStringTitle.addItem( "部署コード",true);
+		csvStringTitle.addItem( "部署名",true);
+		csvStringTitle.addItem( "社員NO",true);
+		csvStringTitle.addItem( "社員名",true);
+		csvStringTitle.addItem( "勤務開始時刻",true);
+		csvStringTitle.addItem( "勤務終了時刻",true);
+		csvStringTitle.addItem( "勤務実働時間",true);
+		csvStringTitle.addItem( "年月日",true);
+		csvStringTitle.addItem( "曜日",true);
+		csvStringTitle.addItem( "出社時間",true);
+		csvStringTitle.addItem( "退社時間",true);
+		csvStringTitle.addItem( "実働時間",true);
+		csvStringTitle.addItem( "賃金申請区分1",true);
+		csvStringTitle.addItem( "賃金申請時間1",true);
+		csvStringTitle.addItem( "賃金申請区分2",true);
+		csvStringTitle.addItem( "賃金申請時間2",true);
+		csvStringTitle.addItem( "賃金申請区分3",true);
+		csvStringTitle.addItem( "賃金申請時間3",true);
+		csvStringTitle.addItem( "通勤費日数",true);
+		csvStringTitle.addItem( "通勤費単価",true);
+		csvStringTitle.addItem( "特記事項",true);
 			
 		// データ格納
 		csvString.append(csvStringTitle.getLine() + newLine);
@@ -325,32 +331,36 @@ public class CsvChiChinginkeisanshoDownload extends DownloadBase {
 		for (int i = 0; i < count; i++) {
 			// CSVデータ1レコード分
 			CSVLine csvStringRecord = new CSVLine();
-			csvStringRecord.addItem(data.get(i).get("TaishoNendo"));
-			csvStringRecord.addItem(data.get(i).get("TaishoGetsudo"));
-			csvStringRecord.addItem(data.get(i).get("SakuseiDate"));
-			csvStringRecord.addItem(data.get(i).get("EigyoshoCode"));
-			csvStringRecord.addItem(data.get(i).get("EigyoshoName"));
-			csvStringRecord.addItem(data.get(i).get("BushoCode"));
-			csvStringRecord.addItem(data.get(i).get("BushoName"));
-			csvStringRecord.addItem(data.get(i).get("ShainNO"));
-			csvStringRecord.addItem(data.get(i).get("ShainName"));
-			csvStringRecord.addItem(data.get(i).get("KinmuKaishiJikoku"));
-			csvStringRecord.addItem(data.get(i).get("KinmuShuryoJikoku"));
-			csvStringRecord.addItem(data.get(i).get("KeiyakuJitsudoJikan"));
-			csvStringRecord.addItem(data.get(i).get("TaishoNengappi"));
-			csvStringRecord.addItem(data.get(i).get("YobiKbn"));
-			csvStringRecord.addItem(data.get(i).get("ShusshaJikoku"));
-			csvStringRecord.addItem(data.get(i).get("TaishaJikoku"));
-			csvStringRecord.addItem(data.get(i).get("JitsudoJikan"));
-			csvStringRecord.addItem(data.get(i).get("ChinginShinseiKbn1"));
-			csvStringRecord.addItem(data.get(i).get("ChinginShinseiJikan1"));
-			csvStringRecord.addItem(data.get(i).get("ChinginShinseiKbn2"));
-			csvStringRecord.addItem(data.get(i).get("ChinginShinseiJikan2"));
-			csvStringRecord.addItem(data.get(i).get("ChinginShinseiKbn3"));
-			csvStringRecord.addItem(data.get(i).get("ChinginShinseiJikan3"));
-			csvStringRecord.addItem(data.get(i).get("TsukinhiNissu"));
-			csvStringRecord.addItem(data.get(i).get("TsukinhiTanka"));
-			csvStringRecord.addItem(data.get(i).get("TokkiJiko"));
+			
+			// 1行取得
+			HashMap<String, String> d = data.get(i);
+			
+			csvStringRecord.addItem(d.get("TaishoNendo"), PJActionBase.getQuotation(columns, "TaishoNendo"));
+			csvStringRecord.addItem(d.get("TaishoGetsudo"), PJActionBase.getQuotation(columns, "TaishoGetsudo"));
+			csvStringRecord.addItem(d.get("SakuseiDate"), PJActionBase.getQuotation(columns, "SakuseiDate"));
+			csvStringRecord.addItem(d.get("EigyoshoCode"), PJActionBase.getQuotation(columns, "EigyoshoCode"));
+			csvStringRecord.addItem(d.get("EigyoshoName"), PJActionBase.getQuotation(columns, "EigyoshoName"));
+			csvStringRecord.addItem(d.get("BushoCode"), PJActionBase.getQuotation(columns, "BushoCode"));
+			csvStringRecord.addItem(d.get("BushoName"), PJActionBase.getQuotation(columns, "BushoName"));
+			csvStringRecord.addItem(d.get("ShainNO"), PJActionBase.getQuotation(columns, "ShainNO"));
+			csvStringRecord.addItem(d.get("ShainName"), PJActionBase.getQuotation(columns, "ShainName"));
+			csvStringRecord.addItem(d.get("KinmuKaishiJikoku"), PJActionBase.getQuotation(columns, "KinmuKaishiJikoku"));
+			csvStringRecord.addItem(d.get("KinmuShuryoJikoku"), PJActionBase.getQuotation(columns, "KinmuShuryoJikoku"));
+			csvStringRecord.addItem(d.get("KeiyakuJitsudoJikan"), PJActionBase.getQuotation(columns, "KeiyakuJitsudoJikan"));
+			csvStringRecord.addItem(d.get("TaishoNengappi"), PJActionBase.getQuotation(columns, "TaishoNengappi"));
+			csvStringRecord.addItem(d.get("YobiKbn"), PJActionBase.getQuotation(columns, "YobiKbn"));
+			csvStringRecord.addItem(d.get("ShusshaJikoku"), PJActionBase.getQuotation(columns, "ShusshaJikoku"));
+			csvStringRecord.addItem(d.get("TaishaJikoku"), PJActionBase.getQuotation(columns, "TaishaJikoku"));
+			csvStringRecord.addItem(d.get("JitsudoJikan"), PJActionBase.getQuotation(columns, "JitsudoJikan"));
+			csvStringRecord.addItem(d.get("ChinginShinseiKbn1"), PJActionBase.getQuotation(columns, "ChinginShinseiKbn1"));
+			csvStringRecord.addItem(d.get("ChinginShinseiJikan1"), PJActionBase.getQuotation(columns, "ChinginShinseiJikan1"));
+			csvStringRecord.addItem(d.get("ChinginShinseiKbn2"), PJActionBase.getQuotation(columns, "ChinginShinseiKbn2"));
+			csvStringRecord.addItem(d.get("ChinginShinseiJikan2"), PJActionBase.getQuotation(columns, "ChinginShinseiJikan2"));
+			csvStringRecord.addItem(d.get("ChinginShinseiKbn3"), PJActionBase.getQuotation(columns, "ChinginShinseiKbn3"));
+			csvStringRecord.addItem(d.get("ChinginShinseiJikan3"), PJActionBase.getQuotation(columns, "ChinginShinseiJikan3"));
+			csvStringRecord.addItem(d.get("TsukinhiNissu"), PJActionBase.getQuotation(columns, "TsukinhiNissu"));
+			csvStringRecord.addItem(d.get("TsukinhiTanka"), PJActionBase.getQuotation(columns, "TsukinhiTanka"));
+			csvStringRecord.addItem(d.get("TokkiJiko"), PJActionBase.getQuotation(columns, "TokkiJiko"));
 			
 			// データ格納
 			csvString.append(csvStringRecord.getLine() + newLine);

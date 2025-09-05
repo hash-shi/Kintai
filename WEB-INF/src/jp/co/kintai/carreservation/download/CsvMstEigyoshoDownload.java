@@ -15,6 +15,7 @@ import jakarta.servlet.http.HttpServletResponse;
 import org.apache.commons.lang3.StringUtils;
 
 import jp.ac.wakhok.tomoharu.csv.CSVLine;
+import jp.co.kintai.carreservation.base.PJActionBase;
 import jp.co.tjs_net.java.framework.base.DownloadBase;
 import jp.co.tjs_net.java.framework.database.PreparedStatementFactory;
 import jp.co.tjs_net.java.framework.information.IndexInformation;
@@ -32,6 +33,7 @@ public class CsvMstEigyoshoDownload extends DownloadBase {
 		// パラメータ取得
 		//=====================================================================
 		ArrayList<HashMap<String, String>> data = new ArrayList<>();
+		HashMap<String, String> columns = new HashMap<String, String>();
 		String eigyoshoCodeF		= req.getParameter("srhTxtEigyoshoCodeF");
 		String eigyoshoCodeT		= req.getParameter("srhTxtEigyoshoCodeT");
 		String saishuKoshinDateF	= req.getParameter("srhTxtSaishuKoshinDateF");
@@ -93,7 +95,7 @@ public class CsvMstEigyoshoDownload extends DownloadBase {
 			// 実行
 			rset = pstmt.executeQuery();
 			// 結果取得
-			ResultSetMetaData metaData = rset.getMetaData(); 
+			ResultSetMetaData metaData = rset.getMetaData();
 			
 			// カラム数(列数)の取得
 			int colCount = metaData.getColumnCount(); 
@@ -102,12 +104,16 @@ public class CsvMstEigyoshoDownload extends DownloadBase {
 			while (rset.next()){
 				// 1レコード分の配列を用意
 				HashMap<String, String> record = new HashMap<String, String>();
+				HashMap<String, String> recordc = new HashMap<String, String>();
 				// カラム名をkeyとして値を格納
 				for (int i = 1; i <= colCount; i++) {
 					record.put(metaData.getColumnLabel(i), StringUtils.stripToEmpty(rset.getString(i)));
+					// カラムのSQLデータ型を取得
+					recordc.put(metaData.getColumnLabel(i), metaData.getColumnTypeName(i));
 				}
 				// 配列の格納
 				data.add(record);
+				columns = recordc;
 			}
 		} finally {
 			if (rset != null){ try { rset.close(); } catch (Exception exp){}}
@@ -122,11 +128,11 @@ public class CsvMstEigyoshoDownload extends DownloadBase {
 		
 		// CSVデータヘッダ
 		CSVLine csvStringTitle = new CSVLine();
-		csvStringTitle.addItem("営業所コード");
-		csvStringTitle.addItem("営業所名");
-		csvStringTitle.addItem("最終更新社員NO");
-		csvStringTitle.addItem("最終更新日");
-		csvStringTitle.addItem("最終更新時刻");
+		csvStringTitle.addItem("営業所コード",true);
+		csvStringTitle.addItem("営業所名",true);
+		csvStringTitle.addItem("最終更新社員NO",true);
+		csvStringTitle.addItem("最終更新日",true);
+		csvStringTitle.addItem("最終更新時刻",true);
 		
 		// データ格納
 		csvString.append(csvStringTitle.getLine() + newLine);
@@ -135,11 +141,15 @@ public class CsvMstEigyoshoDownload extends DownloadBase {
 		for (int i = 0; i < data.size(); i++) {
 			// CSVデータ1レコード分
 			CSVLine csvStringRecord = new CSVLine();
-			csvStringRecord.addItem(data.get(i).get("EigyoshoCode"));
-			csvStringRecord.addItem(data.get(i).get("EigyoshoName"));
-			csvStringRecord.addItem(data.get(i).get("SaishuKoshinShainNO"));
-			csvStringRecord.addItem(data.get(i).get("SaishuKoshinDate"));
-			csvStringRecord.addItem(data.get(i).get("SaishuKoshinJikan"));
+			
+			// 1行取得
+			HashMap<String, String> d = data.get(i);
+			
+			csvStringRecord.addItem(d.get("EigyoshoCode"), PJActionBase.getQuotation(columns, "EigyoshoCode"));
+			csvStringRecord.addItem(d.get("EigyoshoName"), PJActionBase.getQuotation(columns, "EigyoshoName"));
+			csvStringRecord.addItem(d.get("SaishuKoshinShainNO"), PJActionBase.getQuotation(columns, "SaishuKoshinShainNO"));
+			csvStringRecord.addItem(d.get("SaishuKoshinDate"), PJActionBase.getQuotation(columns, "SaishuKoshinDate"));
+			csvStringRecord.addItem(d.get("SaishuKoshinJikan"), PJActionBase.getQuotation(columns, "SaishuKoshinJikan"));
 			// データ格納
 			csvString.append(csvStringRecord.getLine() + newLine);
 		}

@@ -16,6 +16,7 @@ import jakarta.servlet.http.HttpServletResponse;
 import org.apache.commons.lang3.StringUtils;
 
 import jp.ac.wakhok.tomoharu.csv.CSVLine;
+import jp.co.kintai.carreservation.base.PJActionBase;
 import jp.co.tjs_net.java.framework.base.DownloadBase;
 import jp.co.tjs_net.java.framework.database.PreparedStatementFactory;
 import jp.co.tjs_net.java.framework.information.IndexInformation;
@@ -33,6 +34,7 @@ public class CsvChinginkeisanshoDataDownload extends DownloadBase {
 		// パラメータ取得
 		//=====================================================================
 		ArrayList<HashMap<String, String>> data = new ArrayList<>();
+		HashMap<String, String> columns = new HashMap<String, String>();
 		String taishoNengetsuF	= req.getParameter("srhTxtTaishoNengetsuF");
 		String taishoNengetsuT	= req.getParameter("srhTxtTaishoNengetsuT");
 		
@@ -101,21 +103,25 @@ public class CsvChinginkeisanshoDataDownload extends DownloadBase {
 			// 実行
 			rset = pstmt.executeQuery();
 			// 結果取得
-			ResultSetMetaData metaData = rset.getMetaData(); 
+			ResultSetMetaData metaData = rset.getMetaData();
 			
 			// カラム数(列数)の取得
-			int colCount = metaData.getColumnCount(); 
+			int colCount = metaData.getColumnCount();
 			
 			// レコード数分繰り返す
 			while (rset.next()){
 				// 1レコード分の配列を用意
 				HashMap<String, String> record = new HashMap<String, String>();
+				HashMap<String, String> recordc = new HashMap<String, String>();
 				// カラム名をkeyとして値を格納
 				for (int i = 1; i <= colCount; i++) {
 					record.put(metaData.getColumnLabel(i), StringUtils.stripToEmpty(rset.getString(i)));
+					// カラムのSQLデータ型を取得
+					recordc.put(metaData.getColumnLabel(i), metaData.getColumnTypeName(i));
 				}
 				// 配列の格納
 				data.add(record);
+				columns = recordc;
 			}
 		} finally {
 			if (rset != null){ try { rset.close(); } catch (Exception exp){}}
@@ -130,55 +136,55 @@ public class CsvChinginkeisanshoDataDownload extends DownloadBase {
 		
 		// CSVデータヘッダ
 		CSVLine csvStringTitle = new CSVLine();
-			csvStringTitle.addItem( "対象年度");
-			csvStringTitle.addItem( "対象月度");
-			csvStringTitle.addItem( "作成日付");
-			csvStringTitle.addItem( "社員NO");
-			csvStringTitle.addItem( "社員名");
-			csvStringTitle.addItem( "営業所コード");
+			csvStringTitle.addItem( "対象年度", true);
+			csvStringTitle.addItem( "対象月度",true);
+			csvStringTitle.addItem( "作成日付",true);
+			csvStringTitle.addItem( "社員NO",true);
+			csvStringTitle.addItem( "社員名",true);
+			csvStringTitle.addItem( "営業所コード",true);
 			
-			csvStringTitle.addItem( "通常勤務日数");
-			csvStringTitle.addItem( "休日勤務日数");
-			csvStringTitle.addItem( "時間外勤務日数");
-			csvStringTitle.addItem( "深夜勤務日数");
-			csvStringTitle.addItem( "有給休暇勤務日数");
-			csvStringTitle.addItem( "特別有給休暇勤務日数");
-			csvStringTitle.addItem( "半日有給日数");
-			csvStringTitle.addItem( "控除日数");
-			csvStringTitle.addItem( "休日日数");
-			csvStringTitle.addItem( "合計日数");
+			csvStringTitle.addItem( "通常勤務日数",true);
+			csvStringTitle.addItem( "休日勤務日数",true);
+			csvStringTitle.addItem( "時間外勤務日数",true);
+			csvStringTitle.addItem( "深夜勤務日数",true);
+			csvStringTitle.addItem( "有給休暇勤務日数",true);
+			csvStringTitle.addItem( "特別有給休暇勤務日数",true);
+			csvStringTitle.addItem( "半日有給日数",true);
+			csvStringTitle.addItem( "控除日数",true);
+			csvStringTitle.addItem( "休日日数",true);
+			csvStringTitle.addItem( "合計日数",true);
 			
-			csvStringTitle.addItem( "通常勤務時間");
-			csvStringTitle.addItem( "休日勤務時間");
-			csvStringTitle.addItem( "時間外勤務時間");
-			csvStringTitle.addItem( "深夜勤務時間");
-			csvStringTitle.addItem( "有給休暇勤務時間");
-			csvStringTitle.addItem( "特別有給休暇勤務時間");
-			csvStringTitle.addItem( "半日有給時間");
-			csvStringTitle.addItem( "控除時間");
-			csvStringTitle.addItem( "合計時間");
+			csvStringTitle.addItem( "通常勤務時間",true);
+			csvStringTitle.addItem( "休日勤務時間",true);
+			csvStringTitle.addItem( "時間外勤務時間",true);
+			csvStringTitle.addItem( "深夜勤務時間",true);
+			csvStringTitle.addItem( "有給休暇勤務時間",true);
+			csvStringTitle.addItem( "特別有給休暇勤務時間",true);
+			csvStringTitle.addItem( "半日有給時間",true);
+			csvStringTitle.addItem( "控除時間",true);
+			csvStringTitle.addItem( "合計時間",true);
 			
-			csvStringTitle.addItem( "通常勤務単価");
-			csvStringTitle.addItem( "休日勤務単価");
-			csvStringTitle.addItem( "時間外勤務単価");
-			csvStringTitle.addItem( "深夜勤務単価");
-			csvStringTitle.addItem( "有給休暇勤務単価");
-			csvStringTitle.addItem( "特別有給休暇勤務単価");
-			csvStringTitle.addItem( "半日有給単価");
-			csvStringTitle.addItem( "通勤費単価");
-			csvStringTitle.addItem( "控除単価");
+			csvStringTitle.addItem( "通常勤務単価",true);
+			csvStringTitle.addItem( "休日勤務単価",true);
+			csvStringTitle.addItem( "時間外勤務単価",true);
+			csvStringTitle.addItem( "深夜勤務単価",true);
+			csvStringTitle.addItem( "有給休暇勤務単価",true);
+			csvStringTitle.addItem( "特別有給休暇勤務単価",true);
+			csvStringTitle.addItem( "半日有給単価",true);
+			csvStringTitle.addItem( "通勤費単価",true);
+			csvStringTitle.addItem( "控除単価",true);
 			
-			csvStringTitle.addItem( "通常勤務金額");
-			csvStringTitle.addItem( "休日勤務金額");
-			csvStringTitle.addItem( "時間外勤務金額");
-			csvStringTitle.addItem( "深夜勤務金額");
-			csvStringTitle.addItem( "有給休暇勤務金額");
-			csvStringTitle.addItem( "特別有給休暇勤務金額");
-			csvStringTitle.addItem( "半日有給金額");
-			csvStringTitle.addItem( "通勤費金額");
-			csvStringTitle.addItem( "控除金額");
+			csvStringTitle.addItem( "通常勤務金額",true);
+			csvStringTitle.addItem( "休日勤務金額",true);
+			csvStringTitle.addItem( "時間外勤務金額",true);
+			csvStringTitle.addItem( "深夜勤務金額",true);
+			csvStringTitle.addItem( "有給休暇勤務金額",true);
+			csvStringTitle.addItem( "特別有給休暇勤務金額",true);
+			csvStringTitle.addItem( "半日有給金額",true);
+			csvStringTitle.addItem( "通勤費金額",true);
+			csvStringTitle.addItem( "控除金額",true);
 			
-			csvStringTitle.addItem( "合計金額");
+			csvStringTitle.addItem( "合計金額",true);
 			
 		// データ格納
 		csvString.append(csvStringTitle.getLine() + newLine);
@@ -187,12 +193,15 @@ public class CsvChinginkeisanshoDataDownload extends DownloadBase {
 			// CSVデータ1レコード分
 			CSVLine csvStringRecord = new CSVLine();
 			
+			// 1行取得
+			HashMap<String, String> d = data.get(i);
+			
 			BigDecimal goukeiNissu = BigDecimal.ZERO;
 			BigDecimal goukeiJikan = BigDecimal.ZERO;
 			BigDecimal goukeiKingaku = BigDecimal.ZERO;
 			
 			// TaishoNenGetsudo の分割処理
-			String nenGetsudo = data.get(i).get("TaishoNenGetsudo");
+			String nenGetsudo = d.get("TaishoNenGetsudo");
 			String nendo = "";
 			String getsudo = "";
 
@@ -205,19 +214,19 @@ public class CsvChinginkeisanshoDataDownload extends DownloadBase {
 			}
 			
 			// 年度・月度・作成日時など基本項目
-			csvStringRecord.addItem(nendo);
-			csvStringRecord.addItem(getsudo);
-			csvStringRecord.addItem(formattedDateTime);
-			csvStringRecord.addItem(data.get(i).get( "ShainNO"));
-			csvStringRecord.addItem(data.get(i).get( "ShainName"));
-			csvStringRecord.addItem(data.get(i).get( "EigyoshoCode"));
+			csvStringRecord.addItem(nendo,true);
+			csvStringRecord.addItem(getsudo,true);
+			csvStringRecord.addItem(formattedDateTime,true);
+			csvStringRecord.addItem(d.get( "ShainNO"), PJActionBase.getQuotation(columns, "ShainNO"));
+			csvStringRecord.addItem(d.get( "ShainName"), PJActionBase.getQuotation(columns, "ShainName"));
+			csvStringRecord.addItem(d.get( "EigyoshoCode"), PJActionBase.getQuotation(columns, "EigyoshoCode"));
 			
 			
 			// 合計日数処理 + 出力
 			String[] nissuKeys = {
-					"ShinseiNissu01", "ShinseiNissu04", "ShinseiNissu02",
-					"ShinseiNissu03", "ShinseiNissu05", "ShinseiNissu11",
-					"ShinseiNissu06", "ShinseiNissu07", "kyujitsuNissu"
+				    "ShinseiNissu01", "ShinseiNissu04", "ShinseiNissu02",
+				    "ShinseiNissu03", "ShinseiNissu05", "ShinseiNissu11",
+				    "ShinseiNissu06", "ShinseiNissu07", "kyujitsuNissu"
 				};
 
 			for (String key : nissuKeys) {
@@ -228,11 +237,11 @@ public class CsvChinginkeisanshoDataDownload extends DownloadBase {
 					} catch (NumberFormatException e) {
 					}
 				}
-				csvStringRecord.addItem(
-						StringUtils.isNotBlank(val) ?
-								String.format("%.2f",new BigDecimal(val)) :
-									"0.00"
-				);
+		        csvStringRecord.addItem(
+		                StringUtils.isNotBlank(val) ?
+		                    String.format("%.2f",new BigDecimal(val)) :
+		                    "0.00"
+		            );
 			}
 			
 			csvStringRecord.addItem(String.format("%.2f", goukeiNissu));
@@ -252,24 +261,24 @@ public class CsvChinginkeisanshoDataDownload extends DownloadBase {
 					} catch (NumberFormatException e) {
 					}
 				}
-				csvStringRecord.addItem(
-						StringUtils.isNotBlank(val) ?
-								String.format("%.2f",new BigDecimal(val)) :
-									"0.00"
-				);
+		        csvStringRecord.addItem(
+		                StringUtils.isNotBlank(val) ?
+		                	String.format("%.2f",new BigDecimal(val)) :
+		                	"0.00"
+		            );
 			}
 			
 			csvStringRecord.addItem(String.format("%.2f", goukeiJikan));
 
-			csvStringRecord.addItem(data.get(i).get( "ShinseiTanka01"));
-			csvStringRecord.addItem(data.get(i).get( "ShinseiTanka04"));
-			csvStringRecord.addItem(data.get(i).get( "ShinseiTanka02"));
-			csvStringRecord.addItem(data.get(i).get( "ShinseiTanka03"));
-			csvStringRecord.addItem(data.get(i).get( "ShinseiTanka05"));
-			csvStringRecord.addItem(data.get(i).get( "ShinseiTanka11"));
-			csvStringRecord.addItem(data.get(i).get( "ShinseiTanka06"));
-			csvStringRecord.addItem(data.get(i).get( "ShinseiTanka09"));
-			csvStringRecord.addItem(data.get(i).get( "ShinseiTanka07"));
+			csvStringRecord.addItem(d.get( "ShinseiTanka01"),PJActionBase.getQuotation(columns, "ShinseiTanka01"));
+			csvStringRecord.addItem(d.get( "ShinseiTanka04"),PJActionBase.getQuotation(columns, "ShinseiTanka04"));
+			csvStringRecord.addItem(d.get( "ShinseiTanka02"),PJActionBase.getQuotation(columns, "ShinseiTanka02"));
+			csvStringRecord.addItem(d.get( "ShinseiTanka03"),PJActionBase.getQuotation(columns, "ShinseiTanka03"));
+			csvStringRecord.addItem(d.get( "ShinseiTanka05"),PJActionBase.getQuotation(columns, "ShinseiTanka05"));
+			csvStringRecord.addItem(d.get( "ShinseiTanka11"),PJActionBase.getQuotation(columns, "ShinseiTanka11"));
+			csvStringRecord.addItem(d.get( "ShinseiTanka06"),PJActionBase.getQuotation(columns, "ShinseiTanka06"));
+			csvStringRecord.addItem(d.get( "ShinseiTanka09"),PJActionBase.getQuotation(columns, "ShinseiTanka09"));
+			csvStringRecord.addItem(d.get( "ShinseiTanka07"),PJActionBase.getQuotation(columns, "ShinseiTanka07"));
 
 			// 合計金額計算
 			String[] kingakuKeys = {
