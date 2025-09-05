@@ -16,9 +16,11 @@ import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 
 import org.apache.commons.lang3.StringUtils;
+import org.jodconverter.core.DocumentConverter;
+import org.jodconverter.core.office.OfficeManager;
+import org.jodconverter.local.LocalConverter;
+import org.jodconverter.local.office.LocalOfficeManager;
 
-import com.spire.xls.CellRange;
-import com.spire.xls.FileFormat;
 import com.spire.xls.Workbook;
 import com.spire.xls.Worksheet;
 
@@ -40,7 +42,6 @@ public class PdfKinYukyuKyukaDaichoDownload extends DownloadBase {
 		//=====================================================================
 		// パラメータ取得
 		//=====================================================================
-		int count = 0;
 		ArrayList<HashMap<String, String>> data = new ArrayList<>();
 		String fromTaishoNendo		= req.getParameter("srhTxtTaishoNendoF");
 		String toTaishoNendo		= req.getParameter("srhTxtTaishoNendoT");
@@ -63,10 +64,12 @@ public class PdfKinYukyuKyukaDaichoDownload extends DownloadBase {
 		String templateFilePath = this.getTemplateFilePath(req);
 		// ファイル名のみ
 		String templateFileName = this.getTemplateFileName("kinYukyuKyukaDaicho");
-		// 拡張子
-		String extension = templateFileName.substring(templateFileName.lastIndexOf('.'));
+		// 拡張子(xlsx)
+		String extensionXlsx = templateFileName.substring(templateFileName.lastIndexOf('.'));
+		// 拡張子(pdf)
+		String extensionPdf = ".pdf";
 		// ファイル名から拡張子を取り除く
-		templateFileName = templateFileName.replace(extension, "");
+		templateFileName = templateFileName.replace(extensionXlsx, "");
 		
 		// 新しいファイル名に付ける文字列
 		SimpleDateFormat sdfNewFileName = new SimpleDateFormat("yyyyMMddHHmms");
@@ -75,11 +78,19 @@ public class PdfKinYukyuKyukaDaichoDownload extends DownloadBase {
 		Date date = new Date();
 		
 		// ファイル名の作成(元のファイル名にyyyyMMddHHmms.pdf)
-		String createFile = templateFilePath + "\\" + templateFileName + "_" + sdfNewFileName.format(date) + ".pdf";
-		String createFileName = templateFileName + "_" + sdfNewFileName.format(date) + ".pdf";
+		// excel
+		String createFileNameXlsx = templateFileName + "_" + sdfNewFileName.format(date) + extensionXlsx;
+		String createFileXlsx = templateFilePath + createFileNameXlsx;
+		// pdf
+		String createFileNamePdf = templateFileName + "_" + sdfNewFileName.format(date) + extensionPdf;
+		String createFilePdf = templateFilePath + createFileNamePdf;
 		
 		// ワークブック
 		Workbook workbook = new Workbook();
+		
+		// PDF変換で使用
+		OfficeManager officeManager = null;
+		DocumentConverter localConverter = null;
 		
 		//=====================================================================
 		// DB接続
@@ -149,12 +160,12 @@ public class PdfKinYukyuKyukaDaichoDownload extends DownloadBase {
 			sql.append("  		S.TaisyokuDate = '' ");
 			
 			if (StringUtils.isNotBlank(fromShainNo)) {
-				sql.append(" AND CAST(K.ShainNO AS int) >=  ? ");
+				sql.append(" AND CAST(S.ShainNO AS int) >=  ? ");
 				pstmtf.addValue("String", fromShainNo);
 			}
 			
 			if (StringUtils.isNotBlank(toShainNo)) {
-				sql.append(" AND CAST(K.ShainNO AS int) <=  ? ");
+				sql.append(" AND CAST(S.ShainNO AS int) <=  ? ");
 				pstmtf.addValue("String", toShainNo);
 			}
 			
@@ -565,101 +576,108 @@ public class PdfKinYukyuKyukaDaichoDownload extends DownloadBase {
 			
 			// 最初のシートを取得
 			Worksheet worksheetTmp = workbook.getWorksheets().get(0);
-//			// 新しいシートを作成
-//			// 社員NOの数分シートを作成する
-//			Worksheet worksheetNew = workbook.getWorksheets().add("kintai");
-//			//最初のシートを2番目のシートに複製する
-//			worksheetNew.copyFrom(worksheetTmp);
-//			
-//			// 編集するワークシートを選択
-//			Worksheet worksheet = workbook.getWorksheets().get("kintai");
-//			
-//			
-//			
-//			String cellShainNO = rset.getString("ShainNO");
-//			// 特定のセルを取得
-//			CellRange cellshainNo = worksheet.getCellRange("AI5");// 社員NO入れたい
-////			// セルの値を取得
-////			String text = cell.getValue();
-//			// セルに値を設定
-//			cellshainNo.setText(cellShainNO);
 			
+			// 作成日のフォーマット指定
 			SimpleDateFormat sakuseiformat = new SimpleDateFormat("yyyy/MM/dd");
 			
-			// dataリストから1件ずつ社員NOを取得して処理
-			for (int i = 0; i < data.size(); i++) {
-
-				HashMap<String, String> record = data.get(i);
+			int pageIndex = 1;
+			
+			for (HashMap<String, String> record : data) {
+				String nendo = record.get("TaishoNendo");
 				String shainNo = record.get("ShainNO");
+				
+				String key = nendo + "_" + shainNo;
+				
+				// シート作成＆コピー
+				Worksheet newSheet = workbook.getWorksheets().add(key);
+				newSheet.copyFrom(worksheetTmp);
 				
 				String shainName = record.get("ShainName");
 				String eigyosho = record.get("EigyoshoName");
 				String busho = record.get("BushoName");
+				String sakuseidate = sakuseiformat.format(date);
 				String yukyukyukahuyoNissu = record.get("YukyuKyukaFuyoNissu");
 				String yukyukyukazanNissu = record.get("YukyuKyukaZanNissu");
-
-				// シート名を作成
-				String sheetName = "Shain_" + shainNo;
-
-				// 新しいシートをテンプレートからコピーして作成
-				Worksheet newSheet = workbook.getWorksheets().add(sheetName);
-				newSheet.copyFrom(worksheetTmp);
-				    
-				// セルに作成年月日を書き込み
-				CellRange cellsakuseidate = newSheet.getCellRange("AM3");
-				String sakuseidate = sakuseiformat.format(date);
-				cellsakuseidate.setText(sakuseidate);
-				    
-				// セルにページ数を書き込み
-				CellRange cellpagecnt = newSheet.getCellRange("AS3");
-				cellpagecnt.setText("PAGE: " + (i+1));
-
-				// セルに社員NOを書き込み
-				CellRange cellshainNo = newSheet.getCellRange("AI5");
-				cellshainNo.setText(shainNo);
-				    
-				// セルに社員名を書き込み
-				CellRange cellshainName = newSheet.getCellRange("AM5");
-				cellshainName.setText(shainName);
-				    
-				// セルに営業所名を書き込み
-				CellRange celleigyosho = newSheet.getCellRange("A5");
-				celleigyosho.setText(eigyosho);
-				    
-				// セルに部署名を書き込み
-				CellRange cellbusho = newSheet.getCellRange("K5");
-				cellbusho.setText(busho);
 				
-				// セルに有給休暇期首日数を書き込み
-				CellRange cellyukyukyukahuyoNissu = newSheet.getCellRange("J7");
-				cellyukyukyukahuyoNissu.setText(yukyukyukahuyoNissu);
+				// 基本情報セット
+				newSheet.getCellRange("A4").setText(nendo + "   年分");
+				newSheet.getCellRange("AM3").setText(sakuseidate);
+				newSheet.getCellRange("AS3").setText("PAGE:   " + pageIndex);
+				newSheet.getCellRange("AI5").setText(shainNo);
+				newSheet.getCellRange("AM5").setText(shainName);
+				newSheet.getCellRange("A5").setText(eigyosho);
+				newSheet.getCellRange("K5").setText(busho);
+				newSheet.getCellRange("J7").setText(yukyukyukahuyoNissu);
+				newSheet.getCellRange("J32").setText(yukyukyukazanNissu);
 				
-				// セルに有給休暇残日数を書き込み
-				CellRange cellyukyukyukazanNissu = newSheet.getCellRange("J32");
-				cellyukyukyukazanNissu.setText(yukyukyukazanNissu);
-				    
-			
+				// カラムの開始位置をまとめた配列（3ブロック分）
+				String[][] columns = {
+					{"A", "D", "G"},
+					{"U", "X", "AA"},
+					{"AO", "AR", "AU"}
+				};
+				
+				int rowsPerBlock = 20;
+				
+				System.out.println(record);
+				
+				// 1から60までのデータを3ブロックに分けてセット
+				for (int i = 1; i <= 60; i++) {
+					String month = record.get("month" + i);
+					String day = record.get("day" + i);
+					String hankyu = record.get("hankyu" + i);
+					
+					// 0-based indexでブロックと行を計算
+					int blockIndex = (i - 1) / rowsPerBlock; // 0,1,2のどれか
+					int rowIndexInBlock = (i - 1) % rowsPerBlock + 11; // 11～30の行番号
+					
+					// 対応列を取得
+					String monthCol = columns[blockIndex][0];
+					String dayCol = columns[blockIndex][1];
+					String hankyuCol = columns[blockIndex][2];
+					
+					// セルにセット
+					newSheet.getCellRange(monthCol + rowIndexInBlock).setText(month != null ? month : "");
+					newSheet.getCellRange(dayCol + rowIndexInBlock).setText(day != null ? day : "");
+					newSheet.getCellRange(hankyuCol + rowIndexInBlock).setText(hankyu != null ? hankyu : "");
+				}
+				
+				pageIndex++;
 			}
-			
 			
 			// テンプレートシートを削除する。
 			worksheetTmp.remove();
 			
-			// PDFに変換して保存(templateFile配下に保存される)
-			workbook.saveToFile(createFile ,FileFormat.PDF);
+			// 保存(templateFile配下に保存される)
+			workbook.saveToFile(createFileXlsx);
+			
+			// PDF変換元ファイル
+			File inputFile = new File(createFileXlsx);
+			// PDF変換先ファイル
+			File outputFile = new File(createFilePdf);
+			
+			// PDF変換用ライブラリの準備(これの起動に10秒かかる)
+			officeManager = LocalOfficeManager.make();
+			localConverter = LocalConverter.make(officeManager);
+			// 起動
+			officeManager.start();
+			// PDF変換
+			localConverter.convert(inputFile).to(outputFile).execute();
+			// 停止
+			officeManager.stop();
 			
 			// PDFファイルをbyte[]に変換
-			byte[] pdfBytes = Files.readAllBytes(Paths.get(createFile));
+			byte[] pdfBytes = Files.readAllBytes(Paths.get(createFilePdf));
 			
 			// データの格納
 			this.setData(pdfBytes); // ここに編集中のデータをbyte[]で格納
 			
 			// 名前を付けて保存
-			this.setFilename(createFileName);
+			this.setFilename(createFileNamePdf);
 			
-			// templateFile配下に保存されたPDFファイルを削除する。
-			Files.delete(Paths.get(createFile));
-			
+			// templateFile配下に作成したxlsxとpdfを削除する
+			Files.delete(Paths.get(createFileXlsx));
+			Files.delete(Paths.get(createFilePdf));
 			
 		} catch (Exception e) {
 		    System.out.println("例外発生: " + e.getClass().getName());
@@ -669,6 +687,7 @@ public class PdfKinYukyuKyukaDaichoDownload extends DownloadBase {
 			t.printStackTrace();
 		} finally {
 			// 各機能の停止/解放
+			if (officeManager != null) { if (officeManager.isRunning()) { officeManager.stop(); } }
 			if (workbook != null) { workbook.dispose(); }
 		}
 	}

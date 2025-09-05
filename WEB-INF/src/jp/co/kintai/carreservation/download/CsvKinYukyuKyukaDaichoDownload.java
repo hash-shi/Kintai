@@ -125,12 +125,12 @@ public class CsvKinYukyuKyukaDaichoDownload extends DownloadBase {
 			sql.append("  		S.TaisyokuDate = '' ");
 			
 			if (StringUtils.isNotBlank(fromShainNo)) {
-				sql.append(" AND CAST(K.ShainNO AS int) >=  ? ");
+				sql.append(" AND CAST(S.ShainNO AS int) >=  ? ");
 				pstmtf.addValue("String", fromShainNo);
 			}
 			
 			if (StringUtils.isNotBlank(toShainNo)) {
-				sql.append(" AND CAST(K.ShainNO AS int) <=  ? ");
+				sql.append(" AND CAST(S.ShainNO AS int) <=  ? ");
 				pstmtf.addValue("String", toShainNo);
 			}
 			
