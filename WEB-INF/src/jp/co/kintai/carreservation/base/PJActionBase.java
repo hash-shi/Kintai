@@ -68,6 +68,21 @@ public abstract class PJActionBase extends ActionBase {
 	}
 	
 	/**
+	 * コーテーション付けの判定
+	 * 
+	 * @param con
+	 * @return
+	 * @throws Exception
+	 */
+	public static Boolean getQuotation(HashMap<String, String> columns, String key) throws Exception {
+		// 文字列 true
+		// 数値 false
+		// データ型が数値型(intやdecimal)の場合はコーテーションを付けない
+		return !(columns.get(key).startsWith("int") || columns.get(key).startsWith("decimal"));
+	}
+	
+	
+	/**
 	 * 営業所名取得
 	 * 
 	 * @param req
