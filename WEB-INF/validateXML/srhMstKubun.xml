@@ -1,13 +1,11 @@
 <?xml version="1.0" encoding="UTF-8"?>
-
 <validate>
 	<proc func="search">
 		<variable name="srhDlgTxtKbnCode" dispName="区分コード">
-			<check class="IsNumber" message="!#itemName#!には数字を入力してください。" itemName="{dispName}"></check>
+			<check class="IsNumeric" message="!#itemName#!には数字を入力してください。" itemName="{dispName}"></check>
 		</variable>
-		
 		<variable name="srhDlgTxtCode" dispName="コード">
-			<check class="IsNumber" message="!#itemName#!には数字を入力してください。" itemName="{dispName}"></check>
+			<check class="IsNumeric" message="!#itemName#!には数字を入力してください。" itemName="{dispName}"></check>
 		</variable>
 	</proc>
 </validate>

@@ -2,7 +2,7 @@
 <validate>
 	<proc func="search">
 		<variable name="srhDlgTxtEigyoshoCode" dispName="営業所コード">
-			<check class="IsNumber" message="!#itemName#!には数字を入力してください。" itemName="{dispName}"></check>
+			<check class="IsNumeric" message="!#itemName#!には数字を入力してください。" itemName="{dispName}"></check>
 		</variable>
 	</proc>
 </validate>
