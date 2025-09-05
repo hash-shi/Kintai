@@ -9,8 +9,12 @@ import java.util.Date;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 
+import org.jodconverter.core.DocumentConverter;
+import org.jodconverter.core.office.OfficeManager;
+import org.jodconverter.local.LocalConverter;
+import org.jodconverter.local.office.LocalOfficeManager;
+
 import com.spire.xls.CellRange;
-import com.spire.xls.FileFormat;
 import com.spire.xls.Workbook;
 import com.spire.xls.Worksheet;
 
@@ -33,10 +37,13 @@ public class PdfFileDownload extends DownloadBase {
 		String templateFilePath = this.getTemplateFilePath(req);
 		// ファイル名のみ
 		String templateFileName = this.getTemplateFileName("kinShukkinBo");
-		// 拡張子
-		String extension = templateFileName.substring(templateFileName.lastIndexOf('.'));
+		// 拡張子(xlsx)
+		String extensionXlsx = templateFileName.substring(templateFileName.lastIndexOf('.'));
+		// 拡張子(pdf)
+		String extensionPdf = ".pdf";
+		
 		// ファイル名から拡張子を取り除く
-		templateFileName = templateFileName.replace(extension, "");
+		templateFileName = templateFileName.replace(extensionXlsx, "");
 		
 		// 新しいファイル名に付ける文字列
 		SimpleDateFormat sdfNewFileName = new SimpleDateFormat("yyyyMMddHHmms");
@@ -45,11 +52,19 @@ public class PdfFileDownload extends DownloadBase {
 		Date date = new Date();
 		
 		// ファイル名の作成(元のファイル名にyyyyMMddHHmms.pdf)
-		String createFile = templateFilePath + "\\" + templateFileName + "_" + sdfNewFileName.format(date) + ".pdf";
-		String createFileName = templateFileName + "_" + sdfNewFileName.format(date) + ".pdf";
+		// excel
+		String createFileNameXlsx = templateFileName + "_" + sdfNewFileName.format(date) + extensionXlsx;
+		String createFileXlsx = templateFilePath + createFileNameXlsx;
+		// pdf
+		String createFileNamePdf = templateFileName + "_" + sdfNewFileName.format(date) + extensionPdf;
+		String createFilePdf = templateFilePath + createFileNamePdf;
 		
 		// ワークブック
 		Workbook workbook = new Workbook();
+		
+		// PDF変換で使用
+		OfficeManager officeManager = null;
+		DocumentConverter localConverter = null;
 		
 		try {
 			
@@ -64,38 +79,61 @@ public class PdfFileDownload extends DownloadBase {
 			
 			// 最初のシートを取得
 			Worksheet worksheetTmp = workbook.getWorksheets().get(0);
-			// 新しいシートを作成
-			Worksheet worksheetNew = workbook.getWorksheets().add("kintai");
-			//最初のシートを2番目のシートに複製する
-			worksheetNew.copyFrom(worksheetTmp);
 			
-			// 編集するワークシートを選択
-			Worksheet worksheet = workbook.getWorksheets().get("kintai");
-			
-			// 特定のセルを取得
-			CellRange cell = worksheet.getCellRange("A1");
-//			// セルの値を取得
-//			String text = cell.getValue();
-			// セルに値を設定
-			cell.setValue("勤怠システム");
+			// 複数シート作成のサンプル
+			for (int i = 0; i < 5; i++) {
+				
+				// 新しいシートを作成
+				// シート名が重複しないように別名にする(もしかしたら同じで大丈夫？)
+				Worksheet worksheetNew = workbook.getWorksheets().add("kintai" + "_" + i);
+				//最初のシートを2番目のシートに複製する
+				worksheetNew.copyFrom(worksheetTmp);
+				
+				// 編集するワークシートを選択
+				Worksheet worksheet = workbook.getWorksheets().get("kintai" + "_" + i);
+				
+				// 特定のセルを取得
+				CellRange cell = worksheet.getCellRange("A1");
+//				// セルの値を取得
+//				String text = cell.getValue();
+				// セルに値を設定
+				cell.setValue("勤怠システム" + "_" + i);
+				
+			}
 			
 			// テンプレートシートを削除する。
 			worksheetTmp.remove();
 			
-			// PDFに変換して保存(templateFile配下に保存される)
-			workbook.saveToFile(createFile ,FileFormat.PDF);
+			// 保存(templateFile配下に保存される)
+			workbook.saveToFile(createFileXlsx);
 			
+			// PDF変換元ファイル
+			File inputFile = new File(createFileXlsx);
+			// PDF変換先ファイル
+			File outputFile = new File(createFilePdf);
+			
+			// PDF変換用ライブラリの準備(これの起動に10秒かかる)
+			officeManager = LocalOfficeManager.make();
+			localConverter = LocalConverter.make(officeManager);
+			// 起動
+			officeManager.start();
+			// PDF変換
+			localConverter.convert(inputFile).to(outputFile).execute();
+			// 停止
+			officeManager.stop();
+
 			// PDFファイルをbyte[]に変換
-			byte[] pdfBytes = Files.readAllBytes(Paths.get(createFile));
+			byte[] pdfBytes = Files.readAllBytes(Paths.get(createFilePdf));
 			
 			// データの格納
 			this.setData(pdfBytes); // ここに編集中のデータをbyte[]で格納
 			
 			// 名前を付けて保存
-			this.setFilename(createFileName);
+			this.setFilename(createFileNamePdf);
 			
-			// templateFile配下に保存されたPDFファイルを削除する。
-			Files.delete(Paths.get(createFile));
+			// templateFile配下に作成したxlsxとpdfを削除する
+			Files.delete(Paths.get(createFileXlsx));
+			Files.delete(Paths.get(createFilePdf));
 			
 			
 		} catch (Exception e) {
@@ -106,6 +144,7 @@ public class PdfFileDownload extends DownloadBase {
 			t.printStackTrace();
 		} finally {
 			// 各機能の停止/解放
+			if (officeManager != null) { if (officeManager.isRunning()) { officeManager.stop(); } }
 			if (workbook != null) { workbook.dispose(); }
 		}
 	}
