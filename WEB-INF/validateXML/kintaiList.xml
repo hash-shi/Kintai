@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<validate
->
+<validate>
+
 	<proc func="kinShukkinBo,chiChinginkeisansho">
 		<variable name="srhTxtTaishoNengetsuF" dispName="対象年月度FROM">
 			<check class="IsRequired" message="!#itemName#!が入力されていません。" itemName="{dispName}"></check>
@@ -22,10 +22,10 @@
 			</check>
 		</variable>
 		<variable name="srhTxtEigyoshoCodeF" dispName="営業所コードFROM">
-			<check class="IsNumber" message="!#itemName#!には数字を入力してください。" itemName="{dispName}"></check>
+			<check class="IsNumeric" message="!#itemName#!には数字を入力してください。" itemName="{dispName}"></check>
 		</variable>
 		<variable name="srhTxtEigyoshoCodeT" dispName="営業所コードTO">
-			<check class="IsNumber" message="!#itemName#!には数字を入力してください。" itemName="{dispName}"></check>
+			<check class="IsNumeric" message="!#itemName#!には数字を入力してください。" itemName="{dispName}"></check>
 		</variable>
 		<variable name="dummy" dispName="">
 			<check class="SizeComparison" message="営業所コードFROM-TOの大小が不正です。" itemName="{dispName}">
@@ -35,10 +35,10 @@
 			</check>
 		</variable>
 		<variable name="srhTxtBushoCodeF" dispName="部署コードFROM">
-			<check class="IsNumber" message="!#itemName#!には数字を入力してください。" itemName="{dispName}"></check>
+			<check class="IsNumeric" message="!#itemName#!には数字を入力してください。" itemName="{dispName}"></check>
 		</variable>
 		<variable name="srhTxtBushoCodeT" dispName="部署コードTO">
-			<check class="IsNumber" message="!#itemName#!には数字を入力してください。" itemName="{dispName}"></check>
+			<check class="IsNumeric" message="!#itemName#!には数字を入力してください。" itemName="{dispName}"></check>
 		</variable>
 		<variable name="dummy" dispName="">
 			<check class="SizeComparison" message="部署コードFROM-TOの大小が不正です。" itemName="{dispName}">
@@ -48,10 +48,10 @@
 			</check>
 		</variable>
 		<variable name="srhTxtShainNoF" dispName="社員NOFROM">
-			<check class="IsNumber" message="!#itemName#!には数字を入力してください。" itemName="{dispName}"></check>
+			<check class="IsNumeric" message="!#itemName#!には数字を入力してください。" itemName="{dispName}"></check>
 		</variable>
 		<variable name="srhTxtShainNoT" dispName="社員NOTO">
-			<check class="IsNumber" message="!#itemName#!には数字を入力してください。" itemName="{dispName}"></check>
+			<check class="IsNumeric" message="!#itemName#!には数字を入力してください。" itemName="{dispName}"></check>
 		</variable>
 		<variable name="dummy" dispName="">
 			<check class="SizeComparison" message="社員NOFROM-TOの大小が不正です。" itemName="{dispName}">
@@ -83,10 +83,10 @@
 			</check>
 		</variable>
 		<variable name="srhTxtEigyoshoCodeF" dispName="営業所コードFROM">
-			<check class="IsNumber" message="!#itemName#!には数字を入力してください。" itemName="{dispName}"></check>
+			<check class="IsNumeric" message="!#itemName#!には数字を入力してください。" itemName="{dispName}"></check>
 		</variable>
 		<variable name="srhTxtEigyoshoCodeT" dispName="営業所コードTO">
-			<check class="IsNumber" message="!#itemName#!には数字を入力してください。" itemName="{dispName}"></check>
+			<check class="IsNumeric" message="!#itemName#!には数字を入力してください。" itemName="{dispName}"></check>
 		</variable>
 		<variable name="dummy" dispName="">
 			<check class="SizeComparison" message="営業所コードFROM-TOの大小が不正です。" itemName="{dispName}">
@@ -96,10 +96,10 @@
 			</check>
 		</variable>
 		<variable name="srhTxtBushoCodeF" dispName="部署コードFROM">
-			<check class="IsNumber" message="!#itemName#!には数字を入力してください。" itemName="{dispName}"></check>
+			<check class="IsNumeric" message="!#itemName#!には数字を入力してください。" itemName="{dispName}"></check>
 		</variable>
 		<variable name="srhTxtBushoCodeT" dispName="部署コードTO">
-			<check class="IsNumber" message="!#itemName#!には数字を入力してください。" itemName="{dispName}"></check>
+			<check class="IsNumeric" message="!#itemName#!には数字を入力してください。" itemName="{dispName}"></check>
 		</variable>
 		<variable name="dummy" dispName="">
 			<check class="SizeComparison" message="部署コードFROM-TOの大小が不正です。" itemName="{dispName}">
@@ -109,10 +109,10 @@
 			</check>
 		</variable>
 		<variable name="srhTxtShainNoF" dispName="社員NOFROM">
-			<check class="IsNumber" message="!#itemName#!には数字を入力してください。" itemName="{dispName}"></check>
+			<check class="IsNumeric" message="!#itemName#!には数字を入力してください。" itemName="{dispName}"></check>
 		</variable>
 		<variable name="srhTxtShainNoT" dispName="社員NOTO">
-			<check class="IsNumber" message="!#itemName#!には数字を入力してください。" itemName="{dispName}"></check>
+			<check class="IsNumeric" message="!#itemName#!には数字を入力してください。" itemName="{dispName}"></check>
 		</variable>
 		<variable name="dummy" dispName="">
 			<check class="SizeComparison" message="社員NOFROM-TOの大小が不正です。" itemName="{dispName}">

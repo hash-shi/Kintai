@@ -1,11 +1,11 @@
 <?xml version="1.0" encoding="UTF-8"?>
-
 <validate>
-	<proc func="search">	
+
+	<proc func="search">
 		<variable name="srhTxtKbnCode" dispName="区分コード(検索)">
 			<check class="IsRequired" message="!#itemName#!が入力されていません。" itemName="{dispName}"></check>
 			<check class="IsHalf" message="!#itemName#!には全角文字は入力できません。" itemName="{dispName}"></check>
-			<check class="IsNumber" message="!#itemName#!には数字を入力してください。" itemName="{dispName}"></check>
+			<check class="IsNumeric" message="!#itemName#!には数字を入力してください。" itemName="{dispName}"></check>
 			<check class="MaxLength" message="!#itemName#!が4バイトを超えています。(4バイト = 全角4/2文字, 半角4文字)" itemName="{dispName}">
 				<param name="type">full</param>
 				<param name="length">4</param>
@@ -14,7 +14,7 @@
 		<variable name="srhTxtCode" dispName="コード(検索)">
 			<check class="IsRequired" message="!#itemName#!が入力されていません。" itemName="{dispName}"></check>
 			<check class="IsHalf" message="!#itemName#!には全角文字は入力できません。" itemName="{dispName}"></check>
-			<check class="IsNumber" message="!#itemName#!には数字を入力してください。" itemName="{dispName}"></check>
+			<check class="IsNumeric" message="!#itemName#!には数字を入力してください。" itemName="{dispName}"></check>
 			<check class="MaxLength" message="!#itemName#!が2バイトを超えています。(4バイト = 全角2/2文字, 半角2文字)" itemName="{dispName}">
 				<param name="type">full</param>
 				<param name="length">2</param>
@@ -39,7 +39,7 @@
 		<variable name="txtKbnCode" dispName="区分コード">
 			<check class="IsRequired" message="!#itemName#!が入力されていません。" itemName="{dispName}"></check>
 			<check class="IsHalf" message="!#itemName#!には全角文字は入力できません。" itemName="{dispName}"></check>
-			<check class="IsNumber" message="!#itemName#!には数字を入力してください。" itemName="{dispName}"></check>
+			<check class="IsNumeric" message="!#itemName#!には数字を入力してください。" itemName="{dispName}"></check>
 			<check class="MaxLength" message="!#itemName#!が4バイトを超えています。(4バイト = 全角4/2文字, 半角4文字)" itemName="{dispName}">
 				<param name="type">full</param>
 				<param name="length">4</param>
@@ -48,7 +48,7 @@
 		<variable name="txtCode" dispName="コード">
 			<check class="IsRequired" message="!#itemName#!が入力されていません。" itemName="{dispName}"></check>
 			<check class="IsHalf" message="!#itemName#!には全角文字は入力できません。" itemName="{dispName}"></check>
-			<check class="IsNumber" message="!#itemName#!には数字を入力してください。" itemName="{dispName}"></check>
+			<check class="IsNumeric" message="!#itemName#!には数字を入力してください。" itemName="{dispName}"></check>
 			<check class="MaxLength" message="!#itemName#!が4バイトを超えています。(4バイト = 全角2/2文字, 半角2文字)" itemName="{dispName}">
 				<param name="type">full</param>
 				<param name="length">2</param>
@@ -69,7 +69,7 @@
 		</variable>
 		<variable name="txtGroupCode1" dispName="グループコード1">
 			<check class="IsHalf" message="!#itemName#!には全角文字は入力できません。" itemName="{dispName}"></check>
-			<check class="IsNumber" message="!#itemName#!には数字を入力してください。" itemName="{dispName}"></check>
+			<check class="IsNumeric" message="!#itemName#!には数字を入力してください。" itemName="{dispName}"></check>
 			<check class="MaxLength" message="!#itemName#!が4バイトを超えています。(4バイト = 全角4/2文字, 半角4文字)" itemName="{dispName}">
 				<param name="type">full</param>
 				<param name="length">4</param>
@@ -77,7 +77,7 @@
 		</variable>
 		<variable name="txtGroupCode2" dispName="グループコード2">
 			<check class="IsHalf" message="!#itemName#!には全角文字は入力できません。" itemName="{dispName}"></check>
-			<check class="IsNumber" message="!#itemName#!には数字を入力してください。" itemName="{dispName}"></check>
+			<check class="IsNumeric" message="!#itemName#!には数字を入力してください。" itemName="{dispName}"></check>
 			<check class="MaxLength" message="!#itemName#!が4バイトを超えています。(4バイト = 全角4/2文字, 半角4文字)" itemName="{dispName}">
 				<param name="type">full</param>
 				<param name="length">4</param>
@@ -105,7 +105,7 @@
 				<param name="keyValue">txtKbnCode,txtCode</param>
 				<param name="saishuKoshinDate"></param>
 				<param name="saishuKoshinJikan"></param>
-			</check>			
+			</check>
 		</variable>
 	</proc>
 	
