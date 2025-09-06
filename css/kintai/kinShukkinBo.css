@@ -25,17 +25,6 @@
 	color: #ff0000;
 }
 
-/*
-*
-* 画面内の表で横スクロールできるよう設定
-*
-*/
-.shukkinboArea{
-/*
-	overflow: auto;
-*/
-}
-
 .w10 { min-width: 10px !important; max-width: 10px !important; }
 .w15 { min-width: 15px !important; max-width: 15px !important; }
 .w20 { min-width: 20px !important; max-width: 20px !important; }

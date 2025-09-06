@@ -31,7 +31,7 @@
 							<input type="text" class=""  style="width: 120px" name="txtShainName" id="txtShainName" value="" disabled readonly>
 						</td>
 						<td class="value w50">
-							<button type="button" onclick="onSearchKinShukkinBo();">検索</button>
+							<button type="button" onclick="onSearchChiChinginkeisansho();">検索</button>
 						</td>
 					</tr>
 				</table>
@@ -46,8 +46,8 @@
 			</div>
 			<div style="display: flex;">
 				<div>
-					<div class="box shukkinboArea" style="margin-right:10px;">
-						<table class="kinShukkinBoSearchRecord">
+					<div class="box chinginkeisanshoArea" style="margin-right:10px;">
+						<table class="chiChinginkeisanshoSearchRecord">
 							<thead>
 								<tr>
 									<th class="title center" colspan="3">	<a >月日</a></th>
@@ -79,13 +79,13 @@
 										<a >所定(契約)勤務時間</a>
 									</th>
 									<td class="value center w100">
-										<a >99:99</a>
+										<a id="kinmuKaishi" name="kinmuKaishi"></a>
 									</td>
 									<td class="title center w50">
 										<a >-</a>
 									</td>
 									<td class="value center w100">
-										<a >99:99</a>
+										<a id="kinmuShuryo" name="kinmuShuryo"></a>
 									</td>
 								</tr>
 								<tr>
@@ -93,12 +93,14 @@
 										<a >実働</a>
 									</th>
 									<td class="value center w150" colspan="2">
-										<a >99:99</a>
+										<a id="jitsudojikan" name="jitsudojikan"></a>
 									</td>
 									<th class="title center w100">
 										<a >時間</a>
 									</th>
 								</tr>
+								<input type="hidden" name="hidEigyoshoCode" id="hidEigyoshoCode" value="">
+								<input type="hidden" name="hidBushoCode" id="hidBushoCode" value="">
 							</tbody>
 						</table>
 					</div>
@@ -132,16 +134,16 @@
 										<a >勤務時間</a>
 									</th>
 									<td class="value right w70">
-										<a >99</a>
+										<a id="shinseinissu01" name="shinseinissu01"></a>
 									</td>
 									<td class="value right w70">
-										<a >99,999</a>
+										<a id="shinseijikan01" name="shinseijikan01"></a>
 									</td>
 									<td class="value right w70">
-										<a >99,999</a>
+										<a id="shinseitanka01" name="shinseitanka01"></a>
 									</td>
 									<td class="value right w70">
-										<a >999,999</a>
+										<a id="shinseikingakugoukei01" name="shinseikingakugoukei01"></a>
 									</td>
 								</tr>
 								<tr>
@@ -149,16 +151,16 @@
 										<a >休日勤務</a>
 									</th>
 									<td class="value right w70">
-										<a >99</a>
+										<a id="shinseinissu04" name="shinseinissu04"></a>
 									</td>
 									<td class="value right w70">
-										<a >99,999</a>
+										<a id="shinseijikan04" name="shinseijikan04"></a>
 									</td>
 									<td class="value right w70">
-										<a >99,999</a>
+										<a id="shinseitanka04" name="shinseitanka04"></a>
 									</td>
 									<td class="value right w70">
-										<a >999,999</a>
+										<a id="shinseikingakugoukei04" name="shinseikingakugoukei04"></a>
 									</td>
 								</tr>
 								<tr>
@@ -166,16 +168,16 @@
 										<a >時間外勤務</a>
 									</th>
 									<td class="value right w70">
-										<a >99</a>
+										<a id="shinseinissu02" name="shinseinissu02"></a>
 									</td>
 									<td class="value right w70">
-										<a >99,999</a>
+										<a id="shinseijikan02" name="shinseijikan02"></a>
 									</td>
 									<td class="value right w70">
-										<a >99,999</a>
+										<a id="shinseitanka02" name="shinseitanka02"></a>
 									</td>
 									<td class="value right w70">
-										<a >999,999</a>
+										<a id="shinseikingakugoukei02" name="shinseikingakugoukei02"></a>
 									</td>
 								</tr>
 								<tr>
@@ -183,16 +185,16 @@
 										<a >深夜勤務</a>
 									</th>
 									<td class="value right w70">
-										<a >99</a>
+										<a id="shinseinissu03" name="shinseinissu03"></a>
 									</td>
 									<td class="value right w70">
-										<a >99,999</a>
+										<a id="shinseijikan03" name="shinseijikan03"></a>
 									</td>
 									<td class="value right w70">
-										<a >99,999</a>
+										<a id="shinseitanka03" name="shinseitanka03"></a>
 									</td>
 									<td class="value right w70">
-										<a >999,999</a>
+										<a id="shinseikingakugoukei03" name="shinseikingakugoukei03"></a>
 									</td>
 								</tr>
 								<tr>
@@ -200,16 +202,16 @@
 										<a >有給休暇</a>
 									</th>
 									<td class="value right w70">
-										<a >99</a>
+										<a id="shinseinissu05" name="shinseinissu05"></a>
 									</td>
 									<td class="value right w70">
-										<a >99,999</a>
+										<a id="shinseijikan05" name="shinseijikan05"></a>
 									</td>
 									<td class="value right w70">
-										<a >99,999</a>
+										<a id="shinseitanka05" name="shinseitanka05"></a>
 									</td>
 									<td class="value right w70">
-										<a >999,999</a>
+										<a id="shinseikingakugoukei05" name="shinseikingakugoukei05"></a>
 									</td>
 								</tr>
 								<tr>
@@ -217,16 +219,16 @@
 										<a >特別有給休暇</a>
 									</th>
 									<td class="value right w70">
-										<a >99</a>
+										<a id="shinseinissu11" name="shinseinissu11"></a>
 									</td>
 									<td class="value right w70">
-										<a >99,999</a>
+										<a id="shinseijikan11" name="shinseijikan11"></a>
 									</td>
 									<td class="value right w70">
-										<a >99,999</a>
+										<a id="shinseitanka11" name="shinseitanka11"></a>
 									</td>
 									<td class="value right w70">
-										<a >999,999</a>
+										<a id="shinseikingakugoukei11" name="shinseikingakugoukei11"></a>
 									</td>
 								</tr>
 								<tr>
@@ -234,16 +236,16 @@
 										<a >通勤費</a>
 									</th>
 									<td class="value right w70">
-										<a >99</a>
+										<a id="shinseinissu09" name="shinseinissu09"></a>
 									</td>
 									<td class="value right w70">
 		
 									</td>
 									<td class="value right w70">
-										<a >99,999</a>
+										<a id="shinseitanka09" name="shinseitanka09"></a>
 									</td>
 									<td class="value right w70">
-										<a >999,999</a>
+										<a id="shinseikingakugoukei09" name="shinseikingakugoukei09"></a>
 									</td>
 								</tr>
 								<tr>
@@ -251,16 +253,16 @@
 										<a >控除</a>
 									</th>
 									<td class="value right w70">
-										<a >99</a>
+										<a id="shinseinissu07" name="shinseinissu07"></a>
 									</td>
 									<td class="value right w70">
-										<a >99,999</a>
+										<a id="shinseijikan07" name="shinseijikan07"></a>
 									</td>
 									<td class="value right w70">
-										<a >99,999</a>
+										<a id="shinseitanka07" name="shinseitanka07"></a>
 									</td>
 									<td class="value right w70">
-										<a >999,999</a>
+										<a id="shinseikingakugoukei07" name="shinseikingakugoukei07"></a>
 									</td>
 								</tr>
 								<tr>
@@ -268,7 +270,7 @@
 										<a >休日</a>
 									</th>
 									<td class="value right w70">
-										<a >99</a>
+										<a id="shinseinissukyujitsu" name="shinseinissukyujitsu"></a>
 									</td>
 									<td class="value right w70">
 		
@@ -285,16 +287,16 @@
 										<a >計</a>
 									</th>
 									<td class="value right w70">
-										<a >99</a>
+										<a id="shinseinisuugoukei" name="shinseinisuugoukei"></a>
 									</td>
 									<td class="value right w70">
-										<a >99,999</a>
+										<a id="shinseijikangoukei" name="shinseijikangoukei"></a>
 									</td>
 									<td class="value right w70">
-										<a >99,999</a>
+										<a ></a>
 									</td>
 									<td class="value right w70">
-										<a >999,999</a>
+										<a id="shinseikingakugoukeigoukei" name="shinseikingakugoukeigoukei"></a>
 									</td>
 								</tr>
 							</tbody>
@@ -308,7 +310,7 @@
 										<a >特記事項</a>
 									</th>
 									<td class="title center w350">
-										<textarea class="w340 h100"></textarea>
+										<textarea class="w340 h100" id="tokkijiko" name="tokkijiko"></textarea>
 									</td>
 								</tr>
 							</tbody>

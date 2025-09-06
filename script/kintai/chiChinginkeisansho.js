@@ -1,9 +1,9 @@
-let kinShukkinBoResultAll = [];
+let chiChinginkeisanshoResultAll = [];
 let shinseiKingaku01 = 0;
 let shinseiKingaku02 = 0;
 
 let yoteiList = [];
-let kintaiKubunList = [];
+let chinginKubunList = [];
 let sinseiKubunList = [];
 
 /*
@@ -56,9 +56,7 @@ window.onload = function(){
 		console.log("getDDLのresult");
 		console.log(result);
 		for(let record of result){
-			if(record["DDLName"] == "shinsei"){
-				sinseiKubunList.push(record);
-			}
+			sinseiKubunList.push(record);
 		}
 	});
 
@@ -122,7 +120,7 @@ function getTaishoYMFormat(){
 
 /*
 *
-* 対象年月フォーカスアウト時のフォーマット編集処理
+* 社員名フォーカスアウト時のフォーマット編集処理
 *
 */
 function getShainNOFormat(){
@@ -143,18 +141,12 @@ function right(str, n) {
 
 /*
 *
-* 出勤簿検索
+* 賃金計算書検索
 *
 */
-function onSearchKinShukkinBo(){
-	//更新処理に備え、検索条件を保持
-	$("#txtSearchedTaishoYM").val($("#txtTaishoYM").val());
-	$("#txtSearchedShainNO").val($("#txtShainNO").val());
-
-	//検索結果が0の時のため、画面非表示
-	$("#nyuryokuArea").css("visibility", "hidden");
-	$("#buttonArea").css("visibility", "hidden");
+function onSearchChiChinginkeisansho(){
 	document.getElementById("btnDelete").disabled = true;
+	document.getElementById("btnRecalc").disabled = true;
 	document.getElementById("btnUpdate").disabled = true;
 
 	let honshaKakuteizumiFlg = false;
@@ -168,76 +160,175 @@ function onSearchKinShukkinBo(){
 		let contents		= data["contents"];
 		if (contents["result"] == undefined){ return; }
 		
+		//更新処理に備え、検索条件を保持
+		$("#txtSearchedTaishoYM").val($("#txtTaishoYM").val());
+		$("#txtSearchedShainNO").val($("#txtShainNO").val());
+
 		//検索結果があれば入力項目表示
 		$("#nyuryokuArea").css("visibility", "");
-		$("#buttonArea").css("visibility", "");
-		document.getElementById("btnDelete").disabled = false;
-		document.getElementById("btnUpdate").disabled = false;
 
 		let result			= contents["result"];
-		kinShukkinBoResultAll = result;
+		chiChinginkeisanshoResultAll = result;
 
 		onDisplayNyuryokuArea(true);
 
-		if(kinShukkinBoResultAll[0]["KakuteiKbn"] == "03"){
-			honshaKakuteizumiFlg = true;
-		}
-	});
+		//勤務開始・終了時間、実働時間表示
+		proc("searchTokubetsuNyuryokuArea", {}, function(data){
 
-	//本社確定済みチェック　検索結果表示するが更新は不可
-	proc("honshaKakuteizumiCheck", {}, function(data){
+			if (data == undefined){ return; }
+			if (data["contents"] == undefined){ return; }
+			
+			let contents		= data["contents"];
+			if (contents["result"] == undefined){ return; }
+			let result			= contents["result"];
+			
+			$("#kinmuKaishi").text(result.kinmuKaishi);
+			$("#kinmuShuryo").text(result.kinmuShuryo);
+			$("#jitsudojikan").text(result.jitsudojikan);
+			$("#hidEigyoshoCode").val(result.eigyoshoCode);
+			$("#hidBushoCode").val(result.bushoCode);
 
-		if (data == undefined){ return; }
-		if (data["contents"] == undefined){ return; }
-		
-		let contents		= data["contents"];
-		if (contents["result"] == undefined){ return; }
-		
-		let result			= contents["result"];
-		if(result == "1"){
-			honshaKakuteizumiFlg = true;
-		}
-	});
+		});
+		//集計エリア表示
+		proc("searchShukeiArea", {}, function(data){
 
+			if (data == undefined){ return; }
+			if (data["contents"] == undefined){ return; }
+			
+			let contents		= data["contents"];
+			if (contents["result"] == undefined){ return; }
+			let result			= contents["result"];
+			console.log("searchTokubetsuNyuryokuAreaのresult");
+			console.log(result);
+			
+			
+			$("#shinseinissu01").text(Number(result.ShinseiNissu01).toLocaleString("ja-JP", {maximumFractionDigits: 1,}));
+			$("#shinseinissu02").text(Number(result.ShinseiNissu02).toLocaleString("ja-JP", {maximumFractionDigits: 1,}));
+			$("#shinseinissu03").text(Number(result.ShinseiNissu03).toLocaleString("ja-JP", {maximumFractionDigits: 1,}));
+			$("#shinseinissu04").text(Number(result.ShinseiNissu04).toLocaleString("ja-JP", {maximumFractionDigits: 1,}));
+			$("#shinseinissu05").text(Number(result.ShinseiNissu05).toLocaleString("ja-JP", {maximumFractionDigits: 1,}));
+			$("#shinseinissu06").text(Number(result.ShinseiNissu06).toLocaleString("ja-JP", {maximumFractionDigits: 1,}));
+			$("#shinseinissu07").text(Number(result.ShinseiNissu07).toLocaleString("ja-JP", {maximumFractionDigits: 1,}));
+			$("#shinseinissu08").text(Number(result.ShinseiNissu08).toLocaleString("ja-JP", {maximumFractionDigits: 1,}));
+			$("#shinseinissu09").text(Number(result.ShinseiNissu09).toLocaleString("ja-JP", {maximumFractionDigits: 1,}));
+			$("#shinseinissu10").text(Number(result.ShinseiNissu10).toLocaleString("ja-JP", {maximumFractionDigits: 1,}));
+			$("#shinseinissu11").text(Number(result.ShinseiNissu11).toLocaleString("ja-JP", {maximumFractionDigits: 1,}));
 
-	if(honshaKakuteizumiFlg){
-		alert("本社確定済みのため処理できません。");
-		if (!$("#nyuryokuArea").hasClass("nom")) {
-			$("#nyuryokuArea").addClass("nom");
-		}
-		if ($("#nyuryokuArea").hasClass("ins")) {
-			$("#nyuryokuArea").removeClass("ins");
-		}
-		if ($("#nyuryokuArea").hasClass("upd")) {
-			$("#nyuryokuArea").removeClass("upd");
-		}
-		$("#buttonArea").css("visibility", "hidden");
-	}
-	else{
-		//取得した更新日付・時間が空の時、新規登録として背景色を変更する
-		if($("#hdnKihonSaishuKoshinDate").val() == "" && $("#hdnKihonSaishuKoshinJikan").val() == ""){
-			if (!$("#nyuryokuArea").hasClass("ins")) {
-				$("#nyuryokuArea").addClass("ins");
+			$("#shinseinissukyujitsu").text(result.ShinseiNissuKyujitsu);
+
+			$("#shinseijikan01").text(Number(result.ShinseiJikan01).toLocaleString("ja-JP", {minimumFractionDigits: 2,}));
+			$("#shinseijikan02").text(Number(result.ShinseiJikan02).toLocaleString("ja-JP", {minimumFractionDigits: 2,}));
+			$("#shinseijikan03").text(Number(result.ShinseiJikan03).toLocaleString("ja-JP", {minimumFractionDigits: 2,}));
+			$("#shinseijikan04").text(Number(result.ShinseiJikan04).toLocaleString("ja-JP", {minimumFractionDigits: 2,}));
+			$("#shinseijikan05").text(Number(result.ShinseiJikan05).toLocaleString("ja-JP", {minimumFractionDigits: 2,}));
+			$("#shinseijikan06").text(Number(result.ShinseiJikan06).toLocaleString("ja-JP", {minimumFractionDigits: 2,}));
+			$("#shinseijikan07").text(Number(result.ShinseiJikan07).toLocaleString("ja-JP", {minimumFractionDigits: 2,}));
+			$("#shinseijikan08").text(Number(result.ShinseiJikan08).toLocaleString("ja-JP", {minimumFractionDigits: 2,}));
+			$("#shinseijikan09").text(Number(result.ShinseiJikan09).toLocaleString("ja-JP", {minimumFractionDigits: 2,}));
+			$("#shinseijikan10").text(Number(result.ShinseiJikan10).toLocaleString("ja-JP", {minimumFractionDigits: 2,}));
+			$("#shinseijikan11").text(Number(result.ShinseiJikan11).toLocaleString("ja-JP", {minimumFractionDigits: 2,}));
+			
+			$("#shinseitanka01").text(Number(result.ShinseiTanka01).toLocaleString("ja-JP"));
+			$("#shinseitanka02").text(Number(result.ShinseiTanka02).toLocaleString("ja-JP"));
+			$("#shinseitanka03").text(Number(result.ShinseiTanka03).toLocaleString("ja-JP"));
+			$("#shinseitanka04").text(Number(result.ShinseiTanka04).toLocaleString("ja-JP"));
+			$("#shinseitanka05").text(Number(result.ShinseiTanka05).toLocaleString("ja-JP"));
+			$("#shinseitanka06").text(Number(result.ShinseiTanka06).toLocaleString("ja-JP"));
+			$("#shinseitanka07").text(Number(result.ShinseiTanka07).toLocaleString("ja-JP"));
+			$("#shinseitanka08").text(Number(result.ShinseiTanka08).toLocaleString("ja-JP"));
+			$("#shinseitanka09").text(Number(result.ShinseiTanka09).toLocaleString("ja-JP"));
+			$("#shinseitanka10").text(Number(result.ShinseiTanka10).toLocaleString("ja-JP"));
+			$("#shinseitanka11").text(Number(result.ShinseiTanka11).toLocaleString("ja-JP"));
+			
+			$("#shinseikingakugoukei01").text(Number(result.ShinseiKingakuGoukei01).toLocaleString("ja-JP"));
+			$("#shinseikingakugoukei02").text(Number(result.ShinseiKingakuGoukei02).toLocaleString("ja-JP"));
+			$("#shinseikingakugoukei03").text(Number(result.ShinseiKingakuGoukei03).toLocaleString("ja-JP"));
+			$("#shinseikingakugoukei04").text(Number(result.ShinseiKingakuGoukei04).toLocaleString("ja-JP"));
+			$("#shinseikingakugoukei05").text(Number(result.ShinseiKingakuGoukei05).toLocaleString("ja-JP"));
+			$("#shinseikingakugoukei06").text(Number(result.ShinseiKingakuGoukei06).toLocaleString("ja-JP"));
+			$("#shinseikingakugoukei07").text(Number(result.ShinseiKingakuGoukei07).toLocaleString("ja-JP"));
+			$("#shinseikingakugoukei08").text(Number(result.ShinseiKingakuGoukei08).toLocaleString("ja-JP"));
+			$("#shinseikingakugoukei09").text(Number(result.ShinseiKingakuGoukei09).toLocaleString("ja-JP"));
+			$("#shinseikingakugoukei10").text(Number(result.ShinseiKingakuGoukei10).toLocaleString("ja-JP"));
+			$("#shinseikingakugoukei11").text(Number(result.ShinseiKingakuGoukei11).toLocaleString("ja-JP"));
+			
+			$("#tokkijiko").val(result.TokkiJiko);
+			
+			$("#shinseinisuugoukei").text(Number(result.ShinseiNisuuGoukei).toLocaleString("ja-JP", {maximumFractionDigits: 1,}));
+			$("#shinseijikangoukei").text(Number(result.ShinseiJikanGoukei).toLocaleString("ja-JP", {minimumFractionDigits: 2,}));
+			$("#shinseikingakugoukeigoukei").text(Number(result.ShinseiKingakuGoukeiGoukei).toLocaleString("ja-JP"));
+
+			if(result.KakuteiKbn == "03"){
+				honshaKakuteizumiFlg = true;
 			}
-			if ($("#nyuryokuArea").hasClass("upd")) {
-				$("#nyuryokuArea").removeClass("upd");
+
+		});
+
+		//本社確定済みチェック　検索結果表示するが更新は不可
+		proc("honshaKakuteizumiCheck", {}, function(data){
+
+			if (data == undefined){ return; }
+			if (data["contents"] == undefined){ return; }
+			
+			let contents		= data["contents"];
+			if (contents["result"] == undefined){ return; }
+			
+			let result			= contents["result"];
+			if(result == "1"){
+				honshaKakuteizumiFlg = true;
 			}
-			if ($("#nyuryokuArea").hasClass("nom")) {
-				$("#nyuryokuArea").removeClass("nom");
-			}
-		}
-		else{
-			if (!$("#nyuryokuArea").hasClass("upd")) {
-				$("#nyuryokuArea").addClass("upd");
+		});
+
+
+		if(honshaKakuteizumiFlg){
+			alert("本社確定済みのため処理できません。");
+			if (!$("#nyuryokuArea").hasClass("nom")) {
+				$("#nyuryokuArea").addClass("nom");
 			}
 			if ($("#nyuryokuArea").hasClass("ins")) {
 				$("#nyuryokuArea").removeClass("ins");
 			}
-			if ($("#nyuryokuArea").hasClass("nom")) {
-				$("#nyuryokuArea").removeClass("nom");
+			if ($("#nyuryokuArea").hasClass("upd")) {
+				$("#nyuryokuArea").removeClass("upd");
 			}
+			$("#buttonArea").css("visibility", "hidden");
+			document.getElementById("btnDelete").disabled = true;
+			document.getElementById("btnRecalc").disabled = true;
+			document.getElementById("btnUpdate").disabled = true;
 		}
-	}
+		else{
+			//取得した更新日付・時間が空の時、新規登録として背景色を変更する
+			if($("#hdnKihonSaishuKoshinDate").val() == "" && $("#hdnKihonSaishuKoshinJikan").val() == ""){
+				if (!$("#nyuryokuArea").hasClass("ins")) {
+					$("#nyuryokuArea").addClass("ins");
+				}
+				if ($("#nyuryokuArea").hasClass("upd")) {
+					$("#nyuryokuArea").removeClass("upd");
+				}
+				if ($("#nyuryokuArea").hasClass("nom")) {
+					$("#nyuryokuArea").removeClass("nom");
+				}
+			}
+			else{
+				if (!$("#nyuryokuArea").hasClass("upd")) {
+					$("#nyuryokuArea").addClass("upd");
+				}
+				if ($("#nyuryokuArea").hasClass("ins")) {
+					$("#nyuryokuArea").removeClass("ins");
+				}
+				if ($("#nyuryokuArea").hasClass("nom")) {
+					$("#nyuryokuArea").removeClass("nom");
+				}
+			}
+			$("#buttonArea").css("visibility", "");
+			document.getElementById("btnDelete").disabled = false;
+			document.getElementById("btnRecalc").disabled = false;
+			document.getElementById("btnUpdate").disabled = false;
+		}
+	});
+	
+	
+	
 }
 
 /*
@@ -251,14 +342,12 @@ function onDisplayNyuryokuArea(firstHalfFlg){
 	$("#txtShinseiKingaku01").val(0);
 	$("#txtShinseiKingaku02").val(0);
 	
-	for(let i = 0; i < kinShukkinBoResultAll.length; i++){
-		let record = kinShukkinBoResultAll[i];
+	for(let i = 0; i < chiChinginkeisanshoResultAll.length; i++){
+		let record = chiChinginkeisanshoResultAll[i];
 		let taishoNengappi = record["TaishoNengappi"];
 		let taishoGetsu = ("00" + record["TaishoGetsu"]).slice(-2);
 		let taishoBi = ("00" + record["TaishoBi"]).slice(-2);
 		let yobiKbn = record["YobiKbn"];
-		let shukkinYoteiKbn = record["ShukkinYoteiKbn"];
-		let kintaiKbn = record["KintaiKbn"];
 
 		let shusshaJi =		record["ShusshaJi"];
 		let shusshaFun =	record["ShusshaFun"];
@@ -266,25 +355,12 @@ function onDisplayNyuryokuArea(firstHalfFlg){
 		let taishaFun =		record["TaishaFun"];
 		let jitsudoJikan =	record["JitsudoJikan"];
 
-		let kintaiShinseiBiko = record["KintaiShinseiBiko"];
-		let kintaiShinseiKbn1 = record["KintaiShinseiKbn1"];
-		let kintaiShinseiKaishiJi1 = record["KintaiShinseiKaishiJi1"];
-		let kintaiShinseiKaishiFun1 = record["KintaiShinseiKaishiFun1"];
-		let kintaiShinseiShuryoJi1 = record["KintaiShinseiShuryoJi1"];
-		let kintaiShinseiShuryoFun1 = record["KintaiShinseiShuryoFun1"];
-		let kintaiShinseiJikan1 = record["KintaiShinseiJikan1"];
-		let kintaiShinseiKbn2 = record["KintaiShinseiKbn2"];
-		let kintaiShinseiKaishiJi2 = record["KintaiShinseiKaishiJi2"];
-		let kintaiShinseiKaishiFun2 = record["KintaiShinseiKaishiFun2"];
-		let kintaiShinseiShuryoJi2 = record["KintaiShinseiShuryoJi2"];
-		let kintaiShinseiShuryoFun2 = record["KintaiShinseiShuryoFun2"];
-		let kintaiShinseiJikan2 = record["KintaiShinseiJikan2"];
-		let kintaiShinseiKbn3 = record["KintaiShinseiKbn3"];
-		let kintaiShinseiKaishiJi3 = record["KintaiShinseiKaishiJi3"];
-		let kintaiShinseiKaishiFun3 = record["KintaiShinseiKaishiFun3"];
-		let kintaiShinseiShuryoJi3 = record["KintaiShinseiShuryoJi3"];
-		let kintaiShinseiShuryoFun3 = record["KintaiShinseiShuryoFun3"];
-		let kintaiShinseiJikan3 = record["KintaiShinseiJikan3"];
+		let chinginShinseiKbn1 = record["ChinginShinseiKbn1"];
+		let chinginShinseiJikan1 = record["ChinginShinseiJikan1"];
+		let chinginShinseiKbn2 = record["ChinginShinseiKbn2"];
+		let chinginShinseiJikan2 = record["ChinginShinseiJikan2"];
+		let chinginShinseiKbn3 = record["ChinginShinseiKbn3"];
+		let chinginShinseiJikan3 = record["ChinginShinseiJikan3"];
 		
 		let meisaiSaishuKoshinDate = record["MeisaiSaishuKoshinDate"];
 		let meisaiSaishuKoshinJikan = record["MeisaiSaishuKoshinJikan"];
@@ -299,71 +375,15 @@ function onDisplayNyuryokuArea(firstHalfFlg){
 		}
 		
 		
-		//予定のセレクトボックス
-		let yoteiSelectBox = "";
-		yoteiSelectBox += 	"<select name=\"ShukkinYoteiKbn" + i + "\" id=\"ShukkinYoteiKbn" + i + "\" value=\"" + shukkinYoteiKbn + "\" " ;
-		if(shukkinYoteiKbn == "02" || shukkinYoteiKbn == "03"){
-			yoteiSelectBox += 		"style = \"COLOR: red\" ";
-		}
-		else{
-			yoteiSelectBox += 		"style = \"COLOR: black\" ";
-		}
-		yoteiSelectBox += 		"onchange=\"yoteiChangeColor(this);setShukkinBo('ShukkinYoteiKbn', " + i + ");\" >" ;
 
-		for(let yoteiRecord of yoteiList){
-			yoteiSelectBox += 		"<option value=\"" + yoteiRecord["Code"] + "\" ";
-			if(yoteiRecord["Code"] == "02" || yoteiRecord["Code"] == "03"){
-				yoteiSelectBox += 		"style = \"COLOR: red\" ";
-			}
-			else{
-				yoteiSelectBox += 		"style = \"COLOR: black\" ";
-			}
-
-			if(shukkinYoteiKbn == yoteiRecord["Code"]){
-				yoteiSelectBox += 		"selected";
-			}
-			yoteiSelectBox += 		"><a>" + yoteiRecord["KbnName"] + "</a></option>" ;
-		}
-		
-		//勤怠区分のセレクトボックス
-		let kintaiSelectBox = "";
-		kintaiSelectBox += 	"<select name=\"KintaiKbn" + i + "\" id=\"KintaiKbn" + i + "\" value=\"" + kintaiKbn + "\" " ;
-		if(kintaiKbn == "04" || kintaiKbn == "05" || kintaiKbn == "08" || kintaiKbn == "10"){
-			kintaiSelectBox += 		"style = \"COLOR: red\" ";
-		}
-		else if(kintaiKbn == "03"){
-			kintaiSelectBox += 		"style = \"COLOR: green\" ";
-		}
-		else{
-			kintaiSelectBox += 		"style = \"COLOR: black\" ";
-		}
-		kintaiSelectBox += 		"onchange=\"kintaiChangeColor(this);setShukkinBo('KintaiKbn', " + i + ");\" >" ;
-
-		for(let kintaiKubunRecord of kintaiKubunList){
-			kintaiSelectBox += 		"<option value=\"" + kintaiKubunRecord["Code"] + "\" ";
-			if(kintaiKubunRecord["Code"] == "04" || kintaiKubunRecord["Code"] == "05" || kintaiKubunRecord["Code"] == "08" || kintaiKubunRecord["Code"] == "10"){
-				kintaiSelectBox += 		"style = \"COLOR: red\" ";
-			}
-			else if(kintaiKubunRecord["Code"] == "03"){
-				kintaiSelectBox += 		"style = \"COLOR: green\" ";
-			}
-			else{
-				kintaiSelectBox += 		"style = \"COLOR: black\" ";
-			}
-
-			if(kintaiKbn == kintaiKubunRecord["Code"]){
-				kintaiSelectBox += 		"selected";
-			}
-			kintaiSelectBox += 		"><a>" + kintaiKubunRecord["KbnName"] + "</a></option>" ;
-		}
 		
 		//申請区分1のセレクトボックス
 		let sinsei1SelectBox = "";
-		sinsei1SelectBox += 	"<select name=\"KintaiShinseiKbn1" + i + "\" id=\"KintaiShinseiKbn1" + i + "\" value=\"" + kintaiShinseiKbn1 + "\"  onchange=\"setShukkinBo('KintaiShinseiKbn1', " + i + ");\" >" ;
+		sinsei1SelectBox += 	"<select name=\"ChinginShinseiKbn1" + i + "\" id=\"ChinginShinseiKbn1" + i + "\" value=\"" + chinginShinseiKbn1 + "\"  onchange=\"setShukkinBo('ChinginShinseiKbn1', " + i + ");\" >" ;
 
 		for(let sinseiKubunRecord of sinseiKubunList){
 			sinsei1SelectBox += 		"<option value=\"" + sinseiKubunRecord["Code"] + "\" ";
-			if(kintaiShinseiKbn1 == sinseiKubunRecord["Code"]){
+			if(chinginShinseiKbn1 == sinseiKubunRecord["Code"]){
 				sinsei1SelectBox += 		"selected";
 			}
 			sinsei1SelectBox += 		">" + sinseiKubunRecord["KbnName"] + "</option>" ;
@@ -371,11 +391,11 @@ function onDisplayNyuryokuArea(firstHalfFlg){
 		
 		//申請区分2のセレクトボックス
 		let sinsei2SelectBox = "";
-		sinsei2SelectBox += 	"<select name=\"KintaiShinseiKbn2" + i + "\" id=\"KintaiShinseiKbn2" + i + "\" value=\"" + kintaiShinseiKbn2 + "\"  onchange=\"setShukkinBo('KintaiShinseiKbn2', " + i + ");\" >" ;
+		sinsei2SelectBox += 	"<select name=\"ChinginShinseiKbn2" + i + "\" id=\"ChinginShinseiKbn2" + i + "\" value=\"" + chinginShinseiKbn2 + "\"  onchange=\"setShukkinBo('ChinginShinseiKbn2', " + i + ");\" >" ;
 
 		for(let sinseiKubunRecord of sinseiKubunList){
 			sinsei2SelectBox += 		"<option value=\"" + sinseiKubunRecord["Code"] + "\" ";
-			if(kintaiShinseiKbn2 == sinseiKubunRecord["Code"]){
+			if(chinginShinseiKbn2 == sinseiKubunRecord["Code"]){
 				sinsei2SelectBox += 		"selected";
 			}
 			sinsei2SelectBox += 		">" + sinseiKubunRecord["KbnName"] + "</option>" ;
@@ -383,83 +403,100 @@ function onDisplayNyuryokuArea(firstHalfFlg){
 		
 		//申請区分3のセレクトボックス
 		let sinsei3SelectBox = "";
-		sinsei3SelectBox += 	"<select name=\"KintaiShinseiKbn3" + i + "\" id=\"KintaiShinseiKbn3" + i + "\" value=\"" + kintaiShinseiKbn3 + "\"  onchange=\"setShukkinBo('KintaiShinseiKbn3', " + i + ");\" >" ;
+		sinsei3SelectBox += 	"<select name=\"ChinginShinseiKbn3" + i + "\" id=\"ChinginShinseiKbn3" + i + "\" value=\"" + chinginShinseiKbn3 + "\"  onchange=\"setShukkinBo('ChinginShinseiKbn3', " + i + ");\" >" ;
 
 		for(let sinseiKubunRecord of sinseiKubunList){
 			sinsei3SelectBox += 		"<option value=\"" + sinseiKubunRecord["Code"] + "\" ";
-			if(kintaiShinseiKbn3 == sinseiKubunRecord["Code"]){
+			if(chinginShinseiKbn3 == sinseiKubunRecord["Code"]){
 				sinsei3SelectBox += 		"selected";
 			}
 			sinsei3SelectBox += 		">" + sinseiKubunRecord["KbnName"] + "</option>" ;
 		}
 
 
-		let trDisplay = "";
+		let kihonNyuryokuAreaHtml = "";
 		if(
-			(firstHalfFlg == true && record["TaishoGetsu"] == kinShukkinBoResultAll[0]["TaishoGetsu"]) ||
-			(firstHalfFlg != true && record["TaishoGetsu"] != kinShukkinBoResultAll[0]["TaishoGetsu"])
+			(firstHalfFlg == true && record["TaishoGetsu"] == chiChinginkeisanshoResultAll[0]["TaishoGetsu"]) ||
+			(firstHalfFlg != true && record["TaishoGetsu"] != chiChinginkeisanshoResultAll[0]["TaishoGetsu"])
 		){
-			trDisplay = "";
+			kihonNyuryokuAreaHtml =
+				"<tr>" +
+					"<input type=\"hidden\" name=\"TaishoNengappi" + i + "\" id=\"TaishoNengappi" + i + "\" value=\"" + taishoNengappi + "\">" +
+					"<input type=\"hidden\" name=\"MeisaiSaishuKoshinDate" + i + "\" id=\"MeisaiSaishuKoshinDate" + i + "\" value=\"" + meisaiSaishuKoshinDate + "\">" +
+					"<input type=\"hidden\" name=\"MeisaiSaishuKoshinJikan" + i + "\" id=\"MeisaiSaishuKoshinJikan" + i + "\" value=\"" + meisaiSaishuKoshinJikan + "\">" +
+					
+					"<td class=\"value center\"><a >" + taishoGetsu + "</a></td>" +
+					"<input type=\"hidden\" name=\"TaishoGetsu" + i + "\" id=\"TaishoGetsu" + i + "\" value=\"" + taishoGetsu + "\">" +
+					"<td class=\"value center\"><a >" + taishoBi + "</a></td>" +
+					"<input type=\"hidden\" name=\"TaishoBi" + i + "\" id=\"TaishoBi" + i + "\" value=\"" + taishoBi + "\">" +
+					"<td class=\"value center\"><a class=\"" + yobiColorClass + "\">" + yobiKbn + "</a></td>" +
+	
+					"<td class=\"value center\">" + 
+						"<input type=\"text\" class=\"\"  style=\"width: 40px; text-align: right;\" maxlength=\"2\" name=\"ShusshaJi" + i + "\" id=\"ShusshaJi" + i + "\"  value=\"" + shusshaJi + "\"  onchange=\"setShukkinBo('ShusshaJi', " + i + ");calcJitsudoJikan(" + i + ");\" >" + 
+					"</td>" +
+					"<td class=\"value center\">" + 
+						"<input type=\"text\" class=\"\"  style=\"width: 40px; text-align: right;\" maxlength=\"2\" name=\"ShusshaFun" + i + "\" id=\"ShusshaFun" + i + "\"  value=\"" + shusshaFun + "\"  onchange=\"setShukkinBo('ShusshaFun', " + i + ");calcJitsudoJikan(" + i + ");\" >" + 
+					"</td>" +
+					"<td class=\"value center\">" + 
+						"<a >-</a>" + 
+					"</td>" +
+					"<td class=\"value center\">" + 
+						"<input type=\"text\" class=\"\"  style=\"width: 40px; text-align: right;\" maxlength=\"2\" name=\"TaishaJi" + i + "\" id=\"TaishaJi" + i + "\"  value=\"" + taishaJi + "\"  onchange=\"setShukkinBo('TaishaJi', " + i + ");calcJitsudoJikan(" + i + ");\" >" + 
+					"</td>" +
+					"<td class=\"value center\">" + 
+						"<input type=\"text\" class=\"\"  style=\"width: 40px; text-align: right;\" maxlength=\"2\" name=\"TaishaFun" + i + "\" id=\"TaishaFun" + i + "\"  value=\"" + taishaFun + "\"  onchange=\"setShukkinBo('TaishaFun', " + i + ");calcJitsudoJikan(" + i + ");\" >" + 
+					"</td>" +
+					"<td class=\"value center\">" + 
+						"<input type=\"text\" class=\"\"  style=\"width: 40px; text-align: right;\" maxlength=\"5\" name=\"JitsudoJikan" + i + "\" id=\"JitsudoJikan" + i + "\"  value=\"" + jitsudoJikan + "\"  onchange=\"setShukkinBo('JitsudoJikan', " + i + ");\" >" + 
+					"</td>" +
+					"<td class=\"value center\">" + 
+						sinsei1SelectBox + 
+					"</td>" +
+					"<td class=\"value center\">" + 
+						"<input type=\"text\" class=\"\"  style=\"width: 40px; text-align: right;\" maxlength=\"5\" name=\"ChinginShinseiJikan1" + i + "\" id=\"ChinginShinseiJikan1" + i + "\"  value=\"" + chinginShinseiJikan1 + "\"  onchange=\"setShukkinBo('ChinginShinseiJikan1', " + i + ");\" >" + 
+					"</td>" +
+					"<td class=\"value center\">" + 
+						sinsei2SelectBox + 
+					"</td>" +
+					"<td class=\"value center\">" + 
+						"<input type=\"text\" class=\"\"  style=\"width: 40px; text-align: right;\" maxlength=\"5\" name=\"ChinginShinseiJikan2" + i + "\" id=\"ChinginShinseiJikan2" + i + "\"  value=\"" + chinginShinseiJikan2 + "\"  onchange=\"setShukkinBo('ChinginShinseiJikan2', " + i + ");\" >" + 
+					"</td>" +
+					"<td class=\"value center\">" + 
+						sinsei3SelectBox + 
+					"</td>" +
+					"<td class=\"value center\">" + 
+						"<input type=\"text\" class=\"\"  style=\"width: 40px; text-align: right;\" maxlength=\"5\" name=\"ChinginShinseiJikan3" + i + "\" id=\"ChinginShinseiJikan3" + i + "\"  value=\"" + chinginShinseiJikan3 + "\"  onchange=\"setShukkinBo('ChinginShinseiJikan3', " + i + ");\" >" + 
+					"</td>" +
+				"</tr>";
 		}
 		else{
-			trDisplay = " style=\"display: none;\"";
+			kihonNyuryokuAreaHtml =
+					"<input type=\"hidden\" name=\"TaishoNengappi" + i + "\" id=\"TaishoNengappi" + i + "\" value=\"" + taishoNengappi + "\">" +
+					"<input type=\"hidden\" name=\"MeisaiSaishuKoshinDate" + i + "\" id=\"MeisaiSaishuKoshinDate" + i + "\" value=\"" + meisaiSaishuKoshinDate + "\">" +
+					"<input type=\"hidden\" name=\"MeisaiSaishuKoshinJikan" + i + "\" id=\"MeisaiSaishuKoshinJikan" + i + "\" value=\"" + meisaiSaishuKoshinJikan + "\">" +
+					
+					"<input type=\"hidden\" name=\"TaishoGetsu" + i + "\" id=\"TaishoGetsu" + i + "\" value=\"" + taishoGetsu + "\">" +
+					"<input type=\"hidden\" name=\"TaishoBi" + i + "\" id=\"TaishoBi" + i + "\" value=\"" + taishoBi + "\">" +
+					"<input type=\"hidden\" name=\"ShusshaJi" + i + "\" id=\"ShusshaJi" + i + "\"  value=\"" + shusshaJi + "\" >" + 
+					"<input type=\"hidden\" name=\"ShusshaFun" + i + "\" id=\"ShusshaFun" + i + "\"  value=\"" + shusshaFun + "\" >" +
+					"<input type=\"hidden\" name=\"TaishaJi" + i + "\" id=\"TaishaJi" + i + "\"  value=\"" + taishaJi + "\" >" +
+					"<input type=\"hidden\" name=\"TaishaFun" + i + "\" id=\"TaishaFun" + i + "\"  value=\"" + taishaFun + "\" >" +
+					"<input type=\"hidden\" name=\"JitsudoJikan" + i + "\" id=\"JitsudoJikan" + i + "\"  value=\"" + jitsudoJikan + "\" >" +
+					"<input type=\"hidden\" name=\"ChinginShinseiKbn1" + i + "\" id=\"ChinginShinseiKbn1" + i + "\"  value=\"" + chinginShinseiKbn1 + "\" >" + 
+					"<input type=\"hidden\" name=\"ChinginShinseiJikan1" + i + "\" id=\"ChinginShinseiJikan1" + i + "\"  value=\"" + chinginShinseiJikan1 + "\" >" + 
+
+					"<input type=\"hidden\" name=\"ChinginShinseiKbn2" + i + "\" id=\"ChinginShinseiKbn2" + i + "\"  value=\"" + chinginShinseiKbn2 + "\" >" + 
+					"<input type=\"hidden\" name=\"ChinginShinseiJikan2" + i + "\" id=\"ChinginShinseiJikan2" + i + "\"  value=\"" + chinginShinseiJikan2 + "\" >" + 
+					"<input type=\"hidden\" name=\"ChinginShinseiKbn3" + i + "\" id=\"ChinginShinseiKbn3" + i + "\"  value=\"" + chinginShinseiKbn3 + "\" >" + 
+					"<input type=\"hidden\" name=\"ChinginShinseiJikan3" + i + "\" id=\"ChinginShinseiJikan3" + i + "\"  value=\"" + chinginShinseiJikan3 + "\" >";
 		}
 
-		let	kihonNyuryokuAreaHtml =
-			"<tr" + trDisplay + ">" +
-				"<input type=\"hidden\" name=\"TaishoNengappi" + i + "\" id=\"TaishoNengappi" + i + "\" value=\"" + taishoNengappi + "\">" +
-				"<input type=\"hidden\" name=\"MeisaiSaishuKoshinDate" + i + "\" id=\"MeisaiSaishuKoshinDate" + i + "\" value=\"" + meisaiSaishuKoshinDate + "\">" +
-				"<input type=\"hidden\" name=\"MeisaiSaishuKoshinJikan" + i + "\" id=\"MeisaiSaishuKoshinJikan" + i + "\" value=\"" + meisaiSaishuKoshinJikan + "\">" +
-				
-				"<td class=\"value center\"><a >" + taishoGetsu + "</a></td>" +
-				"<input type=\"hidden\" name=\"TaishoGetsu" + i + "\" id=\"TaishoGetsu" + i + "\" value=\"" + taishoGetsu + "\">" +
-				"<td class=\"value center\"><a >" + taishoBi + "</a></td>" +
-				"<input type=\"hidden\" name=\"TaishoBi" + i + "\" id=\"TaishoBi" + i + "\" value=\"" + taishoBi + "\">" +
-				"<td class=\"value center\"><a class=\"" + yobiColorClass + "\">" + yobiKbn + "</a></td>" +
-
-				"<td class=\"value center\">" + 
-					"<input type=\"text\" class=\"\"  style=\"width: 40px; text-align: right;\" maxlength=\"2\" name=\"ShusshaJi" + i + "\" id=\"ShusshaJi" + i + "\"  value=\"" + shusshaJi + "\"  onchange=\"setShukkinBo('ShusshaJi', " + i + ");calcJitsudoJikan(" + i + ");\" >" + 
-				"</td>" +
-				"<td class=\"value center\">" + 
-					"<input type=\"text\" class=\"\"  style=\"width: 40px; text-align: right;\" maxlength=\"2\" name=\"ShusshaFun" + i + "\" id=\"ShusshaFun" + i + "\"  value=\"" + shusshaFun + "\"  onchange=\"setShukkinBo('ShusshaFun', " + i + ");calcJitsudoJikan(" + i + ");\" >" + 
-				"</td>" +
-				"<td class=\"value center\">" + 
-					"<a >-</a>" + 
-				"</td>" +
-				"<td class=\"value center\">" + 
-					"<input type=\"text\" class=\"\"  style=\"width: 40px; text-align: right;\" maxlength=\"2\" name=\"TaishaJi" + i + "\" id=\"TaishaJi" + i + "\"  value=\"" + taishaJi + "\"  onchange=\"setShukkinBo('TaishaJi', " + i + ");calcJitsudoJikan(" + i + ");\" >" + 
-				"</td>" +
-				"<td class=\"value center\">" + 
-					"<input type=\"text\" class=\"\"  style=\"width: 40px; text-align: right;\" maxlength=\"2\" name=\"TaishaFun" + i + "\" id=\"TaishaFun" + i + "\"  value=\"" + taishaFun + "\"  onchange=\"setShukkinBo('TaishaFun', " + i + ");calcJitsudoJikan(" + i + ");\" >" + 
-				"</td>" +
-				"<td class=\"value center\">" + 
-					"<input type=\"text\" class=\"\"  style=\"width: 40px; text-align: right;\" maxlength=\"5\" name=\"JitsudoJikan" + i + "\" id=\"JitsudoJikan" + i + "\"  value=\"" + jitsudoJikan + "\"  onchange=\"setShukkinBo('JitsudoJikan', " + i + ");\" >" + 
-				"</td>" +
-				"<td class=\"value center\">" + 
-					sinsei1SelectBox + 
-				"</td>" +
-				"<td class=\"value center\">" + 
-					"<input type=\"text\" class=\"\"  style=\"width: 40px; text-align: right;\" maxlength=\"5\" name=\"KintaiShinseiJikan1" + i + "\" id=\"KintaiShinseiJikan1" + i + "\"  value=\"" + kintaiShinseiJikan1 + "\"  onchange=\"setShukkinBo('KintaiShinseiJikan1', " + i + ");\" >" + 
-				"</td>" +
-				"<td class=\"value center\">" + 
-					sinsei2SelectBox + 
-				"</td>" +
-				"<td class=\"value center\">" + 
-					"<input type=\"text\" class=\"\"  style=\"width: 40px; text-align: right;\" maxlength=\"5\" name=\"KintaiShinseiJikan2" + i + "\" id=\"KintaiShinseiJikan2" + i + "\"  value=\"" + kintaiShinseiJikan2 + "\"  onchange=\"setShukkinBo('KintaiShinseiJikan2', " + i + ");\" >" + 
-				"</td>" +
-				"<td class=\"value center\">" + 
-					sinsei3SelectBox + 
-				"</td>" +
-				"<td class=\"value center\">" + 
-					"<input type=\"text\" class=\"\"  style=\"width: 40px; text-align: right;\" maxlength=\"5\" name=\"KintaiShinseiJikan3" + i + "\" id=\"KintaiShinseiJikan3" + i + "\"  value=\"" + kintaiShinseiJikan3 + "\"  onchange=\"setShukkinBo('KintaiShinseiJikan3', " + i + ");\" >" + 
-				"</td>" +
-			"</tr>";
 		$("#kihonNyuryokuArea").append(kihonNyuryokuAreaHtml);
 	}
-	$("#txtShinseiKingaku01").val(kinShukkinBoResultAll[0]["ShinseiKingaku01"]);
-	$("#txtShinseiKingaku02").val(kinShukkinBoResultAll[0]["ShinseiKingaku02"]);
-	$("#hdnKihonSaishuKoshinDate").val(kinShukkinBoResultAll[0]["KihonSaishuKoshinDate"]);
-	$("#hdnKihonSaishuKoshinJikan").val(kinShukkinBoResultAll[0]["KihonSaishuKoshinJikan"]);
+	$("#txtShinseiKingaku01").val(chiChinginkeisanshoResultAll[0]["ShinseiKingaku01"]);
+	$("#txtShinseiKingaku02").val(chiChinginkeisanshoResultAll[0]["ShinseiKingaku02"]);
+	$("#hdnKihonSaishuKoshinDate").val(chiChinginkeisanshoResultAll[0]["KihonSaishuKoshinDate"]);
+	$("#hdnKihonSaishuKoshinJikan").val(chiChinginkeisanshoResultAll[0]["KihonSaishuKoshinJikan"]);
 
 
 	//前・次一覧ボタンの活性変更
@@ -473,7 +510,7 @@ function onDisplayNyuryokuArea(firstHalfFlg){
 		document.getElementById("btnFirstHalf").disabled = false;
 		document.getElementById("btnSecondHalf").disabled = true;
 		//次一覧表示時、最後の予定をフォーカス
-		$("#ShukkinYoteiKbn" + (kinShukkinBoResultAll.length - 1)).focus();
+		$("#ShukkinYoteiKbn" + (chiChinginkeisanshoResultAll.length - 1)).focus();
 	}
 
 }
@@ -484,7 +521,7 @@ function onDisplayNyuryokuArea(firstHalfFlg){
 *
 */
 function setShukkinBo(fieldName, nowRow){
-	kinShukkinBoResultAll[nowRow][fieldName] = $("#" + fieldName + nowRow).val();
+	chiChinginkeisanshoResultAll[nowRow][fieldName] = $("#" + fieldName + nowRow).val();
 }
 
 /*
@@ -493,7 +530,7 @@ function setShukkinBo(fieldName, nowRow){
 *
 */
 function setShinseiKingaku01(){
-	kinShukkinBoResultAll[0]["ShinseiKingaku01"] = $("#txtShinseiKingaku01").val();
+	chiChinginkeisanshoResultAll[0]["ShinseiKingaku01"] = $("#txtShinseiKingaku01").val();
 }
 
 /*
@@ -502,7 +539,7 @@ function setShinseiKingaku01(){
 *
 */
 function setShinseiKingaku02(){
-	kinShukkinBoResultAll[0]["ShinseiKingaku02"] = $("#txtShinseiKingaku02").val();
+	chiChinginkeisanshoResultAll[0]["ShinseiKingaku02"] = $("#txtShinseiKingaku02").val();
 }
 
 
@@ -525,15 +562,15 @@ function yoteiChangeColor(yotei){
 * 勤怠区分DLL選択時の色変更
 *
 */
-function kintaiChangeColor(kintai){
-	if( kintai.value == "03" ){
-		kintai.style.color = 'green';
+function chinginChangeColor(chingin){
+	if( chingin.value == "03" ){
+		chingin.style.color = 'green';
 	}
-	else if( kintai.value == "04" || kintai.value == "05" || kintai.value == "08" || kintai.value == "10" ){
-		kintai.style.color = 'red';
+	else if( chingin.value == "04" || chingin.value == "05" || chingin.value == "08" || chingin.value == "10" ){
+		chingin.style.color = 'red';
 	}
 	else {
-		kintai.style.color = 'black';
+		chingin.style.color = 'black';
 	}
 }
 
@@ -545,12 +582,12 @@ function kintaiChangeColor(kintai){
 function calcJitsudoJikan(nowRow){
 	let checkIfNumber = /^[0-9]+$/;
 
-	let kaishiJi = kinShukkinBoResultAll[nowRow]["ShusshaJi"];
-	let kaishiFun = kinShukkinBoResultAll[nowRow]["ShusshaFun"];
-	let shuryoJi = kinShukkinBoResultAll[nowRow]["TaishaJi"];
-	let shuryoFun = kinShukkinBoResultAll[nowRow]["TaishaFun"];
+	let kaishiJi = chiChinginkeisanshoResultAll[nowRow]["ShusshaJi"];
+	let kaishiFun = chiChinginkeisanshoResultAll[nowRow]["ShusshaFun"];
+	let shuryoJi = chiChinginkeisanshoResultAll[nowRow]["TaishaJi"];
+	let shuryoFun = chiChinginkeisanshoResultAll[nowRow]["TaishaFun"];
 	
-	let jikan = kinShukkinBoResultAll[nowRow]["JitsudoJikan"];
+	let jikan = chiChinginkeisanshoResultAll[nowRow]["JitsudoJikan"];
 	
 	//開始時分、終了時分が全て数字で入力済み　かつ　時間が未入力または0の時のみ自動計算する
 	if(
@@ -579,10 +616,10 @@ function calcJitsudoJikan(nowRow){
 			//3.勤怠申請時間の分部分を計算
 			let jikanFun = jikanWk % 60;
 			//4.実際に項目に表示する値を計算
-			let jikanDisp = jikanJi + (jikanFun * 0.01);
+			let jikanDisp = (Math.floor((jikanJi + (jikanFun / 100)) * 100) / 100).toFixed(2);
 			
-			kinShukkinBoResultAll[nowRow]["JitsudoJikan"] = String(jikanDisp);
-			$("#JitsudoJikan" + nowRow).val(String(jikanDisp));
+			chiChinginkeisanshoResultAll[nowRow]["JitsudoJikan"] = jikanDisp;
+			$("#JitsudoJikan" + nowRow).val(jikanDisp);
 		}
 	}
 }
@@ -595,12 +632,12 @@ function calcJitsudoJikan(nowRow){
 function calcShinseiJikan(nowCol, nowRow){
 	let checkIfNumber = /^[0-9]+$/;
 
-	let kaishiJi = kinShukkinBoResultAll[nowRow]["KintaiShinseiKaishiJi" + nowCol];
-	let kaishiFun = kinShukkinBoResultAll[nowRow]["KintaiShinseiKaishiFun" + nowCol];
-	let shuryoJi = kinShukkinBoResultAll[nowRow]["KintaiShinseiShuryoJi" + nowCol];
-	let shuryoFun = kinShukkinBoResultAll[nowRow]["KintaiShinseiShuryoFun" + nowCol];
+	let kaishiJi = chiChinginkeisanshoResultAll[nowRow]["ChinginShinseiKaishiJi" + nowCol];
+	let kaishiFun = chiChinginkeisanshoResultAll[nowRow]["ChinginShinseiKaishiFun" + nowCol];
+	let shuryoJi = chiChinginkeisanshoResultAll[nowRow]["ChinginShinseiShuryoJi" + nowCol];
+	let shuryoFun = chiChinginkeisanshoResultAll[nowRow]["ChinginShinseiShuryoFun" + nowCol];
 	
-	let jikan = kinShukkinBoResultAll[nowRow]["KintaiShinseiJikan" + nowCol];
+	let jikan = chiChinginkeisanshoResultAll[nowRow]["ChinginShinseiJikan" + nowCol];
 	
 	//開始時分、終了時分が全て数字で入力済み　かつ　時間が未入力または0の時のみ自動計算する
 	if(
@@ -629,10 +666,10 @@ function calcShinseiJikan(nowCol, nowRow){
 			//3.勤怠申請時間の分部分を計算
 			let jikanFun = jikanWk % 60;
 			//4.実際に項目に表示する値を計算
-			let jikanDisp = jikanJi + (jikanFun * 0.01);
+			let jikanDisp = (Math.floor((jikanJi + (jikanFun / 100)) * 100) / 100).toFixed(2);
 			
-			kinShukkinBoResultAll[nowRow]["KintaiShinseiJikan" + nowCol] = String(jikanDisp);
-			$("#KintaiShinseiJikan" + nowCol + nowRow).val(String(jikanDisp));
+			chiChinginkeisanshoResultAll[nowRow]["ChinginShinseiJikan" + nowCol] = jikanDisp;
+			$("#ChinginShinseiJikan" + nowCol + nowRow).val(jikanDisp);
 		}
 	}
 }
@@ -661,14 +698,14 @@ function onDelete(){
 
 		if(result == true){
 			alert("正常に削除しました。");
+			document.getElementById("txtTaishoYM").focus();
+			//画面表示を初期状態に戻す
+			$("#nyuryokuArea").css("visibility", "hidden");
+			$("#buttonArea").css("visibility", "hidden");
 		}
 		else{
 			alert("このデータはすでに、別のユーザーに更新されています。\r\nもう一度データを確認してください。");
 		}
-		document.getElementById("txtTaishoYM").focus();
-		//画面表示を初期状態に戻す
-		$("#nyuryokuArea").css("visibility", "hidden");
-		$("#buttonArea").css("visibility", "hidden");
 	});
 }
 
@@ -695,18 +732,11 @@ function onRecalc(){
 		let result			= contents["result"];
 
 		if(result == 1){
-			alert("正常に登録しました。");
-		}
-		else if(result == 2){
-			alert("正常に更新しました。");
+			document.getElementById("txtTaishoYM").focus();
 		}
 		else{
 			alert("このデータはすでに、別のユーザーに更新されています。\r\nもう一度データを確認してください。");
 		}
-		document.getElementById("txtTaishoYM").focus();
-		//画面表示を初期状態に戻す
-		$("#nyuryokuArea").css("visibility", "hidden");
-		$("#buttonArea").css("visibility", "hidden");
 	});
 }
 
@@ -732,18 +762,25 @@ function onUpdate(){
 		
 		let result			= contents["result"];
 
-		if(result == 1){
-			alert("正常に登録しました。");
-		}
-		else if(result == 2){
-			alert("正常に更新しました。");
+		if((result == 1) || (result == 2)){
+			if(result == 1){
+				alert("正常に登録しました。");
+			}
+			if(result == 2){
+				alert("正常に更新しました。");
+			}
+			//再検索する
+			//更新処理に備え、検索条件を保持
+			$("#txtTaishoYM").val($("#txtSearchedTaishoYM").val());
+			$("#txtShainNO").val($("#txtSearchedShainNO").val());
+
+			//検索結果が0の時のため、画面非表示
+			$("#nyuryokuArea").css("visibility", "hidden");
+			$("#buttonArea").css("visibility", "hidden");
+			onSearchChiChinginkeisansho();
 		}
 		else{
 			alert("このデータはすでに、別のユーザーに更新されています。\r\nもう一度データを確認してください。");
 		}
-		document.getElementById("txtTaishoYM").focus();
-		//画面表示を初期状態に戻す
-		$("#nyuryokuArea").css("visibility", "hidden");
-		$("#buttonArea").css("visibility", "hidden");
 	});
 }

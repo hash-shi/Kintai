@@ -129,7 +129,7 @@ function getTaishoYMFormat(){
 
 /*
 *
-* 対象年月フォーカスアウト時のフォーマット編集処理
+* 社員名フォーカスアウト時のフォーマット編集処理
 *
 */
 function getShainNOFormat(){

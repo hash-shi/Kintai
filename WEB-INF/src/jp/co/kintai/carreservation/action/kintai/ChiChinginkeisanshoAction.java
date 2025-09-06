@@ -90,31 +90,7 @@ public class ChiChinginkeisanshoAction extends PJActionBase {
 		UserInformation userInformation = (UserInformation)req.getSession().getAttribute(Define.SESSION_ID);
 		String loginShainNo = userInformation.getShainNO();
 		
-		// DB接続
-		Connection con		= this.getConnection("kintai", req);
-		StringBuffer sql				= new StringBuffer();
-		PreparedStatement pstmt			= null;
-		PreparedStatementFactory pstmtf	= new PreparedStatementFactory();
-		ResultSet rset					= null;
-		
-		sql.append(" SELECT ShainNO AS code, ShainName AS code_name FROM MST_SHAIN WHERE ShukinboKbn = '00' AND ShainNO = ? ORDER BY ShainNO");
-		pstmtf.addValue("String", loginShainNo);
-		
-		try {
-			// SQL文の生成
-			pstmt = con.prepareStatement(sql.toString());
-			// パラメータの設定
-			pstmtf.setPreparedStatement(pstmt);
-			// 実行
-			rset = pstmt.executeQuery();
-			// 結果取得
-			if(rset.next()) {
-				result = StringUtils.stripToEmpty(rset.getString("code"));
-			}
-		} finally {
-			if (rset != null){ try { rset.close(); } catch (Exception exp){}}
-			if (pstmt != null){ try { pstmt.close(); } catch (Exception exp){}}
-		}
+		result = StringUtils.stripToEmpty(loginShainNo);
 		
 		//=====================================================================
 		// 結果返却
@@ -133,51 +109,120 @@ public class ChiChinginkeisanshoAction extends PJActionBase {
 		
 		// DB接続
 		Connection con		= this.getConnection("kintai", req);
+
+		
+		// チェック対象の社員NO
+		String shainNo			= this.getParameter("txtShainNO");
+		String JikyuNikkyuKbn = "";
+		
+		//=====================================================================
+		// 処理
+		//=====================================================================
+		// チェック対象の社員の存在確認、時給日給区分取得
+		ArrayList<HashMap<String, String>> mstShains = PJActionBase.getMstShains(con, shainNo, null, null, null, null, null, null, null);
+		
+		//社員が存在すれば時給日給区分取得する
+		if (0 < mstShains.size()){
+			JikyuNikkyuKbn = mstShains.get(0).get("JikyuNikkyuKbn"); 
+		}
+		
 		ArrayList<HashMap<String, String>> mstDatas = new ArrayList<>();
 		
-		//申請区分DDL検索
-		ArrayList<HashMap<String, String>> mstShinseiKubun = PJActionBase.getMstKubuns(con, "0201", null, null);
+		//申請区分DDL検索 ソート順が独自なので独自実装
+		StringBuffer sql					= new StringBuffer();
+		PreparedStatement pstmt			= null;
+		PreparedStatementFactory pstmtf	= new PreparedStatementFactory();
+		ResultSet rset						= null;
+		
+		sql.append("	SELECT ");
+		sql.append("		COALESCE (Code, '') AS Code, ");
+		sql.append("		COALESCE (KbnName, '') AS KbnName ");
+		sql.append("	FROM ");
+		sql.append("		MST_KUBUN ");
+		sql.append("	WHERE ");
+		sql.append("		KbnCode = '0201' ");
+		sql.append("	AND	LEFT(GroupCode2, 2) <> '' ");
+		sql.append("	ORDER BY ");
+		sql.append("		LEFT(GroupCode2, 2) ");
+		
+		try {
+			// SQL文の生成
+			pstmt = con.prepareStatement(sql.toString());
+			// パラメータの設定
+			pstmtf.setPreparedStatement(pstmt);
+			// 実行
+			rset = pstmt.executeQuery();
+			// レコード数分繰り返す
+			while (rset.next()){
+				//区分名が空の場合スキップ
+				if(StringUtils.isEmpty(rset.getString("KbnName"))){
+					continue;
+				}
+				
+				//Codeが"01"はスキップ
+				if("01".equals(rset.getString("Code"))) {
+					continue;
+				}
+				
+				//社員が時給　かつ　Codeが"07","08","09"の場合スキップ
+				if(
+					"01".equals(JikyuNikkyuKbn) &&
+					(
+						"07".equals(rset.getString("Code")) ||
+						"08".equals(rset.getString("Code")) ||
+						"09".equals(rset.getString("Code"))
+					)
+				) {
+					continue;
+				}
+				// 1レコード分の配列を用意
+				HashMap<String, String> returnRecord = new HashMap<String, String>();
 
-		// 送信データを減らすため不要なカラムは削る
-		// レコード数分繰り返す
-		for (HashMap<String, String> searchRecord: mstShinseiKubun){
-			//区分名が空の場合スキップ
-			if(StringUtils.isEmpty(searchRecord.get("KbnName"))){
-				continue;
-			}
-			
-			//Codeが"01"はスキップ
-			if("01".equals(searchRecord.get("Code"))) {
-				continue;
-			}
-			
-			//TODO 社員が時給　かつ　Codeが"07","08","09"の場合スキップ
-			if(
-				//社員が時給 &&
-				(
-					"07".equals(searchRecord.get("Code")) ||
-					"08".equals(searchRecord.get("Code")) ||
-					"09".equals(searchRecord.get("Code"))
-				)
-			) {
-				continue;
-			}
-			// 1レコード分の配列を用意
-			HashMap<String, String> returnRecord = new HashMap<String, String>();
+				//値を格納
+				returnRecord.put("Code", rset.getString("Code"));
+				returnRecord.put("KbnName", rset.getString("KbnName"));
 
-			//値を格納
-			returnRecord.put("DDLName", "shinsei");
-			returnRecord.put("Code", searchRecord.get("Code"));
-			returnRecord.put("KbnName", searchRecord.get("KbnName"));
-
-			// 配列の格納
-			mstDatas.add(returnRecord);
+				// 配列の格納
+				mstDatas.add(returnRecord);
+			}
+		}
+		catch (Exception exp){
+			System.out.println(String.valueOf(exp));
+		}
+		finally {
+			if (rset != null){ try { rset.close(); } catch (Exception exp){}}
+			if (pstmt != null){ try { pstmt.close(); } catch (Exception exp){}}
 		}
 		
 		//=====================================================================
 		// 結果返却
 		//=====================================================================
 		this.addContent("result", mstDatas);
+	}
+	
+	/**
+	 * ログイン社員のユーザー区分取得
+	 * 
+	 * @param req
+	 * @param res
+	 * @throws Exception
+	 */
+	public void getLoginUserkbn(HttpServletRequest req, HttpServletResponse res) throws Exception {
+		
+		/**
+		 * 詳細説明
+		 * 
+		 * 対象社員の区分チェック
+		 */
+		
+		//=====================================================================
+		// チェック対象の社員NO
+		UserInformation userInformation = (UserInformation)req.getSession().getAttribute(Define.SESSION_ID);
+		
+		//=====================================================================
+		// 結果返却
+		//=====================================================================
+		this.addContent("result", userInformation.getUserKbn());
 	}
 	
 	/**
@@ -189,8 +234,8 @@ public class ChiChinginkeisanshoAction extends PJActionBase {
 	 */
 	public void honshaKakuteizumiCheck(HttpServletRequest req, HttpServletResponse res) throws Exception {
 		// 検索条件取得
-		String taishoYM			= this.getParameter("txtSearchedTaishoYM");
-		String taishoShainNo	= this.getParameter("txtSearchedShainNO");
+		String taishoYM			= this.getParameter("txtTaishoYM");
+		String taishoShainNo	= this.getParameter("txtShainNO");
 		
 		// DB接続
 		Connection con		= this.getConnection("kintai", req);
@@ -298,7 +343,7 @@ public class ChiChinginkeisanshoAction extends PJActionBase {
 	}
 	
 	/**
-	 * 出勤簿の取得
+	 * 賃金計算書の取得
 	 * 
 	 * @param req
 	 * @param res
@@ -307,16 +352,14 @@ public class ChiChinginkeisanshoAction extends PJActionBase {
 	public void search(HttpServletRequest req, HttpServletResponse res) throws Exception {
 		
 		// 検索条件取得
-		String taishoYM			= this.getParameter("txtSearchedTaishoYM");
-		String taishoShainNo	= this.getParameter("txtSearchedShainNO");
+		String taishoYM			= this.getParameter("txtTaishoYM");
+		String taishoShainNo	= this.getParameter("txtShainNO");
 
 		//検索結果0件の時のため、デフォルトのデータを作成
 		ArrayList<HashMap<String, String>> ResultDatas = getResultDatas(taishoYM);
 		
 		// DB接続
 		Connection con		= this.getConnection("kintai", req);
-		
-		ArrayList<HashMap<String, String>> mstDatas = new ArrayList<>();
 		
 		// DB接続
 		StringBuffer sql				= new StringBuffer();
@@ -325,57 +368,38 @@ public class ChiChinginkeisanshoAction extends PJActionBase {
 		ResultSet rset					= null;
 		
 		sql.append(" SELECT ");
-		sql.append(" 	M.TaishoNengappi ");
-		sql.append(" 	,MONTH(CONVERT(DATETIME, M.TaishoNengappi, 111)) AS TaishoGetsu ");
-		sql.append(" 	,DAY(CONVERT(DATETIME, M.TaishoNengappi, 111)) AS TaishoBi ");
-		sql.append(" 	,M.YobiKbn ");
-		sql.append(" 	,M.ShukkinYoteiKbn ");
-		sql.append(" 	,M.KintaiKbn ");
+		sql.append("         M.TaishoNengappi, ");
+		sql.append("         MONTH(CONVERT(DATETIME, M.TaishoNengappi, 111)) AS TaishoGetsu, ");
+		sql.append("         DAY(CONVERT(DATETIME, M.TaishoNengappi, 111)) AS TaishoBi, ");
+		sql.append("         M.YobiKbn,");
+		sql.append("         COALESCE(RTRIM(M.ShusshaJi), '') AS ShusshaJi, ");
+		sql.append("         COALESCE(RTRIM(M.ShusshaFun), '') AS ShusshaFun, ");
+		sql.append("         COALESCE(RTRIM(M.TaishaJi), '') AS TaishaJi, ");
+		sql.append("         COALESCE(RTRIM(M.TaishaFun), '') AS TaishaFun, ");
+		sql.append("         COALESCE(M.JitsudoJikan, 0) AS JitsudoJikan, ");
+		sql.append("         COALESCE(M.ChinginShinseiKbn1, '00') AS ChinginShinseiKbn1, ");
+		sql.append("         COALESCE(M.ChinginShinseiJikan1, 0) AS ChinginShinseiJikan1, ");
+		sql.append("         COALESCE(M.ChinginShinseiKbn2, '00') AS ChinginShinseiKbn2, ");
+		sql.append("         COALESCE(M.ChinginShinseiJikan2, 0) AS ChinginShinseiJikan2, ");
+		sql.append("         COALESCE(M.ChinginShinseiKbn3, '00') AS ChinginShinseiKbn3, ");
+		sql.append("         COALESCE(M.ChinginShinseiJikan3, 0) AS ChinginShinseiJikan3, ");
+		sql.append("         COALESCE(M.SaishuKoshinDate, '') AS MeisaiSaishuKoshinDate, ");
+		sql.append("         COALESCE(M.SaishuKoshinJikan, '') AS MeisaiSaishuKoshinJikan, ");
 
-		sql.append(" 	,M.ShusshaJi ");
-		sql.append(" 	,M.ShusshaFun ");
-		sql.append(" 	,M.TaishaJi ");
-		sql.append(" 	,M.TaishaFun ");
-		sql.append(" 	,M.JitsudoJikan ");
-
-		sql.append(" 	,M.KintaiShinseiBiko ");
-		sql.append(" 	,M.KintaiShinseiKbn1 ");
-		sql.append(" 	,M.KintaiShinseiKaishiJi1 ");
-		sql.append(" 	,M.KintaiShinseiKaishiFun1 ");
-		sql.append(" 	,M.KintaiShinseiShuryoJi1 ");
-		sql.append(" 	,M.KintaiShinseiShuryoFun1 ");
-		sql.append(" 	,M.KintaiShinseiJikan1 ");
-		sql.append(" 	,M.KintaiShinseiKbn2 ");
-		sql.append(" 	,M.KintaiShinseiKaishiJi2 ");
-		sql.append(" 	,M.KintaiShinseiKaishiFun2 ");
-		sql.append(" 	,M.KintaiShinseiShuryoJi2 ");
-		sql.append(" 	,M.KintaiShinseiShuryoFun2 ");
-		sql.append(" 	,M.KintaiShinseiJikan2 ");
-		sql.append(" 	,M.KintaiShinseiKbn3 ");
-		sql.append(" 	,M.KintaiShinseiKaishiJi3 ");
-		sql.append(" 	,M.KintaiShinseiKaishiFun3 ");
-		sql.append(" 	,M.KintaiShinseiShuryoJi3 ");
-		sql.append(" 	,M.KintaiShinseiShuryoFun3 ");
-		sql.append(" 	,M.KintaiShinseiJikan3 ");
-		sql.append(" 	,M.SaishuKoshinDate AS MeisaiSaishuKoshinDate ");
-		sql.append(" 	,M.SaishuKoshinJikan AS MeisaiSaishuKoshinJikan ");
-		sql.append(" 	,K.ShinseiKingaku01 ");
-		sql.append(" 	,K.ShinseiKingaku02 ");
-		sql.append(" 	,K.KakuteiKbn ");
-		sql.append(" 	,K.SaishuKoshinDate AS KihonSaishuKoshinDate ");
-		sql.append(" 	,K.SaishuKoshinJikan AS KihonSaishuKoshinJikan ");
+		sql.append("         COALESCE(K.SaishuKoshinDate, '') AS KihonSaishuKoshinDate, ");
+		sql.append("         COALESCE(K.SaishuKoshinJikan, '') AS KihonSaishuKoshinJikan ");
 		sql.append(" FROM ");
-		sql.append(" 	KIN_SHUKKINBO_MEISAI M ");
-		sql.append(" LEFT OUTER JOIN ");
-		sql.append(" 	KIN_SHUKKINBO_KIHON K ");
-		sql.append(" ON ");
-		sql.append(" 	K.TaishoNenGetsudo = M.TaishoNenGetsudo ");
-		sql.append(" AND	K.ShainNO = M.ShainNO ");
-		sql.append(" WHERE ");
-		sql.append(" 	M.TaishoNenGetsudo = ? ");
-		sql.append(" AND	M.ShainNO = ? ");
-		sql.append(" ORDER BY ");
-		sql.append(" 	M.TaishoNengappi ");
+		sql.append("         CHI_CHINGINKEISANSHO_MEISAI M WITH(NOLOCK) ");
+		sql.append(" LEFT OUTER JOIN");
+		sql.append("         CHI_CHINGINKEISANSHO_KIHON K WITH(NOLOCK) ");
+		sql.append(" ON");
+		sql.append("         K.TaishoNenGetsudo = M.TaishoNenGetsudo AND");
+		sql.append("         K.ShainNO = M.ShainNO ");
+
+		sql.append(" WHERE");
+		sql.append("         M.TaishoNenGetsudo = ? AND");
+		sql.append("         M.ShainNO = ? ");
+		sql.append(" ORDER BY M.TaishoNengappi");
 		
 		pstmtf.addValue("String", taishoYM);
 		pstmtf.addValue("String", taishoShainNo);
@@ -471,37 +495,33 @@ public class ChiChinginkeisanshoAction extends PJActionBase {
 				break;
 			}
 			record.put("YobiKbn", yobi);
-			record.put("ShukkinYoteiKbn","00");
-			record.put("KintaiKbn","00");
 			record.put("ShusshaJi","");
 			record.put("ShusshaFun","");
 			record.put("TaishaJi","");
 			record.put("TaishaFun","");
-			record.put("JitsudoJikan","");
-			record.put("KintaiShinseiBiko","");
-			record.put("KintaiShinseiKbn1","00");
-			record.put("KintaiShinseiKaishiJi1","");
-			record.put("KintaiShinseiKaishiFun1","");
-			record.put("KintaiShinseiShuryoJi1","");
-			record.put("KintaiShinseiShuryoFun1","");
-			record.put("KintaiShinseiJikan1","");
+			record.put("JitsudoJikan","0.00");
+			record.put("ChinginShinseiKbn1","00");
+			record.put("ChinginShinseiJikan1","0.00");
+			record.put("ChinginShinseiKbn2","00");
+			record.put("ChinginShinseiJikan2","0.00");
+			record.put("ChinginShinseiKbn3","00");
+			record.put("ChinginShinseiJikan3","0.00");
+			
+			
 			record.put("KintaiShinseiKbn2","00");
 			record.put("KintaiShinseiKaishiJi2","");
 			record.put("KintaiShinseiKaishiFun2","");
 			record.put("KintaiShinseiShuryoJi2","");
 			record.put("KintaiShinseiShuryoFun2","");
-			record.put("KintaiShinseiJikan2","");
+			record.put("KintaiShinseiJikan2","0.00");
 			record.put("KintaiShinseiKbn3","00");
 			record.put("KintaiShinseiKaishiJi3","");
 			record.put("KintaiShinseiKaishiFun3","");
 			record.put("KintaiShinseiShuryoJi3","");
 			record.put("KintaiShinseiShuryoFun3","");
-			record.put("KintaiShinseiJikan3","");
+			record.put("KintaiShinseiJikan3","0.00");
 			record.put("MeisaiSaishuKoshinDate","");
 			record.put("MeisaiSaishuKoshinJikan","");
-			record.put("ShinseiKingaku01","");
-			record.put("ShinseiKingaku02","");
-			record.put("KakuteiKbn","");
 			record.put("KihonSaishuKoshinDate","");
 			record.put("KihonSaishuKoshinJikan","");
 			// 配列の格納
@@ -511,6 +531,244 @@ public class ChiChinginkeisanshoAction extends PJActionBase {
 		}
 		
 		return ResultDatas;
+	}
+	
+	/**
+	 * 所定(契約)勤務時間、実働時間の取得
+	 * 
+	 * @param req
+	 * @param res
+	 * @throws Exception
+	 */
+	public void searchTokubetsuNyuryokuArea(HttpServletRequest req, HttpServletResponse res) throws Exception {
+
+		HashMap<String, String> returnRecord = new HashMap<String, String>();
+		
+		String kinmuKaishi = "00:00";
+		String kinmuShuryo = "00:00";
+		String jitsudojikan = "";
+		String eigyoshoCode = "";
+		String bushoCode = "";
+		//=====================================================================
+		// DB接続
+		//=====================================================================
+		Connection con	= this.getConnection("kintai", req);
+		
+		// 検索条件取得
+		String taishoShainNo	= this.getParameter("txtShainNO");
+		
+		// 現在日付の取得
+		String nowDate	= PJActionBase.getNowDate();
+		
+		// チェック対象の社員情報の取得
+		ArrayList<HashMap<String, String>> mstShains = PJActionBase.getMstShains(con, taishoShainNo, null, null, null, null, null, null, nowDate);
+
+		if (0 < mstShains.size()) {
+			HashMap<String, String> mstShain = mstShains.get(0);
+			kinmuKaishi = mstShain.get("KinmuKaishiJi") + ":" + mstShain.get("KinmuKaishiFun");
+			kinmuShuryo = mstShain.get("KinmuShuryoJi") + ":" + mstShain.get("KinmuShuryoFun");
+			jitsudojikan = mstShain.get("KeiyakuJitsudoJikan");
+			eigyoshoCode = mstShain.get("EigyoshoCode");
+			bushoCode = mstShain.get("BushoCode");
+			
+		}
+		//値を格納
+		returnRecord.put("kinmuKaishi", kinmuKaishi);
+		returnRecord.put("kinmuShuryo", kinmuShuryo);
+		returnRecord.put("jitsudojikan", jitsudojikan);
+		returnRecord.put("eigyoshoCode", eigyoshoCode);
+		returnRecord.put("bushoCode", bushoCode);
+
+		//=====================================================================
+		// 結果返却
+		//=====================================================================
+		this.addContent("result", returnRecord);
+		
+	}
+	
+	/**
+	 * 集計エリアの取得
+	 * 
+	 * @param req
+	 * @param res
+	 * @throws Exception
+	 */
+	public void searchShukeiArea(HttpServletRequest req, HttpServletResponse res) throws Exception {
+		
+		// 検索条件取得
+		String taishoYM			= this.getParameter("txtTaishoYM");
+		String taishoShainNo	= this.getParameter("txtShainNO");
+
+		HashMap<String, String> ResultDatas = new HashMap<>();
+		
+		// DB接続
+		Connection con		= this.getConnection("kintai", req);
+		
+		// DB接続
+		StringBuffer sql				= new StringBuffer();
+		PreparedStatement pstmt			= null;
+		PreparedStatementFactory pstmtf	= new PreparedStatementFactory();
+		ResultSet rset					= null;
+		
+		sql.append(" SELECT ");
+		sql.append("     KakuteiKbn, ");
+		sql.append("     ShinseiNissu01, ");
+		sql.append("     ShinseiNissu02, ");
+		sql.append("     ShinseiNissu03, ");
+		sql.append("     ShinseiNissu04, ");
+		sql.append("     ShinseiNissu05 + ShinseiNissu06 AS ShinseiNissu05, ");
+		sql.append("     ShinseiNissu06, ");
+		sql.append("     ShinseiNissu07, ");
+		sql.append("     ShinseiNissu08, ");
+		sql.append("     ShinseiNissu09, ");
+		sql.append("     ShinseiNissu10, ");
+		sql.append("     ShinseiNissu11, ");
+		
+		// 休日
+		sql.append("     ( ");
+		sql.append("         SELECT    ");
+		sql.append("             CAST(COUNT('a') AS DECIMAL) ");
+		sql.append("         FROM ");
+		sql.append("             CHI_CHINGINKEISANSHO_MEISAI WITH(NOLOCK) ");
+		sql.append("         WHERE TaishoNenGetsudo = ? ");
+		sql.append("             AND ShainNO = ? ");
+		sql.append("             AND ShusshaJi = '' ");
+		sql.append("             AND ShusshaFun = '' ");
+		sql.append("             AND TaishaJi = '' ");
+		sql.append("             AND TaishaFun = '' ");
+		sql.append("             AND JitsudoJikan = 0 ");
+		sql.append("             AND ChinginShinseiKbn1 IN ('', '0', '00') ");
+		sql.append("             AND ChinginShinseiJikan1 = 0 ");
+		sql.append("             AND ChinginShinseiKbn2 IN ('', '0', '00') ");
+		sql.append("             AND ChinginShinseiJikan2 = 0 ");
+		sql.append("             AND ChinginShinseiKbn3 IN ('', '0', '00') ");
+		sql.append("             AND ChinginShinseiJikan3 = 0 ");
+		sql.append("     ) AS ShinseiNissuKyujitsu, ");
+		
+		sql.append("     ShinseiJikan01, ");
+		sql.append("     ShinseiJikan02, ");
+		sql.append("     ShinseiJikan03, ");
+		sql.append("     ShinseiJikan04, ");
+		sql.append("     ShinseiJikan05 + ShinseiJikan06 AS ShinseiJikan05, ");
+		sql.append("     ShinseiJikan06, ");
+		sql.append("     ShinseiJikan07, ");
+		sql.append("     ShinseiJikan08, ");
+		sql.append("     ShinseiJikan09, ");
+		sql.append("     ShinseiJikan10, ");
+		sql.append("     ShinseiJikan11, ");
+		sql.append("     ShinseiTanka01, ");
+		sql.append("     ShinseiTanka02, ");
+		sql.append("     ShinseiTanka03, ");
+		sql.append("     ShinseiTanka04, ");
+		sql.append("     ShinseiTanka05, ");
+		sql.append("     ShinseiTanka06, ");
+		sql.append("     ShinseiTanka07, ");
+		sql.append("     ShinseiTanka08, ");
+		sql.append("     ShinseiTanka09, ");
+		sql.append("     ShinseiTanka10, ");
+		sql.append("     ShinseiTanka11, ");
+		sql.append("     ShinseiKingakuGoukei01, ");
+		sql.append("     ShinseiKingakuGoukei02, ");
+		sql.append("     ShinseiKingakuGoukei03, ");
+		sql.append("     ShinseiKingakuGoukei04, ");
+		sql.append("     ShinseiKingakuGoukei05 + ShinseiKingakuGoukei06 AS ShinseiKingakuGoukei05, ");
+		sql.append("     ShinseiKingakuGoukei06, ");
+		sql.append("     ShinseiKingakuGoukei07, ");
+		sql.append("     ShinseiKingakuGoukei08, ");
+		sql.append("     ShinseiKingakuGoukei09, ");
+		sql.append("     ShinseiKingakuGoukei10, ");
+		sql.append("     ShinseiKingakuGoukei11, ");
+		sql.append("     TokkiJiko, ");
+		
+		// 休日
+		sql.append("     ( ");
+		sql.append("         SELECT    ");
+		sql.append("             CAST(COUNT('a') AS DECIMAL) ");
+		sql.append("         FROM ");
+		sql.append("             CHI_CHINGINKEISANSHO_MEISAI WITH(NOLOCK) ");
+		sql.append("         WHERE TaishoNenGetsudo = ? ");
+		sql.append("             AND ShainNO = ? ");
+		sql.append("             AND ShusshaJi = '' ");
+		sql.append("             AND ShusshaFun = '' ");
+		sql.append("             AND TaishaJi = '' ");
+		sql.append("             AND TaishaFun = '' ");
+		sql.append("             AND JitsudoJikan = 0 ");
+		sql.append("             AND ChinginShinseiKbn1 IN ('', '0', '00') ");
+		sql.append("             AND ChinginShinseiJikan1 = 0 ");
+		sql.append("             AND ChinginShinseiKbn2 IN ('', '0', '00') ");
+		sql.append("             AND ChinginShinseiJikan2 = 0 ");
+		sql.append("             AND ChinginShinseiKbn3 IN ('', '0', '00') ");
+		sql.append("             AND ChinginShinseiJikan3 = 0 ");
+		sql.append("     ) + ");
+		
+		sql.append("     ShinseiNissu01 + ");
+		sql.append("     ShinseiNissu04 + ShinseiNissu05 + ShinseiNissu06 AS ShinseiNisuuGoukei, ");
+		
+		sql.append("     ShinseiJikan01 + ");
+		sql.append("     ShinseiJikan02 + ");
+		sql.append("     ShinseiJikan03 + ");
+		sql.append("     ShinseiJikan04 + ");
+		sql.append("     ShinseiJikan05 + ");
+		sql.append("     ShinseiJikan06 + ");
+		sql.append("     ShinseiJikan07 + ");
+		sql.append("     ShinseiJikan08 + ");
+		sql.append("     ShinseiJikan09 + ");
+		sql.append("     ShinseiJikan10 + ");
+		sql.append("     ShinseiJikan11 AS ShinseiJikanGoukei, ");
+		
+		sql.append("     ShinseiKingakuGoukei01 + ");
+		sql.append("     ShinseiKingakuGoukei02 + ");
+		sql.append("     ShinseiKingakuGoukei03 + ");
+		sql.append("     ShinseiKingakuGoukei04 + ");
+		sql.append("     ShinseiKingakuGoukei05 + ");
+		sql.append("     ShinseiKingakuGoukei06 + ");
+		sql.append("     ShinseiKingakuGoukei07 + ");
+		sql.append("     ShinseiKingakuGoukei08 + ");
+		sql.append("     ShinseiKingakuGoukei09 + ");
+		sql.append("     ShinseiKingakuGoukei10 + ");
+		sql.append("     ShinseiKingakuGoukei11 AS ShinseiKingakuGoukeiGoukei ");
+		sql.append(" FROM ");
+		sql.append("     CHI_CHINGINKEISANSHO_KIHON WITH(NOLOCK) ");
+		sql.append(" WHERE TaishoNenGetsudo = ? ");
+		sql.append("     AND ShainNO = ? ");
+		
+		pstmtf.addValue("String", taishoYM);
+		pstmtf.addValue("String", taishoShainNo);
+		pstmtf.addValue("String", taishoYM);
+		pstmtf.addValue("String", taishoShainNo);
+		pstmtf.addValue("String", taishoYM);
+		pstmtf.addValue("String", taishoShainNo);
+		
+		try {
+			// パラメータ付きSQL文の生成
+			pstmt = con.prepareStatement(sql.toString());
+			// パラメータの設定
+			pstmtf.setPreparedStatement(pstmt);
+			// 実行
+			rset = pstmt.executeQuery();
+			// 結果取得
+			ResultSetMetaData metaData = rset.getMetaData(); 
+			
+			// カラム数(列数)の取得
+			int colCount = metaData.getColumnCount(); 
+			
+			// レコード数分繰り返す
+			if (rset.next()){
+				// カラム名をkeyとして値を格納
+				for (int j = 1; j <= colCount; j++) {
+					ResultDatas.put(metaData.getColumnLabel(j), StringUtils.stripToEmpty(rset.getString(j)));
+				}
+			}
+		} finally {
+			if (rset != null){ try { rset.close(); } catch (Exception exp){}}
+			if (pstmt != null){ try { pstmt.close(); } catch (Exception exp){}}
+		}
+		
+		//=====================================================================
+		// 結果返却
+		//=====================================================================
+		this.addContent("result", ResultDatas);
+		
 	}
 	
 	/**
@@ -1301,27 +1559,27 @@ public class ChiChinginkeisanshoAction extends PJActionBase {
 		String shuryoFun3			= this.getParameter(shuryoFun3KeySb.toString());
 		String jikan3				= this.getParameter(jikan3KeySb.toString());
 
-		if(StringUtils.isNumeric(shusshaJi) == false) {shusshaJi = "";}
-		if(StringUtils.isNumeric(shusshaFun) == false) {shusshaFun = "";}
-		if(StringUtils.isNumeric(taishaJi) == false) {taishaJi = "";}
-		if(StringUtils.isNumeric(taishaFun) == false) {taishaFun = "";}
-		if(StringUtils.isNumeric(kaishiJi1) == false) {kaishiJi1 = "";}
-		if(StringUtils.isNumeric(kaishiFun1) == false) {kaishiFun1 = "";}
-		if(StringUtils.isNumeric(shuryoJi1) == false) {shuryoJi1 = "";}
-		if(StringUtils.isNumeric(shuryoFun1) == false) {shuryoFun1 = "";}
-		if(StringUtils.isNumeric(kaishiJi2) == false) {kaishiJi2 = "";}
-		if(StringUtils.isNumeric(kaishiFun2) == false) {kaishiFun2 = "";}
-		if(StringUtils.isNumeric(shuryoJi2) == false) {shuryoJi2 = "";}
-		if(StringUtils.isNumeric(shuryoFun2) == false) {shuryoFun2 = "";}
-		if(StringUtils.isNumeric(kaishiJi3) == false) {kaishiJi3 = "";}
-		if(StringUtils.isNumeric(kaishiFun3) == false) {kaishiFun3 = "";}
-		if(StringUtils.isNumeric(shuryoJi3) == false) {shuryoJi3 = "";}
-		if(StringUtils.isNumeric(shuryoFun3) == false) {shuryoFun3 = "";}
+		if(isDouble(shusshaJi) == false) {shusshaJi = "";}
+		if(isDouble(shusshaFun) == false) {shusshaFun = "";}
+		if(isDouble(taishaJi) == false) {taishaJi = "";}
+		if(isDouble(taishaFun) == false) {taishaFun = "";}
+		if(isDouble(kaishiJi1) == false) {kaishiJi1 = "";}
+		if(isDouble(kaishiFun1) == false) {kaishiFun1 = "";}
+		if(isDouble(shuryoJi1) == false) {shuryoJi1 = "";}
+		if(isDouble(shuryoFun1) == false) {shuryoFun1 = "";}
+		if(isDouble(kaishiJi2) == false) {kaishiJi2 = "";}
+		if(isDouble(kaishiFun2) == false) {kaishiFun2 = "";}
+		if(isDouble(shuryoJi2) == false) {shuryoJi2 = "";}
+		if(isDouble(shuryoFun2) == false) {shuryoFun2 = "";}
+		if(isDouble(kaishiJi3) == false) {kaishiJi3 = "";}
+		if(isDouble(kaishiFun3) == false) {kaishiFun3 = "";}
+		if(isDouble(shuryoJi3) == false) {shuryoJi3 = "";}
+		if(isDouble(shuryoFun3) == false) {shuryoFun3 = "";}
 
-		if(StringUtils.isEmpty(jitsudoJikan) || (StringUtils.isNumeric(jitsudoJikan) == false)) {jitsudoJikan = "0";}
-		if(StringUtils.isEmpty(jikan1) || (StringUtils.isNumeric(jikan1) == false)) {jikan1 = "0";}
-		if(StringUtils.isEmpty(jikan2) || (StringUtils.isNumeric(jikan2) == false)) {jikan2 = "0";}
-		if(StringUtils.isEmpty(jikan3) || (StringUtils.isNumeric(jikan3) == false)) {jikan3 = "0";}
+		if(StringUtils.isEmpty(jitsudoJikan) || (isDouble(jitsudoJikan) == false)) {jitsudoJikan = "0";}
+		if(StringUtils.isEmpty(jikan1) || (isDouble(jikan1) == false)) {jikan1 = "0";}
+		if(StringUtils.isEmpty(jikan2) || (isDouble(jikan2) == false)) {jikan2 = "0";}
+		if(StringUtils.isEmpty(jikan3) || (isDouble(jikan3) == false)) {jikan3 = "0";}
 
 		HashMap<String, String> shinseiPatternRecord = getShinseiPattern(con, kintaiKbn, kintaiShinseiKbn1, kintaiShinseiKbn2, kintaiShinseiKbn3);
 		String jikanKeisan1 = "0";
@@ -1717,27 +1975,27 @@ public class ChiChinginkeisanshoAction extends PJActionBase {
 		String shuryoFun3			= this.getParameter(shuryoFun3KeySb.toString());
 		String jikan3				= this.getParameter(jikan3KeySb.toString());
 
-		if(StringUtils.isNumeric(shusshaJi) == false) {shusshaJi = "";}
-		if(StringUtils.isNumeric(shusshaFun) == false) {shusshaFun = "";}
-		if(StringUtils.isNumeric(taishaJi) == false) {taishaJi = "";}
-		if(StringUtils.isNumeric(taishaFun) == false) {taishaFun = "";}
-		if(StringUtils.isNumeric(kaishiJi1) == false) {kaishiJi1 = "";}
-		if(StringUtils.isNumeric(kaishiFun1) == false) {kaishiFun1 = "";}
-		if(StringUtils.isNumeric(shuryoJi1) == false) {shuryoJi1 = "";}
-		if(StringUtils.isNumeric(shuryoFun1) == false) {shuryoFun1 = "";}
-		if(StringUtils.isNumeric(kaishiJi2) == false) {kaishiJi2 = "";}
-		if(StringUtils.isNumeric(kaishiFun2) == false) {kaishiFun2 = "";}
-		if(StringUtils.isNumeric(shuryoJi2) == false) {shuryoJi2 = "";}
-		if(StringUtils.isNumeric(shuryoFun2) == false) {shuryoFun2 = "";}
-		if(StringUtils.isNumeric(kaishiJi3) == false) {kaishiJi3 = "";}
-		if(StringUtils.isNumeric(kaishiFun3) == false) {kaishiFun3 = "";}
-		if(StringUtils.isNumeric(shuryoJi3) == false) {shuryoJi3 = "";}
-		if(StringUtils.isNumeric(shuryoFun3) == false) {shuryoFun3 = "";}
+		if(isDouble(shusshaJi) == false) {shusshaJi = "";}
+		if(isDouble(shusshaFun) == false) {shusshaFun = "";}
+		if(isDouble(taishaJi) == false) {taishaJi = "";}
+		if(isDouble(taishaFun) == false) {taishaFun = "";}
+		if(isDouble(kaishiJi1) == false) {kaishiJi1 = "";}
+		if(isDouble(kaishiFun1) == false) {kaishiFun1 = "";}
+		if(isDouble(shuryoJi1) == false) {shuryoJi1 = "";}
+		if(isDouble(shuryoFun1) == false) {shuryoFun1 = "";}
+		if(isDouble(kaishiJi2) == false) {kaishiJi2 = "";}
+		if(isDouble(kaishiFun2) == false) {kaishiFun2 = "";}
+		if(isDouble(shuryoJi2) == false) {shuryoJi2 = "";}
+		if(isDouble(shuryoFun2) == false) {shuryoFun2 = "";}
+		if(isDouble(kaishiJi3) == false) {kaishiJi3 = "";}
+		if(isDouble(kaishiFun3) == false) {kaishiFun3 = "";}
+		if(isDouble(shuryoJi3) == false) {shuryoJi3 = "";}
+		if(isDouble(shuryoFun3) == false) {shuryoFun3 = "";}
 
-		if(StringUtils.isEmpty(jitsudoJikan) || (StringUtils.isNumeric(jitsudoJikan) == false)) {jitsudoJikan = "0";}
-		if(StringUtils.isEmpty(jikan1) || (StringUtils.isNumeric(jikan1) == false)) {jikan1 = "0";}
-		if(StringUtils.isEmpty(jikan2) || (StringUtils.isNumeric(jikan2) == false)) {jikan2 = "0";}
-		if(StringUtils.isEmpty(jikan3) || (StringUtils.isNumeric(jikan3) == false)) {jikan3 = "0";}
+		if(StringUtils.isEmpty(jitsudoJikan) || (isDouble(jitsudoJikan) == false)) {jitsudoJikan = "0";}
+		if(StringUtils.isEmpty(jikan1) || (isDouble(jikan1) == false)) {jikan1 = "0";}
+		if(StringUtils.isEmpty(jikan2) || (isDouble(jikan2) == false)) {jikan2 = "0";}
+		if(StringUtils.isEmpty(jikan3) || (isDouble(jikan3) == false)) {jikan3 = "0";}
 
 		HashMap<String, String> shinseiPatternRecord = getShinseiPattern(con, kintaiKbn, kintaiShinseiKbn1, kintaiShinseiKbn2, kintaiShinseiKbn3);
 		String jikanKeisan1 = "0";
@@ -2267,6 +2525,18 @@ public class ChiChinginkeisanshoAction extends PJActionBase {
 		
 		return result;
 
+	}
+	
+	private boolean isDouble(String str) {
+		//判定処理
+		boolean result = false;
+		try {
+			Double.parseDouble(str);
+			result = true;
+		}
+		catch (NumberFormatException e) {
+		}
+		return result;
 	}
 	
 }

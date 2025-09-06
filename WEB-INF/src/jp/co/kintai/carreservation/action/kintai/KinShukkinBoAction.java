@@ -184,7 +184,7 @@ public class KinShukkinBoAction extends PJActionBase {
 	}
 	
 	/**
-	 * ログイン社員の社員区分取得
+	 * ログイン社員のユーザー区分取得
 	 * 
 	 * @param req
 	 * @param res
