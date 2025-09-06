@@ -202,61 +202,61 @@ function onSearchChiChinginkeisansho(){
 			console.log(result);
 			
 			
-			$("#shinseinissu01").text(Number(result.ShinseiNissu01).toLocaleString("ja-JP", {maximumFractionDigits: 1,}));
-			$("#shinseinissu02").text(Number(result.ShinseiNissu02).toLocaleString("ja-JP", {maximumFractionDigits: 1,}));
-			$("#shinseinissu03").text(Number(result.ShinseiNissu03).toLocaleString("ja-JP", {maximumFractionDigits: 1,}));
-			$("#shinseinissu04").text(Number(result.ShinseiNissu04).toLocaleString("ja-JP", {maximumFractionDigits: 1,}));
-			$("#shinseinissu05").text(Number(result.ShinseiNissu05).toLocaleString("ja-JP", {maximumFractionDigits: 1,}));
-			$("#shinseinissu06").text(Number(result.ShinseiNissu06).toLocaleString("ja-JP", {maximumFractionDigits: 1,}));
-			$("#shinseinissu07").text(Number(result.ShinseiNissu07).toLocaleString("ja-JP", {maximumFractionDigits: 1,}));
-			$("#shinseinissu08").text(Number(result.ShinseiNissu08).toLocaleString("ja-JP", {maximumFractionDigits: 1,}));
-			$("#shinseinissu09").text(Number(result.ShinseiNissu09).toLocaleString("ja-JP", {maximumFractionDigits: 1,}));
-			$("#shinseinissu10").text(Number(result.ShinseiNissu10).toLocaleString("ja-JP", {maximumFractionDigits: 1,}));
-			$("#shinseinissu11").text(Number(result.ShinseiNissu11).toLocaleString("ja-JP", {maximumFractionDigits: 1,}));
+			$("#shinseinissu01").text(Number(result.ShinseiNissu01??0).toLocaleString("ja-JP", {maximumFractionDigits: 1,}));
+			$("#shinseinissu02").text(Number(result.ShinseiNissu02??0).toLocaleString("ja-JP", {maximumFractionDigits: 1,}));
+			$("#shinseinissu03").text(Number(result.ShinseiNissu03??0).toLocaleString("ja-JP", {maximumFractionDigits: 1,}));
+			$("#shinseinissu04").text(Number(result.ShinseiNissu04??0).toLocaleString("ja-JP", {maximumFractionDigits: 1,}));
+			$("#shinseinissu05").text(Number(result.ShinseiNissu05??0).toLocaleString("ja-JP", {maximumFractionDigits: 1,}));
+			$("#shinseinissu06").text(Number(result.ShinseiNissu06??0).toLocaleString("ja-JP", {maximumFractionDigits: 1,}));
+			$("#shinseinissu07").text(Number(result.ShinseiNissu07??0).toLocaleString("ja-JP", {maximumFractionDigits: 1,}));
+			$("#shinseinissu08").text(Number(result.ShinseiNissu08??0).toLocaleString("ja-JP", {maximumFractionDigits: 1,}));
+			$("#shinseinissu09").text(Number(result.ShinseiNissu09??0).toLocaleString("ja-JP", {maximumFractionDigits: 1,}));
+			$("#shinseinissu10").text(Number(result.ShinseiNissu10??0).toLocaleString("ja-JP", {maximumFractionDigits: 1,}));
+			$("#shinseinissu11").text(Number(result.ShinseiNissu11??0).toLocaleString("ja-JP", {maximumFractionDigits: 1,}));
 
-			$("#shinseinissukyujitsu").text(result.ShinseiNissuKyujitsu);
+			$("#shinseinissukyujitsu").text(Number(result.ShinseiNissuKyujitsu??0).toLocaleString("ja-JP", {maximumFractionDigits: 1,}));
 
-			$("#shinseijikan01").text(Number(result.ShinseiJikan01).toLocaleString("ja-JP", {minimumFractionDigits: 2,}));
-			$("#shinseijikan02").text(Number(result.ShinseiJikan02).toLocaleString("ja-JP", {minimumFractionDigits: 2,}));
-			$("#shinseijikan03").text(Number(result.ShinseiJikan03).toLocaleString("ja-JP", {minimumFractionDigits: 2,}));
-			$("#shinseijikan04").text(Number(result.ShinseiJikan04).toLocaleString("ja-JP", {minimumFractionDigits: 2,}));
-			$("#shinseijikan05").text(Number(result.ShinseiJikan05).toLocaleString("ja-JP", {minimumFractionDigits: 2,}));
-			$("#shinseijikan06").text(Number(result.ShinseiJikan06).toLocaleString("ja-JP", {minimumFractionDigits: 2,}));
-			$("#shinseijikan07").text(Number(result.ShinseiJikan07).toLocaleString("ja-JP", {minimumFractionDigits: 2,}));
-			$("#shinseijikan08").text(Number(result.ShinseiJikan08).toLocaleString("ja-JP", {minimumFractionDigits: 2,}));
-			$("#shinseijikan09").text(Number(result.ShinseiJikan09).toLocaleString("ja-JP", {minimumFractionDigits: 2,}));
-			$("#shinseijikan10").text(Number(result.ShinseiJikan10).toLocaleString("ja-JP", {minimumFractionDigits: 2,}));
-			$("#shinseijikan11").text(Number(result.ShinseiJikan11).toLocaleString("ja-JP", {minimumFractionDigits: 2,}));
+			$("#shinseijikan01").text(Number(result.ShinseiJikan01??0).toLocaleString("ja-JP", {minimumFractionDigits: 2,}));
+			$("#shinseijikan02").text(Number(result.ShinseiJikan02??0).toLocaleString("ja-JP", {minimumFractionDigits: 2,}));
+			$("#shinseijikan03").text(Number(result.ShinseiJikan03??0).toLocaleString("ja-JP", {minimumFractionDigits: 2,}));
+			$("#shinseijikan04").text(Number(result.ShinseiJikan04??0).toLocaleString("ja-JP", {minimumFractionDigits: 2,}));
+			$("#shinseijikan05").text(Number(result.ShinseiJikan05??0).toLocaleString("ja-JP", {minimumFractionDigits: 2,}));
+			$("#shinseijikan06").text(Number(result.ShinseiJikan06??0).toLocaleString("ja-JP", {minimumFractionDigits: 2,}));
+			$("#shinseijikan07").text(Number(result.ShinseiJikan07??0).toLocaleString("ja-JP", {minimumFractionDigits: 2,}));
+			$("#shinseijikan08").text(Number(result.ShinseiJikan08??0).toLocaleString("ja-JP", {minimumFractionDigits: 2,}));
+			$("#shinseijikan09").text(Number(result.ShinseiJikan09??0).toLocaleString("ja-JP", {minimumFractionDigits: 2,}));
+			$("#shinseijikan10").text(Number(result.ShinseiJikan10??0).toLocaleString("ja-JP", {minimumFractionDigits: 2,}));
+			$("#shinseijikan11").text(Number(result.ShinseiJikan11??0).toLocaleString("ja-JP", {minimumFractionDigits: 2,}));
+
+			$("#shinseitanka01").text(Number(result.ShinseiTanka01??0).toLocaleString("ja-JP"));
+			$("#shinseitanka02").text(Number(result.ShinseiTanka02??0).toLocaleString("ja-JP"));
+			$("#shinseitanka03").text(Number(result.ShinseiTanka03??0).toLocaleString("ja-JP"));
+			$("#shinseitanka04").text(Number(result.ShinseiTanka04??0).toLocaleString("ja-JP"));
+			$("#shinseitanka05").text(Number(result.ShinseiTanka05??0).toLocaleString("ja-JP"));
+			$("#shinseitanka06").text(Number(result.ShinseiTanka06??0).toLocaleString("ja-JP"));
+			$("#shinseitanka07").text(Number(result.ShinseiTanka07??0).toLocaleString("ja-JP"));
+			$("#shinseitanka08").text(Number(result.ShinseiTanka08??0).toLocaleString("ja-JP"));
+			$("#shinseitanka09").text(Number(result.ShinseiTanka09??0).toLocaleString("ja-JP"));
+			$("#shinseitanka10").text(Number(result.ShinseiTanka10??0).toLocaleString("ja-JP"));
+			$("#shinseitanka11").text(Number(result.ShinseiTanka11??0).toLocaleString("ja-JP"));
 			
-			$("#shinseitanka01").text(Number(result.ShinseiTanka01).toLocaleString("ja-JP"));
-			$("#shinseitanka02").text(Number(result.ShinseiTanka02).toLocaleString("ja-JP"));
-			$("#shinseitanka03").text(Number(result.ShinseiTanka03).toLocaleString("ja-JP"));
-			$("#shinseitanka04").text(Number(result.ShinseiTanka04).toLocaleString("ja-JP"));
-			$("#shinseitanka05").text(Number(result.ShinseiTanka05).toLocaleString("ja-JP"));
-			$("#shinseitanka06").text(Number(result.ShinseiTanka06).toLocaleString("ja-JP"));
-			$("#shinseitanka07").text(Number(result.ShinseiTanka07).toLocaleString("ja-JP"));
-			$("#shinseitanka08").text(Number(result.ShinseiTanka08).toLocaleString("ja-JP"));
-			$("#shinseitanka09").text(Number(result.ShinseiTanka09).toLocaleString("ja-JP"));
-			$("#shinseitanka10").text(Number(result.ShinseiTanka10).toLocaleString("ja-JP"));
-			$("#shinseitanka11").text(Number(result.ShinseiTanka11).toLocaleString("ja-JP"));
-			
-			$("#shinseikingakugoukei01").text(Number(result.ShinseiKingakuGoukei01).toLocaleString("ja-JP"));
-			$("#shinseikingakugoukei02").text(Number(result.ShinseiKingakuGoukei02).toLocaleString("ja-JP"));
-			$("#shinseikingakugoukei03").text(Number(result.ShinseiKingakuGoukei03).toLocaleString("ja-JP"));
-			$("#shinseikingakugoukei04").text(Number(result.ShinseiKingakuGoukei04).toLocaleString("ja-JP"));
-			$("#shinseikingakugoukei05").text(Number(result.ShinseiKingakuGoukei05).toLocaleString("ja-JP"));
-			$("#shinseikingakugoukei06").text(Number(result.ShinseiKingakuGoukei06).toLocaleString("ja-JP"));
-			$("#shinseikingakugoukei07").text(Number(result.ShinseiKingakuGoukei07).toLocaleString("ja-JP"));
-			$("#shinseikingakugoukei08").text(Number(result.ShinseiKingakuGoukei08).toLocaleString("ja-JP"));
-			$("#shinseikingakugoukei09").text(Number(result.ShinseiKingakuGoukei09).toLocaleString("ja-JP"));
-			$("#shinseikingakugoukei10").text(Number(result.ShinseiKingakuGoukei10).toLocaleString("ja-JP"));
-			$("#shinseikingakugoukei11").text(Number(result.ShinseiKingakuGoukei11).toLocaleString("ja-JP"));
-			
+			$("#shinseikingakugoukei01").text(Number(result.ShinseiKingakuGoukei01??0).toLocaleString("ja-JP"));
+			$("#shinseikingakugoukei02").text(Number(result.ShinseiKingakuGoukei02??0).toLocaleString("ja-JP"));
+			$("#shinseikingakugoukei03").text(Number(result.ShinseiKingakuGoukei03??0).toLocaleString("ja-JP"));
+			$("#shinseikingakugoukei04").text(Number(result.ShinseiKingakuGoukei04??0).toLocaleString("ja-JP"));
+			$("#shinseikingakugoukei05").text(Number(result.ShinseiKingakuGoukei05??0).toLocaleString("ja-JP"));
+			$("#shinseikingakugoukei06").text(Number(result.ShinseiKingakuGoukei06??0).toLocaleString("ja-JP"));
+			$("#shinseikingakugoukei07").text(Number(result.ShinseiKingakuGoukei07??0).toLocaleString("ja-JP"));
+			$("#shinseikingakugoukei08").text(Number(result.ShinseiKingakuGoukei08??0).toLocaleString("ja-JP"));
+			$("#shinseikingakugoukei09").text(Number(result.ShinseiKingakuGoukei09??0).toLocaleString("ja-JP"));
+			$("#shinseikingakugoukei10").text(Number(result.ShinseiKingakuGoukei10??0).toLocaleString("ja-JP"));
+			$("#shinseikingakugoukei11").text(Number(result.ShinseiKingakuGoukei11??0).toLocaleString("ja-JP"));
+
 			$("#tokkijiko").val(result.TokkiJiko);
-			
-			$("#shinseinisuugoukei").text(Number(result.ShinseiNisuuGoukei).toLocaleString("ja-JP", {maximumFractionDigits: 1,}));
-			$("#shinseijikangoukei").text(Number(result.ShinseiJikanGoukei).toLocaleString("ja-JP", {minimumFractionDigits: 2,}));
-			$("#shinseikingakugoukeigoukei").text(Number(result.ShinseiKingakuGoukeiGoukei).toLocaleString("ja-JP"));
+
+			$("#shinseinisuugoukei").text(Number(result.ShinseiNisuuGoukei??0).toLocaleString("ja-JP", {maximumFractionDigits: 1,}));
+			$("#shinseijikangoukei").text(Number(result.ShinseiJikanGoukei??0).toLocaleString("ja-JP", {minimumFractionDigits: 2,}));
+			$("#shinseikingakugoukeigoukei").text(Number(result.ShinseiKingakuGoukeiGoukei??0).toLocaleString("ja-JP"));
 
 			if(result.KakuteiKbn == "03"){
 				honshaKakuteizumiFlg = true;
