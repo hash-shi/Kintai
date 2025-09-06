@@ -594,8 +594,9 @@ function calcJitsudoJikan(nowRow){
 		kaishiJi != "" && checkIfNumber.test(kaishiJi) &&
 		kaishiFun != "" && checkIfNumber.test(kaishiFun) &&
 		shuryoJi != "" && checkIfNumber.test(shuryoJi) &&
-		shuryoFun != "" && checkIfNumber.test(shuryoFun) &&
-		(jikan == "" || Number(jikan) == 0)
+		shuryoFun != "" && checkIfNumber.test(shuryoFun) 
+//		&&
+//		(jikan == "" || Number(jikan) == 0)
 	){
 		let kaishiJiNum = Number(kaishiJi);
 		let kaishiFunNum = Number(kaishiFun);
@@ -644,8 +645,9 @@ function calcShinseiJikan(nowCol, nowRow){
 		kaishiJi != "" && checkIfNumber.test(kaishiJi) &&
 		kaishiFun != "" && checkIfNumber.test(kaishiFun) &&
 		shuryoJi != "" && checkIfNumber.test(shuryoJi) &&
-		shuryoFun != "" && checkIfNumber.test(shuryoFun) &&
-		(jikan == "" || Number(jikan) == 0)
+		shuryoFun != "" && checkIfNumber.test(shuryoFun)
+//		 &&
+//		(jikan == "" || Number(jikan) == 0)
 	){
 		let kaishiJiNum = Number(kaishiJi);
 		let kaishiFunNum = Number(kaishiFun);
