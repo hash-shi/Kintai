@@ -836,28 +836,39 @@ function onKeyEventF02(){
 	}
 }
 function onDelete(){
-	//削除処理呼び出し
-	proc("delete", {}, function(data){
-
-		if (data == undefined){ return; }
-		if (data["contents"] == undefined){ return; }
+	if ($("#nyuryokuArea").hasClass("upd")) {
+		var result = window.confirm('データの削除を行います。\nよろしいですか？');
+		    
+		if( result ) {
+			//削除処理呼び出し
+			proc("delete", {}, function(data){
 		
-		let contents		= data["contents"];
-		if (contents["result"] == undefined){ return; }
+				if (data == undefined){ return; }
+				if (data["contents"] == undefined){ return; }
+				
+				let contents		= data["contents"];
+				if (contents["result"] == undefined){ return; }
+				
+				let result			= contents["result"];
 		
-		let result			= contents["result"];
+				if(result == true){
+					alert("正常に削除しました。");
+					//再検索する
+					//更新処理に備え、検索条件を保持
+					$("#txtTaishoYM").val($("#txtSearchedTaishoYM").val());
+					$("#txtShainNO").val($("#txtSearchedShainNO").val());
 
-		if(result == true){
-			alert("正常に削除しました。");
-			document.getElementById("txtTaishoYM").focus();
-			//画面表示を初期状態に戻す
-			$("#nyuryokuArea").css("visibility", "hidden");
-			$("#buttonArea").css("visibility", "hidden");
+					//検索結果が0の時のため、画面非表示
+					$("#nyuryokuArea").css("visibility", "hidden");
+					$("#buttonArea").css("visibility", "hidden");
+					onSearchKinShukkinBo();
+				}
+				else{
+					alert("このデータはすでに、別のユーザーに更新されています。\r\nもう一度データを確認してください。");
+				}
+			});
 		}
-		else{
-			alert("このデータはすでに、別のユーザーに更新されています。\r\nもう一度データを確認してください。");
-		}
-	});
+	}
 }
 
 /*
@@ -871,36 +882,40 @@ function onKeyEventF09(){
 	}
 }
 function onUpdate(){
-	//更新処理呼び出し
-	proc("update", {}, function(data){
-
-		if (data == undefined){ return; }
-		if (data["contents"] == undefined){ return; }
-		
-		let contents		= data["contents"];
-		if (contents["result"] == undefined){ return; }
-		
-		let result			= contents["result"];
-
-		if((result == 1) || (result == 2)){
-			if(result == 1){
-				alert("正常に登録しました。");
+	var result = window.confirm('データの更新を行います。\nよろしいですか？');
+	    
+    if( result ) {
+		//更新処理呼び出し
+		proc("update", {}, function(data){
+	
+			if (data == undefined){ return; }
+			if (data["contents"] == undefined){ return; }
+			
+			let contents		= data["contents"];
+			if (contents["result"] == undefined){ return; }
+			
+			let result			= contents["result"];
+	
+			if((result == 1) || (result == 2)){
+				if(result == 1){
+					alert("正常に登録しました。");
+				}
+				if(result == 2){
+					alert("正常に更新しました。");
+				}
+				//再検索する
+				//更新処理に備え、検索条件を保持
+				$("#txtTaishoYM").val($("#txtSearchedTaishoYM").val());
+				$("#txtShainNO").val($("#txtSearchedShainNO").val());
+	
+				//検索結果が0の時のため、画面非表示
+				$("#nyuryokuArea").css("visibility", "hidden");
+				$("#buttonArea").css("visibility", "hidden");
+				onSearchKinShukkinBo();
 			}
-			if(result == 2){
-				alert("正常に更新しました。");
+			else{
+				alert("このデータはすでに、別のユーザーに更新されています。\r\nもう一度データを確認してください。");
 			}
-			//再検索する
-			//更新処理に備え、検索条件を保持
-			$("#txtTaishoYM").val($("#txtSearchedTaishoYM").val());
-			$("#txtShainNO").val($("#txtSearchedShainNO").val());
-
-			//検索結果が0の時のため、画面非表示
-			$("#nyuryokuArea").css("visibility", "hidden");
-			$("#buttonArea").css("visibility", "hidden");
-			onSearchKinShukkinBo();
-		}
-		else{
-			alert("このデータはすでに、別のユーザーに更新されています。\r\nもう一度データを確認してください。");
-		}
-	});
+		});
+	}
 }

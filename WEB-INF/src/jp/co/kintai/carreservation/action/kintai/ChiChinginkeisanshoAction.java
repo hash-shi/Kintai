@@ -350,6 +350,35 @@ public class ChiChinginkeisanshoAction extends PJActionBase {
 	 * @throws Exception
 	 */
 	public void search(HttpServletRequest req, HttpServletResponse res) throws Exception {
+		HashMap<String, Object> Result = new HashMap<>();
+
+		// DB接続
+		Connection con		= this.getConnection("kintai", req);
+		ArrayList<HashMap<String, String>> meisaiResult = new ArrayList<>();
+		meisaiResult = searchExecute(req, res, con);
+		Result.put("chinginkeisanshoArea", meisaiResult);
+
+		HashMap<String, String> tokubetsuNyuryokuResult = new HashMap<>();
+		tokubetsuNyuryokuResult = searchTokubetsuNyuryokuArea(req, res, con);
+		Result.put("tokubetsuNyuryokuArea", tokubetsuNyuryokuResult);
+
+		HashMap<String, String> shukeiResult = new HashMap<>();
+		shukeiResult = searchShukeiArea(req, res, con);
+		Result.put("shukeiArea", shukeiResult);
+		
+		
+		this.addContent("result", Result);
+		
+	}
+
+	/**
+	 * 賃金計算書の取得
+	 * 
+	 * @param req
+	 * @param res
+	 * @throws Exception
+	 */
+	public ArrayList<HashMap<String, String>> searchExecute(HttpServletRequest req, HttpServletResponse res, Connection con) throws Exception {
 		
 		// 検索条件取得
 		String taishoYM			= this.getParameter("txtTaishoYM");
@@ -357,9 +386,6 @@ public class ChiChinginkeisanshoAction extends PJActionBase {
 
 		//検索結果0件の時のため、デフォルトのデータを作成
 		ArrayList<HashMap<String, String>> ResultDatas = getResultDatas(taishoYM);
-		
-		// DB接続
-		Connection con		= this.getConnection("kintai", req);
 		
 		// DB接続
 		StringBuffer sql				= new StringBuffer();
@@ -443,7 +469,7 @@ public class ChiChinginkeisanshoAction extends PJActionBase {
 		//=====================================================================
 		// 結果返却
 		//=====================================================================
-		this.addContent("result", ResultDatas);
+		return ResultDatas;
 		
 	}
 	
@@ -540,7 +566,7 @@ public class ChiChinginkeisanshoAction extends PJActionBase {
 	 * @param res
 	 * @throws Exception
 	 */
-	public void searchTokubetsuNyuryokuArea(HttpServletRequest req, HttpServletResponse res) throws Exception {
+	public HashMap<String, String> searchTokubetsuNyuryokuArea(HttpServletRequest req, HttpServletResponse res, Connection con) throws Exception {
 
 		HashMap<String, String> returnRecord = new HashMap<String, String>();
 		
@@ -549,10 +575,6 @@ public class ChiChinginkeisanshoAction extends PJActionBase {
 		String jitsudojikan = "";
 		String eigyoshoCode = "";
 		String bushoCode = "";
-		//=====================================================================
-		// DB接続
-		//=====================================================================
-		Connection con	= this.getConnection("kintai", req);
 		
 		// 検索条件取得
 		String taishoShainNo	= this.getParameter("txtShainNO");
@@ -582,7 +604,7 @@ public class ChiChinginkeisanshoAction extends PJActionBase {
 		//=====================================================================
 		// 結果返却
 		//=====================================================================
-		this.addContent("result", returnRecord);
+		return returnRecord;
 		
 	}
 	
@@ -593,16 +615,13 @@ public class ChiChinginkeisanshoAction extends PJActionBase {
 	 * @param res
 	 * @throws Exception
 	 */
-	public void searchShukeiArea(HttpServletRequest req, HttpServletResponse res) throws Exception {
+	public HashMap<String, String> searchShukeiArea(HttpServletRequest req, HttpServletResponse res, Connection con) throws Exception {
 		
 		// 検索条件取得
 		String taishoYM			= this.getParameter("txtTaishoYM");
 		String taishoShainNo	= this.getParameter("txtShainNO");
 
 		HashMap<String, String> ResultDatas = new HashMap<>();
-		
-		// DB接続
-		Connection con		= this.getConnection("kintai", req);
 		
 		// DB接続
 		StringBuffer sql				= new StringBuffer();
@@ -767,7 +786,7 @@ public class ChiChinginkeisanshoAction extends PJActionBase {
 		//=====================================================================
 		// 結果返却
 		//=====================================================================
-		this.addContent("result", ResultDatas);
+		return ResultDatas;
 		
 	}
 	
@@ -781,6 +800,30 @@ public class ChiChinginkeisanshoAction extends PJActionBase {
 	public void update(HttpServletRequest req, HttpServletResponse res) throws Exception {
 		// DB接続
 		Connection con		= this.getConnection("kintai", req);
+		//トランザクション開始
+		con.setAutoCommit(false);
+
+		int returnval = updateExecute(req, res, con);
+		if(returnval == 0) {
+			returnval = 0;
+			//ロールバック
+			con.rollback();
+		}
+		else {
+			//コミット
+			con.commit();
+		}
+		this.addContent("result", returnval);
+	}
+
+	/**
+	 * 出勤簿の更新
+	 * 
+	 * @param req
+	 * @param res
+	 * @throws Exception
+	 */
+	public int updateExecute(HttpServletRequest req, HttpServletResponse res, Connection con) throws Exception {
 
 		//=====================================================================
 		// パラメータ取得
@@ -795,8 +838,6 @@ public class ChiChinginkeisanshoAction extends PJActionBase {
 		
 		boolean result = false;
 		int returnval = 0;
-		//トランザクション開始
-		con.setAutoCommit(false);
 		//1か月分入力項目があるので1か月分ループ
 		for(int i = 0;i < 31;i++){
 			StringBuilder taishoNengappiKeySb	= new StringBuilder();
@@ -831,14 +872,8 @@ public class ChiChinginkeisanshoAction extends PJActionBase {
 		}
 		if(result == false) {
 			returnval = 0;
-			//ロールバック
-			con.rollback();
 		}
-		else {
-			//コミット
-			con.commit();
-		}
-		this.addContent("result", returnval);
+		return returnval;
 	}
 	
 	/**

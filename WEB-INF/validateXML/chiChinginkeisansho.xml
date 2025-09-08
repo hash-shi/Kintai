@@ -55,9 +55,9 @@
 				<param name="shainNo">txtSearchedShainNO</param>
 			</check>
 
-			<check class="ChiChinginkeisanshoExclusiveValidate" message="この出勤簿明細データはすでに、別のユーザーに更新されています。もう一度データを確認してください。"></check>
-			<check class="ExclusiveValidate" message="この出勤簿基本データはすでに、別のユーザーに更新されています。もう一度データを確認してください。">
-				<param name="tableName">KIN_SHUKKINBO_KIHON</param>
+			<check class="ChiChinginkeisanshoExclusiveValidate" message="この賃金計算書明細データはすでに、別のユーザーに更新されています。もう一度データを確認してください。"></check>
+			<check class="ExclusiveValidate" message="この賃金計算書基本データはすでに、別のユーザーに更新されています。もう一度データを確認してください。">
+				<param name="tableName">CHI_CHINGINKEISANSHO_KIHON</param>
 				<param name="keyName">TaishoNenGetsudo,ShainNO</param>
 				<param name="keyValue">txtSearchedTaishoYM,txtSearchedShainNO</param>
 				<param name="saishuKoshinDate">hdnKihonSaishuKoshinDate</param>
@@ -67,26 +67,10 @@
 			<check class="ChiChinginkeisanshoValidate" message="更新処理でエラーが発生しました。"></check>
 		</variable>
 
-		<variable name="txtShinseiKingaku01" dispName="特別作業金額">
-			<check class="IsNumber" message="!#itemName#!には数値を入力してください。" itemName="{dispName}">
-				<param name="isReplaceComma">true</param>
-			</check>
-			<check class="MaxNumberLimit" message="!#itemName#!の桁数が不正です。" itemName="{dispName}">
-				<param name="length">9999999</param>
-			</check>
-			<check class="MinNumberLimit" message="!#itemName#!にはマイナスは設定できません。" itemName="{dispName}">
-				<param name="length">0</param>
-			</check>
-		</variable>
-		<variable name="txtShinseiKingaku02" dispName="営業日当手当">
-			<check class="IsNumber" message="!#itemName#!には数値を入力してください。" itemName="{dispName}">
-				<param name="isReplaceComma">true</param>
-			</check>
-			<check class="MaxNumberLimit" message="!#itemName#!の桁数が不正です。" itemName="{dispName}">
-				<param name="length">9999999</param>
-			</check>
-			<check class="MinNumberLimit" message="!#itemName#!にはマイナスは設定できません。" itemName="{dispName}">
-				<param name="length">0</param>
+		<variable name="txtShinseiKingaku02" dispName="特記事項">
+			<check class="lengthValidate" message="!#itemName#!が264バイトを超えています。(264バイト = 全角264/2文字, 半角40文字)" itemName="{dispName}">
+				<param name="type">half</param>
+				<param name="length">264</param>
 			</check>
 		</variable>
 	</proc>

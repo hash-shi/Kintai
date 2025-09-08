@@ -167,102 +167,80 @@ function onSearchChiChinginkeisansho(){
 		//検索結果があれば入力項目表示
 		$("#nyuryokuArea").css("visibility", "");
 
-		let result			= contents["result"];
-		chiChinginkeisanshoResultAll = result;
-
+		let chinginkeisanshoResult			= contents["result"]["chinginkeisanshoArea"];
+		chiChinginkeisanshoResultAll = chinginkeisanshoResult;
 		onDisplayNyuryokuArea(true);
 
 		//勤務開始・終了時間、実働時間表示
-		proc("searchTokubetsuNyuryokuArea", {}, function(data){
+		let tokubetsuNyuryokuResult			= contents["result"]["tokubetsuNyuryokuArea"];
+		$("#kinmuKaishi").text(tokubetsuNyuryokuResult.kinmuKaishi);
+		$("#kinmuShuryo").text(tokubetsuNyuryokuResult.kinmuShuryo);
+		$("#jitsudojikan").text(tokubetsuNyuryokuResult.jitsudojikan);
+		$("#hidEigyoshoCode").val(tokubetsuNyuryokuResult.eigyoshoCode);
+		$("#hidBushoCode").val(tokubetsuNyuryokuResult.bushoCode);
 
-			if (data == undefined){ return; }
-			if (data["contents"] == undefined){ return; }
-			
-			let contents		= data["contents"];
-			if (contents["result"] == undefined){ return; }
-			let result			= contents["result"];
-			
-			$("#kinmuKaishi").text(result.kinmuKaishi);
-			$("#kinmuShuryo").text(result.kinmuShuryo);
-			$("#jitsudojikan").text(result.jitsudojikan);
-			$("#hidEigyoshoCode").val(result.eigyoshoCode);
-			$("#hidBushoCode").val(result.bushoCode);
-
-		});
 		//集計エリア表示
-		proc("searchShukeiArea", {}, function(data){
+		let shukeiResult			= contents["result"]["shukeiArea"];
+		$("#shinseinissu01").text(Number(shukeiResult.ShinseiNissu01??0).toLocaleString("ja-JP", {maximumFractionDigits: 1,}));
+		$("#shinseinissu02").text(Number(shukeiResult.ShinseiNissu02??0).toLocaleString("ja-JP", {maximumFractionDigits: 1,}));
+		$("#shinseinissu03").text(Number(shukeiResult.ShinseiNissu03??0).toLocaleString("ja-JP", {maximumFractionDigits: 1,}));
+		$("#shinseinissu04").text(Number(shukeiResult.ShinseiNissu04??0).toLocaleString("ja-JP", {maximumFractionDigits: 1,}));
+		$("#shinseinissu05").text(Number(shukeiResult.ShinseiNissu05??0).toLocaleString("ja-JP", {maximumFractionDigits: 1,}));
+		$("#shinseinissu06").text(Number(shukeiResult.ShinseiNissu06??0).toLocaleString("ja-JP", {maximumFractionDigits: 1,}));
+		$("#shinseinissu07").text(Number(shukeiResult.ShinseiNissu07??0).toLocaleString("ja-JP", {maximumFractionDigits: 1,}));
+		$("#shinseinissu08").text(Number(shukeiResult.ShinseiNissu08??0).toLocaleString("ja-JP", {maximumFractionDigits: 1,}));
+		$("#shinseinissu09").text(Number(shukeiResult.ShinseiNissu09??0).toLocaleString("ja-JP", {maximumFractionDigits: 1,}));
+		$("#shinseinissu10").text(Number(shukeiResult.ShinseiNissu10??0).toLocaleString("ja-JP", {maximumFractionDigits: 1,}));
+		$("#shinseinissu11").text(Number(shukeiResult.ShinseiNissu11??0).toLocaleString("ja-JP", {maximumFractionDigits: 1,}));
 
-			if (data == undefined){ return; }
-			if (data["contents"] == undefined){ return; }
-			
-			let contents		= data["contents"];
-			if (contents["result"] == undefined){ return; }
-			let result			= contents["result"];
-			console.log("searchTokubetsuNyuryokuAreaのresult");
-			console.log(result);
-			
-			
-			$("#shinseinissu01").text(Number(result.ShinseiNissu01??0).toLocaleString("ja-JP", {maximumFractionDigits: 1,}));
-			$("#shinseinissu02").text(Number(result.ShinseiNissu02??0).toLocaleString("ja-JP", {maximumFractionDigits: 1,}));
-			$("#shinseinissu03").text(Number(result.ShinseiNissu03??0).toLocaleString("ja-JP", {maximumFractionDigits: 1,}));
-			$("#shinseinissu04").text(Number(result.ShinseiNissu04??0).toLocaleString("ja-JP", {maximumFractionDigits: 1,}));
-			$("#shinseinissu05").text(Number(result.ShinseiNissu05??0).toLocaleString("ja-JP", {maximumFractionDigits: 1,}));
-			$("#shinseinissu06").text(Number(result.ShinseiNissu06??0).toLocaleString("ja-JP", {maximumFractionDigits: 1,}));
-			$("#shinseinissu07").text(Number(result.ShinseiNissu07??0).toLocaleString("ja-JP", {maximumFractionDigits: 1,}));
-			$("#shinseinissu08").text(Number(result.ShinseiNissu08??0).toLocaleString("ja-JP", {maximumFractionDigits: 1,}));
-			$("#shinseinissu09").text(Number(result.ShinseiNissu09??0).toLocaleString("ja-JP", {maximumFractionDigits: 1,}));
-			$("#shinseinissu10").text(Number(result.ShinseiNissu10??0).toLocaleString("ja-JP", {maximumFractionDigits: 1,}));
-			$("#shinseinissu11").text(Number(result.ShinseiNissu11??0).toLocaleString("ja-JP", {maximumFractionDigits: 1,}));
+		$("#shinseinissukyujitsu").text(Number(shukeiResult.ShinseiNissuKyujitsu??0).toLocaleString("ja-JP", {maximumFractionDigits: 1,}));
 
-			$("#shinseinissukyujitsu").text(Number(result.ShinseiNissuKyujitsu??0).toLocaleString("ja-JP", {maximumFractionDigits: 1,}));
+		$("#shinseijikan01").text(Number(shukeiResult.ShinseiJikan01??0).toLocaleString("ja-JP", {minimumFractionDigits: 2,}));
+		$("#shinseijikan02").text(Number(shukeiResult.ShinseiJikan02??0).toLocaleString("ja-JP", {minimumFractionDigits: 2,}));
+		$("#shinseijikan03").text(Number(shukeiResult.ShinseiJikan03??0).toLocaleString("ja-JP", {minimumFractionDigits: 2,}));
+		$("#shinseijikan04").text(Number(shukeiResult.ShinseiJikan04??0).toLocaleString("ja-JP", {minimumFractionDigits: 2,}));
+		$("#shinseijikan05").text(Number(shukeiResult.ShinseiJikan05??0).toLocaleString("ja-JP", {minimumFractionDigits: 2,}));
+		$("#shinseijikan06").text(Number(shukeiResult.ShinseiJikan06??0).toLocaleString("ja-JP", {minimumFractionDigits: 2,}));
+		$("#shinseijikan07").text(Number(shukeiResult.ShinseiJikan07??0).toLocaleString("ja-JP", {minimumFractionDigits: 2,}));
+		$("#shinseijikan08").text(Number(shukeiResult.ShinseiJikan08??0).toLocaleString("ja-JP", {minimumFractionDigits: 2,}));
+		$("#shinseijikan09").text(Number(shukeiResult.ShinseiJikan09??0).toLocaleString("ja-JP", {minimumFractionDigits: 2,}));
+		$("#shinseijikan10").text(Number(shukeiResult.ShinseiJikan10??0).toLocaleString("ja-JP", {minimumFractionDigits: 2,}));
+		$("#shinseijikan11").text(Number(shukeiResult.ShinseiJikan11??0).toLocaleString("ja-JP", {minimumFractionDigits: 2,}));
 
-			$("#shinseijikan01").text(Number(result.ShinseiJikan01??0).toLocaleString("ja-JP", {minimumFractionDigits: 2,}));
-			$("#shinseijikan02").text(Number(result.ShinseiJikan02??0).toLocaleString("ja-JP", {minimumFractionDigits: 2,}));
-			$("#shinseijikan03").text(Number(result.ShinseiJikan03??0).toLocaleString("ja-JP", {minimumFractionDigits: 2,}));
-			$("#shinseijikan04").text(Number(result.ShinseiJikan04??0).toLocaleString("ja-JP", {minimumFractionDigits: 2,}));
-			$("#shinseijikan05").text(Number(result.ShinseiJikan05??0).toLocaleString("ja-JP", {minimumFractionDigits: 2,}));
-			$("#shinseijikan06").text(Number(result.ShinseiJikan06??0).toLocaleString("ja-JP", {minimumFractionDigits: 2,}));
-			$("#shinseijikan07").text(Number(result.ShinseiJikan07??0).toLocaleString("ja-JP", {minimumFractionDigits: 2,}));
-			$("#shinseijikan08").text(Number(result.ShinseiJikan08??0).toLocaleString("ja-JP", {minimumFractionDigits: 2,}));
-			$("#shinseijikan09").text(Number(result.ShinseiJikan09??0).toLocaleString("ja-JP", {minimumFractionDigits: 2,}));
-			$("#shinseijikan10").text(Number(result.ShinseiJikan10??0).toLocaleString("ja-JP", {minimumFractionDigits: 2,}));
-			$("#shinseijikan11").text(Number(result.ShinseiJikan11??0).toLocaleString("ja-JP", {minimumFractionDigits: 2,}));
+		$("#shinseitanka01").text(Number(shukeiResult.ShinseiTanka01??0).toLocaleString("ja-JP"));
+		$("#shinseitanka02").text(Number(shukeiResult.ShinseiTanka02??0).toLocaleString("ja-JP"));
+		$("#shinseitanka03").text(Number(shukeiResult.ShinseiTanka03??0).toLocaleString("ja-JP"));
+		$("#shinseitanka04").text(Number(shukeiResult.ShinseiTanka04??0).toLocaleString("ja-JP"));
+		$("#shinseitanka05").text(Number(shukeiResult.ShinseiTanka05??0).toLocaleString("ja-JP"));
+		$("#shinseitanka06").text(Number(shukeiResult.ShinseiTanka06??0).toLocaleString("ja-JP"));
+		$("#shinseitanka07").text(Number(shukeiResult.ShinseiTanka07??0).toLocaleString("ja-JP"));
+		$("#shinseitanka08").text(Number(shukeiResult.ShinseiTanka08??0).toLocaleString("ja-JP"));
+		$("#shinseitanka09").text(Number(shukeiResult.ShinseiTanka09??0).toLocaleString("ja-JP"));
+		$("#shinseitanka10").text(Number(shukeiResult.ShinseiTanka10??0).toLocaleString("ja-JP"));
+		$("#shinseitanka11").text(Number(shukeiResult.ShinseiTanka11??0).toLocaleString("ja-JP"));
 
-			$("#shinseitanka01").text(Number(result.ShinseiTanka01??0).toLocaleString("ja-JP"));
-			$("#shinseitanka02").text(Number(result.ShinseiTanka02??0).toLocaleString("ja-JP"));
-			$("#shinseitanka03").text(Number(result.ShinseiTanka03??0).toLocaleString("ja-JP"));
-			$("#shinseitanka04").text(Number(result.ShinseiTanka04??0).toLocaleString("ja-JP"));
-			$("#shinseitanka05").text(Number(result.ShinseiTanka05??0).toLocaleString("ja-JP"));
-			$("#shinseitanka06").text(Number(result.ShinseiTanka06??0).toLocaleString("ja-JP"));
-			$("#shinseitanka07").text(Number(result.ShinseiTanka07??0).toLocaleString("ja-JP"));
-			$("#shinseitanka08").text(Number(result.ShinseiTanka08??0).toLocaleString("ja-JP"));
-			$("#shinseitanka09").text(Number(result.ShinseiTanka09??0).toLocaleString("ja-JP"));
-			$("#shinseitanka10").text(Number(result.ShinseiTanka10??0).toLocaleString("ja-JP"));
-			$("#shinseitanka11").text(Number(result.ShinseiTanka11??0).toLocaleString("ja-JP"));
-			
-			$("#shinseikingakugoukei01").text(Number(result.ShinseiKingakuGoukei01??0).toLocaleString("ja-JP"));
-			$("#shinseikingakugoukei02").text(Number(result.ShinseiKingakuGoukei02??0).toLocaleString("ja-JP"));
-			$("#shinseikingakugoukei03").text(Number(result.ShinseiKingakuGoukei03??0).toLocaleString("ja-JP"));
-			$("#shinseikingakugoukei04").text(Number(result.ShinseiKingakuGoukei04??0).toLocaleString("ja-JP"));
-			$("#shinseikingakugoukei05").text(Number(result.ShinseiKingakuGoukei05??0).toLocaleString("ja-JP"));
-			$("#shinseikingakugoukei06").text(Number(result.ShinseiKingakuGoukei06??0).toLocaleString("ja-JP"));
-			$("#shinseikingakugoukei07").text(Number(result.ShinseiKingakuGoukei07??0).toLocaleString("ja-JP"));
-			$("#shinseikingakugoukei08").text(Number(result.ShinseiKingakuGoukei08??0).toLocaleString("ja-JP"));
-			$("#shinseikingakugoukei09").text(Number(result.ShinseiKingakuGoukei09??0).toLocaleString("ja-JP"));
-			$("#shinseikingakugoukei10").text(Number(result.ShinseiKingakuGoukei10??0).toLocaleString("ja-JP"));
-			$("#shinseikingakugoukei11").text(Number(result.ShinseiKingakuGoukei11??0).toLocaleString("ja-JP"));
+		$("#shinseikingakugoukei01").text(Number(shukeiResult.ShinseiKingakuGoukei01??0).toLocaleString("ja-JP"));
+		$("#shinseikingakugoukei02").text(Number(shukeiResult.ShinseiKingakuGoukei02??0).toLocaleString("ja-JP"));
+		$("#shinseikingakugoukei03").text(Number(shukeiResult.ShinseiKingakuGoukei03??0).toLocaleString("ja-JP"));
+		$("#shinseikingakugoukei04").text(Number(shukeiResult.ShinseiKingakuGoukei04??0).toLocaleString("ja-JP"));
+		$("#shinseikingakugoukei05").text(Number(shukeiResult.ShinseiKingakuGoukei05??0).toLocaleString("ja-JP"));
+		$("#shinseikingakugoukei06").text(Number(shukeiResult.ShinseiKingakuGoukei06??0).toLocaleString("ja-JP"));
+		$("#shinseikingakugoukei07").text(Number(shukeiResult.ShinseiKingakuGoukei07??0).toLocaleString("ja-JP"));
+		$("#shinseikingakugoukei08").text(Number(shukeiResult.ShinseiKingakuGoukei08??0).toLocaleString("ja-JP"));
+		$("#shinseikingakugoukei09").text(Number(shukeiResult.ShinseiKingakuGoukei09??0).toLocaleString("ja-JP"));
+		$("#shinseikingakugoukei10").text(Number(shukeiResult.ShinseiKingakuGoukei10??0).toLocaleString("ja-JP"));
+		$("#shinseikingakugoukei11").text(Number(shukeiResult.ShinseiKingakuGoukei11??0).toLocaleString("ja-JP"));
 
-			$("#tokkijiko").val(result.TokkiJiko);
+		$("#tokkijiko").val(shukeiResult.TokkiJiko);
 
-			$("#shinseinisuugoukei").text(Number(result.ShinseiNisuuGoukei??0).toLocaleString("ja-JP", {maximumFractionDigits: 1,}));
-			$("#shinseijikangoukei").text(Number(result.ShinseiJikanGoukei??0).toLocaleString("ja-JP", {minimumFractionDigits: 2,}));
-			$("#shinseikingakugoukeigoukei").text(Number(result.ShinseiKingakuGoukeiGoukei??0).toLocaleString("ja-JP"));
+		$("#shinseinisuugoukei").text(Number(shukeiResult.ShinseiNisuuGoukei??0).toLocaleString("ja-JP", {maximumFractionDigits: 1,}));
+		$("#shinseijikangoukei").text(Number(shukeiResult.ShinseiJikanGoukei??0).toLocaleString("ja-JP", {minimumFractionDigits: 2,}));
+		$("#shinseikingakugoukeigoukei").text(Number(shukeiResult.ShinseiKingakuGoukeiGoukei??0).toLocaleString("ja-JP"));
 
-			if(result.KakuteiKbn == "03"){
-				honshaKakuteizumiFlg = true;
-			}
+		if(shukeiResult.KakuteiKbn == "03"){
+			honshaKakuteizumiFlg = true;
+		}
 
-		});
 
 		//本社確定済みチェック　検索結果表示するが更新は不可
 		proc("honshaKakuteizumiCheck", {}, function(data){
@@ -687,28 +665,34 @@ function onKeyEventF02(){
 	}
 }
 function onDelete(){
-	//削除処理呼び出し
-	proc("delete", {}, function(data){
-
-		if (data == undefined){ return; }
-		if (data["contents"] == undefined){ return; }
+	if ($("#nyuryokuArea").hasClass("upd")) {
+		var result = window.confirm('データの削除を行います。\nよろしいですか？');
+		    
+		if( result ) {
+			//削除処理呼び出し
+			proc("delete", {}, function(data){
 		
-		let contents		= data["contents"];
-		if (contents["result"] == undefined){ return; }
+				if (data == undefined){ return; }
+				if (data["contents"] == undefined){ return; }
+				
+				let contents		= data["contents"];
+				if (contents["result"] == undefined){ return; }
+				
+				let result			= contents["result"];
 		
-		let result			= contents["result"];
-
-		if(result == true){
-			alert("正常に削除しました。");
-			document.getElementById("txtTaishoYM").focus();
-			//画面表示を初期状態に戻す
-			$("#nyuryokuArea").css("visibility", "hidden");
-			$("#buttonArea").css("visibility", "hidden");
+				if(result == true){
+					alert("正常に削除しました。");
+					document.getElementById("txtTaishoYM").focus();
+					//画面表示を初期状態に戻す
+					$("#nyuryokuArea").css("visibility", "hidden");
+					$("#buttonArea").css("visibility", "hidden");
+				}
+				else{
+					alert("このデータはすでに、別のユーザーに更新されています。\r\nもう一度データを確認してください。");
+				}
+			});
 		}
-		else{
-			alert("このデータはすでに、別のユーザーに更新されています。\r\nもう一度データを確認してください。");
-		}
-	});
+	}
 }
 
 /*
@@ -753,36 +737,40 @@ function onKeyEventF09(){
 	}
 }
 function onUpdate(){
-	//更新処理呼び出し
-	proc("update", {}, function(data){
-
-		if (data == undefined){ return; }
-		if (data["contents"] == undefined){ return; }
-		
-		let contents		= data["contents"];
-		if (contents["result"] == undefined){ return; }
-		
-		let result			= contents["result"];
-
-		if((result == 1) || (result == 2)){
-			if(result == 1){
-				alert("正常に登録しました。");
+	var result = window.confirm('データの更新を行います。\nよろしいですか？');
+	    
+	if( result ) {
+		//更新処理呼び出し
+		proc("update", {}, function(data){
+	
+			if (data == undefined){ return; }
+			if (data["contents"] == undefined){ return; }
+			
+			let contents		= data["contents"];
+			if (contents["result"] == undefined){ return; }
+			
+			let result			= contents["result"];
+	
+			if((result == 1) || (result == 2)){
+				if(result == 1){
+					alert("正常に登録しました。");
+				}
+				if(result == 2){
+					alert("正常に更新しました。");
+				}
+				//再検索する
+				//更新処理に備え、検索条件を保持
+				$("#txtTaishoYM").val($("#txtSearchedTaishoYM").val());
+				$("#txtShainNO").val($("#txtSearchedShainNO").val());
+	
+				//検索結果が0の時のため、画面非表示
+				$("#nyuryokuArea").css("visibility", "hidden");
+				$("#buttonArea").css("visibility", "hidden");
+				onSearchChiChinginkeisansho();
 			}
-			if(result == 2){
-				alert("正常に更新しました。");
+			else{
+				alert("このデータはすでに、別のユーザーに更新されています。\r\nもう一度データを確認してください。");
 			}
-			//再検索する
-			//更新処理に備え、検索条件を保持
-			$("#txtTaishoYM").val($("#txtSearchedTaishoYM").val());
-			$("#txtShainNO").val($("#txtSearchedShainNO").val());
-
-			//検索結果が0の時のため、画面非表示
-			$("#nyuryokuArea").css("visibility", "hidden");
-			$("#buttonArea").css("visibility", "hidden");
-			onSearchChiChinginkeisansho();
-		}
-		else{
-			alert("このデータはすでに、別のユーザーに更新されています。\r\nもう一度データを確認してください。");
-		}
-	});
+		});
+	}
 }
