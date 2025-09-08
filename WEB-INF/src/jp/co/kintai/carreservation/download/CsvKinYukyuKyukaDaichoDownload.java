@@ -148,15 +148,15 @@ public class CsvKinYukyuKyukaDaichoDownload extends DownloadBase {
 			
 			// 処理可能営業所コードがあるか判定
 			if (0 < shoriKanoEigyoshoCode.size()) {
-			   sql.append(" AND CAST(E.EigyoshoCode AS int) in ( ");
-			   // 処理可能営業所コード分繰り返す
-			   for (int i = 0; i < shoriKanoEigyoshoCode.size(); i++) {
-			     // 最初の1回目のみ,がいらない。
-			     if (i == 0) { sql.append(" ? "); } else { sql.append(" , ? "); }
-			     // パラメータセット
-			     pstmtf.addValue("String", shoriKanoEigyoshoCode.get(i));
-			   }
-			   sql.append(" ) ");
+				sql.append(" AND CAST(E.EigyoshoCode AS int) in ( ");
+				// 処理可能営業所コード分繰り返す
+				for (int i = 0; i < shoriKanoEigyoshoCode.size(); i++) {
+					// 最初の1回目のみ,がいらない。
+					if (i == 0) { sql.append(" ? "); } else { sql.append(" , ? "); }
+					// パラメータセット
+					pstmtf.addValue("String", shoriKanoEigyoshoCode.get(i));
+				}
+				sql.append(" ) ");
 			}
 			
 			if (StringUtils.isNotBlank(fromBushoCode)) {
@@ -278,15 +278,15 @@ public class CsvKinYukyuKyukaDaichoDownload extends DownloadBase {
 		
 		// 処理可能営業所コードがあるか判定
 		if (0 < shoriKanoEigyoshoCode.size()) {
-		   sql.append(" AND CAST(E.EigyoshoCode AS int) in ( ");
-		   // 処理可能営業所コード分繰り返す
-		   for (int i = 0; i < shoriKanoEigyoshoCode.size(); i++) {
-		     // 最初の1回目のみ,がいらない。
-		     if (i == 0) { sql.append(" ? "); } else { sql.append(" , ? "); }
-		     // パラメータセット
-		     pstmtf.addValue("String", shoriKanoEigyoshoCode.get(i));
-		   }
-		   sql.append(" ) ");
+			sql.append(" AND CAST(E.EigyoshoCode AS int) in ( ");
+			// 処理可能営業所コード分繰り返す
+			for (int i = 0; i < shoriKanoEigyoshoCode.size(); i++) {
+				// 最初の1回目のみ,がいらない。
+				if (i == 0) { sql.append(" ? "); } else { sql.append(" , ? "); }
+				// パラメータセット
+				pstmtf.addValue("String", shoriKanoEigyoshoCode.get(i));
+			}
+			sql.append(" ) ");
 		}
 		
 		if (StringUtils.isNotBlank(fromBushoCode)) {
@@ -405,15 +405,15 @@ public class CsvKinYukyuKyukaDaichoDownload extends DownloadBase {
 		
 		// 処理可能営業所コードがあるか判定
 		if (0 < shoriKanoEigyoshoCode.size()) {
-		   sql.append(" AND CAST(E.EigyoshoCode AS int) in ( ");
-		   // 処理可能営業所コード分繰り返す
-		   for (int i = 0; i < shoriKanoEigyoshoCode.size(); i++) {
-		     // 最初の1回目のみ,がいらない。
-		     if (i == 0) { sql.append(" ? "); } else { sql.append(" , ? "); }
-		     // パラメータセット
-		     pstmtf.addValue("String", shoriKanoEigyoshoCode.get(i));
-		   }
-		   sql.append(" ) ");
+			sql.append(" AND CAST(E.EigyoshoCode AS int) in ( ");
+			// 処理可能営業所コード分繰り返す
+			for (int i = 0; i < shoriKanoEigyoshoCode.size(); i++) {
+				// 最初の1回目のみ,がいらない。
+				if (i == 0) { sql.append(" ? "); } else { sql.append(" , ? "); }
+				// パラメータセット
+				pstmtf.addValue("String", shoriKanoEigyoshoCode.get(i));
+			}
+			sql.append(" ) ");
 		}
 		
 		if (StringUtils.isNotBlank(fromBushoCode)) {
@@ -584,14 +584,6 @@ public class CsvKinYukyuKyukaDaichoDownload extends DownloadBase {
 				csvStringRecord.addItem(d.get("month" + cnt), PJActionBase.getQuotation(columns, "month" + cnt,d.get("month" + cnt)));
 				csvStringRecord.addItem(d.get("day" + cnt), PJActionBase.getQuotation(columns, "day" + cnt,d.get("day" + cnt)));
 				csvStringRecord.addItem(d.get("hankyu" + cnt), PJActionBase.getQuotation(columns, "hankyu" + cnt,d.get("hankyu" + cnt)));
-//			    String month  = d.get("month"  + cnt);
-//			    String day    = d.get("day"    + cnt);
-//			    String hankyu = d.get("hankyu" + cnt);
-//				
-//				csvStringRecord.addItem(month == null || month.isEmpty() ? "1" : month, true);
-//				csvStringRecord.addItem(day == null || day.isEmpty() ? "" : day, true);
-//				csvStringRecord.addItem(hankyu == null || hankyu.isEmpty() ? "\"\"" : hankyu, true);
-
 			}
 			
 			csvStringRecord.addItem(d.get("YukyuKyukaZanNissu"), PJActionBase.getQuotation(columns, "YukyuKyukaZanNissu",d.get("YukyuKyukaZanNissu")));

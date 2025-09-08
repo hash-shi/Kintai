@@ -80,19 +80,19 @@ public abstract class PJActionBase extends ActionBase {
 		// 数値 false
 		// NULL、空文字 true
 
-	    // データ型が数値型(intやdecimal)の場合はダブルクオート不要
-	    String type = columns.get(key);
-	    if (type != null && (type.startsWith("int") || type.startsWith("decimal"))) {
-	        return false;
-	    }
-	    
-	    // 値が null または空文字の場合はダブルクオート
-	    if (value == null || value.isEmpty()) {
-	        return true;
-	    }
+		// データ型が数値型(intやdecimal)の場合はダブルクオート不要
+		String type = columns.get(key);
+		if (type != null && (type.startsWith("int") || type.startsWith("decimal"))) {
+			return false;
+		}
+		
+		// 値が null または空文字の場合はダブルクオート
+		if (value == null || value.isEmpty()) {
+			return true;
+		}
 
-	    // それ以外はダブルクオート
-	    return true;
+		// それ以外はダブルクオート
+		return true;
 	}
 	
 	
