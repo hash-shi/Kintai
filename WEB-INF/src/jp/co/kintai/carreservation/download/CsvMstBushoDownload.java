@@ -159,13 +159,14 @@ public class CsvMstBushoDownload extends DownloadBase {
 			// 1行取得
 			HashMap<String, String> d = data.get(i);
 			
-			csvStringRecord.addItem(d.get("BushoCode"), PJActionBase.getQuotation(columns, "BushoCode"));
-			csvStringRecord.addItem(d.get("BushoName"), PJActionBase.getQuotation(columns, "BushoName"));
-			csvStringRecord.addItem(d.get("BushoKbn"), PJActionBase.getQuotation(columns, "BushoKbn"));
-			csvStringRecord.addItem(d.get("EigyoshoCode"), PJActionBase.getQuotation(columns, "EigyoshoCode"));
-			csvStringRecord.addItem(d.get("SaishuKoshinShainNO"), PJActionBase.getQuotation(columns, "SaishuKoshinShainNO"));
-			csvStringRecord.addItem(d.get("SaishuKoshinDate"), PJActionBase.getQuotation(columns, "SaishuKoshinDate"));
-			csvStringRecord.addItem(d.get("SaishuKoshinJikan"), PJActionBase.getQuotation(columns, "SaishuKoshinJikan"));
+			csvStringRecord.addItem(d.get("BushoCode"), PJActionBase.getQuotation(columns, "BushoCode",d.get("BushoCode")));
+			csvStringRecord.addItem(d.get("BushoName"), PJActionBase.getQuotation(columns, "BushoName",d.get("BushoName")));
+			csvStringRecord.addItem(d.get("BushoKbn"), PJActionBase.getQuotation(columns, "BushoKbn",d.get("BushoKbn")));
+			csvStringRecord.addItem(d.get("EigyoshoCode"), PJActionBase.getQuotation(columns, "EigyoshoCode",d.get("EigyoshoCode")));
+			csvStringRecord.addItem(d.get("SaishuKoshinShainNO"), PJActionBase.getQuotation(columns, "SaishuKoshinShainNO",d.get("SaishuKoshinShainNO")));
+			csvStringRecord.addItem(d.get("SaishuKoshinDate"), PJActionBase.getQuotation(columns, "SaishuKoshinDate",d.get("SaishuKoshinDate")));
+			csvStringRecord.addItem(d.get("SaishuKoshinJikan"), PJActionBase.getQuotation(columns, "SaishuKoshinJikan",d.get("SaishuKoshinJikan")));
+			
 			// データ格納
 			csvString.append(csvStringRecord.getLine() + newLine);
 		}

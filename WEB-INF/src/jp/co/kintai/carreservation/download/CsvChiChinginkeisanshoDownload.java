@@ -335,32 +335,32 @@ public class CsvChiChinginkeisanshoDownload extends DownloadBase {
 			// 1行取得
 			HashMap<String, String> d = data.get(i);
 			
-			csvStringRecord.addItem(d.get("TaishoNendo"), PJActionBase.getQuotation(columns, "TaishoNendo"));
-			csvStringRecord.addItem(d.get("TaishoGetsudo"), PJActionBase.getQuotation(columns, "TaishoGetsudo"));
-			csvStringRecord.addItem(d.get("SakuseiDate"), PJActionBase.getQuotation(columns, "SakuseiDate"));
-			csvStringRecord.addItem(d.get("EigyoshoCode"), PJActionBase.getQuotation(columns, "EigyoshoCode"));
-			csvStringRecord.addItem(d.get("EigyoshoName"), PJActionBase.getQuotation(columns, "EigyoshoName"));
-			csvStringRecord.addItem(d.get("BushoCode"), PJActionBase.getQuotation(columns, "BushoCode"));
-			csvStringRecord.addItem(d.get("BushoName"), PJActionBase.getQuotation(columns, "BushoName"));
-			csvStringRecord.addItem(d.get("ShainNO"), PJActionBase.getQuotation(columns, "ShainNO"));
-			csvStringRecord.addItem(d.get("ShainName"), PJActionBase.getQuotation(columns, "ShainName"));
-			csvStringRecord.addItem(d.get("KinmuKaishiJikoku"), PJActionBase.getQuotation(columns, "KinmuKaishiJikoku"));
-			csvStringRecord.addItem(d.get("KinmuShuryoJikoku"), PJActionBase.getQuotation(columns, "KinmuShuryoJikoku"));
-			csvStringRecord.addItem(d.get("KeiyakuJitsudoJikan"), PJActionBase.getQuotation(columns, "KeiyakuJitsudoJikan"));
-			csvStringRecord.addItem(d.get("TaishoNengappi"), PJActionBase.getQuotation(columns, "TaishoNengappi"));
-			csvStringRecord.addItem(d.get("YobiKbn"), PJActionBase.getQuotation(columns, "YobiKbn"));
-			csvStringRecord.addItem(d.get("ShusshaJikoku"), PJActionBase.getQuotation(columns, "ShusshaJikoku"));
-			csvStringRecord.addItem(d.get("TaishaJikoku"), PJActionBase.getQuotation(columns, "TaishaJikoku"));
-			csvStringRecord.addItem(d.get("JitsudoJikan"), PJActionBase.getQuotation(columns, "JitsudoJikan"));
-			csvStringRecord.addItem(d.get("ChinginShinseiKbn1"), PJActionBase.getQuotation(columns, "ChinginShinseiKbn1"));
-			csvStringRecord.addItem(d.get("ChinginShinseiJikan1"), PJActionBase.getQuotation(columns, "ChinginShinseiJikan1"));
-			csvStringRecord.addItem(d.get("ChinginShinseiKbn2"), PJActionBase.getQuotation(columns, "ChinginShinseiKbn2"));
-			csvStringRecord.addItem(d.get("ChinginShinseiJikan2"), PJActionBase.getQuotation(columns, "ChinginShinseiJikan2"));
-			csvStringRecord.addItem(d.get("ChinginShinseiKbn3"), PJActionBase.getQuotation(columns, "ChinginShinseiKbn3"));
-			csvStringRecord.addItem(d.get("ChinginShinseiJikan3"), PJActionBase.getQuotation(columns, "ChinginShinseiJikan3"));
-			csvStringRecord.addItem(d.get("TsukinhiNissu"), PJActionBase.getQuotation(columns, "TsukinhiNissu"));
-			csvStringRecord.addItem(d.get("TsukinhiTanka"), PJActionBase.getQuotation(columns, "TsukinhiTanka"));
-			csvStringRecord.addItem(d.get("TokkiJiko"), PJActionBase.getQuotation(columns, "TokkiJiko"));
+			csvStringRecord.addItem(d.get("TaishoNendo"), PJActionBase.getQuotation(columns, "TaishoNendo", d.get("TaishoNendo")));
+			csvStringRecord.addItem(d.get("TaishoGetsudo"), PJActionBase.getQuotation(columns, "TaishoGetsudo", d.get("TaishoGetsudo")));
+			csvStringRecord.addItem(d.get("SakuseiDate"), PJActionBase.getQuotation(columns, "SakuseiDate", d.get("SakuseiDate")));
+			csvStringRecord.addItem(d.get("EigyoshoCode"), PJActionBase.getQuotation(columns, "EigyoshoCode", d.get("EigyoshoCode")));
+			csvStringRecord.addItem(d.get("EigyoshoName"), PJActionBase.getQuotation(columns, "EigyoshoName", d.get("EigyoshoName")));
+			csvStringRecord.addItem(d.get("BushoCode"), PJActionBase.getQuotation(columns, "BushoCode", d.get("BushoCode")));
+			csvStringRecord.addItem(d.get("BushoName"), PJActionBase.getQuotation(columns, "BushoName", d.get("BushoName")));
+			csvStringRecord.addItem(d.get("ShainNO"), PJActionBase.getQuotation(columns, "ShainNO", d.get("ShainNO")));
+			csvStringRecord.addItem(d.get("ShainName"), PJActionBase.getQuotation(columns, "ShainName", d.get("ShainName")));
+			csvStringRecord.addItem(d.get("KinmuKaishiJikoku"), PJActionBase.getQuotation(columns, "KinmuKaishiJikoku", d.get("KinmuKaishiJikoku")));
+			csvStringRecord.addItem(d.get("KinmuShuryoJikoku"), PJActionBase.getQuotation(columns, "KinmuShuryoJikoku", d.get("KinmuShuryoJikoku")));
+			csvStringRecord.addItem(d.get("KeiyakuJitsudoJikan"), PJActionBase.getQuotation(columns, "KeiyakuJitsudoJikan", d.get("KeiyakuJitsudoJikan")));
+			csvStringRecord.addItem(d.get("TaishoNengappi"), PJActionBase.getQuotation(columns, "TaishoNengappi", d.get("TaishoNengappi")));
+			csvStringRecord.addItem(d.get("YobiKbn"), PJActionBase.getQuotation(columns, "YobiKbn", d.get("YobiKbn")));
+			csvStringRecord.addItem(d.get("ShusshaJikoku"), PJActionBase.getQuotation(columns, "ShusshaJikoku", d.get("ShusshaJikoku")));
+			csvStringRecord.addItem(d.get("TaishaJikoku"), PJActionBase.getQuotation(columns, "TaishaJikoku", d.get("TaishaJikoku")));
+			csvStringRecord.addItem(d.get("JitsudoJikan"), PJActionBase.getQuotation(columns, "JitsudoJikan", d.get("JitsudoJikan")));
+			csvStringRecord.addItem(d.get("ChinginShinseiKbn1"), PJActionBase.getQuotation(columns, "ChinginShinseiKbn1", d.get("ChinginShinseiKbn1")));
+			csvStringRecord.addItem(d.get("ChinginShinseiJikan1"), PJActionBase.getQuotation(columns, "ChinginShinseiJikan1", d.get("ChinginShinseiJikan1")));
+			csvStringRecord.addItem(d.get("ChinginShinseiKbn2"), PJActionBase.getQuotation(columns, "ChinginShinseiKbn2", d.get("ChinginShinseiKbn2")));
+			csvStringRecord.addItem(d.get("ChinginShinseiJikan2"), PJActionBase.getQuotation(columns, "ChinginShinseiJikan2", d.get("ChinginShinseiJikan2")));
+			csvStringRecord.addItem(d.get("ChinginShinseiKbn3"), PJActionBase.getQuotation(columns, "ChinginShinseiKbn3", d.get("ChinginShinseiKbn3")));
+			csvStringRecord.addItem(d.get("ChinginShinseiJikan3"), PJActionBase.getQuotation(columns, "ChinginShinseiJikan3", d.get("ChinginShinseiJikan3")));
+			csvStringRecord.addItem(d.get("TsukinhiNissu"), PJActionBase.getQuotation(columns, "TsukinhiNissu", d.get("TsukinhiNissu")));
+			csvStringRecord.addItem(d.get("TsukinhiTanka"), PJActionBase.getQuotation(columns, "TsukinhiTanka", d.get("TsukinhiTanka")));
+			csvStringRecord.addItem(d.get("TokkiJiko"), PJActionBase.getQuotation(columns, "TokkiJiko", d.get("TokkiJiko")));
 			
 			// データ格納
 			csvString.append(csvStringRecord.getLine() + newLine);

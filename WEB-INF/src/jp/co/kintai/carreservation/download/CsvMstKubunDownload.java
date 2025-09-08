@@ -148,15 +148,16 @@ public class CsvMstKubunDownload extends DownloadBase {
 			// 1行取得
 			HashMap<String, String> d = data.get(i);
 			
-			csvStringRecord.addItem(d.get("KbnCode"),PJActionBase.getQuotation(columns, "KbnCode"));
-			csvStringRecord.addItem(d.get("Code"),PJActionBase.getQuotation(columns, "Code"));
-			csvStringRecord.addItem(d.get("KbnName"),PJActionBase.getQuotation(columns, "KbnName"));
-			csvStringRecord.addItem(d.get("KbnRyaku"),PJActionBase.getQuotation(columns, "KbnRyaku"));
-			csvStringRecord.addItem(d.get("GroupCode1"),PJActionBase.getQuotation(columns, "GroupCode1"));
-			csvStringRecord.addItem(d.get("GroupCode2"),PJActionBase.getQuotation(columns, "GroupCode2"));
-			csvStringRecord.addItem(d.get("SaishuKoshinShainNO"),PJActionBase.getQuotation(columns, "SaishuKoshinShainNO"));
-			csvStringRecord.addItem(d.get("SaishuKoshinDate"),PJActionBase.getQuotation(columns, "SaishuKoshinDate"));
-			csvStringRecord.addItem(d.get("SaishuKoshinJikan"),PJActionBase.getQuotation(columns, "SaishuKoshinJikan"));
+			csvStringRecord.addItem(d.get("KbnCode"), PJActionBase.getQuotation(columns, "KbnCode", d.get("KbnCode")));
+			csvStringRecord.addItem(d.get("Code"), PJActionBase.getQuotation(columns, "Code", d.get("Code")));
+			csvStringRecord.addItem(d.get("KbnName"), PJActionBase.getQuotation(columns, "KbnName", d.get("KbnName")));
+			csvStringRecord.addItem(d.get("KbnRyaku"), PJActionBase.getQuotation(columns, "KbnRyaku", d.get("KbnRyaku")));
+			csvStringRecord.addItem(d.get("GroupCode1"), PJActionBase.getQuotation(columns, "GroupCode1", d.get("GroupCode1")));
+			csvStringRecord.addItem(d.get("GroupCode2"), PJActionBase.getQuotation(columns, "GroupCode2", d.get("GroupCode2")));
+			csvStringRecord.addItem(d.get("SaishuKoshinShainNO"), PJActionBase.getQuotation(columns, "SaishuKoshinShainNO", d.get("SaishuKoshinShainNO")));
+			csvStringRecord.addItem(d.get("SaishuKoshinDate"), PJActionBase.getQuotation(columns, "SaishuKoshinDate", d.get("SaishuKoshinDate")));
+			csvStringRecord.addItem(d.get("SaishuKoshinJikan"), PJActionBase.getQuotation(columns, "SaishuKoshinJikan", d.get("SaishuKoshinJikan")));
+			
 			// データ格納
 			csvString.append(csvStringRecord.getLine() + newLine);
 		}
