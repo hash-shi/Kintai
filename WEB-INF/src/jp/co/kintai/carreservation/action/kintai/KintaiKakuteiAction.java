@@ -154,8 +154,6 @@ public class KintaiKakuteiAction extends PJActionBase {
 		sql.append("     ORDER BY ");
 		sql.append("         Q1.EigyoshoCode, ");
 		sql.append("         Q1.EigyoshoName ");
-
-		
 		pstmtf.addValue("String", taishoYM);
 		pstmtf.addValue("String", taishoYM);
 		
