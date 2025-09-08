@@ -42,11 +42,9 @@ public class CsvKyuyokeisanDataDownload extends DownloadBase {
 		LocalDateTime now 					= LocalDateTime.now();
 		
 		// フォーマットを指定
-		DateTimeFormatter formatter 		= DateTimeFormatter.ofPattern("yyyy/MM/dd");
 		DateTimeFormatter filenameformat 	= DateTimeFormatter.ofPattern("yyyyMMddHHmmss");
 		
 		// フォーマットに従って日時を文字列に変換
-		String formattedDateTime 			= now.format(formatter);
 		String filenameformattedDateTime 	= now.format(filenameformat);
 		
 		//=====================================================================
@@ -65,9 +63,12 @@ public class CsvKyuyokeisanDataDownload extends DownloadBase {
 		String[] targetCols = {"01", "03", "04", "06", "07", "08", "09", "10", "11", "12"};
 		
 		sql.append("SELECT ");
+		sql.append("	FORMAT(GETDATE(), 'yyyy/MM/dd') AS SystemDate, ");
 		sql.append("	skihon.*, ");
 		sql.append("	shain.ShainName, ");
 		sql.append("	shain.EigyoshoCode, ");
+		sql.append("		LEFT(skihon.TaishoNenGetsudo, 4) AS Nendo, ");
+		sql.append("		RIGHT(skihon.TaishoNenGetsudo, 2) AS Getsudo, ");
 		sql.append("	( ");
 		for (int idx = 0; idx < targetCols.length; idx++) {
 			if (idx > 0) {
@@ -75,7 +76,10 @@ public class CsvKyuyokeisanDataDownload extends DownloadBase {
 			}
 			sql.append("COALESCE(skihon.ShinseiNissu").append(targetCols[idx]).append(", 0)");
 		}
-		sql.append("	) AS GoukeiNissu ");
+		sql.append("	) AS GoukeiNissu, ");
+		sql.append("	COALESCE(skihon.ShinseiJikan01, 0) ");
+		sql.append("  + COALESCE(skihon.ShinseiJikan03, 0) ");
+		sql.append("	AS JikangaiKei ");
 		sql.append("FROM KIN_SHUKKINBO_KIHON skihon ");
 		sql.append("LEFT JOIN MST_SHAIN shain ON skihon.ShainNO = shain.ShainNO ");
 		sql.append("WHERE 1 = 1 ");
@@ -89,6 +93,7 @@ public class CsvKyuyokeisanDataDownload extends DownloadBase {
 			sql.append(" AND skihon.TaishoNenGetsudo <= ? ");
 			pstmtf.addValue("String", taishoNengetsuT);
 		}
+		sql.append(" ORDER BY skihon.TaishoNenGetsudo, skihon.ShainNO ");
 		
 		try {
 			// パラメータ付きSQL文の生成
@@ -170,68 +175,38 @@ public class CsvKyuyokeisanDataDownload extends DownloadBase {
 			// 1行取得
 			HashMap<String, String> d = data.get(i);
 			
-			// TaishoNenGetsudo の分割処理
-			String nenGetsudo = d.get("TaishoNenGetsudo");
-			String nendo = "";
-			String getsudo = "";
+			csvStringRecord.addItem(d.get("Nendo"), PJActionBase.getQuotation(columns, "Nendo", d.get("Nendo")));
+			csvStringRecord.addItem(d.get("Getsudo"), PJActionBase.getQuotation(columns, "Getsudo", d.get("Getsudo")));
+			csvStringRecord.addItem(d.get("SystemDate"), PJActionBase.getQuotation(columns, "SystemDate", d.get("SystemDate")));
+			csvStringRecord.addItem(d.get("ShainNO"), PJActionBase.getQuotation(columns, "ShainNO", d.get("ShainNO")));
+			csvStringRecord.addItem(d.get("ShainName"), PJActionBase.getQuotation(columns, "ShainName", d.get("ShainName")));
+			csvStringRecord.addItem(d.get("EigyoshoCode"), PJActionBase.getQuotation(columns, "EigyoshoCode", d.get("EigyoshoCode")));
 
-			if (StringUtils.isNotBlank(nenGetsudo) && nenGetsudo.contains("/")) {
-				String[] parts = nenGetsudo.split("/");
-				if (parts.length == 2) {
-					nendo = parts[0];     // 年度
-					getsudo = parts[1];   // 月度
-				}
-			}
-			
-			// 年度・月度・作成日時など基本項目
-			csvStringRecord.addItem(nendo,true);
-			csvStringRecord.addItem(getsudo,true);
-			csvStringRecord.addItem(formattedDateTime,true);
-			csvStringRecord.addItem(d.get( "ShainNO"), PJActionBase.getQuotation(columns, "ShainNO"));
-			csvStringRecord.addItem(d.get( "ShainName"), PJActionBase.getQuotation(columns, "ShainName"));
-			csvStringRecord.addItem(d.get( "EigyoshoCode"), PJActionBase.getQuotation(columns, "EigyoshoCode"));
-			
-			
-			// 日数出力
-			String[] nissuKeys = {
-					"ShinseiNissu01", "ShinseiNissu02", "ShinseiNissu03",
-					"ShinseiNissu04", "ShinseiNissu05", "ShinseiNissu06",
-					"ShinseiNissu07", "ShinseiNissu08", "ShinseiNissu09",
-					"ShinseiNissu10", "ShinseiNissu11", "ShinseiNissu12",
-					"GoukeiNissu"
-				};
+			// 小数点第2位までの表示に変換してCSVに追加
+			csvStringRecord.addItem(String.format("%.2f", new BigDecimal(StringUtils.defaultIfBlank(d.get("ShinseiJikan01"), "0"))), PJActionBase.getQuotation(columns, "ShinseiJikan01", d.get("ShinseiJikan01")));
+			csvStringRecord.addItem(String.format("%.2f", new BigDecimal(StringUtils.defaultIfBlank(d.get("ShinseiJikan02"), "0"))), PJActionBase.getQuotation(columns, "ShinseiJikan02", d.get("ShinseiJikan02")));
+			csvStringRecord.addItem(String.format("%.2f", new BigDecimal(StringUtils.defaultIfBlank(d.get("ShinseiJikan03"), "0"))), PJActionBase.getQuotation(columns, "ShinseiJikan03", d.get("ShinseiJikan03")));
+			csvStringRecord.addItem(String.format("%.2f", new BigDecimal(StringUtils.defaultIfBlank(d.get("ShinseiJikan04"), "0"))), PJActionBase.getQuotation(columns, "ShinseiJikan04", d.get("ShinseiJikan04")));
 
-			for (String key : nissuKeys) {
-				String val = d.get(key);
-				Boolean quotation = PJActionBase.getQuotation(columns, key);
-				if (StringUtils.isNotBlank(val)) {
-					try {
-						csvStringRecord.addItem(String.format("%.2f", new BigDecimal(val)),quotation);
-					} catch (NumberFormatException e) {
-						csvStringRecord.addItem("0.00",quotation);
-					}
-				} else {
-				csvStringRecord.addItem("0.00",quotation);
-				}
-			}
-			
-			// 時間処理 + 出力
-				
-			// それぞれ小数点第2位までの表示に変換してCSVに追加
-			csvStringRecord.addItem(String.format("%.2f", new BigDecimal(StringUtils.defaultIfBlank(d.get("ShinseiJikan01"), "0"))), PJActionBase.getQuotation(columns, "ShinseiJikan01"));
-			csvStringRecord.addItem(String.format("%.2f", new BigDecimal(StringUtils.defaultIfBlank(d.get("ShinseiJikan02"), "0"))), PJActionBase.getQuotation(columns, "ShinseiJikan02"));
-			csvStringRecord.addItem(String.format("%.2f", new BigDecimal(StringUtils.defaultIfBlank(d.get("ShinseiJikan03"), "0"))), PJActionBase.getQuotation(columns, "ShinseiJikan03"));
-			csvStringRecord.addItem(String.format("%.2f", new BigDecimal(StringUtils.defaultIfBlank(d.get("ShinseiJikan04"), "0"))), PJActionBase.getQuotation(columns, "ShinseiJikan04"));
+			csvStringRecord.addItem(String.format("%.2f", new BigDecimal(StringUtils.defaultIfBlank(d.get("ShinseiNissu05"), "0"))), PJActionBase.getQuotation(columns, "ShinseiNissu05", d.get("ShinseiNissu05")));
+			csvStringRecord.addItem(String.format("%.2f", new BigDecimal(StringUtils.defaultIfBlank(d.get("ShinseiNissu06"), "0"))), PJActionBase.getQuotation(columns, "ShinseiNissu06", d.get("ShinseiNissu06")));
+			csvStringRecord.addItem(String.format("%.2f", new BigDecimal(StringUtils.defaultIfBlank(d.get("ShinseiNissu07"), "0"))), PJActionBase.getQuotation(columns, "ShinseiNissu07", d.get("ShinseiNissu07")));
+			csvStringRecord.addItem(String.format("%.2f", new BigDecimal(StringUtils.defaultIfBlank(d.get("ShinseiNissu08"), "0"))), PJActionBase.getQuotation(columns, "ShinseiNissu08", d.get("ShinseiNissu08")));
+			csvStringRecord.addItem(String.format("%.2f", new BigDecimal(StringUtils.defaultIfBlank(d.get("ShinseiNissu09"), "0"))), PJActionBase.getQuotation(columns, "ShinseiNissu09", d.get("ShinseiNissu09")));
+			csvStringRecord.addItem(String.format("%.2f", new BigDecimal(StringUtils.defaultIfBlank(d.get("ShinseiNissu10"), "0"))), PJActionBase.getQuotation(columns, "ShinseiNissu10", d.get("ShinseiNissu10")));
+			csvStringRecord.addItem(String.format("%.2f", new BigDecimal(StringUtils.defaultIfBlank(d.get("ShinseiNissu11"), "0"))), PJActionBase.getQuotation(columns, "ShinseiNissu11", d.get("ShinseiNissu11")));
+			csvStringRecord.addItem(String.format("%.2f", new BigDecimal(StringUtils.defaultIfBlank(d.get("ShinseiNissu12"), "0"))), PJActionBase.getQuotation(columns, "ShinseiNissu12", d.get("ShinseiNissu12")));
 
-			// 01 と 03 を足して合計を計算、表示
-			BigDecimal jikan01 = new BigDecimal(StringUtils.defaultIfBlank(d.get("ShinseiJikan01"), "0"));
-			BigDecimal jikan03 = new BigDecimal(StringUtils.defaultIfBlank(d.get("ShinseiJikan03"), "0"));
-			BigDecimal total = jikan01.add(jikan03);
-			csvStringRecord.addItem(String.format("%.2f", total));
-			
-			csvStringRecord.addItem(String.format("%.2f", new BigDecimal(StringUtils.defaultIfBlank(d.get("ShinseiKingaku01"), "0"))), PJActionBase.getQuotation(columns, "ShinseiKingaku01"));
-			csvStringRecord.addItem(String.format("%.2f", new BigDecimal(StringUtils.defaultIfBlank(d.get("ShinseiKingaku02"), "0"))), PJActionBase.getQuotation(columns, "ShinseiKingaku02"));
-			
+			csvStringRecord.addItem(String.format("%.2f", new BigDecimal(StringUtils.defaultIfBlank(d.get("GoukeiNissu"), "0"))), PJActionBase.getQuotation(columns, "GoukeiNissu", d.get("GoukeiNissu")));
+
+			csvStringRecord.addItem(String.format("%.2f", new BigDecimal(StringUtils.defaultIfBlank(d.get("ShinseiJikan01"), "0"))), PJActionBase.getQuotation(columns, "ShinseiJikan01", d.get("ShinseiJikan01")));
+			csvStringRecord.addItem(String.format("%.2f", new BigDecimal(StringUtils.defaultIfBlank(d.get("ShinseiJikan02"), "0"))), PJActionBase.getQuotation(columns, "ShinseiJikan02", d.get("ShinseiJikan02")));
+			csvStringRecord.addItem(String.format("%.2f", new BigDecimal(StringUtils.defaultIfBlank(d.get("ShinseiJikan03"), "0"))), PJActionBase.getQuotation(columns, "ShinseiJikan03", d.get("ShinseiJikan03")));
+			csvStringRecord.addItem(String.format("%.2f", new BigDecimal(StringUtils.defaultIfBlank(d.get("ShinseiJikan04"), "0"))), PJActionBase.getQuotation(columns, "ShinseiJikan04", d.get("ShinseiJikan04")));
+			csvStringRecord.addItem(String.format("%.2f", new BigDecimal(StringUtils.defaultIfBlank(d.get("JikangaiKei"), "0"))), PJActionBase.getQuotation(columns, "JikangaiKei", d.get("JikangaiKei")));
+
+			csvStringRecord.addItem(String.format("%.2f", new BigDecimal(StringUtils.defaultIfBlank(d.get("ShinseiKingaku01"), "0"))), PJActionBase.getQuotation(columns, "ShinseiKingaku01", d.get("ShinseiKingaku01")));
+			csvStringRecord.addItem(String.format("%.2f", new BigDecimal(StringUtils.defaultIfBlank(d.get("ShinseiKingaku02"), "0"))), PJActionBase.getQuotation(columns, "ShinseiKingaku02", d.get("ShinseiKingaku02")));
 			// データ格納
 			csvString.append(csvStringRecord.getLine() + newLine);
 		}

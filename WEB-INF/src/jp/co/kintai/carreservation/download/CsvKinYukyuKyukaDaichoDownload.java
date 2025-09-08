@@ -97,7 +97,7 @@ public class CsvKinYukyuKyukaDaichoDownload extends DownloadBase {
 			if (nendo != Integer.parseInt(fromTaishoNendo)) { sql.append(" UNION ALL "); }
 			
 			sql.append("  	SELECT DISTINCT ");
-			sql.append(" 		" + nendo + " AS TaishoNendo ");
+			sql.append(" 		CAST(" + nendo + " AS VARCHAR) AS TaishoNendo");
 			sql.append(" 		,S.ShainNO ");
 			sql.append(" 		,S.ShainName ");
 			sql.append(" 		,ISNULL(E.EigyoshoCode, '') AS EigyoshoCode ");
@@ -495,7 +495,7 @@ public class CsvKinYukyuKyukaDaichoDownload extends DownloadBase {
 		sql.append(" ORDER BY ");
 		sql.append("     C.TaishoNendo ");
 		
-		if (output == "02") {
+		if ("02".equals(output)) {
 			sql.append("     ,C.EigyoshoCode ");
 		}
 		
@@ -571,22 +571,30 @@ public class CsvKinYukyuKyukaDaichoDownload extends DownloadBase {
 			// 1行取得
 			HashMap<String, String> d = data.get(i);
 			
-			csvStringRecord.addItem(d.get("TaishoNendo"), true);
-			csvStringRecord.addItem(d.get("SakuseiDate"), PJActionBase.getQuotation(columns, "SakuseiDate"));
-			csvStringRecord.addItem(d.get("EigyoshoCode"), PJActionBase.getQuotation(columns, "EigyoshoCode"));
-			csvStringRecord.addItem(d.get("EigyoshoName"), PJActionBase.getQuotation(columns, "EigyoshoName"));
-			csvStringRecord.addItem(d.get("BushoName"), PJActionBase.getQuotation(columns, "BushoName"));
-			csvStringRecord.addItem(d.get("ShainNO"), PJActionBase.getQuotation(columns, "ShainNO"));
-			csvStringRecord.addItem(d.get("ShainName"), PJActionBase.getQuotation(columns, "ShainName"));
-			csvStringRecord.addItem(d.get("YukyuKyukaFuyoNissu"), PJActionBase.getQuotation(columns, "YukyuKyukaFuyoNissu"));
+			csvStringRecord.addItem(d.get("TaishoNendo"), PJActionBase.getQuotation(columns, "TaishoNendo",d.get("TaishoNendo")));
+			csvStringRecord.addItem(d.get("SakuseiDate"), PJActionBase.getQuotation(columns, "SakuseiDate",d.get("SakuseiDate")));
+			csvStringRecord.addItem(d.get("EigyoshoCode"), PJActionBase.getQuotation(columns, "EigyoshoCode",d.get("EigyoshoCode")));
+			csvStringRecord.addItem(d.get("EigyoshoName"), PJActionBase.getQuotation(columns, "EigyoshoName",d.get("EigyoshoName")));
+			csvStringRecord.addItem(d.get("BushoName"), PJActionBase.getQuotation(columns, "BushoName",d.get("BushoName")));
+			csvStringRecord.addItem(d.get("ShainNO"), PJActionBase.getQuotation(columns, "ShainNO",d.get("ShainNO")));
+			csvStringRecord.addItem(d.get("ShainName"), PJActionBase.getQuotation(columns, "ShainName",d.get("ShainName")));
+			csvStringRecord.addItem(d.get("YukyuKyukaFuyoNissu"), PJActionBase.getQuotation(columns, "YukyuKyukaFuyoNissu",d.get("YukyuKyukaFuyoNissu")));
 			
 			for (int cnt = 1; cnt <= 60; cnt++) {
-				csvStringRecord.addItem(d.get("month" + cnt), PJActionBase.getQuotation(columns, "month" + cnt));
-				csvStringRecord.addItem(d.get("day" + cnt), PJActionBase.getQuotation(columns, "day" + cnt));
-				csvStringRecord.addItem(d.get("hankyu" + cnt), PJActionBase.getQuotation(columns, "hankyu" + cnt));
+				csvStringRecord.addItem(d.get("month" + cnt), PJActionBase.getQuotation(columns, "month" + cnt,d.get("month" + cnt)));
+				csvStringRecord.addItem(d.get("day" + cnt), PJActionBase.getQuotation(columns, "day" + cnt,d.get("day" + cnt)));
+				csvStringRecord.addItem(d.get("hankyu" + cnt), PJActionBase.getQuotation(columns, "hankyu" + cnt,d.get("hankyu" + cnt)));
+//			    String month  = d.get("month"  + cnt);
+//			    String day    = d.get("day"    + cnt);
+//			    String hankyu = d.get("hankyu" + cnt);
+//				
+//				csvStringRecord.addItem(month == null || month.isEmpty() ? "1" : month, true);
+//				csvStringRecord.addItem(day == null || day.isEmpty() ? "" : day, true);
+//				csvStringRecord.addItem(hankyu == null || hankyu.isEmpty() ? "\"\"" : hankyu, true);
+
 			}
 			
-			csvStringRecord.addItem(d.get("YukyuKyukaZanNissu"), PJActionBase.getQuotation(columns, "YukyuKyukaZanNissu"));
+			csvStringRecord.addItem(d.get("YukyuKyukaZanNissu"), PJActionBase.getQuotation(columns, "YukyuKyukaZanNissu",d.get("YukyuKyukaZanNissu")));
 			
 			// データ格納
 			csvString.append(csvStringRecord.getLine() + newLine);

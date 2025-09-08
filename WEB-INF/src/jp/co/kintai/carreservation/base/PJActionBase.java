@@ -69,16 +69,30 @@ public abstract class PJActionBase extends ActionBase {
 	
 	/**
 	 * コーテーション付けの判定
+	 * @param value 
 	 * 
 	 * @param con
 	 * @return
 	 * @throws Exception
 	 */
-	public static Boolean getQuotation(HashMap<String, String> columns, String key) throws Exception {
+	public static Boolean getQuotation(HashMap<String, String> columns, String key, String value) throws Exception {
 		// 文字列 true
 		// 数値 false
-		// データ型が数値型(intやdecimal)の場合はコーテーションを付けない
-		return !(columns.get(key).startsWith("int") || columns.get(key).startsWith("decimal"));
+		// NULL、空文字 true
+
+	    // データ型が数値型(intやdecimal)の場合はダブルクオート不要
+	    String type = columns.get(key);
+	    if (type != null && (type.startsWith("int") || type.startsWith("decimal"))) {
+	        return false;
+	    }
+	    
+	    // 値が null または空文字の場合はダブルクオート
+	    if (value == null || value.isEmpty()) {
+	        return true;
+	    }
+
+	    // それ以外はダブルクオート
+	    return true;
 	}
 	
 	
