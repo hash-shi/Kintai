@@ -39,7 +39,6 @@ public class KintaiKakuteiAction extends PJActionBase {
 	public void getTaishoYM(HttpServletRequest req, HttpServletResponse res) throws Exception {
 		
 		String result = "";
-
 		
 		// DB接続
 		Connection con		= this.getConnection("kintai", req);
@@ -369,7 +368,6 @@ public class KintaiKakuteiAction extends PJActionBase {
 	 */
 	private boolean deleteGekkyu(Connection con, String taishoYM, String eigyoshoCode) throws Exception {
 		boolean result = false;
-
 		// DB接続
 		StringBuffer sql				= new StringBuffer();
 		PreparedStatement pstmt			= null;
@@ -431,7 +429,6 @@ public class KintaiKakuteiAction extends PJActionBase {
 	 */
 	private boolean deleteNikkyu(Connection con, String taishoYM, String eigyoshoCode) throws Exception {
 		boolean result = false;
-
 		// DB接続
 		StringBuffer sql				= new StringBuffer();
 		PreparedStatement pstmt			= null;
@@ -485,7 +482,6 @@ public class KintaiKakuteiAction extends PJActionBase {
 	 */
 	private boolean updateShukkinbo(Connection con, String kakuteiKbn, String loginShainNo, String saishuKoshinDate, String saishuKoshinJikan, String taishoYM, String eigyoshoCode) throws Exception {
 		boolean result = false;
-
 		// DB接続
 		StringBuffer sql				= new StringBuffer();
 		PreparedStatement pstmt			= null;
@@ -558,7 +554,6 @@ public class KintaiKakuteiAction extends PJActionBase {
 	 */
 	private boolean updateChingin(Connection con, String kakuteiKbn, String loginShainNo, String saishuKoshinDate, String saishuKoshinJikan, String taishoYM, String eigyoshoCode) throws Exception {
 		boolean result = false;
-
 		// DB接続
 		StringBuffer sql				= new StringBuffer();
 		PreparedStatement pstmt			= null;
@@ -802,11 +797,9 @@ public class KintaiKakuteiAction extends PJActionBase {
 		sql.append(" GROUP BY  ");
 		sql.append("     C1.TaishoNenGetsudo,   ");
 		sql.append("     C1.ShainNO  ");
-
-
 		pstmtf.addValue("String", taishoYM);
 		pstmtf.addValue("String", eigyoshoCode);
-
+		
 		try {
 			// SQL文の生成
 			pstmt = con.prepareStatement(sql.toString());

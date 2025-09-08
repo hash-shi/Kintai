@@ -76,9 +76,9 @@ function onSearchKintaiKakutei(){
 		$("#nyuryokuArea").css("visibility", "");
 		$("#nyuryokuArea").addClass("upd");
 		$("#buttonArea").css("visibility", "");
-
+		
 		let result			= contents["result"];
-
+		
 		onDisplayNyuryokuArea(result);
 		
 		// 全選択チェックボックスの取得
@@ -135,7 +135,7 @@ function onDisplayNyuryokuArea(result){
 		if(kakuteiKbnName02 != "本社確定済み"){
 			mojiColorClass2 = "kbnColor";			
 		}
-
+		
 		let kihonNyuryokuAreaHtml = "";
 			kihonNyuryokuAreaHtml =
 				"<tr>" +
@@ -150,7 +150,7 @@ function onDisplayNyuryokuArea(result){
 					"<td><input type=\"hidden\" name=\"hdnTxtKakuteiKbn01" + i + "\" id=\"hdnTxtKakuteiKbn01" + i + "\" value=\"" + kakuteiKbn01 + "\"></td>" +
 					"<td><input type=\"hidden\" name=\"hdnTxtKakuteiKbn02" + i + "\" id=\"hdnTxtKakuteiKbn02" + i + "\" value=\"" + kakuteiKbn02 + "\"></td>" +
 				"</tr>";
-
+				
 		$("#kihonNyuryokuArea").append(kihonNyuryokuAreaHtml);
 	}
 }
@@ -230,12 +230,12 @@ function onKakuteiKaijo(){
 		proc("kaijo_", {}, function(data){
 			if (data == undefined){ return; }
 			if (data["contents"] == undefined){ return; }
-		
+			
 			let contents		= data["contents"];
 			if (contents["result"] == undefined){ return; }
 		
 			let result			= contents["result"];
-
+			
 			if(result == true){
 				alert("正常に登録しました。");
 				onSearchKintaiKakutei();
@@ -271,7 +271,7 @@ function onKakutei(){
 			if (contents["result"] == undefined){ return; }
 		
 			let result			= contents["result"];
-
+			
 			if(result == true){
 				alert("正常に登録しました。");
 				onSearchKintaiKakutei();
@@ -297,7 +297,7 @@ function onKeyEventF02() {
 	
 	// buttonAreaの表示状態を取得
 	var display = $("#buttonArea").css("visibility");
-
+	
 	// buttonAreaが非表示(初期表示時)はスキップする。
 	if (display == "visible") {
 		// 該当の処理を呼び出す。
@@ -316,7 +316,7 @@ function onKeyEventF09() {
 	
 	// buttonAreaの表示状態を取得
 	var display = $("#buttonArea").css("visibility");
-
+	
 	// buttonAreaが非表示(初期表示時)はスキップする。
 	if (display == "visible") {
 		// 該当の処理を呼び出す。
