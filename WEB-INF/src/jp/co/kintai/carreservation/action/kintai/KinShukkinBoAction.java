@@ -27,6 +27,13 @@ public class KinShukkinBoAction extends PJActionBase {
 	
 	@Override
 	public void doRun(HttpServletRequest req, HttpServletResponse res) throws Exception {
+		HashMap<String, Object> Result = new HashMap<>();
+		
+		//対象年月初期値取得
+		String taishoYM = getTaishoYM(req, res);
+		Result.put("taishoYM", taishoYM);
+		
+		req.setAttribute("result", taishoYM);
 		// 画面表示
 		this.setView("success");
 	}
@@ -38,7 +45,7 @@ public class KinShukkinBoAction extends PJActionBase {
 	 * @param res
 	 * @throws Exception
 	 */
-	public void getTaishoYM(HttpServletRequest req, HttpServletResponse res) throws Exception {
+	public String getTaishoYM(HttpServletRequest req, HttpServletResponse res) throws Exception {
 		
 		String result = "";
 
@@ -70,7 +77,7 @@ public class KinShukkinBoAction extends PJActionBase {
 		//=====================================================================
 		// 結果返却
 		//=====================================================================
-		this.addContent("result", result);
+		return result;
 	}
 	
 	/**

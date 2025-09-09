@@ -4,7 +4,6 @@ let shinseiKingaku02 = 0;
 
 let yoteiList = [];
 let chinginKubunList = [];
-let sinseiKubunList = [];
 
 
 /*
@@ -246,6 +245,7 @@ function onDisplayNyuryokuArea(firstHalfFlg){
 	$("#txtShinseiKingaku01").val(0);
 	$("#txtShinseiKingaku02").val(0);
 
+	let sinseiKubunList = [];
 	proc("getDDL", {}, function(data){
 
 		if (data == undefined){ return; }

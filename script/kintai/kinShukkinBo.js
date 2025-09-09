@@ -2,94 +2,6 @@ let kinShukkinBoResultAll = [];
 let shinseiKingaku01 = 0;
 let shinseiKingaku02 = 0;
 
-let yoteiList = [];
-let kintaiKubunList = [];
-let sinseiKubunList = [];
-
-/*
-*
-* 初期値設定
-*
-*/
-window.onload = function(){
-	proc("getTaishoYM", {}, function(data){
-
-		if (data == undefined){ return; }
-		if (data["contents"] == undefined){ return; }
-		
-		let contents		= data["contents"];
-		if (contents["result"] == undefined){ return; }
-		
-		let result			= contents["result"];
-		
-		$("#txtTaishoYM").val(result);
-		$("#txtSearchedTaishoYM").val(result);
-	});
-	
-	proc("getShainNO", {}, function(data){
-
-		if (data == undefined){ return; }
-		if (data["contents"] == undefined){ return; }
-		
-		let contents		= data["contents"];
-		if (contents["result"] == undefined){ return; }
-		
-		let result			= contents["result"];
-		
-		$("#txtShainNO").val(result);
-		$("#txtSearchedShainNO").val(result);
-		
-		getShainName('txtShainNO', 'txtShainName');
-		
-	});
-
-	//各種ドロップダウンの内容取得
-	proc("getDDL", {}, function(data){
-
-		if (data == undefined){ return; }
-		if (data["contents"] == undefined){ return; }
-		
-		let contents		= data["contents"];
-		if (contents["result"] == undefined){ return; }
-		
-		let result			= contents["result"];
-
-		for(let record of result){
-			if(record["DDLName"] == "yotei"){
-				yoteiList.push(record);
-			}
-			if(record["DDLName"] == "kintai"){
-				kintaiKubunList.push(record);
-			}
-			if(record["DDLName"] == "shinsei"){
-				sinseiKubunList.push(record);
-			}
-		}
-	});
-	
-	//ログイン社員の社員区分が"04"(個人)の場合、社員NOは入力不可にする
-	proc("getLoginUserkbn", {}, function(data){
-
-		if (data == undefined){ return; }
-		if (data["contents"] == undefined){ return; }
-		
-		let contents		= data["contents"];
-		if (contents["result"] == undefined){ return; }
-		
-		let result			= contents["result"];
-
-		if(result == "04"){
-			document.getElementById("txtShainNO").readOnly = true;
-			document.getElementById("txtShainNO").tabIndex = "-1";
-			document.getElementById("linkShainSearch").onclick = "";
-			document.getElementById("linkShainSearch").tabIndex = "-1";
-			document.getElementById("btnShainSearch").onclick = "";
-		}
-	});
-	
-	
-}
-
 /*
 *
 * 対象年月フォーカスアウト時のフォーマット編集処理
@@ -264,6 +176,33 @@ function onDisplayNyuryokuArea(firstHalfFlg){
 	$("#kihonNyuryokuArea").children().remove();
 	$("#txtShinseiKingaku01").val(0);
 	$("#txtShinseiKingaku02").val(0);
+
+	let yoteiList = [];
+	let kintaiKubunList = [];
+	let sinseiKubunList = [];
+	//各種ドロップダウンの内容取得
+	proc("getDDL", {}, function(data){
+
+		if (data == undefined){ return; }
+		if (data["contents"] == undefined){ return; }
+		
+		let contents		= data["contents"];
+		if (contents["result"] == undefined){ return; }
+		
+		let result			= contents["result"];
+
+		for(let record of result){
+			if(record["DDLName"] == "yotei"){
+				yoteiList.push(record);
+			}
+			if(record["DDLName"] == "kintai"){
+				kintaiKubunList.push(record);
+			}
+			if(record["DDLName"] == "shinsei"){
+				sinseiKubunList.push(record);
+			}
+		}
+	});
 	
 	for(let i = 0; i < kinShukkinBoResultAll.length; i++){
 		let record = kinShukkinBoResultAll[i];
