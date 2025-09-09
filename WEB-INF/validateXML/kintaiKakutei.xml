@@ -13,10 +13,10 @@
 		<variable name="dummy" dispName="">
 			<check class="ShainHonshaValidate" message="確定は本社ユーザのみ可能です。"></check>
 			<check class="KintaiKakuteiValidate" message="更新処理でエラーが発生しました。">
-				<param name="count">kakuteiCount</param>
+				<param name="count">txtKakuteiCount</param>
 			</check>
 			<check class="KintaiKakuteiHonshaValidate" message="更新処理でエラーが発生しました。">
-				<param name="count">kakuteiCount</param>
+				<param name="count">txtKakuteiCount</param>
 			</check>
 		</variable>
 	</proc>
@@ -25,7 +25,7 @@
 		<variable name="dummy" dispName="">
 			<check class="ShainHonshaValidate" message="確定解除は本社ユーザのみ可能です。"></check>
 			<check class="KintaiKakuteiValidate" message="更新処理でエラーが発生しました。">
-				<param name="count">kakuteiCount</param>
+				<param name="count">txtKakuteiCount</param>
 			</check>
 		</variable>
 	</proc>

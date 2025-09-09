@@ -1,25 +1,5 @@
 /*
 *
-* 初期値設定
-*
-*/
-window.onload = function(){
-	proc("getTaishoYM", {}, function(data){
-
-		if (data == undefined){ return; }
-		if (data["contents"] == undefined){ return; }
-			
-		let contents		= data["contents"];
-		if (contents["result"] == undefined){ return; }
-			
-		let result			= contents["result"];
-			
-		$("#srhTxtTaishoYM").val(result);
-		$("#txtSearchedTaishoYM").val(result);
-	});
-}
-/*
-*
 * 対象年月フォーカスアウト時のフォーマット編集処理
 *
 */
@@ -64,7 +44,7 @@ function getTaishoYMFormat(){
 //****************************************************************************
 function onSearchKintaiKakutei(){	
 	//更新処理に備え、検索条件を保持
-	$("#txtSearchedTaishoYM").val($("#srhTxtTaishoYM").val());
+	$("#hidSrhTxtTaishoYM").val($("#srhTxtTaishoYM").val());
 	//検索結果表示
 	proc("searchKintaiKakutei", {}, function(data){
 
@@ -96,7 +76,7 @@ function onSearchKintaiKakutei(){
 		
 		let kintaiKakuteiResultAll = [];
 		kintaiKakuteiResultAll = result;
-		$("#kakuteiCount").val(kintaiKakuteiResultAll.length);
+		$("#txtKakuteiCount").val(kintaiKakuteiResultAll.length);
 		
 	});
 	
@@ -142,13 +122,13 @@ function onDisplayNyuryokuArea(result){
 					"<td class=\"value center\">" + 
 						"<input type =\"checkbox\" class=\"cbxKakutei\" name=\"cbxKakutei" + i + "\" id=\"cbxKakutei" + i + "\" values= \"\" onclick=\"onSentaku();\">" + 
 					"</td>" +
-					"<td class=\"value center w50\"><a name=\"txtEigyoshoCode" + i + "\" id = \"txtEigyoshoCode" + i + "\">" + eigyoshoCode + "</a></td>" +
+					"<td class=\"value center w50\"><a name=\"lblEigyoshoCode" + i + "\" id = \"lblEigyoshoCode" + i + "\">" + eigyoshoCode + "</a></td>" +
 					"<td class=\"value w150\"><a>" + eigyoshoName + "</a></td>" +
-					"<td class=\"value w140\"><a name=\"txtKakuteiKbnName01" + i + "\" id = \"txtKakuteiKbnName01" + i + "\" class = \"" +mojiColorClass1+ "\" values= \"\">" + kakuteiKbnName01 + "</a></td>" +
-					"<td class=\"value w140\"><a name=\"txtKakuteiKbnName02" + i + "\" id = \"txtKakuteiKbnName02" + i + "\" class = \"" +mojiColorClass2+ "\" values= \"\">" + kakuteiKbnName02 + "</a></td>" +
-					"<td><input type=\"hidden\" name=\"hdnTxtEigyoshoCode" + i + "\" id=\"hdnTxtEigyoshoCode1" + i + "\" value=\"" + eigyoshoCode + "\"></td>" +
-					"<td><input type=\"hidden\" name=\"hdnTxtKakuteiKbn01" + i + "\" id=\"hdnTxtKakuteiKbn01" + i + "\" value=\"" + kakuteiKbn01 + "\"></td>" +
-					"<td><input type=\"hidden\" name=\"hdnTxtKakuteiKbn02" + i + "\" id=\"hdnTxtKakuteiKbn02" + i + "\" value=\"" + kakuteiKbn02 + "\"></td>" +
+					"<td class=\"value w140\"><a name=\"lblKakuteiKbnName01" + i + "\" id = \"lblKakuteiKbnName01" + i + "\" class = \"" +mojiColorClass1+ "\" values= \"\">" + kakuteiKbnName01 + "</a></td>" +
+					"<td class=\"value w140\"><a name=\"lblKakuteiKbnName02" + i + "\" id = \"lblKakuteiKbnName02" + i + "\" class = \"" +mojiColorClass2+ "\" values= \"\">" + kakuteiKbnName02 + "</a></td>" +
+					"<td><input type=\"hidden\" name=\"txtEigyoshoCode" + i + "\" id=\"txtEigyoshoCode" + i + "\" value=\"" + eigyoshoCode + "\"></td>" +
+					"<td><input type=\"hidden\" name=\"txtKakuteiKbn01" + i + "\" id=\"txtKakuteiKbn01" + i + "\" value=\"" + kakuteiKbn01 + "\"></td>" +
+					"<td><input type=\"hidden\" name=\"txtKakuteiKbn02" + i + "\" id=\"txtKakuteiKbn02" + i + "\" value=\"" + kakuteiKbn02 + "\"></td>" +
 				"</tr>";
 				
 		$("#kihonNyuryokuArea").append(kihonNyuryokuAreaHtml);

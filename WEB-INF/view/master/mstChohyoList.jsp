@@ -90,8 +90,10 @@
 					<td class="title center w100">区分コード</td>
 					<td class="value w310">
 						<input type="text" class=""  style="width: 80px"" name="srhTxtKbnCodeF" id="srhTxtKbnCodeF" maxlength="4"   value="">
+						<img class="img border" src="./images/search.png"  onclick="opnDialog('srhMstKubun','srhTxtKbnCodeF','srhTxtKbnCodeF');">
 						～
-						<input type="text" class=""  style="width: 80px"" name="srhTxtKbnCodeT" id="srhTxtKbnCodeT" maxlength="4"  value="" >
+						<input type="text" class=""  style="width: 80px"" name="srhTxtKbnCodeT" id="srhTxtKbnCodeT" maxlength="4"  value="">
+						<img class="img border" src="./images/search.png"  onclick="opnDialog('srhMstKubun','srhTxtKbnCodeT','srhTxtKbnCodeT');">
 					</td>
 				</tr>
 				<tr id="saishuKoshin" class ="inputArea" style="display: none;">

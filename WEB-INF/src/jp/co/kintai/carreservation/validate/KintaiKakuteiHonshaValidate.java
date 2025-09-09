@@ -41,11 +41,11 @@ public class KintaiKakuteiHonshaValidate extends ValidateBase {
 			}
 			// 月給制取得
 			StringBuilder gekkyuSb	= new StringBuilder();
-			gekkyuSb		.append("hdnTxtKakuteiKbn01")	.append(String.valueOf(i));
+			gekkyuSb		.append("txtKakuteiKbn01")	.append(String.valueOf(i));
 			String gekkyu				= this.getParameter(gekkyuSb.toString());
 			// 時給日給制取得
 			StringBuilder nikkyuSb	= new StringBuilder();
-			nikkyuSb		.append("hdnTxtKakuteiKbn02")	.append(String.valueOf(i));
+			nikkyuSb		.append("txtKakuteiKbn02")	.append(String.valueOf(i));
 			String nikkyu				= this.getParameter(nikkyuSb.toString());
 			if(gekkyu.equals("03") || nikkyu.equals("03")) {
 			honshaCnt += 1;

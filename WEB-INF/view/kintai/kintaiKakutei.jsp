@@ -15,6 +15,8 @@
 		shainNO						= userInformation.getShainNO();
 	}
 	
+	//対象年月初期値の取得
+	String	taishoDate					= (String)request.getAttribute("result");
 %>
 
 <main id="main-content" class="nom">
@@ -29,13 +31,13 @@
 				<tr>
 					<td class="title center w100 req">対象年月</td>
 					<td class="value w100">
-						<input type="text" class=""  style="width: 80px; text-align: right;" name="srhTxtTaishoYM" id="srhTxtTaishoYM" maxlength="7" onblur="getTaishoYMFormat();" autofocus>
-						<input type="hidden" name="txtSearchedTaishoYM" id="txtSearchedTaishoYM" value="">
+						<input type="text" class=""  style="width: 80px; text-align: right;" name="srhTxtTaishoYM" id="srhTxtTaishoYM" value="<%=UtilEscape.htmlspecialchars(taishoDate) %>" maxlength="7" onblur="getTaishoYMFormat();" autofocus>
+						<input type="hidden" name="hidSrhTxtTaishoYM" id="hidSrhTxtTaishoYM" value="">
 					</td>
 					<td class="value w50">
 						<button type="button" onclick="onSearchKintaiKakutei();">検索</button>
 					</td>
-					<td><input type="hidden" name="kakuteiCount" id="kakuteiCount" value=""></td>
+					<td><input type="hidden" name="txtKakuteiCount" id="txtKakuteiCount" value=""></td>
 				</tr>
 			</table>
 		</div>

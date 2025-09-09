@@ -25,19 +25,13 @@ public class KintaiKakuteiAction extends PJActionBase {
 
 	@Override
 	public void doRun(HttpServletRequest req, HttpServletResponse res) throws Exception {
-		
-		this.setView("success");
-	}
-
-	/**
-	 * 対象年月の初期値の取得
-	 * 
-	 * @param req
-	 * @param res
-	 * @throws Exception
-	 */
-	public void getTaishoYM(HttpServletRequest req, HttpServletResponse res) throws Exception {
-		
+		/**
+		 * 対象年月の初期値の取得
+		 * 
+		 * @param req
+		 * @param res
+		 * @throws Exception
+		 */
 		String result = "";
 		
 		// DB接続
@@ -47,9 +41,9 @@ public class KintaiKakuteiAction extends PJActionBase {
 		StringBuffer sql				= new StringBuffer();
 		PreparedStatement pstmt			= null;
 		ResultSet rset					= null;
-		
+			
 		sql.append(" SELECT TOP 1 GenzaishoriNengetsudo FROM MST_KANRI");
-		
+			
 		try {
 			// SQL文の生成
 			pstmt = con.prepareStatement(sql.toString());
@@ -63,11 +57,12 @@ public class KintaiKakuteiAction extends PJActionBase {
 			if (rset != null){ try { rset.close(); } catch (Exception exp){}}
 			if (pstmt != null){ try { pstmt.close(); } catch (Exception exp){}}
 		}
-		
+			
 		//=====================================================================
 		// 結果返却
 		//=====================================================================
-		this.addContent("result", result);
+		req.setAttribute("result", result);
+		this.setView("success");
 	}
 	
 	/**
@@ -80,7 +75,7 @@ public class KintaiKakuteiAction extends PJActionBase {
 	public void searchKintaiKakutei(HttpServletRequest req, HttpServletResponse res) throws Exception {
 		
 		// 検索条件取得
-		String taishoYM			= this.getParameter("txtSearchedTaishoYM");
+		String taishoYM			= this.getParameter("srhTxtTaishoYM");
 		
 		// DB接続
 		Connection con		= this.getConnection("kintai", req);
@@ -211,10 +206,10 @@ public class KintaiKakuteiAction extends PJActionBase {
 		// パラメータ取得
 		//=====================================================================
 		// 明細件数
-		String count				= this.getParameter("kakuteiCount");
+		String count				= this.getParameter("txtKakuteiCount");
 		int cnt						= Integer.parseInt(count);
 		//対象年月
-		String taishoYM			= this.getParameter("txtSearchedTaishoYM");
+		String taishoYM			= this.getParameter("srhTxtTaishoYM");
 		//最終更新日
 		String saishuKoshinDate	= PJActionBase.getNowDate();
 		//最終更新時刻
@@ -235,7 +230,7 @@ public class KintaiKakuteiAction extends PJActionBase {
 			}
 			// 月給制取得
 			StringBuilder eigyoshoCodeSb	= new StringBuilder();
-			eigyoshoCodeSb		.append("hdnTxtEigyoshoCode")	.append(String.valueOf(i));
+			eigyoshoCodeSb		.append("txtEigyoshoCode")	.append(String.valueOf(i));
 			String eigyoshoCode				= this.getParameter(eigyoshoCodeSb.toString());
 			String kakuteiKbn				= "02";
 
@@ -289,10 +284,10 @@ public class KintaiKakuteiAction extends PJActionBase {
 		// パラメータ取得
 		//=====================================================================
 		// 明細件数
-		String count				= this.getParameter("kakuteiCount");
+		String count				= this.getParameter("txtKakuteiCount");
 		int cnt						= Integer.parseInt(count);
 		//対象年月
-		String taishoYM			= this.getParameter("txtSearchedTaishoYM");
+		String taishoYM			= this.getParameter("srhTxtTaishoYM");
 		//最終更新日
 		String saishuKoshinDate	= PJActionBase.getNowDate();
 		//最終更新時刻
@@ -313,7 +308,7 @@ public class KintaiKakuteiAction extends PJActionBase {
 			}
 			// 月給制取得
 			StringBuilder eigyoshoCodeSb	= new StringBuilder();
-			eigyoshoCodeSb		.append("hdnTxtEigyoshoCode")	.append(String.valueOf(i));
+			eigyoshoCodeSb		.append("txtEigyoshoCode")	.append(String.valueOf(i));
 			String eigyoshoCode				= this.getParameter(eigyoshoCodeSb.toString());
 			String kakuteiKbn				= "03";
 			//有給休暇台帳(月給)の削除
@@ -496,14 +491,14 @@ public class KintaiKakuteiAction extends PJActionBase {
 		//=====================================================================
 		pstmtf.clear();
 		sql.append(" UPDATE  ");
-		sql.append("  　 KIN_SHUKKINBO_KIHON ");
+		sql.append("     KIN_SHUKKINBO_KIHON ");
 		sql.append(" SET ");
-		sql.append(" 　　KakuteiKbn = ? ,");
-		sql.append(" 　　SaishuKoshinShainNO = ?, ");
-		sql.append(" 　　SaishuKoshinDate = ?, ");
-		sql.append(" 　　SaishuKoshinJikan = ? ");
+		sql.append("     KakuteiKbn = ? ,");
+		sql.append("     SaishuKoshinShainNO = ?, ");
+		sql.append("     SaishuKoshinDate = ?, ");
+		sql.append("     SaishuKoshinJikan = ? ");
 		sql.append(" WHERE ");
-		sql.append("  	1 <> 1");
+		sql.append("    1 <> 1");
 		pstmtf.addValue("String", kakuteiKbn);
 		pstmtf.addValue("String", loginShainNo);
 		pstmtf.addValue("String", saishuKoshinDate);
@@ -563,15 +558,15 @@ public class KintaiKakuteiAction extends PJActionBase {
 		//=====================================================================
 		pstmtf.clear();
 		sql.append(" UPDATE  ");
-		sql.append("  　 CHI_CHINGINKEISANSHO_KIHON ");
+		sql.append("     CHI_CHINGINKEISANSHO_KIHON ");
 		sql.append(" SET ");
-		sql.append(" 　　KakuteiKbn = ?, ");
-		sql.append(" 　　SaishuKoshinShainNO = ?, ");
-		sql.append(" 　　SaishuKoshinDate = ?, ");
-		sql.append(" 　　SaishuKoshinJikan = ? ");
+		sql.append("     KakuteiKbn = ?, ");
+		sql.append("     SaishuKoshinShainNO = ?, ");
+		sql.append("     SaishuKoshinDate = ?, ");
+		sql.append("     SaishuKoshinJikan = ? ");
 		sql.append(" WHERE ");
-		sql.append(" 　　TaishoNenGetsudo = ?  ");
-		sql.append(" 　　 AND EigyoshoCode = ? ");
+		sql.append("     TaishoNenGetsudo = ?  ");
+		sql.append("     AND EigyoshoCode = ? ");
 		pstmtf.addValue("String", kakuteiKbn);
 		pstmtf.addValue("String", loginShainNo);
 		pstmtf.addValue("String", saishuKoshinDate);
@@ -623,12 +618,12 @@ public class KintaiKakuteiAction extends PJActionBase {
 		sql.append(" INSERT INTO KIN_YUKYU_KYUKA_DAICHO ");
 		sql.append(" ( ");
 		sql.append(" ShainNO, ");
-		sql.append(" 　TaishoNendo, ");
-		sql.append(" 　KakuteiKbn, ");
-		sql.append(" 　YukyuKyukaFuyoNissu, ");
-		sql.append(" 　SaishuKoshinShainNO, ");
-		sql.append(" 　SaishuKoshinDate, ");
-		sql.append(" 　SaishuKoshinJikan ");
+		sql.append("   TaishoNendo, ");
+		sql.append("   KakuteiKbn, ");
+		sql.append("   YukyuKyukaFuyoNissu, ");
+		sql.append("   SaishuKoshinShainNO, ");
+		sql.append("   SaishuKoshinDate, ");
+		sql.append("   SaishuKoshinJikan ");
 		sql.append(" ) ");
 		sql.append(" SELECT ");
 		sql.append("      C1.ShainNO, ");
@@ -705,12 +700,12 @@ public class KintaiKakuteiAction extends PJActionBase {
 		sql.append(" INSERT INTO KIN_YUKYU_KYUKA_DAICHO ");
 		sql.append(" ( ");
 		sql.append("   ShainNO, ");
-		sql.append(" 　TaishoNendo, ");
-		sql.append(" 　KakuteiKbn, ");
-		sql.append(" 　YukyuKyukaFuyoNissu, ");
-		sql.append(" 　SaishuKoshinShainNO, ");
-		sql.append(" 　SaishuKoshinDate, ");
-		sql.append(" 　SaishuKoshinJikan ");
+		sql.append("   TaishoNendo, ");
+		sql.append("   KakuteiKbn, ");
+		sql.append("   YukyuKyukaFuyoNissu, ");
+		sql.append("   SaishuKoshinShainNO, ");
+		sql.append("   SaishuKoshinDate, ");
+		sql.append("   SaishuKoshinJikan ");
 		sql.append(" ) ");
 		sql.append(" SELECT ");
 		sql.append("      C1.ShainNO, ");
