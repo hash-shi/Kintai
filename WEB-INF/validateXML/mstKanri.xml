@@ -17,7 +17,7 @@
 			</check>
 		</variable>
 		<variable name="selNendoKakuteiStatus" dispName="年度確定ステータス">
-			<check class="IsRequired" message="該当するステータスが存在しません。" itemName="{dispName}"></check>
+			<check class="IsRequired" message="該当する!#itemName#!が存在しません。" itemName="{dispName}"></check>
 		</variable>
 		<variable name="txtGenzaishoriNengetsudo" dispName="現在処理年月度">
 			<check class="IsRequired" message="!#itemName#!が入力されていません。" itemName="{dispName}"></check>

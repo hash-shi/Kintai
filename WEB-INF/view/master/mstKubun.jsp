@@ -55,13 +55,13 @@
 				<tr>
 					<td class="title center w120 req">区分名称</td>
 					<td class="value w600" colspan="3">
-						<input type="text" class="w500" maxlength="40" name="txtKbnName" id="txtKbnName" value="" >
+						<input type="text" class="w350" maxlength="40" name="txtKbnName" id="txtKbnName" value="" >
 					</td>
 				</tr>
 				<tr>
 					<td class="title center w120">区分略称</td>
 					<td class="value w600" colspan="3">
-						<input type="text" class="w150" maxlength="10" name="txtKbnRyaku" id="txtKbnRyaku" value="" >
+						<input type="text" class="w80" maxlength="10" name="txtKbnRyaku" id="txtKbnRyaku" value="" >
 					</td>
 				</tr>
 				<tr>

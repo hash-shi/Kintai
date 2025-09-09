@@ -49,7 +49,7 @@
 			<check class="IsRequired" message="!#itemName#!が入力されていません。" itemName="{dispName}"></check>
 			<check class="IsHalf" message="!#itemName#!には全角文字は入力できません。" itemName="{dispName}"></check>
 			<check class="IsNumeric" message="!#itemName#!には数字を入力してください。" itemName="{dispName}"></check>
-			<check class="MaxLength" message="!#itemName#!が4バイトを超えています。(4バイト = 全角2/2文字, 半角2文字)" itemName="{dispName}">
+			<check class="MaxLength" message="!#itemName#!が2バイトを超えています。(2バイト = 全角2/2文字, 半角2文字)" itemName="{dispName}">
 				<param name="type">full</param>
 				<param name="length">2</param>
 			</check>
