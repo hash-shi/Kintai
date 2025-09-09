@@ -234,6 +234,27 @@ public class ChiChinginkeisanshoValidate extends ValidateBase {
 				return false;
 			}
 			
+			if(
+				("".equals(shusshaJi) == false) ||
+				("".equals(shusshaFun) == false) ||
+				("".equals(taishaJi) == false) ||
+				("".equals(taishaFun) == false)
+			){
+				//出社退社時分が空でない場合のみ、未入力や0のチェックを行う
+				isRequiredValidate.setParams(this.params);
+				if(isRequiredValidate.doValidate(req, res, jitsudoJikan, info) == false) {
+					this.addValidateMessage("実働時間が入力されていません。");
+					return false;
+				}
+				this.params.put("length", "0");
+				this.params.put("comparisonoperator", "<");
+				numberLimitValidate.setParams(this.params);
+				if(numberLimitValidate.doValidate(req, res, jitsudoJikan, info) == false) {
+					this.addValidateMessage("実働時間が入力されていません。");
+					return false;
+				}
+			}
+
 			if("".equals(jitsudoJikan) == false) {
 				isNumberValidate.setParams(this.params);
 				if(isNumberValidate.doValidate(req, res, jitsudoJikan, info) == false) {
@@ -244,14 +265,6 @@ public class ChiChinginkeisanshoValidate extends ValidateBase {
 				minNumberLimitValidate.setParams(this.params);
 				if(minNumberLimitValidate.doValidate(req, res, jitsudoJikan, info) == false) {
 					this.addValidateMessage("実働時間にはマイナスは設定できません。");
-					return false;
-				}
-	
-				this.params.put("length", "0");
-				this.params.put("comparisonoperator", "<");
-				numberLimitValidate.setParams(this.params);
-				if(numberLimitValidate.doValidate(req, res, jitsudoJikan, info) == false) {
-					this.addValidateMessage("実働時間が入力されていません。");
 					return false;
 				}
 	
@@ -268,52 +281,62 @@ public class ChiChinginkeisanshoValidate extends ValidateBase {
 				}
 			}
 			
-			ArrayList<String> kintaiShinseiKbnList = new ArrayList<String>(Arrays.asList("", "", ""));
+			ArrayList<String> chinginShinseiKbnList = new ArrayList<String>(Arrays.asList("", "", ""));
 
 			for(int j = 1;j <= 3;j++){
 				StringBuilder jikanKeySb		= new StringBuilder();
-				StringBuilder kintaiShinseiKbnKeySb	= new StringBuilder();
-				jikanKeySb		.append("KintaiShinseiJikan")		.append(String.valueOf(j)).append(String.valueOf(i));
-				kintaiShinseiKbnKeySb	.append("KintaiShinseiKbn")	.append(String.valueOf(j)).append(String.valueOf(i));
+				StringBuilder chinginShinseiKbnKeySb	= new StringBuilder();
+				jikanKeySb		.append("ChinginShinseiJikan")		.append(String.valueOf(j)).append(String.valueOf(i));
+				chinginShinseiKbnKeySb	.append("ChinginShinseiKbn")	.append(String.valueOf(j)).append(String.valueOf(i));
 				
 				String jikan			= this.getParameter(jikanKeySb.toString());
-				String kintaiShinseiKbn		= this.getParameter(kintaiShinseiKbnKeySb.toString());
-				kintaiShinseiKbnList.set(j-1, kintaiShinseiKbn);
+				String chinginShinseiKbn		= this.getParameter(chinginShinseiKbnKeySb.toString());
+				chinginShinseiKbnList.set(j-1, chinginShinseiKbn);
 				
 				BigDecimal dcmJikan	= BigDecimal.ZERO;
 				
+				double wkJikan = 0;
+				try {
+					wkJikan = Double.parseDouble(jikan);
+				}
+				catch(Exception e) {}
+				if((StringUtils.isEmpty(jikan) || wkJikan <= 0) == false) {
+					//時間が入力されているとき、申請区分が空だとエラー
+					if(StringUtils.isEmpty(chinginShinseiKbn) || "00".equals(chinginShinseiKbn)) {
+						this.addValidateMessage("申請区分" + String.valueOf(j) + "が入力されていません。");
+						return false;
+					}
+				}
 
-				
 
-
-				if((StringUtils.isEmpty(kintaiShinseiKbn) || "00".equals(kintaiShinseiKbn)) == false) {
+				if((StringUtils.isEmpty(chinginShinseiKbn) || "00".equals(chinginShinseiKbn)) == false) {
 					//申請区分が空でない場合のみ、未入力や0のチェックを行う
 					isRequiredValidate.setParams(this.params);
-					if(isRequiredValidate.doValidate(req, res, jitsudoJikan, info) == false) {
-						this.addValidateMessage("勤怠申請時間" + String.valueOf(j) + "が入力されていません。");
+					if(isRequiredValidate.doValidate(req, res, jikan, info) == false) {
+						this.addValidateMessage("賃金申請時間" + String.valueOf(j) + "が入力されていません。");
 						return false;
 					}
 				}
 
 				isNumberValidate.setParams(this.params);
 				if(isNumberValidate.doValidate(req, res, jikan, info) == false) {
-					this.addValidateMessage("勤怠申請時間" + String.valueOf(j) + "には数値を入力してください。");
+					this.addValidateMessage("賃金申請時間" + String.valueOf(j) + "には数値を入力してください。");
 					return false;
 				}
 				this.params.put("length", "0");
 				minNumberLimitValidate.setParams(this.params);
 				if(minNumberLimitValidate.doValidate(req, res, jikan, info) == false) {
-					this.addValidateMessage("勤怠申請時間" + String.valueOf(j) + "にはマイナスは設定できません。");
+					this.addValidateMessage("賃金申請時間" + String.valueOf(j) + "にはマイナスは設定できません。");
 					return false;
 				}
 
-				if((StringUtils.isEmpty(kintaiShinseiKbn) || "00".equals(kintaiShinseiKbn)) == false) {
+				if((StringUtils.isEmpty(chinginShinseiKbn) || "00".equals(chinginShinseiKbn)) == false) {
 					//申請区分が空でない場合のみ、未入力や0のチェックを行う
 					this.params.put("length", "0");
 					this.params.put("comparisonoperator", "<");
 					numberLimitValidate.setParams(this.params);
-					if(numberLimitValidate.doValidate(req, res, jitsudoJikan, info) == false) {
-						this.addValidateMessage("勤怠申請時間" + String.valueOf(j) + "が入力されていません。");
+					if(numberLimitValidate.doValidate(req, res, jikan, info) == false) {
+						this.addValidateMessage("賃金申請時間" + String.valueOf(j) + "が入力されていません。");
 						return false;
 					}
 				}
@@ -323,31 +346,19 @@ public class ChiChinginkeisanshoValidate extends ValidateBase {
 						dcmJikan = new BigDecimal(jikan);
 					}
 					if((dcmJikan.precision() - dcmJikan.scale() > 2) || (dcmJikan.scale() > 2)){
-						this.addValidateMessage("勤怠申請時間" + String.valueOf(j) + "の桁数が不正です。");
+						this.addValidateMessage("賃金申請時間" + String.valueOf(j) + "の桁数が不正です。");
 							return false;
 						}
 				} catch (Exception e) {
 					return false;
 				}
 				
-				double wkJikan = 0;
-				try {
-					wkJikan = Double.parseDouble(jikan);
-				}
-				catch(Exception e) {}
-				if(("".equals(jikan) || wkJikan <= 0)== false){
-					//時間が入力されているとき、申請区分が空だとエラー
-					if(StringUtils.isEmpty(kintaiShinseiKbn) || "00".equals(kintaiShinseiKbn)) {
-						this.addValidateMessage("申請区分" + String.valueOf(j) + "が入力されていません。");
-						return false;
-					}
-				}
 			}
 			
 			
-			//勤怠区分が空でない場合のみ、申請パターンのチェックを行う
-			// 賃金申請書入力区分("01"固定)、勤怠区分、勤怠申請区分1,2,3の組み合わせが、申請パターンマスタ(MST_SHINSEI_PATTERN)に登録されていない場合
-			if(shinseiPatternCheck(con, kintaiShinseiKbnList.get(0), kintaiShinseiKbnList.get(1), kintaiShinseiKbnList.get(2)) == false){
+			//賃金区分が空でない場合のみ、申請パターンのチェックを行う
+			// 賃金申請書入力区分("01"固定)、賃金区分、賃金申請区分1,2,3の組み合わせが、申請パターンマスタ(MST_SHINSEI_PATTERN)に登録されていない場合
+			if(shinseiPatternCheck(con, chinginShinseiKbnList.get(0), chinginShinseiKbnList.get(1), chinginShinseiKbnList.get(2)) == false){
 				this.addValidateMessage("申請区分の組み合わせが正しくありません。");
 				return false;
 			}

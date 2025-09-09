@@ -67,7 +67,7 @@
 			<check class="ChiChinginkeisanshoValidate" message="更新処理でエラーが発生しました。"></check>
 		</variable>
 
-		<variable name="txtShinseiKingaku02" dispName="特記事項">
+		<variable name="txtTokkijiko" dispName="特記事項">
 			<check class="lengthValidate" message="!#itemName#!が264バイトを超えています。(264バイト = 全角264/2文字, 半角40文字)" itemName="{dispName}">
 				<param name="type">half</param>
 				<param name="length">264</param>
