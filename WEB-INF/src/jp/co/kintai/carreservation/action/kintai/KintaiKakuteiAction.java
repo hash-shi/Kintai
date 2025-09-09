@@ -32,36 +32,21 @@ public class KintaiKakuteiAction extends PJActionBase {
 		 * @param res
 		 * @throws Exception
 		 */
-		String result = "";
-		
+		String taishoDate = "";
 		// DB接続
 		Connection con		= this.getConnection("kintai", req);
-		
-		// DB接続
-		StringBuffer sql				= new StringBuffer();
-		PreparedStatement pstmt			= null;
-		ResultSet rset					= null;
-			
-		sql.append(" SELECT TOP 1 GenzaishoriNengetsudo FROM MST_KANRI");
-			
-		try {
-			// SQL文の生成
-			pstmt = con.prepareStatement(sql.toString());
-			// 実行
-			rset = pstmt.executeQuery();
-			// 結果取得
-			if(rset.next()) {
-				result = StringUtils.stripToEmpty(rset.getString("GenzaishoriNengetsudo"));
-			}
-		} finally {
-			if (rset != null){ try { rset.close(); } catch (Exception exp){}}
-			if (pstmt != null){ try { pstmt.close(); } catch (Exception exp){}}
+		// 取得
+		ArrayList<HashMap<String, String>> mstKanris = PJActionBase.getMstKanris(con, "01");
+		// 送信データを減らすため不要なカラムは削って対象年月のみ返す。
+		for (HashMap<String, String> hashMap : mstKanris) {
+			taishoDate = hashMap.get("GenzaishoriNengetsudo");
 		}
+		
 			
 		//=====================================================================
 		// 結果返却
 		//=====================================================================
-		req.setAttribute("result", result);
+		req.setAttribute("result", taishoDate);
 		this.setView("success");
 	}
 	
@@ -209,7 +194,7 @@ public class KintaiKakuteiAction extends PJActionBase {
 		String count				= this.getParameter("txtKakuteiCount");
 		int cnt						= Integer.parseInt(count);
 		//対象年月
-		String taishoYM			= this.getParameter("srhTxtTaishoYM");
+		String taishoYM			= this.getParameter("txtTaishoYM");
 		//最終更新日
 		String saishuKoshinDate	= PJActionBase.getNowDate();
 		//最終更新時刻
@@ -287,7 +272,7 @@ public class KintaiKakuteiAction extends PJActionBase {
 		String count				= this.getParameter("txtKakuteiCount");
 		int cnt						= Integer.parseInt(count);
 		//対象年月
-		String taishoYM			= this.getParameter("srhTxtTaishoYM");
+		String taishoYM			= this.getParameter("txtTaishoYM");
 		//最終更新日
 		String saishuKoshinDate	= PJActionBase.getNowDate();
 		//最終更新時刻

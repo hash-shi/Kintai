@@ -5,16 +5,6 @@
 <%@ page import="jp.co.kintai.carreservation.information.UserInformation" %>
 
 <%
-
-	String shainNO = "";
-	
-	// ユーザー情報の取得
-	UserInformation userInformation		= (UserInformation)request.getSession().getAttribute(Define.SESSION_ID);
-
-	if (userInformation != null) {
-		shainNO						= userInformation.getShainNO();
-	}
-	
 	//対象年月初期値の取得
 	String	taishoDate					= (String)request.getAttribute("result");
 %>
@@ -32,7 +22,7 @@
 					<td class="title center w100 req">対象年月</td>
 					<td class="value w100">
 						<input type="text" class=""  style="width: 80px; text-align: right;" name="srhTxtTaishoYM" id="srhTxtTaishoYM" value="<%=UtilEscape.htmlspecialchars(taishoDate) %>" maxlength="7" onblur="getTaishoYMFormat();" autofocus onfocus="this.setSelectionRange(7, 7)">
-						<input type="hidden" name="hidSrhTxtTaishoYM" id="hidSrhTxtTaishoYM" value="">
+						<input type="hidden" name="txtTaishoYM" id="txtTaishoYM" value="">
 					</td>
 					<td class="value w50">
 						<button type="button" onclick="onSearchKintaiKakutei();">検索</button>

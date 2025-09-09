@@ -44,7 +44,7 @@ function getTaishoYMFormat(){
 //****************************************************************************
 function onSearchKintaiKakutei(){	
 	//更新処理に備え、検索条件を保持
-	$("#hidSrhTxtTaishoYM").val($("#srhTxtTaishoYM").val());
+	$("#txtTaishoYM").val($("#srhTxtTaishoYM").val());
 	//検索結果表示
 	proc("searchKintaiKakutei", {}, function(data){
 
