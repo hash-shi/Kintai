@@ -44,7 +44,7 @@ public class CsvKinYukyuKyukaDaichoDownload extends DownloadBase {
 		String toBushoCode			= req.getParameter("srhTxtBushoCodeT");
 		String fromShainNo			= req.getParameter("srhTxtShainNoF");
 		String toShainNo			= req.getParameter("srhTxtShainNoT");
-		String output				= req.getParameter("srhRdoOutput");
+		String order				= req.getParameter("srhRdoOrder");
 		
 		// ログインユーザが処理可能な営業所コードの取得
 		UserInformation userInformation = (UserInformation)req.getSession().getAttribute(Define.SESSION_ID);
@@ -495,7 +495,7 @@ public class CsvKinYukyuKyukaDaichoDownload extends DownloadBase {
 		sql.append(" ORDER BY ");
 		sql.append("     C.TaishoNendo ");
 		
-		if ("02".equals(output)) {
+		if ("02".equals(order)) {
 			sql.append("     ,C.EigyoshoCode ");
 		}
 		

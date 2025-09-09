@@ -46,7 +46,7 @@ public class CsvKinShukkinBoDownload extends DownloadBase {
 		String fromShainNo			= req.getParameter("srhTxtShainNoF");
 		String toShainNo			= req.getParameter("srhTxtShainNoT");
 		String joken				= req.getParameter("srhSelJoken");
-		String output				= req.getParameter("srhRdoOutput");
+		String order				= req.getParameter("srhRdoOrder");
 		
 		// ログインユーザが処理可能な営業所コードの取得
 		UserInformation userInformation = (UserInformation)req.getSession().getAttribute(Define.SESSION_ID);
@@ -140,7 +140,7 @@ public class CsvKinShukkinBoDownload extends DownloadBase {
 		sql.append(" 		ELSE 0 ");
 		sql.append(" 	 END AS KintaiShinseiKyukeiJikan2 ");
 		
-		sql.append(" 	,COALESCE(K0101B.KbnName, '') AS KintaiShinseiKbn3 ");
+		sql.append(" 	,COALESCE(K0101C.KbnName, '') AS KintaiShinseiKbn3 ");
 		sql.append(" 	,CASE ");
 		sql.append(" 		WHEN M.KintaiShinseiKaishiJi3 NOT IN ('', '00') ");
 		sql.append(" 		THEN M.KintaiShinseiKaishiJi3 + ':' + M.KintaiShinseiKaishiFun3 ");
@@ -218,6 +218,12 @@ public class CsvKinShukkinBoDownload extends DownloadBase {
 		sql.append(" 	K0101B.Code = M.KintaiShinseiKbn2 ");
 		sql.append(" AND ");
 		sql.append(" 	K0101B.Code <> '00' ");
+		sql.append(" LEFT OUTER JOIN ");
+		sql.append(" 	MST_KUBUN K0101C ");
+		sql.append(" ON ");
+		sql.append(" 	K0101C.KbnCode = '0101' AND ");
+		sql.append(" 	K0101C.Code = M.KintaiShinseiKbn3 AND ");
+		sql.append(" 	K0101C.Code <> '00' ");
 		
 		sql.append(" WHERE ");
 		sql.append(" 	1 = 1 ");
@@ -283,7 +289,7 @@ public class CsvKinShukkinBoDownload extends DownloadBase {
 		sql.append(" ORDER BY ");
 		sql.append("     K.TaishoNenGetsudo ");
 		
-		if (output == "02") {
+		if ("02".equals(order)) {
 			sql.append("     ,E.EigyoshoCode ");
 		}
 		

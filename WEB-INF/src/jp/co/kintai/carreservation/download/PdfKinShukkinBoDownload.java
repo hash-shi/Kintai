@@ -53,7 +53,7 @@ public class PdfKinShukkinBoDownload extends DownloadBase {
 		String fromShainNo			= req.getParameter("srhTxtShainNoF");
 		String toShainNo			= req.getParameter("srhTxtShainNoT");
 		String joken				= req.getParameter("srhSelJoken");
-		String output				= req.getParameter("srhRdoOutput");
+		String order				= req.getParameter("srhRdoOrder");
 		
 		// ログインユーザが処理可能な営業所コードの取得
 		UserInformation userInformation = (UserInformation)req.getSession().getAttribute(Define.SESSION_ID);
@@ -153,7 +153,7 @@ public class PdfKinShukkinBoDownload extends DownloadBase {
 		sql.append(" 		ELSE '' ");
 		sql.append(" 	 END AS KintaiShinseiKyukeiJikan2 ");
 		
-		sql.append(" 	,COALESCE(K0101B.KbnName, '') AS KintaiShinseiKbn3 ");
+		sql.append(" 	,COALESCE(K0101C.KbnName, '') AS KintaiShinseiKbn3 ");
 		sql.append(" 	,CASE ");
 		sql.append(" 		WHEN M.KintaiShinseiKaishiJi3 NOT IN ('') ");
 		sql.append(" 		THEN M.KintaiShinseiKaishiJi3 + ':' + M.KintaiShinseiKaishiFun3 ");
@@ -292,6 +292,12 @@ public class PdfKinShukkinBoDownload extends DownloadBase {
 		sql.append(" 	K0101B.Code = M.KintaiShinseiKbn2 AND ");
 		sql.append(" 	K0101B.Code <> '00' ");
 		sql.append(" LEFT OUTER JOIN ");
+		sql.append(" 	MST_KUBUN K0101C ");
+		sql.append(" ON ");
+		sql.append(" 	K0101C.KbnCode = '0101' AND ");
+		sql.append(" 	K0101C.Code = M.KintaiShinseiKbn3 AND ");
+		sql.append(" 	K0101C.Code <> '00' ");
+		sql.append(" LEFT OUTER JOIN ");
 		sql.append(" 	KIN_YUKYU_KYUKA_DAICHO Y");
 		sql.append(" ON ");
 		sql.append(" 	S.ShainNO = Y.ShainNO AND ");
@@ -367,7 +373,7 @@ public class PdfKinShukkinBoDownload extends DownloadBase {
 		sql.append(" ORDER BY ");
 		sql.append("     K.TaishoNenGetsudo ");
 		
-		if (output == "02") {
+		if ("02".equals(order)) {
 			sql.append("     ,E.EigyoshoCode ");
 		}
 		
@@ -563,14 +569,16 @@ public class PdfKinShukkinBoDownload extends DownloadBase {
 					worksheet.getCellRange("C" 	+ (9 + rowCnt)).getCellStyle().getExcelFont().setColor(Color.red);
 				}
 				
-				// 出勤予定が休の場合は赤色
+				// 出勤予定が休・有休の場合は赤色
 				if(data.get(i).get("ShukkinYoteiKbn").equals("休")) {
+					worksheet.getCellRange("E" 	+ (9 + rowCnt)).getCellStyle().getExcelFont().setColor(Color.red);
+				} else if(data.get(i).get("ShukkinYoteiKbn").equals("有休")) {
 					worksheet.getCellRange("E" 	+ (9 + rowCnt)).getCellStyle().getExcelFont().setColor(Color.red);
 				}
 				
 				String green = "#006400";
 				
-				// 勤怠区分が休日の場合は赤色
+				// 勤怠区分が有給休暇・半日休暇・休日・振替休日の場合は赤色、欠勤の場合は緑色
 				if(data.get(i).get("KintaiKbn").equals("有給休暇")
 						|| data.get(i).get("KintaiKbn").equals("半日有給")
 						|| data.get(i).get("KintaiKbn").equals("休日")
