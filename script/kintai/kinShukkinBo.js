@@ -80,7 +80,7 @@ window.onload = function(){
 
 		if(result == "04"){
 			document.getElementById("txtShainNO").readOnly = true;
-			document.getElementById("txtShainNO").disabled = true;
+			document.getElementById("txtShainNO").tabIndex = "-1";
 			document.getElementById("linkShainSearch").onclick = "";
 			document.getElementById("linkShainSearch").tabIndex = "-1";
 			document.getElementById("btnShainSearch").onclick = "";

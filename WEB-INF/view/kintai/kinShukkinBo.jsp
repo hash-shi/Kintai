@@ -28,7 +28,7 @@
 							<input type="hidden" name="hdnWkShainNO" id="hdnWkShainNO" value="">
 							<input type="hidden" name="txtSearchedShainNO" id="txtSearchedShainNO" value="">
 							<img class="img border" name="btnShainSearch" id="btnShainSearch" src="./images/search.png"  onclick="opnDialog('srhMstShain','txtShainNO','txtShainName');">
-							<input type="text" class=""  style="width: 120px" name="txtShainName" id="txtShainName" value="" disabled readonly>
+							<input type="text" class=""  style="width: 120px" name="txtShainName" id="txtShainName" value="" readonly tabindex="-1">
 						</td>
 						<td class="value w50">
 							<button type="button" onclick="onSearchKinShukkinBo();">検索</button>
