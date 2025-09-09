@@ -42,7 +42,6 @@ public class PdfKinShukkinBoDownload extends DownloadBase {
 		//=====================================================================
 		// パラメータ取得
 		//=====================================================================
-		int count = 0;
 		ArrayList<HashMap<String, String>> data = new ArrayList<>();
 		String fromTaishoNengetsu	= req.getParameter("srhTxtTaishoNengetsuF");
 		String toTaishoNengetsu		= req.getParameter("srhTxtTaishoNengetsuT");
