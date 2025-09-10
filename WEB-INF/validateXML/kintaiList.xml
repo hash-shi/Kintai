@@ -65,13 +65,13 @@
 	<proc func="kinYukyuKyukaDaicho">
 		<variable name="srhTxtTaishoNendoF" dispName="対象年度FROM">
 			<check class="IsRequired" message="!#itemName#!が入力されていません。" itemName="{dispName}"></check>
-			<check class="IsDate" message="!#itemName#!の指定が不正です(YYYY/MM)" itemName="{dispName}">
+			<check class="IsDate" message="!#itemName#!の指定が不正です(YYYY)" itemName="{dispName}">
 				<param name="format">yyyy</param>
 			</check>
 		</variable>
 		<variable name="srhTxtTaishoNendoT" dispName="対象年度TO">
 			<check class="IsRequired" message="!#itemName#!が入力されていません。" itemName="{dispName}"></check>
-			<check class="IsDate" message="!#itemName#!の指定が不正です(YYYY/MM)" itemName="{dispName}">
+			<check class="IsDate" message="!#itemName#!の指定が不正です(YYYY)" itemName="{dispName}">
 				<param name="format">yyyy</param>
 			</check>
 		</variable>
