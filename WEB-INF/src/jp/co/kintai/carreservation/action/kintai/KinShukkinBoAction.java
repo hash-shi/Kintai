@@ -432,15 +432,49 @@ public class KinShukkinBoAction extends PJActionBase {
 			while (rset.next()){
 				for(int i = 0;i < ResultDatas.size();i++) {
 					if(
-							ResultDatas.get(i).get("TaishoGetsu").equals(StringUtils.stripToEmpty(rset.getString("TaishoGetsu"))) &&
-							ResultDatas.get(i).get("TaishoBi").equals(StringUtils.stripToEmpty(rset.getString("TaishoBi")))
+							ResultDatas.get(i).get("txtTaishoGetsu").equals(StringUtils.stripToEmpty(rset.getString("TaishoGetsu"))) &&
+							ResultDatas.get(i).get("txtTaishoBi").equals(StringUtils.stripToEmpty(rset.getString("TaishoBi")))
 							) {
 						// 1レコード分の配列を用意
 						HashMap<String, String> record = new HashMap<String, String>();
-						// カラム名をkeyとして値を格納
-						for (int j = 1; j <= colCount; j++) {
-							record.put(metaData.getColumnLabel(j), StringUtils.stripToEmpty(rset.getString(j)));
-						}
+						record.put("txtTaishoNengappi",				StringUtils.stripToEmpty(rset.getString("TaishoNengappi")));
+						record.put("txtTaishoGetsu",				StringUtils.stripToEmpty(rset.getString("TaishoGetsu")));
+						record.put("txtTaishoBi",					StringUtils.stripToEmpty(rset.getString("TaishoBi")));
+						record.put("txtYobiKbn",					StringUtils.stripToEmpty(rset.getString("YobiKbn")));
+						record.put("selShukkinYoteiKbn",			StringUtils.stripToEmpty(rset.getString("ShukkinYoteiKbn")));
+						record.put("selKintaiKbn",					StringUtils.stripToEmpty(rset.getString("KintaiKbn")));
+						record.put("numShusshaJi",					StringUtils.stripToEmpty(rset.getString("ShusshaJi")));
+						record.put("numShusshaFun",					StringUtils.stripToEmpty(rset.getString("ShusshaFun")));
+						record.put("numTaishaJi",					StringUtils.stripToEmpty(rset.getString("TaishaJi")));
+						record.put("numTaishaFun",					StringUtils.stripToEmpty(rset.getString("TaishaFun")));
+						record.put("numJitsudoJikan",				StringUtils.stripToEmpty(rset.getString("JitsudoJikan")));
+						record.put("txtKintaiShinseiBiko",			StringUtils.stripToEmpty(rset.getString("KintaiShinseiBiko")));
+						record.put("selKintaiShinseiKbn1",			StringUtils.stripToEmpty(rset.getString("KintaiShinseiKbn1")));
+						record.put("numKintaiShinseiKaishiJi1",		StringUtils.stripToEmpty(rset.getString("KintaiShinseiKaishiJi1")));
+						record.put("numKintaiShinseiKaishiFun1",	StringUtils.stripToEmpty(rset.getString("KintaiShinseiKaishiFun1")));
+						record.put("numKintaiShinseiShuryoJi1",		StringUtils.stripToEmpty(rset.getString("KintaiShinseiShuryoJi1")));
+						record.put("numKintaiShinseiShuryoFun1",	StringUtils.stripToEmpty(rset.getString("KintaiShinseiShuryoFun1")));
+						record.put("numKintaiShinseiJikan1",		StringUtils.stripToEmpty(rset.getString("KintaiShinseiJikan1")));
+						record.put("selKintaiShinseiKbn2",			StringUtils.stripToEmpty(rset.getString("KintaiShinseiKbn2")));
+						record.put("numKintaiShinseiKaishiJi2",		StringUtils.stripToEmpty(rset.getString("KintaiShinseiKaishiJi2")));
+						record.put("numKintaiShinseiKaishiFun2",	StringUtils.stripToEmpty(rset.getString("KintaiShinseiKaishiFun2")));
+						record.put("numKintaiShinseiShuryoJi2",		StringUtils.stripToEmpty(rset.getString("KintaiShinseiShuryoJi2")));
+						record.put("numKintaiShinseiShuryoFun2",	StringUtils.stripToEmpty(rset.getString("KintaiShinseiShuryoFun2")));
+						record.put("numKintaiShinseiJikan2",		StringUtils.stripToEmpty(rset.getString("KintaiShinseiJikan2")));
+						record.put("selKintaiShinseiKbn3",			StringUtils.stripToEmpty(rset.getString("KintaiShinseiKbn3")));
+						record.put("numKintaiShinseiKaishiJi3",		StringUtils.stripToEmpty(rset.getString("KintaiShinseiKaishiJi3")));
+						record.put("numKintaiShinseiKaishiFun3",	StringUtils.stripToEmpty(rset.getString("KintaiShinseiKaishiFun3")));
+						record.put("numKintaiShinseiShuryoJi3",		StringUtils.stripToEmpty(rset.getString("KintaiShinseiShuryoJi3")));
+						record.put("numKintaiShinseiShuryoFun3",	StringUtils.stripToEmpty(rset.getString("KintaiShinseiShuryoFun3")));
+						record.put("numKintaiShinseiJikan3",		StringUtils.stripToEmpty(rset.getString("KintaiShinseiJikan3")));
+						record.put("txtMeisaiSaishuKoshinDate",		StringUtils.stripToEmpty(rset.getString("MeisaiSaishuKoshinDate")));
+						record.put("txtMeisaiSaishuKoshinJikan",	StringUtils.stripToEmpty(rset.getString("MeisaiSaishuKoshinJikan")));
+						record.put("numShinseiKingaku01",			StringUtils.stripToEmpty(rset.getString("ShinseiKingaku01")));
+						record.put("numShinseiKingaku02",			StringUtils.stripToEmpty(rset.getString("ShinseiKingaku02")));
+						record.put("txtKakuteiKbn",					StringUtils.stripToEmpty(rset.getString("KakuteiKbn")));
+						record.put("txtKihonSaishuKoshinDate",		StringUtils.stripToEmpty(rset.getString("KihonSaishuKoshinDate")));
+						record.put("txtKihonSaishuKoshinJikan",		StringUtils.stripToEmpty(rset.getString("KihonSaishuKoshinJikan")));
+
 						// 配列の格納
 						ResultDatas.set(i, record);
 					}
@@ -477,9 +511,9 @@ public class KinShukkinBoAction extends PJActionBase {
 			// 1レコード分の配列を用意
 			HashMap<String, String> record = new HashMap<String, String>();
 			// カラム名をkeyとして値を格納
-			record.put("TaishoNengappi", wkTaishoYMLD.format(dtf));
-			record.put("TaishoGetsu", String.valueOf(wkTaishoYMLD.getMonthValue()));
-			record.put("TaishoBi", String.valueOf(wkTaishoYMLD.getDayOfMonth()));
+			record.put("txtTaishoNengappi", wkTaishoYMLD.format(dtf));
+			record.put("txtTaishoGetsu", String.valueOf(wkTaishoYMLD.getMonthValue()));
+			record.put("txtTaishoBi", String.valueOf(wkTaishoYMLD.getDayOfMonth()));
 			
 			String yobi = "";
 			switch(wkTaishoYMLD.getDayOfWeek().getValue()) {
@@ -505,40 +539,40 @@ public class KinShukkinBoAction extends PJActionBase {
 				yobi = "日";
 				break;
 			}
-			record.put("YobiKbn", yobi);
-			record.put("ShukkinYoteiKbn","01");
-			record.put("KintaiKbn","00");
-			record.put("ShusshaJi","");
-			record.put("ShusshaFun","");
-			record.put("TaishaJi","");
-			record.put("TaishaFun","");
-			record.put("JitsudoJikan","0.00");
-			record.put("KintaiShinseiBiko","");
-			record.put("KintaiShinseiKbn1","00");
-			record.put("KintaiShinseiKaishiJi1","");
-			record.put("KintaiShinseiKaishiFun1","");
-			record.put("KintaiShinseiShuryoJi1","");
-			record.put("KintaiShinseiShuryoFun1","");
-			record.put("KintaiShinseiJikan1","0.00");
-			record.put("KintaiShinseiKbn2","00");
-			record.put("KintaiShinseiKaishiJi2","");
-			record.put("KintaiShinseiKaishiFun2","");
-			record.put("KintaiShinseiShuryoJi2","");
-			record.put("KintaiShinseiShuryoFun2","");
-			record.put("KintaiShinseiJikan2","0.00");
-			record.put("KintaiShinseiKbn3","00");
-			record.put("KintaiShinseiKaishiJi3","");
-			record.put("KintaiShinseiKaishiFun3","");
-			record.put("KintaiShinseiShuryoJi3","");
-			record.put("KintaiShinseiShuryoFun3","");
-			record.put("KintaiShinseiJikan3","0.00");
-			record.put("MeisaiSaishuKoshinDate","");
-			record.put("MeisaiSaishuKoshinJikan","");
-			record.put("ShinseiKingaku01","0");
-			record.put("ShinseiKingaku02","0");
-			record.put("KakuteiKbn","");
-			record.put("KihonSaishuKoshinDate","");
-			record.put("KihonSaishuKoshinJikan","");
+			record.put("txtYobiKbn", yobi);
+			record.put("selShukkinYoteiKbn","01");
+			record.put("selKintaiKbn","00");
+			record.put("numShusshaJi","");
+			record.put("numShusshaFun","");
+			record.put("numTaishaJi","");
+			record.put("numTaishaFun","");
+			record.put("numJitsudoJikan","0.00");
+			record.put("txtKintaiShinseiBiko","");
+			record.put("selKintaiShinseiKbn1","00");
+			record.put("numKintaiShinseiKaishiJi1","");
+			record.put("numKintaiShinseiKaishiFun1","");
+			record.put("numKintaiShinseiShuryoJi1","");
+			record.put("numKintaiShinseiShuryoFun1","");
+			record.put("numKintaiShinseiJikan1","0.00");
+			record.put("selKintaiShinseiKbn2","00");
+			record.put("numKintaiShinseiKaishiJi2","");
+			record.put("numKintaiShinseiKaishiFun2","");
+			record.put("numKintaiShinseiShuryoJi2","");
+			record.put("numKintaiShinseiShuryoFun2","");
+			record.put("numKintaiShinseiJikan2","0.00");
+			record.put("selKintaiShinseiKbn3","00");
+			record.put("numKintaiShinseiKaishiJi3","");
+			record.put("numKintaiShinseiKaishiFun3","");
+			record.put("numKintaiShinseiShuryoJi3","");
+			record.put("numKintaiShinseiShuryoFun3","");
+			record.put("numKintaiShinseiJikan3","0.00");
+			record.put("txtMeisaiSaishuKoshinDate","");
+			record.put("txtMeisaiSaishuKoshinJikan","");
+			record.put("numShinseiKingaku01","0");
+			record.put("numShinseiKingaku02","0");
+			record.put("txtKakuteiKbn","");
+			record.put("txtKihonSaishuKoshinDate","");
+			record.put("txtKihonSaishuKoshinJikan","");
 			// 配列の格納
 			ResultDatas.add(record);
 			
@@ -577,7 +611,7 @@ public class KinShukkinBoAction extends PJActionBase {
 		//1か月分入力項目があるので1か月分ループ
 		for(int i = 0;i < 31;i++){
 			StringBuilder taishoNengappiKeySb	= new StringBuilder();
-			taishoNengappiKeySb	.append("TaishoNengappi")	.append(String.valueOf(i));
+			taishoNengappiKeySb	.append("txtTaishoNengappi")	.append(String.valueOf(i));
 			String taishoNengappi		= this.getParameter(taishoNengappiKeySb.toString());
 			
 			if(StringUtils.isEmpty(taishoNengappi)) {
@@ -874,11 +908,11 @@ public class KinShukkinBoAction extends PJActionBase {
 		HashMap<String, String> nissuRecord = getNissu(con, taishoYM, taishoShainNo);
 		HashMap<String, String> jikanRecord = getJikan(con, taishoYM, taishoShainNo);
 		
-		String shinseiKingaku01 =  this.getParameter("txtShinseiKingaku01");
+		String shinseiKingaku01 =  this.getParameter("numShinseiKingaku01");
 		if(StringUtils.isEmpty(shinseiKingaku01)) {
 			shinseiKingaku01 = "0";
 		}
-		String shinseiKingaku02 =  this.getParameter("txtShinseiKingaku02");
+		String shinseiKingaku02 =  this.getParameter("numShinseiKingaku02");
 		if(StringUtils.isEmpty(shinseiKingaku02)) {
 			shinseiKingaku02 = "0";
 		}
@@ -1006,11 +1040,11 @@ public class KinShukkinBoAction extends PJActionBase {
 		HashMap<String, String> nissuRecord = getNissu(con, taishoYM, taishoShainNo);
 		HashMap<String, String> jikanRecord = getJikan(con, taishoYM, taishoShainNo);
 		
-		String shinseiKingaku01 =  this.getParameter("txtShinseiKingaku01");
+		String shinseiKingaku01 =  this.getParameter("numShinseiKingaku01");
 		if(StringUtils.isEmpty(shinseiKingaku01)) {
 			shinseiKingaku01 = "0";
 		}
-		String shinseiKingaku02 =  this.getParameter("txtShinseiKingaku02");
+		String shinseiKingaku02 =  this.getParameter("numShinseiKingaku02");
 		if(StringUtils.isEmpty(shinseiKingaku02)) {
 			shinseiKingaku02 = "0";
 		}
@@ -1282,32 +1316,32 @@ public class KinShukkinBoAction extends PJActionBase {
 		StringBuilder shuryoFun3KeySb			= new StringBuilder();
 		StringBuilder jikan3KeySb				= new StringBuilder();
 
-		shukkinYoteiKbnKeySb	.append("ShukkinYoteiKbn")			.append(String.valueOf(i));
-		kintaiKbnKeySb			.append("KintaiKbn")				.append(String.valueOf(i));
-		shusshaJiKeySb			.append("ShusshaJi")				.append(String.valueOf(i));
-		shusshaFunKeySb			.append("ShusshaFun")				.append(String.valueOf(i));
-		taishaJiKeySb			.append("TaishaJi")					.append(String.valueOf(i));
-		taishaFunKeySb			.append("TaishaFun")				.append(String.valueOf(i));
-		jitsudoJikanKeySb		.append("JitsudoJikan")				.append(String.valueOf(i));
-		bikoKeySb				.append("KintaiShinseiBiko")		.append(String.valueOf(i));
-		kintaiShinseiKbn1KeySb	.append("KintaiShinseiKbn1")		.append(String.valueOf(i));
-		kaishiJi1KeySb			.append("KintaiShinseiKaishiJi1")	.append(String.valueOf(i));
-		kaishiFun1KeySb			.append("KintaiShinseiKaishiFun1")	.append(String.valueOf(i));
-		shuryoJi1KeySb			.append("KintaiShinseiShuryoJi1")	.append(String.valueOf(i));
-		shuryoFun1KeySb			.append("KintaiShinseiShuryoFun1")	.append(String.valueOf(i));
-		jikan1KeySb				.append("KintaiShinseiJikan1")		.append(String.valueOf(i));
-		kintaiShinseiKbn2KeySb	.append("KintaiShinseiKbn2")		.append(String.valueOf(i));
-		kaishiJi2KeySb			.append("KintaiShinseiKaishiJi2")	.append(String.valueOf(i));
-		kaishiFun2KeySb			.append("KintaiShinseiKaishiFun2")	.append(String.valueOf(i));
-		shuryoJi2KeySb			.append("KintaiShinseiShuryoJi2")	.append(String.valueOf(i));
-		shuryoFun2KeySb			.append("KintaiShinseiShuryoFun2")	.append(String.valueOf(i));
-		jikan2KeySb				.append("KintaiShinseiJikan2")		.append(String.valueOf(i));
-		kintaiShinseiKbn3KeySb	.append("KintaiShinseiKbn3")		.append(String.valueOf(i));
-		kaishiJi3KeySb			.append("KintaiShinseiKaishiJi3")	.append(String.valueOf(i));
-		kaishiFun3KeySb			.append("KintaiShinseiKaishiFun3")	.append(String.valueOf(i));
-		shuryoJi3KeySb			.append("KintaiShinseiShuryoJi3")	.append(String.valueOf(i));
-		shuryoFun3KeySb			.append("KintaiShinseiShuryoFun3")	.append(String.valueOf(i));
-		jikan3KeySb				.append("KintaiShinseiJikan3")		.append(String.valueOf(i));
+		shukkinYoteiKbnKeySb	.append("selShukkinYoteiKbn")			.append(String.valueOf(i));
+		kintaiKbnKeySb			.append("selKintaiKbn")				.append(String.valueOf(i));
+		shusshaJiKeySb			.append("numShusshaJi")				.append(String.valueOf(i));
+		shusshaFunKeySb			.append("numShusshaFun")			.append(String.valueOf(i));
+		taishaJiKeySb			.append("numTaishaJi")				.append(String.valueOf(i));
+		taishaFunKeySb			.append("numTaishaFun")				.append(String.valueOf(i));
+		jitsudoJikanKeySb		.append("numJitsudoJikan")			.append(String.valueOf(i));
+		bikoKeySb				.append("txtKintaiShinseiBiko")		.append(String.valueOf(i));
+		kintaiShinseiKbn1KeySb	.append("selKintaiShinseiKbn1")		.append(String.valueOf(i));
+		kaishiJi1KeySb			.append("numKintaiShinseiKaishiJi1")	.append(String.valueOf(i));
+		kaishiFun1KeySb			.append("numKintaiShinseiKaishiFun1")	.append(String.valueOf(i));
+		shuryoJi1KeySb			.append("numKintaiShinseiShuryoJi1")	.append(String.valueOf(i));
+		shuryoFun1KeySb			.append("numKintaiShinseiShuryoFun1")	.append(String.valueOf(i));
+		jikan1KeySb				.append("numKintaiShinseiJikan1")		.append(String.valueOf(i));
+		kintaiShinseiKbn2KeySb	.append("selKintaiShinseiKbn2")		.append(String.valueOf(i));
+		kaishiJi2KeySb			.append("numKintaiShinseiKaishiJi2")	.append(String.valueOf(i));
+		kaishiFun2KeySb			.append("numKintaiShinseiKaishiFun2")	.append(String.valueOf(i));
+		shuryoJi2KeySb			.append("numKintaiShinseiShuryoJi2")	.append(String.valueOf(i));
+		shuryoFun2KeySb			.append("numKintaiShinseiShuryoFun2")	.append(String.valueOf(i));
+		jikan2KeySb				.append("numKintaiShinseiJikan2")		.append(String.valueOf(i));
+		kintaiShinseiKbn3KeySb	.append("selKintaiShinseiKbn3")		.append(String.valueOf(i));
+		kaishiJi3KeySb			.append("numKintaiShinseiKaishiJi3")	.append(String.valueOf(i));
+		kaishiFun3KeySb			.append("numKintaiShinseiKaishiFun3")	.append(String.valueOf(i));
+		shuryoJi3KeySb			.append("numKintaiShinseiShuryoJi3")	.append(String.valueOf(i));
+		shuryoFun3KeySb			.append("numKintaiShinseiShuryoFun3")	.append(String.valueOf(i));
+		jikan3KeySb				.append("numKintaiShinseiJikan3")		.append(String.valueOf(i));
 		
 		String shukkinYoteiKbn		= this.getParameter(shukkinYoteiKbnKeySb.toString());
 		String kintaiKbn			= this.getParameter(kintaiKbnKeySb.toString());
@@ -1698,32 +1732,32 @@ public class KinShukkinBoAction extends PJActionBase {
 		StringBuilder shuryoFun3KeySb			= new StringBuilder();
 		StringBuilder jikan3KeySb				= new StringBuilder();
 
-		shukkinYoteiKbnKeySb	.append("ShukkinYoteiKbn")			.append(String.valueOf(i));
-		kintaiKbnKeySb			.append("KintaiKbn")				.append(String.valueOf(i));
-		shusshaJiKeySb			.append("ShusshaJi")				.append(String.valueOf(i));
-		shusshaFunKeySb			.append("ShusshaFun")				.append(String.valueOf(i));
-		taishaJiKeySb			.append("TaishaJi")					.append(String.valueOf(i));
-		taishaFunKeySb			.append("TaishaFun")				.append(String.valueOf(i));
-		jitsudoJikanKeySb		.append("JitsudoJikan")				.append(String.valueOf(i));
-		bikoKeySb				.append("KintaiShinseiBiko")		.append(String.valueOf(i));
-		kintaiShinseiKbn1KeySb	.append("KintaiShinseiKbn1")		.append(String.valueOf(i));
-		kaishiJi1KeySb			.append("KintaiShinseiKaishiJi1")	.append(String.valueOf(i));
-		kaishiFun1KeySb			.append("KintaiShinseiKaishiFun1")	.append(String.valueOf(i));
-		shuryoJi1KeySb			.append("KintaiShinseiShuryoJi1")	.append(String.valueOf(i));
-		shuryoFun1KeySb			.append("KintaiShinseiShuryoFun1")	.append(String.valueOf(i));
-		jikan1KeySb				.append("KintaiShinseiJikan1")		.append(String.valueOf(i));
-		kintaiShinseiKbn2KeySb	.append("KintaiShinseiKbn2")		.append(String.valueOf(i));
-		kaishiJi2KeySb			.append("KintaiShinseiKaishiJi2")	.append(String.valueOf(i));
-		kaishiFun2KeySb			.append("KintaiShinseiKaishiFun2")	.append(String.valueOf(i));
-		shuryoJi2KeySb			.append("KintaiShinseiShuryoJi2")	.append(String.valueOf(i));
-		shuryoFun2KeySb			.append("KintaiShinseiShuryoFun2")	.append(String.valueOf(i));
-		jikan2KeySb				.append("KintaiShinseiJikan2")		.append(String.valueOf(i));
-		kintaiShinseiKbn3KeySb	.append("KintaiShinseiKbn3")		.append(String.valueOf(i));
-		kaishiJi3KeySb			.append("KintaiShinseiKaishiJi3")	.append(String.valueOf(i));
-		kaishiFun3KeySb			.append("KintaiShinseiKaishiFun3")	.append(String.valueOf(i));
-		shuryoJi3KeySb			.append("KintaiShinseiShuryoJi3")	.append(String.valueOf(i));
-		shuryoFun3KeySb			.append("KintaiShinseiShuryoFun3")	.append(String.valueOf(i));
-		jikan3KeySb				.append("KintaiShinseiJikan3")		.append(String.valueOf(i));
+		shukkinYoteiKbnKeySb	.append("selShukkinYoteiKbn")			.append(String.valueOf(i));
+		kintaiKbnKeySb			.append("selKintaiKbn")				.append(String.valueOf(i));
+		shusshaJiKeySb			.append("numShusshaJi")				.append(String.valueOf(i));
+		shusshaFunKeySb			.append("numShusshaFun")			.append(String.valueOf(i));
+		taishaJiKeySb			.append("numTaishaJi")				.append(String.valueOf(i));
+		taishaFunKeySb			.append("numTaishaFun")				.append(String.valueOf(i));
+		jitsudoJikanKeySb		.append("numJitsudoJikan")			.append(String.valueOf(i));
+		bikoKeySb				.append("txtKintaiShinseiBiko")		.append(String.valueOf(i));
+		kintaiShinseiKbn1KeySb	.append("selKintaiShinseiKbn1")		.append(String.valueOf(i));
+		kaishiJi1KeySb			.append("numKintaiShinseiKaishiJi1")	.append(String.valueOf(i));
+		kaishiFun1KeySb			.append("numKintaiShinseiKaishiFun1")	.append(String.valueOf(i));
+		shuryoJi1KeySb			.append("numKintaiShinseiShuryoJi1")	.append(String.valueOf(i));
+		shuryoFun1KeySb			.append("numKintaiShinseiShuryoFun1")	.append(String.valueOf(i));
+		jikan1KeySb				.append("numKintaiShinseiJikan1")		.append(String.valueOf(i));
+		kintaiShinseiKbn2KeySb	.append("selKintaiShinseiKbn2")		.append(String.valueOf(i));
+		kaishiJi2KeySb			.append("numKintaiShinseiKaishiJi2")	.append(String.valueOf(i));
+		kaishiFun2KeySb			.append("numKintaiShinseiKaishiFun2")	.append(String.valueOf(i));
+		shuryoJi2KeySb			.append("numKintaiShinseiShuryoJi2")	.append(String.valueOf(i));
+		shuryoFun2KeySb			.append("numKintaiShinseiShuryoFun2")	.append(String.valueOf(i));
+		jikan2KeySb				.append("numKintaiShinseiJikan2")		.append(String.valueOf(i));
+		kintaiShinseiKbn3KeySb	.append("selKintaiShinseiKbn3")		.append(String.valueOf(i));
+		kaishiJi3KeySb			.append("numKintaiShinseiKaishiJi3")	.append(String.valueOf(i));
+		kaishiFun3KeySb			.append("numKintaiShinseiKaishiFun3")	.append(String.valueOf(i));
+		shuryoJi3KeySb			.append("numKintaiShinseiShuryoJi3")	.append(String.valueOf(i));
+		shuryoFun3KeySb			.append("numKintaiShinseiShuryoFun3")	.append(String.valueOf(i));
+		jikan3KeySb				.append("numKintaiShinseiJikan3")		.append(String.valueOf(i));
 		
 		String shukkinYoteiKbn		= this.getParameter(shukkinYoteiKbnKeySb.toString());
 		String kintaiKbn			= this.getParameter(kintaiKbnKeySb.toString());

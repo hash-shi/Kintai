@@ -58,14 +58,14 @@
 				<param name="tableName">KIN_SHUKKINBO_KIHON</param>
 				<param name="keyName">TaishoNenGetsudo,ShainNO</param>
 				<param name="keyValue">txtTaishoYM,txtShainNO</param>
-				<param name="saishuKoshinDate">hdnKihonSaishuKoshinDate</param>
-				<param name="saishuKoshinJikan">hdnKihonSaishuKoshinJikan</param>
+				<param name="saishuKoshinDate">txtKihonSaishuKoshinDate</param>
+				<param name="saishuKoshinJikan">txtKihonSaishuKoshinJikan</param>
 			</check>
 
 			<check class="KinShukkinBoValidate" message="更新処理でエラーが発生しました。"></check>
 		</variable>
 
-		<variable name="txtShinseiKingaku01" dispName="特別作業金額">
+		<variable name="numShinseiKingaku01" dispName="特別作業金額">
 			<check class="IsNumber" message="!#itemName#!には数値を入力してください。" itemName="{dispName}">
 				<param name="isReplaceComma">true</param>
 			</check>
@@ -76,7 +76,7 @@
 				<param name="length">0</param>
 			</check>
 		</variable>
-		<variable name="txtShinseiKingaku02" dispName="その他">
+		<variable name="numShinseiKingaku02" dispName="その他">
 			<check class="IsNumber" message="!#itemName#!には数値を入力してください。" itemName="{dispName}">
 				<param name="isReplaceComma">true</param>
 			</check>
@@ -118,8 +118,8 @@
 				<param name="tableName">KIN_SHUKKINBO_KIHON</param>
 				<param name="keyName">TaishoNenGetsudo,ShainNO</param>
 				<param name="keyValue">txtTaishoYM,txtShainNO</param>
-				<param name="saishuKoshinDate">hdnKihonSaishuKoshinDate</param>
-				<param name="saishuKoshinJikan">hdnKihonSaishuKoshinJikan</param>
+				<param name="saishuKoshinDate">txtKihonSaishuKoshinDate</param>
+				<param name="saishuKoshinJikan">txtKihonSaishuKoshinJikan</param>
 			</check>
 		</variable>
 	</proc>

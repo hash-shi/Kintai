@@ -58,7 +58,7 @@
 							>社員NO</a>
 						</td>
 						<td class="value w300">
-							<input type="text" class=""  style="width: 80px" name="srhTxtShainNO" id="srhTxtShainNO" value="<%=UtilEscape.htmlspecialchars(shainNO) %>" maxlength="4" onblur="getShainNOFormat();" 
+							<input type="text" class=""  style="width: 80px" name="srhTxtShainNO" id="srhTxtShainNO" value="<%=UtilEscape.htmlspecialchars(shainNO) %>" maxlength="4" onblur="onSearchShainName();" 
 								<% if(shainNOReadonlyFlg == true){ %>
 								readonly  tabindex="-1"
 								<% } %>
@@ -125,7 +125,7 @@
 								<a >特別作業金額</a>
 							</td>
 							<td class="value w100">
-								<input type="text" class="" maxlength="7" style="width: 80px; text-align: right;" name="txtShinseiKingaku01" id="txtShinseiKingaku01" value="" onblur="setShinseiKingaku01();">
+								<input type="text" class="" maxlength="7" style="width: 80px; text-align: right;" name="numShinseiKingaku01" id="numShinseiKingaku01" value="" onblur="setShinseiKingaku01();">
 							</td>
 							<th class="w10">
 							</th>
@@ -133,10 +133,10 @@
 								<a >その他</a>
 							</td>
 							<td class="value w100">
-								<input type="text" class="" maxlength="7" style="width: 80px; text-align: right;" name="txtShinseiKingaku02" id="txtShinseiKingaku02" value="" onblur="setShinseiKingaku02();">
+								<input type="text" class="" maxlength="7" style="width: 80px; text-align: right;" name="numShinseiKingaku02" id="numShinseiKingaku02" value="" onblur="setShinseiKingaku02();">
 							</td>
-							<input type="hidden" name="hdnKihonSaishuKoshinDate" id="hdnKihonSaishuKoshinDate" value="">
-							<input type="hidden" name="hdnKihonSaishuKoshinJikan" id="hdnKihonSaishuKoshinJikan" value="">
+							<input type="hidden" name="txtKihonSaishuKoshinDate" id="txtKihonSaishuKoshinDate" value="">
+							<input type="hidden" name="txtKihonSaishuKoshinJikan" id="txtKihonSaishuKoshinJikan" value="">
 						</tr>
 					</tbody>
 				</table>

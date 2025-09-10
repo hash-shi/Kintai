@@ -25,7 +25,7 @@ public class KinShukkinBoExclusiveValidate extends ValidateBase {
 		//1か月分入力項目があるので1か月分ループ
 		for(int i = 0;i < 31;i++){
 			StringBuilder taishoNengappiKeySb	= new StringBuilder();
-			taishoNengappiKeySb	.append("TaishoNengappi")	.append(String.valueOf(i));
+			taishoNengappiKeySb	.append("txtTaishoNengappi")	.append(String.valueOf(i));
 			String taishoNengappi		= this.getParameter(taishoNengappiKeySb.toString());
 			
 			if(StringUtils.isEmpty(taishoNengappi)) {
@@ -35,9 +35,9 @@ public class KinShukkinBoExclusiveValidate extends ValidateBase {
 
 			//各日ごとに排他チェックを呼び出す
 			StringBuilder meisaiSaishuKoshinDateKeySb	= new StringBuilder();
-			meisaiSaishuKoshinDateKeySb	.append("MeisaiSaishuKoshinDate")	.append(String.valueOf(i));
+			meisaiSaishuKoshinDateKeySb	.append("txtMeisaiSaishuKoshinDate")	.append(String.valueOf(i));
 			StringBuilder meisaiSaishuKoshinJikanKeySb	= new StringBuilder();
-			meisaiSaishuKoshinJikanKeySb	.append("MeisaiSaishuKoshinJikan")	.append(String.valueOf(i));
+			meisaiSaishuKoshinJikanKeySb	.append("txtMeisaiSaishuKoshinJikan")	.append(String.valueOf(i));
 			
 			this.params.put("tableName", "KIN_SHUKKINBO_MEISAI");
 			this.params.put("keyName", "TaishoNenGetsudo,ShainNO,TaishoNengappi");

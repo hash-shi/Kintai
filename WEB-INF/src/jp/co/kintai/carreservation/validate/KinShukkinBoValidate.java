@@ -52,7 +52,7 @@ public class KinShukkinBoValidate extends ValidateBase {
 		//1か月分入力項目があるので1か月分ループ
 		for(int i = 0;i < 31;i++){
 			StringBuilder taishoNengappiKeySb	= new StringBuilder();
-			taishoNengappiKeySb	.append("TaishoNengappi")	.append(String.valueOf(i));
+			taishoNengappiKeySb	.append("txtTaishoNengappi")	.append(String.valueOf(i));
 			String taishoNengappi		= this.getParameter(taishoNengappiKeySb.toString());
 			
 			if(StringUtils.isEmpty(taishoNengappi)) {
@@ -62,11 +62,11 @@ public class KinShukkinBoValidate extends ValidateBase {
 
 			//各日ごとに入力チェックを呼び出す
 			StringBuilder shukkinYoteiKbnKeySb	= new StringBuilder();
-			shukkinYoteiKbnKeySb	.append("ShukkinYoteiKbn")	.append(String.valueOf(i));
+			shukkinYoteiKbnKeySb	.append("selShukkinYoteiKbn")	.append(String.valueOf(i));
 			String shukkinYoteiKbn		= this.getParameter(shukkinYoteiKbnKeySb.toString());
 
 			StringBuilder kintaiKbnKeySb	= new StringBuilder();
-			kintaiKbnKeySb	.append("KintaiKbn")	.append(String.valueOf(i));
+			kintaiKbnKeySb	.append("selKintaiKbn")	.append(String.valueOf(i));
 			String kintaiKbn		= this.getParameter(kintaiKbnKeySb.toString());
 			
 			StringBuilder shusshaJiKeySb	= new StringBuilder();
@@ -74,11 +74,11 @@ public class KinShukkinBoValidate extends ValidateBase {
 			StringBuilder taishaJiKeySb		= new StringBuilder();
 			StringBuilder taishaFunKeySb	= new StringBuilder();
 			StringBuilder jitsudoJikanKeySb	= new StringBuilder();
-			shusshaJiKeySb		.append("ShusshaJi")	.append(String.valueOf(i));
-			shusshaFunKeySb		.append("ShusshaFun")	.append(String.valueOf(i));
-			taishaJiKeySb		.append("TaishaJi")		.append(String.valueOf(i));
-			taishaFunKeySb		.append("TaishaFun")	.append(String.valueOf(i));
-			jitsudoJikanKeySb	.append("JitsudoJikan")	.append(String.valueOf(i));
+			shusshaJiKeySb		.append("numShusshaJi")	.append(String.valueOf(i));
+			shusshaFunKeySb		.append("numShusshaFun")	.append(String.valueOf(i));
+			taishaJiKeySb		.append("numTaishaJi")		.append(String.valueOf(i));
+			taishaFunKeySb		.append("numTaishaFun")	.append(String.valueOf(i));
+			jitsudoJikanKeySb	.append("numJitsudoJikan")	.append(String.valueOf(i));
 			
 			String shusshaJi		= this.getParameter(shusshaJiKeySb.toString());
 			String shusshaFun		= this.getParameter(shusshaFunKeySb.toString());
@@ -422,12 +422,12 @@ public class KinShukkinBoValidate extends ValidateBase {
 				StringBuilder shuryoFunKeySb	= new StringBuilder();
 				StringBuilder jikanKeySb		= new StringBuilder();
 				StringBuilder kintaiShinseiKbnKeySb	= new StringBuilder();
-				kaishiJiKeySb	.append("KintaiShinseiKaishiJi")	.append(String.valueOf(j)).append(String.valueOf(i));
-				kaishiFunKeySb	.append("KintaiShinseiKaishiFun")	.append(String.valueOf(j)).append(String.valueOf(i));
-				shuryoJiKeySb	.append("KintaiShinseiShuryoJi")	.append(String.valueOf(j)).append(String.valueOf(i));
-				shuryoFunKeySb	.append("KintaiShinseiShuryoFun")	.append(String.valueOf(j)).append(String.valueOf(i));
-				jikanKeySb		.append("KintaiShinseiJikan")		.append(String.valueOf(j)).append(String.valueOf(i));
-				kintaiShinseiKbnKeySb	.append("KintaiShinseiKbn")	.append(String.valueOf(j)).append(String.valueOf(i));
+				kaishiJiKeySb	.append("numKintaiShinseiKaishiJi")	.append(String.valueOf(j)).append(String.valueOf(i));
+				kaishiFunKeySb	.append("numKintaiShinseiKaishiFun")	.append(String.valueOf(j)).append(String.valueOf(i));
+				shuryoJiKeySb	.append("numKintaiShinseiShuryoJi")	.append(String.valueOf(j)).append(String.valueOf(i));
+				shuryoFunKeySb	.append("numKintaiShinseiShuryoFun")	.append(String.valueOf(j)).append(String.valueOf(i));
+				jikanKeySb		.append("numKintaiShinseiJikan")		.append(String.valueOf(j)).append(String.valueOf(i));
+				kintaiShinseiKbnKeySb	.append("selKintaiShinseiKbn")	.append(String.valueOf(j)).append(String.valueOf(i));
 				
 				String kaishiJi			= this.getParameter(kaishiJiKeySb.toString());
 				String kaishiFun		= this.getParameter(kaishiFunKeySb.toString());
@@ -697,7 +697,7 @@ public class KinShukkinBoValidate extends ValidateBase {
 			}
 
 			StringBuilder bikoKeySb	= new StringBuilder();
-			bikoKeySb	.append("KintaiShinseiBiko")	.append(String.valueOf(i));
+			bikoKeySb	.append("txtKintaiShinseiBiko")	.append(String.valueOf(i));
 			String biko		= this.getParameter(bikoKeySb.toString());
 
 			this.params.put("type", "half");
