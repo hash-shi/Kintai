@@ -17,8 +17,8 @@
 			<table>
 				<tr>
 					<td class="title center w300">マスタリスト</td>
-					<input type="hidden" name="hidEigyoshoCodeF" id="hidEigyoshoCodeF" value="<%=UtilEscape.htmlspecialchars(mstData.get("eigyoshoCodeF")) %>">
-					<input type="hidden" name="hidEigyoshoCodeT" id="hidEigyoshoCodeT" value="<%=UtilEscape.htmlspecialchars(mstData.get("eigyoshoCodeT")) %>">
+					<input type="hidden" name="txtEigyoshoCodeF" id="txtEigyoshoCodeF" value="<%=UtilEscape.htmlspecialchars(mstData.get("eigyoshoCodeF")) %>">
+					<input type="hidden" name="txtEigyoshoCodeT" id="txtEigyoshoCodeT" value="<%=UtilEscape.htmlspecialchars(mstData.get("eigyoshoCodeT")) %>">
 				</tr>
 			</table>
 			<table>
@@ -43,7 +43,7 @@
 				<tr>
 					<td class="title center w100">処理選択</td>
 					<td class="value w170">
-						<input type="text" class=""  style="width: 160px"" name="txtShoriSentaku" id="txtShoriSentaku" value="" readonly>
+						<input type="text" class=""  style="width: 160px"" name="lblShoriSentaku" id="lblShoriSentaku" value="" readonly>
 					</td>
 				</tr>
 			</table>
@@ -53,37 +53,37 @@
 				<tr id="eigyosho" class ="inputArea" style="display: none;" >
 					<td class="title center w100">営業所</td>
 					<td class="value w600">
-						<input type="text" class=""  style="width: 80px"" name="srhTxtEigyoshoCodeF" id="srhTxtEigyoshoCodeF" maxlength="3" value=""  onblur="getEigyoshoName('srhTxtEigyoshoCodeF', 'srhTxtEigyoshoNameF');" >
-						<img class="img border" src="./images/search.png"  onclick="opnDialog('srhMstEigyosho','srhTxtEigyoshoCodeF','srhTxtEigyoshoNameF');">
-						<input type="text" class=""  style="width: 150px"" name="srhTxtEigyoshoNameF" id="srhTxtEigyoshoNameF" value="" readonly>
+						<input type="text" class=""  style="width: 80px"" name="srhTxtEigyoshoCodeF" id="srhTxtEigyoshoCodeF" maxlength="3" value=""  onblur="getEigyoshoName('srhTxtEigyoshoCodeF', 'lblEigyoshoNameF');" >
+						<img class="img border" src="./images/search.png"  onclick="opnDialog('srhMstEigyosho','srhTxtEigyoshoCodeF','lblEigyoshoNameF');">
+						<input type="text" class=""  style="width: 150px"" name="lblEigyoshoNameF" id="lblEigyoshoNameF" value="" readonly>
 						～
-						<input type="text" class=""  style="width: 80px"" name="srhTxtEigyoshoCodeT" id="srhTxtEigyoshoCodeT" maxlength="3" value=""  onblur="getEigyoshoName('srhTxtEigyoshoCodeT', 'srhTxtEigyoshoNameT');" >
-						<img class="img border" src="./images/search.png"  onclick="opnDialog('srhMstEigyosho','srhTxtEigyoshoCodeT','srhTxtEigyoshoNameT');">
-						<input type="text" class=""  style="width: 150px"" name="srhTxtEigyoshoNameT" id="srhTxtEigyoshoNameT" value="" readonly>
+						<input type="text" class=""  style="width: 80px"" name="srhTxtEigyoshoCodeT" id="srhTxtEigyoshoCodeT" maxlength="3" value=""  onblur="getEigyoshoName('srhTxtEigyoshoCodeT', 'lblEigyoshoNameT');" >
+						<img class="img border" src="./images/search.png"  onclick="opnDialog('srhMstEigyosho','srhTxtEigyoshoCodeT','lblEigyoshoNameT');">
+						<input type="text" class=""  style="width: 150px"" name="lblEigyoshoNameT" id="lblEigyoshoNameT" value="" readonly>
 					</td>
 				</tr>
 				<tr id="busho" class ="inputArea" style="display: none;">
 					<td class="title center w100">部署</td>
 					<td class="value w600">
-						<input type="text" class=""  style="width: 80px"" name="srhTxtBushoCodeF" id="srhTxtBushoCodeF" maxlength="4"  value=""  onblur="getBushoName('srhTxtBushoCodeF', 'srhTxtBushoNameF');" >
-						<img class="img border" src="./images/search.png"  onclick="opnDialog('srhMstBusho','srhTxtBushoCodeF','srhTxtBushoNameF');">
-						<input type="text" class=""  style="width: 150px"" name="srhTxtBushoNameF" id="srhTxtBushoNameF" value="" readonly>
+						<input type="text" class=""  style="width: 80px"" name="srhTxtBushoCodeF" id="srhTxtBushoCodeF" maxlength="4"  value=""  onblur="getBushoName('srhTxtBushoCodeF', 'lblBushoNameF');" >
+						<img class="img border" src="./images/search.png"  onclick="opnDialog('srhMstBusho','srhTxtBushoCodeF','lblBushoNameF');">
+						<input type="text" class=""  style="width: 150px"" name="lblBushoNameF" id="lblBushoNameF" value="" readonly>
 						～
-						<input type="text" class=""  style="width: 80px"" name="srhTxtBushoCodeT" id="srhTxtBushoCodeT" maxlength="4"  value=""  onblur="getBushoName('srhTxtBushoCodeT', 'srhTxtBushoNameT');" >
-						<img class="img border" src="./images/search.png"  onclick="opnDialog('srhMstBusho','srhTxtBushoCodeT','srhTxtBushoNameT');">
-						<input type="text" class=""  style="width: 150px"" name="srhTxtBushoNameT" id="srhTxtBushoNameT" value="" readonly>
+						<input type="text" class=""  style="width: 80px"" name="srhTxtBushoCodeT" id="srhTxtBushoCodeT" maxlength="4"  value=""  onblur="getBushoName('srhTxtBushoCodeT', 'lblBushoNameT');" >
+						<img class="img border" src="./images/search.png"  onclick="opnDialog('srhMstBusho','srhTxtBushoCodeT','lblBushoNameT');">
+						<input type="text" class=""  style="width: 150px"" name="lblBushoNameT" id="lblBushoNameT" value="" readonly>
 					</td>
 				</tr>
 				<tr id="shain" class ="inputArea" style="display: none;">
 					<td class="title center w100">社員NO</td>
 					<td class="value w600">
-						<input type="text" class=""  style="width: 80px"" name="srhTxtShainNoF" id="srhTxtShainNoF" maxlength="4"  value=""  onblur="getShainName('srhTxtShainNoF', 'srhTxtShainNameF');" >
-						<img class="img border" src="./images/search.png"  onclick="opnDialog('srhMstShain','srhTxtShainNoF','srhTxtShainNameF');">
-						<input type="text" class=""  style="width: 150px"" name="srhTxtShainNameF" id="srhTxtShainNameF" value="" readonly>
+						<input type="text" class=""  style="width: 80px"" name="srhTxtShainNoF" id="srhTxtShainNoF" maxlength="4"  value=""  onblur="getShainName('srhTxtShainNoF', 'lblShainNameF');" >
+						<img class="img border" src="./images/search.png"  onclick="opnDialog('srhMstShain','srhTxtShainNoF','lblShainNameF');">
+						<input type="text" class=""  style="width: 150px"" name="lblShainNameF" id="lblShainNameF" value="" readonly>
 						～
-						<input type="text" class=""  style="width: 80px"" name="srhTxtShainNoT" id="srhTxtShainNoT" maxlength="4"  value=""  onblur="getShainName('srhTxtShainNoT', 'srhTxtShainNameT');" >
-						<img class="img border" src="./images/search.png"  onclick="opnDialog('srhMstShain','srhTxtShainNoT','srhTxtShainNameT');">
-						<input type="text" class=""  style="width: 150px"" name="srhTxtShainNameT" id="srhTxtShainNameT" value="" readonly>
+						<input type="text" class=""  style="width: 80px"" name="srhTxtShainNoT" id="srhTxtShainNoT" maxlength="4"  value=""  onblur="getShainName('srhTxtShainNoT', 'lblShainNameT');" >
+						<img class="img border" src="./images/search.png"  onclick="opnDialog('srhMstShain','srhTxtShainNoT','lblShainNameT');">
+						<input type="text" class=""  style="width: 150px"" name="lblShainNameT" id="lblShainNameT" value="" readonly>
 					</td>
 				</tr>
 				<tr id="kubun" class ="inputArea" style="display: none;">

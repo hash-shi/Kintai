@@ -14,7 +14,7 @@ function setShoriSentaku(){
 	var name = $("#selShoriSentaku option:selected").text();
 	
 	// 処理選択に格納する。
-	$("#txtShoriSentaku").val(name);
+	$("#lblShoriSentaku").val(name);
 	
 	// mainAreaを表示する。
 	$("#mainArea").css("visibility", "visible");
@@ -66,25 +66,25 @@ function setShoriSentaku(){
 	}
 
 	// 営業所に初期値を設定
-	let eigyoshoCodeF = $("#hidEigyoshoCodeF").val();
-	let eigyoshoCodeT = $("#hidEigyoshoCodeT").val();
+	let eigyoshoCodeF = $("#txtEigyoshoCodeF").val();
+	let eigyoshoCodeT = $("#txtEigyoshoCodeT").val();
 	
 	// コードセット/名称取得
 	// 営業所
 	$("#srhTxtEigyoshoCodeF").val(eigyoshoCodeF);
-	getEigyoshoName('srhTxtEigyoshoCodeF', 'srhTxtEigyoshoNameF');
+	getEigyoshoName('srhTxtEigyoshoCodeF', 'lblEigyoshoNameF');
 	$("#srhTxtEigyoshoCodeT").val(eigyoshoCodeT);
-	getEigyoshoName('srhTxtEigyoshoCodeT', 'srhTxtEigyoshoNameT');
+	getEigyoshoName('srhTxtEigyoshoCodeT', 'lblEigyoshoNameT');
 	// 部署
 	$("#srhTxtBushoCodeF").val("");
-	getBushoName('srhTxtBushoCodeF', 'srhTxtBushoNameF');
+	getBushoName('srhTxtBushoCodeF', 'lblBushoNameF');
 	$("#srhTxtBushoCodeT").val("");
-	getBushoName('srhTxtBushoCodeT', 'srhTxtBushoNameT');
+	getBushoName('srhTxtBushoCodeT', 'lblBushoNameT');
 	// 社員
 	$("#srhTxtShainNoF").val("");
-	getShainName('srhTxtShainNoF', 'srhTxtShainNameF');
+	getShainName('srhTxtShainNoF', 'lblShainNameF');
 	$("#srhTxtShainNoT").val("");
-	getShainName('srhTxtShainNoT', 'srhTxtShainNameT');
+	getShainName('srhTxtShainNoT', 'lblShainNameT');
 	// 区分
 	$("#srhTxtKbnCodeF").val("");
 	$("#srhTxtKbnCodeT").val("");
