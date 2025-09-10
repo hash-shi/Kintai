@@ -49,29 +49,15 @@ public class KinShukkinBoAction extends PJActionBase {
 		
 		String result = "";
 
-		
 		// DB接続
 		Connection con		= this.getConnection("kintai", req);
 		
-		// DB接続
-		StringBuffer sql				= new StringBuffer();
-		PreparedStatement pstmt			= null;
-		ResultSet rset					= null;
-		
-		sql.append(" SELECT TOP 1 GenzaishoriNengetsudo FROM MST_KANRI");
-		
-		try {
-			// SQL文の生成
-			pstmt = con.prepareStatement(sql.toString());
-			// 実行
-			rset = pstmt.executeQuery();
-			// 結果取得
-			if(rset.next()) {
-				result = StringUtils.stripToEmpty(rset.getString("GenzaishoriNengetsudo"));
-			}
-		} finally {
-			if (rset != null){ try { rset.close(); } catch (Exception exp){}}
-			if (pstmt != null){ try { pstmt.close(); } catch (Exception exp){}}
+		// チェック対象の社員情報の取得
+		ArrayList<HashMap<String, String>> mstKanris = PJActionBase.getMstKanris(con, null);
+
+		if (0 < mstKanris.size()) {
+			HashMap<String, String> mstKanri = mstKanris.get(0);
+			result = mstKanri.get("GenzaishoriNengetsudo");
 		}
 		
 		//=====================================================================
