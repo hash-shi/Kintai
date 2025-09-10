@@ -680,19 +680,49 @@ public class PdfChiChinginkeisanshoDownload extends DownloadBase {
 					worksheet.getCellRange("E" + (11 + rowCnt)).setText(data.get(i).get("ShusshaJikoku") + "　～　" + data.get(i).get("TaishaJikoku"));
 				}
 				
-				worksheet.getCellRange("L" 	+ (11 + rowCnt)).setText(data.get(i).get("JitsudoJikan"));
-				worksheet.getCellRange("O" 	+ (11 + rowCnt)).setText(data.get(i).get("ChinginShinseiKbn1"));
-				worksheet.getCellRange("S" 	+ (11 + rowCnt)).setText(data.get(i).get("ChinginShinseiJikan1"));
-				worksheet.getCellRange("V" 	+ (11 + rowCnt)).setText(data.get(i).get("ChinginShinseiKbn2"));
-				worksheet.getCellRange("Z" 	+ (11 + rowCnt)).setText(data.get(i).get("ChinginShinseiJikan2"));
+				// 勤務時間のデータがない場合は空文字を出力
+				// 未入力項目に0.00が出力されることを防ぐ
+				if(data.get(i).get("JitsudoJikan").isBlank() || data.get(i).get("JitsudoJikan").equals("0.00")) {
+					worksheet.getCellRange("L" + (11 + rowCnt)).setText("");
+				} else {
+					worksheet.getCellRange("L" + (11 + rowCnt)).setText(data.get(i).get("JitsudoJikan"));
+				}
+				
+				worksheet.getCellRange("O" + (11 + rowCnt)).setText(data.get(i).get("ChinginShinseiKbn1"));
+				
+				// 申請時間1のデータがない場合は空文字を出力
+				// 未入力項目に0.00が出力されることを防ぐ
+				if(data.get(i).get("ChinginShinseiJikan1").isBlank() || data.get(i).get("ChinginShinseiJikan1").equals("0.00")) {
+					worksheet.getCellRange("S" + (11 + rowCnt)).setText("");
+				} else {
+					worksheet.getCellRange("S" + (11 + rowCnt)).setText(data.get(i).get("ChinginShinseiJikan1"));
+				}
+				
+				worksheet.getCellRange("V" + (11 + rowCnt)).setText(data.get(i).get("ChinginShinseiKbn2"));
+				
+				// 申請時間2のデータがない場合は空文字を出力
+				// 未入力項目に0.00が出力されることを防ぐ
+				if(data.get(i).get("ChinginShinseiJikan2").isBlank() || data.get(i).get("ChinginShinseiJikan2").equals("0.00")) {
+					worksheet.getCellRange("Z" + (11 + rowCnt)).setText("");
+				} else {
+					worksheet.getCellRange("Z" + (11 + rowCnt)).setText(data.get(i).get("ChinginShinseiJikan2"));
+				}
+				
 				worksheet.getCellRange("AC" + (11 + rowCnt)).setText(data.get(i).get("ChinginShinseiKbn3"));
-				worksheet.getCellRange("AG" + (11 + rowCnt)).setText(data.get(i).get("ChinginShinseiJikan3"));
+				
+				// 申請時間3のデータがない場合は空文字を出力
+				// 未入力項目に0.00が出力されることを防ぐ
+				if(data.get(i).get("ChinginShinseiJikan3").isBlank() || data.get(i).get("ChinginShinseiJikan3").equals("0.00")) {
+					worksheet.getCellRange("AG" + (11 + rowCnt)).setText("");
+				} else {
+					worksheet.getCellRange("AG" + (11 + rowCnt)).setText(data.get(i).get("ChinginShinseiJikan3"));
+				}
 				
 				// 曜日区分が土の場合は青色、日の場合は赤色
 				if(data.get(i).get("YobiKbn").equals("土")) {
-					worksheet.getCellRange("C" 	+ (11 + rowCnt)).getCellStyle().getExcelFont().setColor(Color.blue);
+					worksheet.getCellRange("C" + (11 + rowCnt)).getCellStyle().getExcelFont().setColor(Color.blue);
 				} else if(data.get(i).get("YobiKbn").equals("日")) {
-					worksheet.getCellRange("C" 	+ (11 + rowCnt)).getCellStyle().getExcelFont().setColor(Color.red);
+					worksheet.getCellRange("C" + (11 + rowCnt)).getCellStyle().getExcelFont().setColor(Color.red);
 				}
 				
 				rowCnt++;

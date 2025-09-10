@@ -520,7 +520,7 @@ public class PdfKinShukkinBoDownload extends DownloadBase {
 					if(data.get(i).get("RodoJikanFrom").isBlank() && data.get(i).get("RodoJikanTo").isBlank()) {
 						worksheet.getCellRange("J5").setText("");
 					} else {
-						worksheet.getCellRange("J5").setText(data.get(i).get("RodoJikanFrom") + "～" + data.get(i).get("RodoJikanTo"));
+						worksheet.getCellRange("J5").setText(data.get(i).get("RodoJikanFrom") + "　～　" + data.get(i).get("RodoJikanTo"));
 					}
 					
 					worksheet.getCellRange("AP5").setText(data.get(i).get("ShainNO"));
@@ -548,47 +548,77 @@ public class PdfKinShukkinBoDownload extends DownloadBase {
 				}
 				
 				// 中央部：明細部を設定
-				worksheet.getCellRange("A" 	+ (9 + rowCnt)).setText(data.get(i).get("Month"));
-				worksheet.getCellRange("B" 	+ (9 + rowCnt)).setText(data.get(i).get("Day"));
-				worksheet.getCellRange("C" 	+ (9 + rowCnt)).setText(data.get(i).get("YobiKbn"));
-				worksheet.getCellRange("E" 	+ (9 + rowCnt)).setText(data.get(i).get("ShukkinYoteiKbn"));
-				worksheet.getCellRange("G" 	+ (9 + rowCnt)).setText(data.get(i).get("KintaiKbn"));
+				worksheet.getCellRange("A" + (9 + rowCnt)).setText(data.get(i).get("Month"));
+				worksheet.getCellRange("B" + (9 + rowCnt)).setText(data.get(i).get("Day"));
+				worksheet.getCellRange("C" + (9 + rowCnt)).setText(data.get(i).get("YobiKbn"));
+				worksheet.getCellRange("E" + (9 + rowCnt)).setText(data.get(i).get("ShukkinYoteiKbn"));
+				worksheet.getCellRange("G" + (9 + rowCnt)).setText(data.get(i).get("KintaiKbn"));
 
 				// 勤務時間のデータがない場合は空文字を出力	
 				// 「出社時刻　～　退社時刻」の形で表示
 				if(data.get(i).get("ShusshaJikoku").isBlank() && data.get(i).get("TaishaJikoku").isBlank()) {
-					worksheet.getCellRange("J" 	+ (9 + rowCnt)).setText("");
+					worksheet.getCellRange("J" + (9 + rowCnt)).setText("");
 				} else {
-					worksheet.getCellRange("J" 	+ (9 + rowCnt)).setText(data.get(i).get("ShusshaJikoku") + "～" + data.get(i).get("TaishaJikoku"));
+					worksheet.getCellRange("J" + (9 + rowCnt)).setText(data.get(i).get("ShusshaJikoku") + " ～ " + data.get(i).get("TaishaJikoku"));
 				}
 				
-				worksheet.getCellRange("O" 	+ (9 + rowCnt)).setText(data.get(i).get("JitsudoJikan"));
+				// 勤務時間のデータがない場合は空文字を出力
+				// 未入力項目に0.00が出力されることを防ぐ
+				if(data.get(i).get("JitsudoJikan").isBlank() || data.get(i).get("JitsudoJikan").equals("0.00")) {
+					worksheet.getCellRange("O" + (9 + rowCnt)).setText("");
+				} else {
+					worksheet.getCellRange("O" + (9 + rowCnt)).setText(data.get(i).get("JitsudoJikan"));
+				}
+				
 				worksheet.getCellRange("Q" 	+ (9 + rowCnt)).setText(data.get(i).get("KintaiShinseiBiko"));
 				worksheet.getCellRange("V" 	+ (9 + rowCnt)).setText(data.get(i).get("KintaiShinseiKbn1"));
 				worksheet.getCellRange("Y" 	+ (9 + rowCnt)).setText(data.get(i).get("KintaiShinseiKaishiJikoku1"));
 				worksheet.getCellRange("AB" + (9 + rowCnt)).setText(data.get(i).get("KintaiShinseiShuryoJikoku1"));
-				worksheet.getCellRange("AE" + (9 + rowCnt)).setText(data.get(i).get("KintaiShinseiJikan1"));
+				
+				// 申請時間1のデータがない場合は空文字を出力
+				// 未入力項目に0.00が出力されることを防ぐ
+				if(data.get(i).get("KintaiShinseiJikan1").isBlank() || data.get(i).get("KintaiShinseiJikan1").equals("0.00")) {
+					worksheet.getCellRange("AE" + (9 + rowCnt)).setText("");
+				} else {
+					worksheet.getCellRange("AE" + (9 + rowCnt)).setText(data.get(i).get("KintaiShinseiJikan1"));
+				}
+				
 				worksheet.getCellRange("AH" + (9 + rowCnt)).setText(data.get(i).get("KintaiShinseiKbn2"));
 				worksheet.getCellRange("AK" + (9 + rowCnt)).setText(data.get(i).get("KintaiShinseiKaishiJikoku2"));
 				worksheet.getCellRange("AN" + (9 + rowCnt)).setText(data.get(i).get("KintaiShinseiShuryoJikoku2"));
-				worksheet.getCellRange("AQ" + (9 + rowCnt)).setText(data.get(i).get("KintaiShinseiJikan2"));
+				
+				// 申請時間2のデータがない場合は空文字を出力
+				// 未入力項目に0.00が出力されることを防ぐ
+				if(data.get(i).get("KintaiShinseiJikan2").isBlank() || data.get(i).get("KintaiShinseiJikan2").equals("0.00")) {
+					worksheet.getCellRange("AQ" + (9 + rowCnt)).setText("");
+				} else {
+					worksheet.getCellRange("AQ" + (9 + rowCnt)).setText(data.get(i).get("KintaiShinseiJikan2"));
+				}
+				
 				worksheet.getCellRange("AT" + (9 + rowCnt)).setText(data.get(i).get("KintaiShinseiKbn3"));
 				worksheet.getCellRange("AW" + (9 + rowCnt)).setText(data.get(i).get("KintaiShinseiKaishiJikoku3"));
 				worksheet.getCellRange("AZ" + (9 + rowCnt)).setText(data.get(i).get("KintaiShinseiShuryoJikoku3"));
-				worksheet.getCellRange("BC" + (9 + rowCnt)).setText(data.get(i).get("KintaiShinseiJikan3"));
+
+				// 申請時間3のデータがない場合は空文字を出力
+				// 未入力項目に0.00が出力されることを防ぐ
+				if(data.get(i).get("KintaiShinseiJikan3").isBlank() || data.get(i).get("KintaiShinseiJikan3").equals("0.00")) {
+					worksheet.getCellRange("BC" + (9 + rowCnt)).setText("");
+				} else {
+					worksheet.getCellRange("BC" + (9 + rowCnt)).setText(data.get(i).get("KintaiShinseiJikan3"));
+				}
 				
 				// 曜日区分が土の場合は青色、日の場合は赤色
 				if(data.get(i).get("YobiKbn").equals("土")) {
-					worksheet.getCellRange("C" 	+ (9 + rowCnt)).getCellStyle().getExcelFont().setColor(Color.blue);
+					worksheet.getCellRange("C" + (9 + rowCnt)).getCellStyle().getExcelFont().setColor(Color.blue);
 				} else if(data.get(i).get("YobiKbn").equals("日")) {
-					worksheet.getCellRange("C" 	+ (9 + rowCnt)).getCellStyle().getExcelFont().setColor(Color.red);
+					worksheet.getCellRange("C" + (9 + rowCnt)).getCellStyle().getExcelFont().setColor(Color.red);
 				}
 				
 				// 出勤予定が休・有休の場合は赤色
 				if(data.get(i).get("ShukkinYoteiKbn").equals("休")) {
-					worksheet.getCellRange("E" 	+ (9 + rowCnt)).getCellStyle().getExcelFont().setColor(Color.red);
+					worksheet.getCellRange("E" + (9 + rowCnt)).getCellStyle().getExcelFont().setColor(Color.red);
 				} else if(data.get(i).get("ShukkinYoteiKbn").equals("有休")) {
-					worksheet.getCellRange("E" 	+ (9 + rowCnt)).getCellStyle().getExcelFont().setColor(Color.red);
+					worksheet.getCellRange("E" + (9 + rowCnt)).getCellStyle().getExcelFont().setColor(Color.red);
 				}
 				
 				String green = "#006400";
@@ -598,9 +628,9 @@ public class PdfKinShukkinBoDownload extends DownloadBase {
 						|| data.get(i).get("KintaiKbn").equals("半日有給")
 						|| data.get(i).get("KintaiKbn").equals("休日")
 						|| data.get(i).get("KintaiKbn").equals("振替休日")) {
-					worksheet.getCellRange("G" 	+ (9 + rowCnt)).getCellStyle().getExcelFont().setColor(Color.red);
+					worksheet.getCellRange("G" + (9 + rowCnt)).getCellStyle().getExcelFont().setColor(Color.red);
 				} else if(data.get(i).get("KintaiKbn").equals("欠勤")) {
-					worksheet.getCellRange("G" 	+ (9 + rowCnt)).getCellStyle().getExcelFont().setColor(Color.decode(green));
+					worksheet.getCellRange("G" + (9 + rowCnt)).getCellStyle().getExcelFont().setColor(Color.decode(green));
 				}
 				
 				rowCnt++;
