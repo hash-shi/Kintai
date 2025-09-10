@@ -1,7 +1,5 @@
 package jp.co.kintai.carreservation.validate;
 
-import java.sql.Connection;
-
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 
@@ -24,11 +22,6 @@ public class ShainHonshaValidate extends ValidateBase {
 		 * 
 		 * 対象社員の区分チェック
 		 */
-		
-		//=====================================================================
-		// DB接続
-		//=====================================================================
-		Connection con	= this.getConnection("kintai", req);
 		
 		//=====================================================================
 		// ユーザー情報の取得
