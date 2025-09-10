@@ -7,7 +7,7 @@ let shinseiKingaku02 = 0;
 * 対象年月フォーカスアウト時のフォーマット編集処理
 *
 */
-function getTaishoYMFormat(){
+function onChangeTaishoYM(){
 	let strReplacing = $("#srhTxtTaishoYM").val();
 	let strReplaced = "";
 	//全角半角変換
@@ -48,7 +48,7 @@ function onSearchShainName(){
 	//もともとの社員NOを保持
 	let wkTxtShainNO = $("#srhTxtShainNO").val();
 
-	//作業用隠し項目に、0埋めした社員NOをセット
+	//0埋めした社員NOをセット
 	$("#srhTxtShainNO").val(right("0000" + $("#srhTxtShainNO").val(), 4));
 	//0埋めした社員NOで社員名を取得
 	getShainName('srhTxtShainNO', 'lblShainName');
