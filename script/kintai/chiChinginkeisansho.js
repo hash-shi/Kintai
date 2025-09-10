@@ -96,7 +96,10 @@ function onSearchChiChinginkeisansho(){
 		$("#nyuryokuArea").css("visibility", "");
 
 		//検索データ表示
-		displaySearchOrRecalcData(contents["result"]);
+		let chinginkeisanshoResult			= contents["result"]["chinginkeisanshoArea"];
+		let tokubetsuNyuryokuResult			= contents["result"]["tokubetsuNyuryokuArea"];
+		let shukeiResult			= contents["result"]["shukeiArea"];
+		displaySearchOrRecalcData(chinginkeisanshoResult, tokubetsuNyuryokuResult, shukeiResult);
 
 		if(contents["result"]["shukeiArea"].KakuteiKbn == "03"){
 			honshaKakuteizumiFlg = true;
@@ -175,20 +178,17 @@ function onSearchChiChinginkeisansho(){
 * 検索または再表示のデータを表示
 *
 */
-function displaySearchOrRecalcData(result){
+function displaySearchOrRecalcData(chinginkeisanshoResult, tokubetsuNyuryokuResult, shukeiResult){
 
-	let chinginkeisanshoResult			= result["chinginkeisanshoArea"];
 	chiChinginkeisanshoResultAll = chinginkeisanshoResult;
 	onDisplayNyuryokuArea(true);
 
 	//勤務開始・終了時間、実働時間表示
-	let tokubetsuNyuryokuResult			= result["tokubetsuNyuryokuArea"];
 	$("#lblKinmuKaishi").text(tokubetsuNyuryokuResult.kinmuKaishi);
 	$("#lblKinmuShuryo").text(tokubetsuNyuryokuResult.kinmuShuryo);
 	$("#lblJitsudojikan").text(tokubetsuNyuryokuResult.jitsudojikan);
 
 	//集計エリア表示
-	let shukeiResult			= result["shukeiArea"];
 	$("#lblShinseinissu01").text(Number(shukeiResult.ShinseiNissu01??0).toLocaleString("ja-JP", {maximumFractionDigits: 1,}));
 	$("#lblShinseinissu02").text(Number(shukeiResult.ShinseiNissu02??0).toLocaleString("ja-JP", {maximumFractionDigits: 1,}));
 	$("#lblShinseinissu03").text(Number(shukeiResult.ShinseiNissu03??0).toLocaleString("ja-JP", {maximumFractionDigits: 1,}));
@@ -638,7 +638,19 @@ function onRecalc(){
 		$("#nyuryokuArea").css("visibility", "");
 
 		//検索データ表示
-		displaySearchOrRecalcData(contents["result"]);
+		let chinginkeisanshoResult			= contents["result"]["chinginkeisanshoArea"];
+		let tokubetsuNyuryokuResult			= contents["result"]["tokubetsuNyuryokuArea"];
+		let shukeiResult			= contents["result"]["shukeiArea"];
+
+		//実際には更新されていないので、最終更新日・更新時間を戻す
+		for(let i = 0; i < chiChinginkeisanshoResultAll.length; i++){
+			chinginkeisanshoResult[i]["txtMeisaiSaishuKoshinDate"] = chiChinginkeisanshoResultAll[i]["txtMeisaiSaishuKoshinDate"];
+			chinginkeisanshoResult[i]["txtMeisaiSaishuKoshinJikan"] = chiChinginkeisanshoResultAll[i]["txtMeisaiSaishuKoshinJikan"];
+			chinginkeisanshoResult[i]["txtKihonSaishuKoshinDate"] = chiChinginkeisanshoResultAll[i]["txtKihonSaishuKoshinDate"];
+			chinginkeisanshoResult[i]["txtKihonSaishuKoshinJikan"] = chiChinginkeisanshoResultAll[i]["txtKihonSaishuKoshinJikan"];
+		}
+
+		displaySearchOrRecalcData(chinginkeisanshoResult, tokubetsuNyuryokuResult, shukeiResult);
 
 	});
 }
