@@ -514,7 +514,15 @@ public class PdfKinShukkinBoDownload extends DownloadBase {
 					worksheet.getCellRange("A4").setText(data.get(i).get("EigyoshoName"));
 					worksheet.getCellRange("J4").setText(data.get(i).get("BushoName"));
 					worksheet.getCellRange("AT4").setText(data.get(i).get("KakuteiKbn"));
-					worksheet.getCellRange("J5").setText(data.get(i).get("RodoJikanFrom") + "～" + data.get(i).get("RodoJikanTo"));
+					
+					// 労働時間のデータがない場合は空文字を出力	
+					// 「労働時間FROM　～　労働時間TO」の形で表示
+					if(data.get(i).get("RodoJikanFrom").isBlank() && data.get(i).get("RodoJikanTo").isBlank()) {
+						worksheet.getCellRange("J5").setText("");
+					} else {
+						worksheet.getCellRange("J5").setText(data.get(i).get("RodoJikanFrom") + "～" + data.get(i).get("RodoJikanTo"));
+					}
+					
 					worksheet.getCellRange("AP5").setText(data.get(i).get("ShainNO"));
 					worksheet.getCellRange("AT5").setText(data.get(i).get("ShainName"));
 					
@@ -545,7 +553,15 @@ public class PdfKinShukkinBoDownload extends DownloadBase {
 				worksheet.getCellRange("C" 	+ (9 + rowCnt)).setText(data.get(i).get("YobiKbn"));
 				worksheet.getCellRange("E" 	+ (9 + rowCnt)).setText(data.get(i).get("ShukkinYoteiKbn"));
 				worksheet.getCellRange("G" 	+ (9 + rowCnt)).setText(data.get(i).get("KintaiKbn"));
-				worksheet.getCellRange("J" 	+ (9 + rowCnt)).setText(data.get(i).get("ShusshaJikoku") + "～" + data.get(i).get("TaishaJikoku"));
+
+				// 勤務時間のデータがない場合は空文字を出力	
+				// 「出社時刻　～　退社時刻」の形で表示
+				if(data.get(i).get("ShusshaJikoku").isBlank() && data.get(i).get("TaishaJikoku").isBlank()) {
+					worksheet.getCellRange("J" 	+ (9 + rowCnt)).setText("");
+				} else {
+					worksheet.getCellRange("J" 	+ (9 + rowCnt)).setText(data.get(i).get("ShusshaJikoku") + "～" + data.get(i).get("TaishaJikoku"));
+				}
+				
 				worksheet.getCellRange("O" 	+ (9 + rowCnt)).setText(data.get(i).get("JitsudoJikan"));
 				worksheet.getCellRange("Q" 	+ (9 + rowCnt)).setText(data.get(i).get("KintaiShinseiBiko"));
 				worksheet.getCellRange("V" 	+ (9 + rowCnt)).setText(data.get(i).get("KintaiShinseiKbn1"));
@@ -620,10 +636,9 @@ public class PdfKinShukkinBoDownload extends DownloadBase {
 			// 名前を付けて保存
 			this.setFilename(createFileNamePdf);
 			
-//			// templateFile配下に作成したxlsxとpdfを削除する
-//			Files.delete(Paths.get(createFileXlsx));
-//			Files.delete(Paths.get(createFilePdf));
-			
+			// templateFile配下に作成したxlsxとpdfを削除する
+			Files.delete(Paths.get(createFileXlsx));
+			Files.delete(Paths.get(createFilePdf));
 			
 		} catch (Exception e) {
 		    System.out.println("例外発生: " + e.getClass().getName());

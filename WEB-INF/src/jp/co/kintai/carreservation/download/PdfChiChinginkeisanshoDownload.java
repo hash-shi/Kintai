@@ -564,6 +564,53 @@ public class PdfChiChinginkeisanshoDownload extends DownloadBase {
 				// 編集するワークシートを選択
 				Worksheet worksheet = workbook.getWorksheets().get(data.get(i).get("TaishoNenGetsudo") + "_" + data.get(i).get("ShainNO"));
 				
+				// 単価項目の値を３桁ごとにカンマ区切りにする
+				int ShinseiTanka01_ = Integer.parseInt(data.get(i).get("ShinseiTanka01"));
+				String ShinseiTanka01 = String.format("%,3d", ShinseiTanka01_);
+				
+				int ShinseiTanka04_ = Integer.parseInt(data.get(i).get("ShinseiTanka04"));
+				String ShinseiTanka04 = String.format("%,3d", ShinseiTanka04_);
+				
+				int ShinseiTanka02_ = Integer.parseInt(data.get(i).get("ShinseiTanka02"));
+				String ShinseiTanka02 = String.format("%,3d", ShinseiTanka02_);
+				
+				int ShinseiTanka03_ = Integer.parseInt(data.get(i).get("ShinseiTanka03"));
+				String ShinseiTanka03 = String.format("%,3d", ShinseiTanka03_);
+				
+				int ShinseiTanka05_ = Integer.parseInt(data.get(i).get("ShinseiTanka05"));
+				String ShinseiTanka05 = String.format("%,3d", ShinseiTanka05_);
+				
+				int ShinseiTanka09_ = Integer.parseInt(data.get(i).get("ShinseiTanka09"));
+				String ShinseiTanka09 = String.format("%,3d", ShinseiTanka09_);
+				
+				int ShinseiTanka11_ = Integer.parseInt(data.get(i).get("ShinseiTanka11"));
+				String ShinseiTanka11 = String.format("%,3d", ShinseiTanka11_);
+				
+				// 金額項目の値を３桁ごとにカンマ区切りにする
+				int ShinseiKingakuGoukei01_ = Integer.parseInt(data.get(i).get("ShinseiKingakuGoukei01"));
+				String ShinseiKingakuGoukei01 = String.format("%,3d", ShinseiKingakuGoukei01_);
+				
+				int ShinseiKingakuGoukei04_ = Integer.parseInt(data.get(i).get("ShinseiKingakuGoukei04"));
+				String ShinseiKingakuGoukei04 = String.format("%,3d", ShinseiKingakuGoukei04_);
+				
+				int ShinseiKingakuGoukei02_ = Integer.parseInt(data.get(i).get("ShinseiKingakuGoukei02"));
+				String ShinseiKingakuGoukei02 = String.format("%,3d", ShinseiKingakuGoukei02_);
+				
+				int ShinseiKingakuGoukei03_ = Integer.parseInt(data.get(i).get("ShinseiKingakuGoukei03"));
+				String ShinseiKingakuGoukei03 = String.format("%,3d", ShinseiKingakuGoukei03_);
+				
+				int ShinseiKingakuGoukei05_ = Integer.parseInt(data.get(i).get("ShinseiKingakuGoukei05"));
+				String ShinseiKingakuGoukei05 = String.format("%,3d", ShinseiKingakuGoukei05_);
+				
+				int ShinseiKingakuGoukei09_ = Integer.parseInt(data.get(i).get("ShinseiKingakuGoukei09"));
+				String ShinseiKingakuGoukei09 = String.format("%,3d", ShinseiKingakuGoukei09_);
+				
+				int ShinseiKingakuGoukei11_ = Integer.parseInt(data.get(i).get("ShinseiKingakuGoukei11"));
+				String ShinseiKingakuGoukei11 = String.format("%,3d", ShinseiKingakuGoukei11_);
+				
+				int ShinseiKingakuGoukeiGoukei_ = Integer.parseInt(data.get(i).get("ShinseiKingakuGoukeiGoukei"));
+				String ShinseiKingakuGoukeiGoukei = String.format("%,3d", ShinseiKingakuGoukeiGoukei_);
+				
 				// 特定のセルを取得し値を設定
 				// 新しいシートを作成した場合のみ上部と下部に値を設定
 				if(i == 0 
@@ -585,35 +632,35 @@ public class PdfChiChinginkeisanshoDownload extends DownloadBase {
 					// 下部：集計内容を設定
 					worksheet.getCellRange("F44").setText(data.get(i).get("ShinseiNissu01"));
 					worksheet.getCellRange("I44").setText(data.get(i).get("ShinseiJikan01"));
-					worksheet.getCellRange("L44").setText(data.get(i).get("ShinseiTanka01"));
-					worksheet.getCellRange("O44").setText(data.get(i).get("ShinseiKingakuGoukei01"));
+					worksheet.getCellRange("L44").setText(ShinseiTanka01);
+					worksheet.getCellRange("O44").setText(ShinseiKingakuGoukei01);
 					worksheet.getCellRange("F45").setText(data.get(i).get("ShinseiNissu04"));
 					worksheet.getCellRange("I45").setText(data.get(i).get("ShinseiJikan04"));
-					worksheet.getCellRange("L45").setText(data.get(i).get("ShinseiTanka04"));
-					worksheet.getCellRange("O45").setText(data.get(i).get("ShinseiKingakuGoukei04"));
+					worksheet.getCellRange("L45").setText(ShinseiTanka04);
+					worksheet.getCellRange("O45").setText(ShinseiKingakuGoukei04);
 					worksheet.getCellRange("F46").setText(data.get(i).get("ShinseiNissu02"));
 					worksheet.getCellRange("I46").setText(data.get(i).get("ShinseiJikan02"));
-					worksheet.getCellRange("L46").setText(data.get(i).get("ShinseiTanka02"));
-					worksheet.getCellRange("O46").setText(data.get(i).get("ShinseiKingakuGoukei02"));
+					worksheet.getCellRange("L46").setText(ShinseiTanka02);
+					worksheet.getCellRange("O46").setText(ShinseiKingakuGoukei02);
 					worksheet.getCellRange("F47").setText(data.get(i).get("ShinseiNissu03"));
 					worksheet.getCellRange("I47").setText(data.get(i).get("ShinseiJikan03"));
-					worksheet.getCellRange("L47").setText(data.get(i).get("ShinseiTanka03"));
-					worksheet.getCellRange("O47").setText(data.get(i).get("ShinseiKingakuGoukei03"));
+					worksheet.getCellRange("L47").setText(ShinseiTanka03);
+					worksheet.getCellRange("O47").setText(ShinseiKingakuGoukei03);
 					worksheet.getCellRange("F48").setText(data.get(i).get("ShinseiNissu05"));
 					worksheet.getCellRange("I48").setText(data.get(i).get("ShinseiJikan05"));
-					worksheet.getCellRange("L48").setText(data.get(i).get("ShinseiTanka05"));
-					worksheet.getCellRange("O48").setText(data.get(i).get("ShinseiKingakuGoukei05"));
+					worksheet.getCellRange("L48").setText(ShinseiTanka05);
+					worksheet.getCellRange("O48").setText(ShinseiKingakuGoukei05);
 					worksheet.getCellRange("F49").setText(data.get(i).get("ShinseiNissu09"));
-					worksheet.getCellRange("L49").setText(data.get(i).get("ShinseiTanka09"));
-					worksheet.getCellRange("O49").setText(data.get(i).get("ShinseiKingakuGoukei09"));
+					worksheet.getCellRange("L49").setText(ShinseiTanka09);
+					worksheet.getCellRange("O49").setText(ShinseiKingakuGoukei09);
 					worksheet.getCellRange("F50").setText(data.get(i).get("ShinseiNissu11"));
 					worksheet.getCellRange("I50").setText(data.get(i).get("ShinseiJikan11"));
-					worksheet.getCellRange("L50").setText(data.get(i).get("ShinseiTanka11"));
-					worksheet.getCellRange("O50").setText(data.get(i).get("ShinseiKingakuGoukei11"));
+					worksheet.getCellRange("L50").setText(ShinseiTanka11);
+					worksheet.getCellRange("O50").setText(ShinseiKingakuGoukei11);
 					worksheet.getCellRange("F51").setText(data.get(i).get("ShinseiNissuKyujitsu"));
 					worksheet.getCellRange("F52").setText(data.get(i).get("ShinseiNisuuGoukei"));
 					worksheet.getCellRange("I52").setText(data.get(i).get("ShinseiJikanGoukei"));
-					worksheet.getCellRange("O52").setText(data.get(i).get("ShinseiKingakuGoukeiGoukei"));
+					worksheet.getCellRange("O52").setText(ShinseiKingakuGoukeiGoukei);
 					
 					worksheet.getCellRange("AE44").setText(data.get(i).get("TokkiJiko1") + data.get(i).get("TokkiJiko2") 
 														+ data.get(i).get("TokkiJiko3") + data.get(i).get("TokkiJiko4"));
@@ -621,10 +668,18 @@ public class PdfChiChinginkeisanshoDownload extends DownloadBase {
 				}
 				
 				// 中央部：明細部を設定
-				worksheet.getCellRange("A" 	+ (11 + rowCnt)).setText(data.get(i).get("Month"));
-				worksheet.getCellRange("B" 	+ (11 + rowCnt)).setText(data.get(i).get("Day"));
-				worksheet.getCellRange("C" 	+ (11 + rowCnt)).setText(data.get(i).get("YobiKbn"));
-				worksheet.getCellRange("E" 	+ (11 + rowCnt)).setText(data.get(i).get("ShusshaJikoku") + "～" + data.get(i).get("TaishaJikoku"));
+				worksheet.getCellRange("A" + (11 + rowCnt)).setText(data.get(i).get("Month"));
+				worksheet.getCellRange("B" + (11 + rowCnt)).setText(data.get(i).get("Day"));
+				worksheet.getCellRange("C" + (11 + rowCnt)).setText(data.get(i).get("YobiKbn"));
+				
+				// 勤務時間のデータがない場合は空文字を出力	
+				// 「出社時刻　～　退社時刻」の形で表示
+				if(data.get(i).get("ShusshaJikoku").isBlank() && data.get(i).get("TaishaJikoku").isBlank()) {
+					worksheet.getCellRange("E" + (11 + rowCnt)).setText("");
+				} else {
+					worksheet.getCellRange("E" + (11 + rowCnt)).setText(data.get(i).get("ShusshaJikoku") + "　～　" + data.get(i).get("TaishaJikoku"));
+				}
+				
 				worksheet.getCellRange("L" 	+ (11 + rowCnt)).setText(data.get(i).get("JitsudoJikan"));
 				worksheet.getCellRange("O" 	+ (11 + rowCnt)).setText(data.get(i).get("ChinginShinseiKbn1"));
 				worksheet.getCellRange("S" 	+ (11 + rowCnt)).setText(data.get(i).get("ChinginShinseiJikan1"));
@@ -673,9 +728,9 @@ public class PdfChiChinginkeisanshoDownload extends DownloadBase {
 			// 名前を付けて保存
 			this.setFilename(createFileNamePdf);
 			
-//			// templateFile配下に作成したxlsxとpdfを削除する
-//			Files.delete(Paths.get(createFileXlsx));
-//			Files.delete(Paths.get(createFilePdf));
+			// templateFile配下に作成したxlsxとpdfを削除する
+			Files.delete(Paths.get(createFileXlsx));
+			Files.delete(Paths.get(createFilePdf));
 			
 			
 		} catch (Exception e) {
