@@ -25,13 +25,8 @@ public class KintaiKakuteiAction extends PJActionBase {
 
 	@Override
 	public void doRun(HttpServletRequest req, HttpServletResponse res) throws Exception {
-		/**
-		 * 対象年月の初期値の取得
-		 * 
-		 * @param req
-		 * @param res
-		 * @throws Exception
-		 */
+		
+		//対象年月初期値の取得
 		String taishoDate = "";
 		// DB接続
 		Connection con		= this.getConnection("kintai", req);
@@ -42,7 +37,6 @@ public class KintaiKakuteiAction extends PJActionBase {
 			taishoDate = hashMap.get("GenzaishoriNengetsudo");
 		}
 		
-			
 		//=====================================================================
 		// 結果返却
 		//=====================================================================
@@ -170,7 +164,6 @@ public class KintaiKakuteiAction extends PJActionBase {
 		// 結果返却
 		//=====================================================================
 		this.addContent("result", mstDatas);
-		
 	}
 	
 	public void kaijo(HttpServletRequest req, HttpServletResponse res) throws Exception {
@@ -334,6 +327,7 @@ public class KintaiKakuteiAction extends PJActionBase {
 			//コミット
 			con.commit();
 		}
+		
 		this.addContent("result", result);
 	}
 
@@ -395,7 +389,6 @@ public class KintaiKakuteiAction extends PJActionBase {
 		}
 		
 		return result;
-
 	}
 	
 	/**
@@ -448,7 +441,6 @@ public class KintaiKakuteiAction extends PJActionBase {
 		}
 		
 		return result;
-
 	}
 	
 	/**
@@ -520,7 +512,6 @@ public class KintaiKakuteiAction extends PJActionBase {
 		}
 		
 		return result;
-
 	}
 	
 	/**
@@ -577,7 +568,6 @@ public class KintaiKakuteiAction extends PJActionBase {
 		}
 		
 		return result;
-
 	}
 	
 	/**
@@ -809,8 +799,6 @@ public class KintaiKakuteiAction extends PJActionBase {
 			if (pstmt != null){ try { pstmt.close(); } catch (Exception exp){}}
 		}
 		
-		// 結果返却
 		return result;
-		
 	}
 }
