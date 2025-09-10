@@ -376,8 +376,8 @@ public class ChiChinginkeisanshoValidate extends ValidateBase {
 	private boolean shinseiPatternCheck(Connection con, String shinseiKbn1, String shinseiKbn2, String shinseiKbn3) throws Exception {
 
 		// チェック対象の社員NO
-		String shainNo			= this.getParameter("txtSearchedShainNO");
-		String JikyuNikkyuKbn = "";
+		String shainNo			= this.getParameter("txtShainNO");
+		String jikyuNikkyuKbn = "";
 		
 		//=====================================================================
 		// 処理
@@ -386,7 +386,7 @@ public class ChiChinginkeisanshoValidate extends ValidateBase {
 		ArrayList<HashMap<String, String>> mstShains = PJActionBase.getMstShains(con, shainNo, null, null, null, null, null, null, null);
 		//社員が存在すれば時給日給区分を取得する
 		if (0 < mstShains.size()){
-			JikyuNikkyuKbn = mstShains.get(0).get("JikyuNikkyuKbn"); 
+			jikyuNikkyuKbn = mstShains.get(0).get("JikyuNikkyuKbn"); 
 		}
 
 		boolean result = false;
@@ -407,7 +407,7 @@ public class ChiChinginkeisanshoValidate extends ValidateBase {
 		sql.append(" AND ShinseiKbn2 = ? ");
 		sql.append(" AND ShinseiKbn3 = ? ");
 		//社員が日給の場合、一部除外
-		if("02".equals(JikyuNikkyuKbn)) {
+		if("02".equals(jikyuNikkyuKbn)) {
 			sql.append(" AND KintaiKbn NOT IN ('07', '08') ");
 		}
 

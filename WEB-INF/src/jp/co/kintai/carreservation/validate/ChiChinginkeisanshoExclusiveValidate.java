@@ -41,7 +41,7 @@ public class ChiChinginkeisanshoExclusiveValidate extends ValidateBase {
 			
 			this.params.put("tableName", "CHI_CHINGINKEISANSHO_MEISAI");
 			this.params.put("keyName", "TaishoNenGetsudo,ShainNO,TaishoNengappi");
-			this.params.put("keyValue", "txtSearchedTaishoYM,txtSearchedShainNO," + taishoNengappiKeySb.toString());
+			this.params.put("keyValue", "txtTaishoYM,txtShainNO," + taishoNengappiKeySb.toString());
 			this.params.put("saishuKoshinDate", meisaiSaishuKoshinDateKeySb.toString());
 			this.params.put("saishuKoshinJikan", meisaiSaishuKoshinJikanKeySb.toString());
 			

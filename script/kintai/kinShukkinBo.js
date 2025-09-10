@@ -8,7 +8,7 @@ let shinseiKingaku02 = 0;
 *
 */
 function getTaishoYMFormat(){
-	let strReplacing = $("#txtTaishoYM").val();
+	let strReplacing = $("#srhTxtTaishoYM").val();
 	let strReplaced = "";
 	//全角半角変換
 	strReplacing = strReplacing.replace(/[０-９]/g, function(s) {
@@ -36,7 +36,7 @@ function getTaishoYMFormat(){
 		strReplaced = strReplacing;
 	}
 
-	$("#txtTaishoYM").val(strReplaced);
+	$("#srhTxtTaishoYM").val(strReplaced);
 }
 
 /*
@@ -45,13 +45,16 @@ function getTaishoYMFormat(){
 *
 */
 function getShainNOFormat(){
+	//もともとの社員NOを保持
+	let wkTxtShainNO = $("#srhTxtShainNO").val();
+
 	//作業用隠し項目に、0埋めした社員NOをセット
-	$("#hdnWkShainNO").val(right("0000" + $("#txtShainNO").val(), 4));
+	$("#srhTxtShainNO").val(right("0000" + $("#srhTxtShainNO").val(), 4));
 	//0埋めした社員NOで社員名を取得
-	getShainName('hdnWkShainNO', 'txtShainName');
-	//社員名を取得できたら、社員NO項目に「0埋めした社員NO」をセット
-	if($("#txtShainName").val() != ""){
-		$("#txtShainNO").val($("#hdnWkShainNO").val());
+	getShainName('srhTxtShainNO', 'lblShainName');
+	//社員名を取得できなかったら、社員NO項目を戻す
+	if($("#lblShainName").val() == ""){
+		$("#srhTxtShainNO").val(wkTxtShainNO);
 	}
 }
 function right(str, n) {
@@ -66,13 +69,8 @@ function right(str, n) {
 *
 */
 function onSearchKinShukkinBo(){
-	//更新処理に備え、検索条件を保持
-//	$("#txtSearchedTaishoYM").val($("#txtTaishoYM").val());
-//	$("#txtSearchedShainNO").val($("#txtShainNO").val());
 
-//	//検索結果が0の時のため、画面非表示
-//	$("#nyuryokuArea").css("visibility", "hidden");
-//	$("#buttonArea").css("visibility", "hidden");
+	//検索結果が0の時のため、画面非表示
 	document.getElementById("btnDelete").disabled = true;
 	document.getElementById("btnUpdate").disabled = true;
 	
@@ -88,8 +86,8 @@ function onSearchKinShukkinBo(){
 		if (contents["result"] == undefined){ return; }
 		
 		//更新処理に備え、検索条件を保持
-		$("#txtSearchedTaishoYM").val($("#txtTaishoYM").val());
-		$("#txtSearchedShainNO").val($("#txtShainNO").val());
+		$("#txtTaishoYM").val($("#srhTxtTaishoYM").val());
+		$("#txtShainNO").val($("#srhTxtShainNO").val());
 
 		//検索結果があれば入力項目表示
 		$("#nyuryokuArea").css("visibility", "");
@@ -794,8 +792,9 @@ function onDelete(){
 					alert("正常に削除しました。");
 					//再検索する
 					//更新処理に備え、検索条件を保持
-					$("#txtTaishoYM").val($("#txtSearchedTaishoYM").val());
-					$("#txtShainNO").val($("#txtSearchedShainNO").val());
+					$("#srhTxtTaishoYM").val($("#txtTaishoYM").val());
+					$("#srhTxtShainNO").val($("#txtShainNO").val());
+					getShainNOFormat();//社員名再取得
 
 					//検索結果が0の時のため、画面非表示
 					$("#nyuryokuArea").css("visibility", "hidden");
@@ -844,8 +843,9 @@ function onUpdate(){
 				}
 				//再検索する
 				//更新処理に備え、検索条件を保持
-				$("#txtTaishoYM").val($("#txtSearchedTaishoYM").val());
-				$("#txtShainNO").val($("#txtSearchedShainNO").val());
+				$("#srhTxtTaishoYM").val($("#txtTaishoYM").val());
+				$("#srhTxtShainNO").val($("#txtShainNO").val());
+				getShainNOFormat();//社員名再取得
 	
 				//検索結果が0の時のため、画面非表示
 				$("#nyuryokuArea").css("visibility", "hidden");

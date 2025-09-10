@@ -1,6 +1,34 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <validate>
 	<proc func="search">
+		<variable name="srhTxtTaishoYM" dispName="対象年月">
+			<check class="IsRequired" message="!#itemName#!が入力されていません。" itemName="{dispName}"></check>
+			<check class="IsLength" message="!#itemName#!の指定が不正です。(YYYY/MM)" itemName="{dispName}">
+				<param name="type">half</param>
+				<param name="comparisonoperator">=</param>
+				<param name="length">7</param>
+			</check>
+			<check class="IsDate" message="!#itemName#!の指定が不正です。(YYYY/MM)" itemName="{dispName}">
+				<param name="format">yyyy/MM</param>
+			</check>
+		</variable>
+		<variable name="srhTxtShainNO" dispName="社員NO">
+			<check class="IsRequired" message="!#itemName#!が入力されていません。" itemName="{dispName}"></check>
+			<check class="IsHalfOnly" message="!#itemName#!には全角文字は入力できません。" itemName="{dispName}"></check>
+			<check class="IsNumeric" message="!#itemName#!には数字を入力してください。" itemName="{dispName}"></check>
+			<check class="ShainExistValidate" message="該当する!#itemName#!が存在しません。" itemName="{dispName}"></check>
+			<check class="ShainTaisyokuValidate" message="該当する!#itemName#!は処理できません。" itemName="{dispName}"></check>
+			<check class="ShainKbnValidate" message="該当する!#itemName#!は出勤簿不要です。" itemName="{dispName}"></check>
+		</variable>
+
+		<variable name="dummy" dispName="">
+			<check class="ShainAuthorityValidate" message="ログインした社員Noでは処理できません。">
+				<param name="shainNo">srhTxtShainNO</param>
+			</check>
+		</variable>
+	</proc>
+
+	<proc func="update">
 		<variable name="txtTaishoYM" dispName="対象年月">
 			<check class="IsRequired" message="!#itemName#!が入力されていません。" itemName="{dispName}"></check>
 			<check class="IsLength" message="!#itemName#!の指定が不正です。(YYYY/MM)" itemName="{dispName}">
@@ -14,50 +42,22 @@
 		</variable>
 		<variable name="txtShainNO" dispName="社員NO">
 			<check class="IsRequired" message="!#itemName#!が入力されていません。" itemName="{dispName}"></check>
-			<check class="IsHalfOnly" message="!#itemName#!には全角文字は入力できません。" itemName="{dispName}"></check>
-			<check class="IsNumeric" message="!#itemName#!には数字を入力してください。" itemName="{dispName}"></check>
 			<check class="ShainExistValidate" message="該当する!#itemName#!が存在しません。" itemName="{dispName}"></check>
 			<check class="ShainTaisyokuValidate" message="該当する!#itemName#!は処理できません。" itemName="{dispName}"></check>
 			<check class="ShainKbnValidate" message="該当する!#itemName#!は出勤簿不要です。" itemName="{dispName}"></check>
 		</variable>
-
+		
+		
 		<variable name="dummy" dispName="">
 			<check class="ShainAuthorityValidate" message="ログインした社員Noでは処理できません。">
 				<param name="shainNo">txtShainNO</param>
-			</check>
-		</variable>
-	</proc>
-
-	<proc func="update">
-		<variable name="txtSearchedTaishoYM" dispName="対象年月">
-			<check class="IsRequired" message="!#itemName#!が入力されていません。" itemName="{dispName}"></check>
-			<check class="IsLength" message="!#itemName#!の指定が不正です。(YYYY/MM)" itemName="{dispName}">
-				<param name="type">half</param>
-				<param name="comparisonoperator">=</param>
-				<param name="length">7</param>
-			</check>
-			<check class="IsDate" message="!#itemName#!の指定が不正です。(YYYY/MM)" itemName="{dispName}">
-				<param name="format">yyyy/MM</param>
-			</check>
-		</variable>
-		<variable name="txtSearchedShainNO" dispName="社員NO">
-			<check class="IsRequired" message="!#itemName#!が入力されていません。" itemName="{dispName}"></check>
-			<check class="ShainExistValidate" message="該当する!#itemName#!が存在しません。" itemName="{dispName}"></check>
-			<check class="ShainTaisyokuValidate" message="該当する!#itemName#!は処理できません。" itemName="{dispName}"></check>
-			<check class="ShainKbnValidate" message="該当する!#itemName#!は出勤簿不要です。" itemName="{dispName}"></check>
-		</variable>
-		
-		
-		<variable name="dummy" dispName="">
-			<check class="ShainAuthorityValidate" message="ログインした社員Noでは処理できません。">
-				<param name="shainNo">txtSearchedShainNO</param>
 			</check>
 
 			<check class="KinShukkinBoExclusiveValidate" message="この出勤簿明細データはすでに、別のユーザーに更新されています。もう一度データを確認してください。"></check>
 			<check class="ExclusiveValidate" message="この出勤簿基本データはすでに、別のユーザーに更新されています。もう一度データを確認してください。">
 				<param name="tableName">KIN_SHUKKINBO_KIHON</param>
 				<param name="keyName">TaishoNenGetsudo,ShainNO</param>
-				<param name="keyValue">txtSearchedTaishoYM,txtSearchedShainNO</param>
+				<param name="keyValue">txtTaishoYM,txtShainNO</param>
 				<param name="saishuKoshinDate">hdnKihonSaishuKoshinDate</param>
 				<param name="saishuKoshinJikan">hdnKihonSaishuKoshinJikan</param>
 			</check>
@@ -90,7 +90,7 @@
 	</proc>
 
 	<proc func="delete">
-		<variable name="txtSearchedTaishoYM" dispName="対象年月">
+		<variable name="txtTaishoYM" dispName="対象年月">
 			<check class="IsRequired" message="!#itemName#!が入力されていません。" itemName="{dispName}"></check>
 			<check class="IsLength" message="!#itemName#!の指定が不正です。(YYYY/MM)" itemName="{dispName}">
 				<param name="type">half</param>
@@ -101,7 +101,7 @@
 				<param name="format">yyyy/MM</param>
 			</check>
 		</variable>
-		<variable name="txtSearchedShainNO" dispName="社員NO">
+		<variable name="txtShainNO" dispName="社員NO">
 			<check class="IsRequired" message="!#itemName#!が入力されていません。" itemName="{dispName}"></check>
 			<check class="ShainExistValidate" message="該当する!#itemName#!が存在しません。" itemName="{dispName}"></check>
 			<check class="ShainTaisyokuValidate" message="該当する!#itemName#!は処理できません。" itemName="{dispName}"></check>
@@ -110,14 +110,14 @@
 
 		<variable name="dummy" dispName="">
 			<check class="ShainAuthorityValidate" message="ログインした社員Noでは処理できません。">
-				<param name="shainNo">txtSearchedShainNO</param>
+				<param name="shainNo">txtShainNO</param>
 			</check>
 
 			<check class="KinShukkinBoExclusiveValidate" message="この出勤簿明細データはすでに、別のユーザーに更新されています。もう一度データを確認してください。"></check>
 			<check class="ExclusiveValidate" message="この出勤簿基本データはすでに、別のユーザーに更新されています。もう一度データを確認してください。">
 				<param name="tableName">KIN_SHUKKINBO_KIHON</param>
 				<param name="keyName">TaishoNenGetsudo,ShainNO</param>
-				<param name="keyValue">txtSearchedTaishoYM,txtSearchedShainNO</param>
+				<param name="keyValue">txtTaishoYM,txtShainNO</param>
 				<param name="saishuKoshinDate">hdnKihonSaishuKoshinDate</param>
 				<param name="saishuKoshinJikan">hdnKihonSaishuKoshinJikan</param>
 			</check>

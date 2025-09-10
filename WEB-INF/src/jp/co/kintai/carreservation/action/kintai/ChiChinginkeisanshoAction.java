@@ -121,7 +121,7 @@ public class ChiChinginkeisanshoAction extends PJActionBase {
 
 		
 		// チェック対象の社員NO
-		String shainNo			= this.getParameter("txtShainNO");
+		String shainNo			= this.getParameter("srhTxtShainNO");
 		String JikyuNikkyuKbn = "";
 		
 		//=====================================================================
@@ -242,8 +242,8 @@ public class ChiChinginkeisanshoAction extends PJActionBase {
 	 */
 	public void honshaKakuteizumiCheck(HttpServletRequest req, HttpServletResponse res) throws Exception {
 		// 検索条件取得
-		String taishoYM			= this.getParameter("txtTaishoYM");
-		String taishoShainNo	= this.getParameter("txtShainNO");
+		String taishoYM			= this.getParameter("srhTxtTaishoYM");
+		String taishoShainNo	= this.getParameter("srhTxtShainNO");
 		
 		// DB接続
 		Connection con		= this.getConnection("kintai", req);
@@ -360,8 +360,8 @@ public class ChiChinginkeisanshoAction extends PJActionBase {
 	public void search(HttpServletRequest req, HttpServletResponse res) throws Exception {
 		HashMap<String, Object> Result = new HashMap<>();
 		// 検索条件取得
-		String taishoYM			= this.getParameter("txtTaishoYM");
-		String taishoShainNo	= this.getParameter("txtShainNO");
+		String taishoYM			= this.getParameter("srhTxtTaishoYM");
+		String taishoShainNo	= this.getParameter("srhTxtShainNO");
 
 		// DB接続
 		Connection con		= this.getConnection("kintai", req);
@@ -802,8 +802,8 @@ public class ChiChinginkeisanshoAction extends PJActionBase {
 		//=====================================================================
 		// パラメータ取得
 		//=====================================================================
-		String taishoYM			= this.getParameter("txtSearchedTaishoYM");
-		String taishoShainNo	= this.getParameter("txtSearchedShainNO");
+		String taishoYM			= this.getParameter("txtTaishoYM");
+		String taishoShainNo	= this.getParameter("txtShainNO");
 		String eigyoshoCode		= this.getParameter("hidEigyoshoCode");
 		String bushoCode		= this.getParameter("hidBushoCode");
 		// DB接続
@@ -842,8 +842,8 @@ public class ChiChinginkeisanshoAction extends PJActionBase {
 		//=====================================================================
 		// パラメータ取得
 		//=====================================================================
-		String taishoYM			= this.getParameter("txtSearchedTaishoYM");
-		String taishoShainNo	= this.getParameter("txtSearchedShainNO");
+		String taishoYM			= this.getParameter("txtTaishoYM");
+		String taishoShainNo	= this.getParameter("txtShainNO");
 		String eigyoshoCode		= this.getParameter("hidEigyoshoCode");
 		String bushoCode		= this.getParameter("hidBushoCode");
 		// DB接続
@@ -2328,8 +2328,8 @@ public class ChiChinginkeisanshoAction extends PJActionBase {
 		//=====================================================================
 		// パラメータ取得
 		//=====================================================================
-		String taishoYM			= this.getParameter("txtSearchedTaishoYM");
-		String taishoShainNo	= this.getParameter("txtSearchedShainNO");
+		String taishoYM			= this.getParameter("txtTaishoYM");
+		String taishoShainNo	= this.getParameter("txtShainNO");
 		String eigyoshoCode		= this.getParameter("hidEigyoshoCode");
 		String bushoCode		= this.getParameter("hidBushoCode");
 

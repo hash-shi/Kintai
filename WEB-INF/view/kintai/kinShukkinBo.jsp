@@ -25,7 +25,7 @@
 	}
 	
 	//対象年月初期値の取得
-	String	taishoDate = (String)request.getAttribute("result");
+	String	taishoYM = (String)request.getAttribute("result");
 %>
 
 <main id="main-content" class="nom">
@@ -43,34 +43,33 @@
 							<a >対象年月</a>
 						</td>
 						<td class="value w100">
-							<input type="text" class=""  style="width: 80px; text-align: right;" name="txtTaishoYM" id="txtTaishoYM" value="<%=UtilEscape.htmlspecialchars(taishoDate) %>" maxlength="7" onblur="getTaishoYMFormat();" autofocus onfocus="this.setSelectionRange(7, 7)">
-							<input type="hidden" name="txtSearchedTaishoYM" id="txtSearchedTaishoYM" value="<%=UtilEscape.htmlspecialchars(taishoDate) %>">
+							<input type="text" class=""  style="width: 80px; text-align: right;" name="srhTxtTaishoYM" id="srhTxtTaishoYM" value="<%=UtilEscape.htmlspecialchars(taishoYM) %>" maxlength="7" onblur="getTaishoYMFormat();" autofocus onfocus="this.setSelectionRange(7, 7)">
+							<input type="hidden" name="txtTaishoYM" id="txtTaishoYM" value="<%=UtilEscape.htmlspecialchars(taishoYM) %>">
 						</td>
 						<td class="title center w100 req">
-							<a name="lnkShainSearch" id="linkShainSearch" href="#" 
+							<a href="#" 
 								<% if(shainNOReadonlyFlg == true){ %>
 									readonly  tabindex="-1"
 									onclick=""
 								<% } %>
 								<% if(shainNOReadonlyFlg == false){ %>
-									onclick="opnDialog('srhMstShain','txtShainNO','txtShainName'); return false;"
+									onclick="opnDialog('srhMstShain','srhTxtShainNO','lblShainName'); return false;"
 								<% } %>
 							>社員NO</a>
 						</td>
 						<td class="value w300">
-							<input type="text" class=""  style="width: 80px" name="txtShainNO" id="txtShainNO" value="<%=UtilEscape.htmlspecialchars(shainNO) %>" maxlength="4" onblur="getShainNOFormat();" 
+							<input type="text" class=""  style="width: 80px" name="srhTxtShainNO" id="srhTxtShainNO" value="<%=UtilEscape.htmlspecialchars(shainNO) %>" maxlength="4" onblur="getShainNOFormat();" 
 								<% if(shainNOReadonlyFlg == true){ %>
 								readonly  tabindex="-1"
 								<% } %>
 							>
-							<input type="hidden" name="hdnWkShainNO" id="hdnWkShainNO" value="">
-							<input type="hidden" name="txtSearchedShainNO" id="txtSearchedShainNO" value="">
-							<img class="img border" name="btnShainSearch" id="btnShainSearch" src="./images/search.png"  
+							<input type="hidden" name="txtShainNO" id="txtShainNO" value="">
+							<img class="img border" src="./images/search.png"  
 								<% if(shainNOReadonlyFlg == false){ %>
-									onclick="opnDialog('srhMstShain','txtShainNO','txtShainName');"
+									onclick="opnDialog('srhMstShain','srhTxtShainNO','lblShainName');"
 								<% } %>
 							>
-							<input type="text" class=""  style="width: 120px" name="txtShainName" id="txtShainName" value="<%=UtilEscape.htmlspecialchars(shainName) %>" readonly tabindex="-1">
+							<input type="text" class=""  style="width: 120px" name="lblShainName" id="lblShainName" value="<%=UtilEscape.htmlspecialchars(shainName) %>" readonly tabindex="-1">
 						</td>
 						<td class="value w50">
 							<button type="button" onclick="onSearchKinShukkinBo();">検索</button>

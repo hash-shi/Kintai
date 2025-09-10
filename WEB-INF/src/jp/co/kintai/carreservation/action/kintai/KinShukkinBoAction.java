@@ -224,10 +224,8 @@ public class KinShukkinBoAction extends PJActionBase {
 	 */
 	public void honshaKakuteizumiCheck(HttpServletRequest req, HttpServletResponse res) throws Exception {
 		// 検索条件取得
-//		String taishoYM			= this.getParameter("txtSearchedTaishoYM");
-//		String taishoShainNo	= this.getParameter("txtSearchedShainNO");
-		String taishoYM			= this.getParameter("txtTaishoYM");
-		String taishoShainNo	= this.getParameter("txtShainNO");
+		String taishoYM			= this.getParameter("srhTxtTaishoYM");
+		String taishoShainNo	= this.getParameter("srhTxtShainNO");
 		
 		// DB接続
 		Connection con		= this.getConnection("kintai", req);
@@ -344,10 +342,8 @@ public class KinShukkinBoAction extends PJActionBase {
 	public void search(HttpServletRequest req, HttpServletResponse res) throws Exception {
 		
 		// 検索条件取得
-//		String taishoYM			= this.getParameter("txtSearchedTaishoYM");
-//		String taishoShainNo	= this.getParameter("txtSearchedShainNO");
-		String taishoYM			= this.getParameter("txtTaishoYM");
-		String taishoShainNo	= this.getParameter("txtShainNO");
+		String taishoYM			= this.getParameter("srhTxtTaishoYM");
+		String taishoShainNo	= this.getParameter("srhTxtShainNO");
 
 		//検索結果0件の時のため、デフォルトのデータを作成
 		ArrayList<HashMap<String, String>> ResultDatas = getResultDatas(taishoYM);
@@ -566,8 +562,8 @@ public class KinShukkinBoAction extends PJActionBase {
 		//=====================================================================
 		// パラメータ取得
 		//=====================================================================
-		String taishoYM			= this.getParameter("txtSearchedTaishoYM");
-		String taishoShainNo	= this.getParameter("txtSearchedShainNO");
+		String taishoYM			= this.getParameter("txtTaishoYM");
+		String taishoShainNo	= this.getParameter("txtShainNO");
 		//=====================================================================
 		// ユーザー情報の取得
 		//=====================================================================
@@ -2183,8 +2179,8 @@ public class KinShukkinBoAction extends PJActionBase {
 		//=====================================================================
 		// パラメータ取得
 		//=====================================================================
-		String taishoYM			= this.getParameter("txtSearchedTaishoYM");
-		String taishoShainNo	= this.getParameter("txtSearchedShainNO");
+		String taishoYM			= this.getParameter("txtTaishoYM");
+		String taishoShainNo	= this.getParameter("txtShainNO");
 		
 		boolean result = false;
 		//トランザクション開始
