@@ -5,6 +5,10 @@
 			<check class="IsRequired" message="!#itemName#!が入力されていません。" itemName="{dispName}"></check>
 			<check class="IsHalf" message="!#itemName#!には全角文字は入力できません。" itemName="{dispName}"></check>
 			<check class="IsNumeric" message="!#itemName#!には数字を入力してください。" itemName="{dispName}"></check>
+			<check class="MaxLength" message="!#itemName#!が3バイトを超えています。(3バイト = 全角3/2文字, 半角3文字)" itemName="{dispName}">
+				<param name="type">full</param>
+				<param name="length">3</param>
+			</check>
 		</variable>
 	</proc>
 	
@@ -21,6 +25,10 @@
 			<check class="IsRequired" message="!#itemName#!が入力されていません。" itemName="{dispName}"></check>
 			<check class="IsHalf" message="!#itemName#!には全角文字は入力できません。" itemName="{dispName}"></check>
 			<check class="IsNumeric" message="!#itemName#!には数字を入力してください。" itemName="{dispName}"></check>
+			<check class="MaxLength" message="!#itemName#!が3バイトを超えています。(3バイト = 全角3/2文字, 半角3文字)" itemName="{dispName}">
+				<param name="type">full</param>
+				<param name="length">3</param>
+			</check>
 		</variable>
 		<variable name="txtEigyoshoName" dispName="営業所名">
 			<check class="IsRequired" message="!#itemName#!が入力されていません。" itemName="{dispName}"></check>			
