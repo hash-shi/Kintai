@@ -43,7 +43,7 @@
 							<a >対象年月</a>
 						</td>
 						<td class="value w100">
-							<input type="text" class=""  style="width: 80px; text-align: right;" name="srhTxtTaishoYM" id="srhTxtTaishoYM" value="<%=UtilEscape.htmlspecialchars(taishoDate) %>" maxlength="7" onblur="getTaishoYMFormat();" autofocus onfocus="this.setSelectionRange(7, 7)">
+							<input type="text" class=""  style="width: 80px; text-align: right;" name="srhTxtTaishoYM" id="srhTxtTaishoYM" value="<%=UtilEscape.htmlspecialchars(taishoDate) %>" maxlength="7" onblur="onChangeTaishoYM();" autofocus onfocus="this.setSelectionRange(7, 7)">
 							<input type="hidden" name="txtTaishoYM" id="txtTaishoYM" value="<%=UtilEscape.htmlspecialchars(taishoDate) %>">
 						</td>
 						<td class="title center w100 req">
@@ -58,7 +58,7 @@
 							>社員NO</a>
 						</td>
 						<td class="value w300">
-							<input type="text" class=""  style="width: 80px" name="srhTxtShainNO" id="srhTxtShainNO" value="<%=UtilEscape.htmlspecialchars(shainNO) %>" maxlength="4" onblur="getShainNOFormat();" 
+							<input type="text" class=""  style="width: 80px" name="srhTxtShainNO" id="srhTxtShainNO" value="<%=UtilEscape.htmlspecialchars(shainNO) %>" maxlength="4" onblur="onSearchShainName();" 
 								<% if(shainNOReadonlyFlg == true){ %>
 								readonly  tabindex="-1"
 								<% } %>
@@ -120,13 +120,13 @@
 										<a >所定(契約)勤務時間</a>
 									</th>
 									<td class="value center w100">
-										<a id="kinmuKaishi" name="kinmuKaishi"></a>
+										<a id="lblKinmuKaishi" name="lblKinmuKaishi"></a>
 									</td>
 									<td class="title center w50">
 										<a >-</a>
 									</td>
 									<td class="value center w100">
-										<a id="kinmuShuryo" name="kinmuShuryo"></a>
+										<a id="lblKinmuShuryo" name="lblKinmuShuryo"></a>
 									</td>
 								</tr>
 								<tr>
@@ -134,14 +134,12 @@
 										<a >実働</a>
 									</th>
 									<td class="value center w150" colspan="2">
-										<a id="jitsudojikan" name="jitsudojikan"></a>
+										<a id="lblJitsudojikan" name="lblJitsudojikan"></a>
 									</td>
 									<th class="title center w100">
 										<a >時間</a>
 									</th>
 								</tr>
-								<input type="hidden" name="hidEigyoshoCode" id="hidEigyoshoCode" value="">
-								<input type="hidden" name="hidBushoCode" id="hidBushoCode" value="">
 							</tbody>
 						</table>
 					</div>
@@ -175,16 +173,16 @@
 										<a >勤務時間</a>
 									</th>
 									<td class="value right w70">
-										<a id="shinseinissu01" name="shinseinissu01"></a>
+										<a id="lblShinseinissu01" name="lblShinseinissu01"></a>
 									</td>
 									<td class="value right w70">
-										<a id="shinseijikan01" name="shinseijikan01"></a>
+										<a id="lblShinseijikan01" name="lblShinseijikan01"></a>
 									</td>
 									<td class="value right w70">
-										<a id="shinseitanka01" name="shinseitanka01"></a>
+										<a id="lblShinseitanka01" name="lblShinseitanka01"></a>
 									</td>
 									<td class="value right w70">
-										<a id="shinseikingakugoukei01" name="shinseikingakugoukei01"></a>
+										<a id="lblShinseikingakugoukei01" name="lblShinseikingakugoukei01"></a>
 									</td>
 								</tr>
 								<tr>
@@ -192,16 +190,16 @@
 										<a >休日勤務</a>
 									</th>
 									<td class="value right w70">
-										<a id="shinseinissu04" name="shinseinissu04"></a>
+										<a id="lblShinseinissu04" name="lblShinseinissu04"></a>
 									</td>
 									<td class="value right w70">
-										<a id="shinseijikan04" name="shinseijikan04"></a>
+										<a id="lblShinseijikan04" name="lblShinseijikan04"></a>
 									</td>
 									<td class="value right w70">
-										<a id="shinseitanka04" name="shinseitanka04"></a>
+										<a id="lblShinseitanka04" name="lblShinseitanka04"></a>
 									</td>
 									<td class="value right w70">
-										<a id="shinseikingakugoukei04" name="shinseikingakugoukei04"></a>
+										<a id="lblShinseikingakugoukei04" name="lblShinseikingakugoukei04"></a>
 									</td>
 								</tr>
 								<tr>
@@ -209,16 +207,16 @@
 										<a >時間外勤務</a>
 									</th>
 									<td class="value right w70">
-										<a id="shinseinissu02" name="shinseinissu02"></a>
+										<a id="lblShinseinissu02" name="lblShinseinissu02"></a>
 									</td>
 									<td class="value right w70">
-										<a id="shinseijikan02" name="shinseijikan02"></a>
+										<a id="lblShinseijikan02" name="lblShinseijikan02"></a>
 									</td>
 									<td class="value right w70">
-										<a id="shinseitanka02" name="shinseitanka02"></a>
+										<a id="lblShinseitanka02" name="lblShinseitanka02"></a>
 									</td>
 									<td class="value right w70">
-										<a id="shinseikingakugoukei02" name="shinseikingakugoukei02"></a>
+										<a id="lblShinseikingakugoukei02" name="lblShinseikingakugoukei02"></a>
 									</td>
 								</tr>
 								<tr>
@@ -226,16 +224,16 @@
 										<a >深夜勤務</a>
 									</th>
 									<td class="value right w70">
-										<a id="shinseinissu03" name="shinseinissu03"></a>
+										<a id="lblShinseinissu03" name="lblShinseinissu03"></a>
 									</td>
 									<td class="value right w70">
-										<a id="shinseijikan03" name="shinseijikan03"></a>
+										<a id="lblShinseijikan03" name="lblShinseijikan03"></a>
 									</td>
 									<td class="value right w70">
-										<a id="shinseitanka03" name="shinseitanka03"></a>
+										<a id="lblShinseitanka03" name="lblShinseitanka03"></a>
 									</td>
 									<td class="value right w70">
-										<a id="shinseikingakugoukei03" name="shinseikingakugoukei03"></a>
+										<a id="lblShinseikingakugoukei03" name="lblShinseikingakugoukei03"></a>
 									</td>
 								</tr>
 								<tr>
@@ -243,16 +241,16 @@
 										<a >有給休暇</a>
 									</th>
 									<td class="value right w70">
-										<a id="shinseinissu05" name="shinseinissu05"></a>
+										<a id="lblShinseinissu05" name="lblShinseinissu05"></a>
 									</td>
 									<td class="value right w70">
-										<a id="shinseijikan05" name="shinseijikan05"></a>
+										<a id="lblShinseijikan05" name="lblShinseijikan05"></a>
 									</td>
 									<td class="value right w70">
-										<a id="shinseitanka05" name="shinseitanka05"></a>
+										<a id="lblShinseitanka05" name="lblShinseitanka05"></a>
 									</td>
 									<td class="value right w70">
-										<a id="shinseikingakugoukei05" name="shinseikingakugoukei05"></a>
+										<a id="lblShinseikingakugoukei05" name="lblShinseikingakugoukei05"></a>
 									</td>
 								</tr>
 								<tr>
@@ -260,16 +258,16 @@
 										<a >特別有給休暇</a>
 									</th>
 									<td class="value right w70">
-										<a id="shinseinissu11" name="shinseinissu11"></a>
+										<a id="lblShinseinissu11" name="lblShinseinissu11"></a>
 									</td>
 									<td class="value right w70">
-										<a id="shinseijikan11" name="shinseijikan11"></a>
+										<a id="lblShinseijikan11" name="lblShinseijikan11"></a>
 									</td>
 									<td class="value right w70">
-										<a id="shinseitanka11" name="shinseitanka11"></a>
+										<a id="lblShinseitanka11" name="lblShinseitanka11"></a>
 									</td>
 									<td class="value right w70">
-										<a id="shinseikingakugoukei11" name="shinseikingakugoukei11"></a>
+										<a id="lblShinseikingakugoukei11" name="lblShinseikingakugoukei11"></a>
 									</td>
 								</tr>
 								<tr>
@@ -277,16 +275,16 @@
 										<a >通勤費</a>
 									</th>
 									<td class="value right w70">
-										<a id="shinseinissu09" name="shinseinissu09"></a>
+										<a id="lblShinseinissu09" name="lblShinseinissu09"></a>
 									</td>
 									<td class="value right w70">
 		
 									</td>
 									<td class="value right w70">
-										<a id="shinseitanka09" name="shinseitanka09"></a>
+										<a id="lblShinseitanka09" name="lblShinseitanka09"></a>
 									</td>
 									<td class="value right w70">
-										<a id="shinseikingakugoukei09" name="shinseikingakugoukei09"></a>
+										<a id="lblShinseikingakugoukei09" name="lblShinseikingakugoukei09"></a>
 									</td>
 								</tr>
 								<tr>
@@ -294,16 +292,16 @@
 										<a >控除</a>
 									</th>
 									<td class="value right w70">
-										<a id="shinseinissu07" name="shinseinissu07"></a>
+										<a id="lblShinseinissu07" name="lblShinseinissu07"></a>
 									</td>
 									<td class="value right w70">
-										<a id="shinseijikan07" name="shinseijikan07"></a>
+										<a id="lblShinseijikan07" name="lblShinseijikan07"></a>
 									</td>
 									<td class="value right w70">
-										<a id="shinseitanka07" name="shinseitanka07"></a>
+										<a id="lblShinseitanka07" name="lblShinseitanka07"></a>
 									</td>
 									<td class="value right w70">
-										<a id="shinseikingakugoukei07" name="shinseikingakugoukei07"></a>
+										<a id="lblShinseikingakugoukei07" name="lblShinseikingakugoukei07"></a>
 									</td>
 								</tr>
 								<tr>
@@ -311,7 +309,7 @@
 										<a >休日</a>
 									</th>
 									<td class="value right w70">
-										<a id="shinseinissukyujitsu" name="shinseinissukyujitsu"></a>
+										<a id="lblShinseinissukyujitsu" name="lblShinseinissukyujitsu"></a>
 									</td>
 									<td class="value right w70">
 		
@@ -328,16 +326,16 @@
 										<a >計</a>
 									</th>
 									<td class="value right w70">
-										<a id="shinseinisuugoukei" name="shinseinisuugoukei"></a>
+										<a id="lblShinseinisuugoukei" name="lblShinseinisuugoukei"></a>
 									</td>
 									<td class="value right w70">
-										<a id="shinseijikangoukei" name="shinseijikangoukei"></a>
+										<a id="lblShinseijikangoukei" name="lblShinseijikangoukei"></a>
 									</td>
 									<td class="value right w70">
 										<a ></a>
 									</td>
 									<td class="value right w70">
-										<a id="shinseikingakugoukeigoukei" name="shinseikingakugoukeigoukei"></a>
+										<a id="lblShinseikingakugoukeigoukei" name="lblShinseikingakugoukeigoukei"></a>
 									</td>
 								</tr>
 							</tbody>
@@ -353,6 +351,8 @@
 									<td class="title center w350">
 										<textarea class="w340 h100" id="txtTokkijiko" name="txtTokkijiko"></textarea>
 									</td>
+									<input type="hidden" name="txtKihonSaishuKoshinDate" id="txtKihonSaishuKoshinDate" value="">
+									<input type="hidden" name="txtKihonSaishuKoshinJikan" id="txtKihonSaishuKoshinJikan" value="">
 								</tr>
 							</tbody>
 						</table>

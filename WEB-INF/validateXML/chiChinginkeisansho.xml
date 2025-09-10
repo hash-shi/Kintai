@@ -25,8 +25,6 @@
 			</check>
 		</variable>
 	</proc>
-	<proc func="searchTokubetsuNyuryokuArea">
-	</proc>
 
 	<proc func="update">
 		<variable name="txtTaishoYM" dispName="対象年月">
@@ -60,8 +58,8 @@
 				<param name="tableName">CHI_CHINGINKEISANSHO_KIHON</param>
 				<param name="keyName">TaishoNenGetsudo,ShainNO</param>
 				<param name="keyValue">txtTaishoYM,txtShainNO</param>
-				<param name="saishuKoshinDate">hdnKihonSaishuKoshinDate</param>
-				<param name="saishuKoshinJikan">hdnKihonSaishuKoshinJikan</param>
+				<param name="saishuKoshinDate">txtKihonSaishuKoshinDate</param>
+				<param name="saishuKoshinJikan">txtKihonSaishuKoshinJikan</param>
 			</check>
 
 			<check class="ChiChinginkeisanshoValidate" message="更新処理でエラーが発生しました。"></check>
@@ -104,8 +102,8 @@
 				<param name="tableName">KIN_SHUKKINBO_KIHON</param>
 				<param name="keyName">TaishoNenGetsudo,ShainNO</param>
 				<param name="keyValue">txtTaishoYM,txtShainNO</param>
-				<param name="saishuKoshinDate">hdnKihonSaishuKoshinDate</param>
-				<param name="saishuKoshinJikan">hdnKihonSaishuKoshinJikan</param>
+				<param name="saishuKoshinDate">txtKihonSaishuKoshinDate</param>
+				<param name="saishuKoshinJikan">txtKihonSaishuKoshinJikan</param>
 			</check>
 		</variable>
 	</proc>

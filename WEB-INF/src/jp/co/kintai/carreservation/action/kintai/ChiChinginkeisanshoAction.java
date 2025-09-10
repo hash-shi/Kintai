@@ -50,29 +50,15 @@ public class ChiChinginkeisanshoAction extends PJActionBase {
 		
 		String result = "";
 
-		
 		// DB接続
 		Connection con		= this.getConnection("kintai", req);
 		
-		// DB接続
-		StringBuffer sql				= new StringBuffer();
-		PreparedStatement pstmt			= null;
-		ResultSet rset					= null;
-		
-		sql.append(" SELECT TOP 1 GenzaishoriNengetsudo FROM MST_KANRI");
-		
-		try {
-			// SQL文の生成
-			pstmt = con.prepareStatement(sql.toString());
-			// 実行
-			rset = pstmt.executeQuery();
-			// 結果取得
-			if(rset.next()) {
-				result = StringUtils.stripToEmpty(rset.getString("GenzaishoriNengetsudo"));
-			}
-		} finally {
-			if (rset != null){ try { rset.close(); } catch (Exception exp){}}
-			if (pstmt != null){ try { pstmt.close(); } catch (Exception exp){}}
+		// チェック対象の社員情報の取得
+		ArrayList<HashMap<String, String>> mstKanris = PJActionBase.getMstKanris(con, null);
+
+		if (0 < mstKanris.size()) {
+			HashMap<String, String> mstKanri = mstKanris.get(0);
+			result = mstKanri.get("GenzaishoriNengetsudo");
 		}
 		
 		//=====================================================================
@@ -80,31 +66,6 @@ public class ChiChinginkeisanshoAction extends PJActionBase {
 		//=====================================================================
 		return result;
 	}
-	
-//	/**
-//	 * 社員NOの初期値の取得　ログインユーザーの社員NOがMST_SHAINに存在すれば、それを初期値とする
-//	 * 
-//	 * @param req
-//	 * @param res
-//	 * @throws Exception
-//	 */
-//	public void getShainNO(HttpServletRequest req, HttpServletResponse res) throws Exception {
-//		
-//		String result = "";
-//
-//		//=====================================================================
-//		// ユーザー情報の取得
-//		//=====================================================================
-//		UserInformation userInformation = (UserInformation)req.getSession().getAttribute(Define.SESSION_ID);
-//		String loginShainNo = userInformation.getShainNO();
-//		
-//		result = StringUtils.stripToEmpty(loginShainNo);
-//		
-//		//=====================================================================
-//		// 結果返却
-//		//=====================================================================
-//		this.addContent("result", result);
-//	}
 	
 	/**
 	 * DDLの内容取得
@@ -207,31 +168,6 @@ public class ChiChinginkeisanshoAction extends PJActionBase {
 		//=====================================================================
 		this.addContent("result", mstDatas);
 	}
-	
-//	/**
-//	 * ログイン社員のユーザー区分取得
-//	 * 
-//	 * @param req
-//	 * @param res
-//	 * @throws Exception
-//	 */
-//	public void getLoginUserkbn(HttpServletRequest req, HttpServletResponse res) throws Exception {
-//		
-//		/**
-//		 * 詳細説明
-//		 * 
-//		 * 対象社員の区分チェック
-//		 */
-//		
-//		//=====================================================================
-//		// チェック対象の社員NO
-//		UserInformation userInformation = (UserInformation)req.getSession().getAttribute(Define.SESSION_ID);
-//		
-//		//=====================================================================
-//		// 結果返却
-//		//=====================================================================
-//		this.addContent("result", userInformation.getUserKbn());
-//	}
 	
 	/**
 	 * 本社確定済みの確認
@@ -445,25 +381,35 @@ public class ChiChinginkeisanshoAction extends PJActionBase {
 			pstmtf.setPreparedStatement(pstmt);
 			// 実行
 			rset = pstmt.executeQuery();
-			// 結果取得
-			ResultSetMetaData metaData = rset.getMetaData(); 
-			
-			// カラム数(列数)の取得
-			int colCount = metaData.getColumnCount(); 
-			
+
 			// レコード数分繰り返す
 			while (rset.next()){
 				for(int i = 0;i < ResultDatas.size();i++) {
 					if(
-							ResultDatas.get(i).get("TaishoGetsu").equals(StringUtils.stripToEmpty(rset.getString("TaishoGetsu"))) &&
-							ResultDatas.get(i).get("TaishoBi").equals(StringUtils.stripToEmpty(rset.getString("TaishoBi")))
+							ResultDatas.get(i).get("txtTaishoGetsu").equals(StringUtils.stripToEmpty(rset.getString("TaishoGetsu"))) &&
+							ResultDatas.get(i).get("txtTaishoBi").equals(StringUtils.stripToEmpty(rset.getString("TaishoBi")))
 							) {
 						// 1レコード分の配列を用意
 						HashMap<String, String> record = new HashMap<String, String>();
-						// カラム名をkeyとして値を格納
-						for (int j = 1; j <= colCount; j++) {
-							record.put(metaData.getColumnLabel(j), StringUtils.stripToEmpty(rset.getString(j)));
-						}
+						record.put("txtTaishoNengappi",				StringUtils.stripToEmpty(rset.getString("TaishoNengappi")));
+						record.put("txtTaishoGetsu",				StringUtils.stripToEmpty(rset.getString("TaishoGetsu")));
+						record.put("txtTaishoBi",					StringUtils.stripToEmpty(rset.getString("TaishoBi")));
+						record.put("txtYobiKbn",					StringUtils.stripToEmpty(rset.getString("YobiKbn")));
+						record.put("numShusshaJi",					StringUtils.stripToEmpty(rset.getString("ShusshaJi")));
+						record.put("numShusshaFun",					StringUtils.stripToEmpty(rset.getString("ShusshaFun")));
+						record.put("numTaishaJi",					StringUtils.stripToEmpty(rset.getString("TaishaJi")));
+						record.put("numTaishaFun",					StringUtils.stripToEmpty(rset.getString("TaishaFun")));
+						record.put("numJitsudoJikan",				StringUtils.stripToEmpty(rset.getString("JitsudoJikan")));
+						record.put("selChinginShinseiKbn1",			StringUtils.stripToEmpty(rset.getString("ChinginShinseiKbn1")));
+						record.put("numChinginShinseiJikan1",		StringUtils.stripToEmpty(rset.getString("ChinginShinseiJikan1")));
+						record.put("selChinginShinseiKbn2",			StringUtils.stripToEmpty(rset.getString("ChinginShinseiKbn2")));
+						record.put("numChinginShinseiJikan2",		StringUtils.stripToEmpty(rset.getString("ChinginShinseiJikan2")));
+						record.put("selChinginShinseiKbn3",			StringUtils.stripToEmpty(rset.getString("ChinginShinseiKbn3")));
+						record.put("numChinginShinseiJikan3",		StringUtils.stripToEmpty(rset.getString("ChinginShinseiJikan3")));
+						record.put("txtMeisaiSaishuKoshinDate",		StringUtils.stripToEmpty(rset.getString("MeisaiSaishuKoshinDate")));
+						record.put("txtMeisaiSaishuKoshinJikan",	StringUtils.stripToEmpty(rset.getString("MeisaiSaishuKoshinJikan")));
+						record.put("KihonSaishuKoshinDate",			StringUtils.stripToEmpty(rset.getString("KihonSaishuKoshinDate")));
+						record.put("KihonSaishuKoshinJikan",		StringUtils.stripToEmpty(rset.getString("KihonSaishuKoshinJikan")));
 						// 配列の格納
 						ResultDatas.set(i, record);
 					}
@@ -500,9 +446,9 @@ public class ChiChinginkeisanshoAction extends PJActionBase {
 			// 1レコード分の配列を用意
 			HashMap<String, String> record = new HashMap<String, String>();
 			// カラム名をkeyとして値を格納
-			record.put("TaishoNengappi", wkTaishoYMLD.format(dtf));
-			record.put("TaishoGetsu", String.valueOf(wkTaishoYMLD.getMonthValue()));
-			record.put("TaishoBi", String.valueOf(wkTaishoYMLD.getDayOfMonth()));
+			record.put("txtTaishoNengappi", wkTaishoYMLD.format(dtf));
+			record.put("txtTaishoGetsu", String.valueOf(wkTaishoYMLD.getMonthValue()));
+			record.put("txtTaishoBi", String.valueOf(wkTaishoYMLD.getDayOfMonth()));
 			
 			String yobi = "";
 			switch(wkTaishoYMLD.getDayOfWeek().getValue()) {
@@ -528,36 +474,24 @@ public class ChiChinginkeisanshoAction extends PJActionBase {
 				yobi = "日";
 				break;
 			}
-			record.put("YobiKbn", yobi);
-			record.put("ShusshaJi","");
-			record.put("ShusshaFun","");
-			record.put("TaishaJi","");
-			record.put("TaishaFun","");
-			record.put("JitsudoJikan","0.00");
-			record.put("ChinginShinseiKbn1","00");
-			record.put("ChinginShinseiJikan1","0.00");
-			record.put("ChinginShinseiKbn2","00");
-			record.put("ChinginShinseiJikan2","0.00");
-			record.put("ChinginShinseiKbn3","00");
-			record.put("ChinginShinseiJikan3","0.00");
+			record.put("txtYobiKbn", yobi);
+			record.put("numShusshaJi","");
+			record.put("numShusshaFun","");
+			record.put("numTaishaJi","");
+			record.put("numTaishaFun","");
+			record.put("numJitsudoJikan","0.00");
+			record.put("selChinginShinseiKbn1","00");
+			record.put("numChinginShinseiJikan1","0.00");
+			record.put("selChinginShinseiKbn2","00");
+			record.put("numChinginShinseiJikan2","0.00");
+			record.put("selChinginShinseiKbn3","00");
+			record.put("numChinginShinseiJikan3","0.00");
 			
 			
-			record.put("KintaiShinseiKbn2","00");
-			record.put("KintaiShinseiKaishiJi2","");
-			record.put("KintaiShinseiKaishiFun2","");
-			record.put("KintaiShinseiShuryoJi2","");
-			record.put("KintaiShinseiShuryoFun2","");
-			record.put("KintaiShinseiJikan2","0.00");
-			record.put("KintaiShinseiKbn3","00");
-			record.put("KintaiShinseiKaishiJi3","");
-			record.put("KintaiShinseiKaishiFun3","");
-			record.put("KintaiShinseiShuryoJi3","");
-			record.put("KintaiShinseiShuryoFun3","");
-			record.put("KintaiShinseiJikan3","0.00");
-			record.put("MeisaiSaishuKoshinDate","");
-			record.put("MeisaiSaishuKoshinJikan","");
-			record.put("KihonSaishuKoshinDate","");
-			record.put("KihonSaishuKoshinJikan","");
+			record.put("txtMeisaiSaishuKoshinDate","");
+			record.put("txtMeisaiSaishuKoshinJikan","");
+			record.put("txtKihonSaishuKoshinDate","");
+			record.put("txtKihonSaishuKoshinJikan","");
 			// 配列の格納
 			ResultDatas.add(record);
 			
@@ -581,8 +515,6 @@ public class ChiChinginkeisanshoAction extends PJActionBase {
 		String kinmuKaishi = "00:00";
 		String kinmuShuryo = "00:00";
 		String jitsudojikan = "";
-		String eigyoshoCode = "";
-		String bushoCode = "";
 		
 		// 現在日付の取得
 		String nowDate	= PJActionBase.getNowDate();
@@ -595,16 +527,12 @@ public class ChiChinginkeisanshoAction extends PJActionBase {
 			kinmuKaishi = mstShain.get("KinmuKaishiJi") + ":" + mstShain.get("KinmuKaishiFun");
 			kinmuShuryo = mstShain.get("KinmuShuryoJi") + ":" + mstShain.get("KinmuShuryoFun");
 			jitsudojikan = mstShain.get("KeiyakuJitsudoJikan");
-			eigyoshoCode = mstShain.get("EigyoshoCode");
-			bushoCode = mstShain.get("BushoCode");
-			
 		}
+		
 		//値を格納
 		returnRecord.put("kinmuKaishi", kinmuKaishi);
 		returnRecord.put("kinmuShuryo", kinmuShuryo);
 		returnRecord.put("jitsudojikan", jitsudojikan);
-		returnRecord.put("eigyoshoCode", eigyoshoCode);
-		returnRecord.put("bushoCode", bushoCode);
 
 		//=====================================================================
 		// 結果返却
@@ -804,12 +732,21 @@ public class ChiChinginkeisanshoAction extends PJActionBase {
 		//=====================================================================
 		String taishoYM			= this.getParameter("txtTaishoYM");
 		String taishoShainNo	= this.getParameter("txtShainNO");
-		String eigyoshoCode		= this.getParameter("hidEigyoshoCode");
-		String bushoCode		= this.getParameter("hidBushoCode");
 		// DB接続
 		Connection con		= this.getConnection("kintai", req);
 		//トランザクション開始
 		con.setAutoCommit(false);
+
+		//対象社員の営業所・部署コード取得
+		String nowDate	= PJActionBase.getNowDate();
+		String eigyoshoCode		= "";
+		String bushoCode		= "";
+		ArrayList<HashMap<String, String>> mstShains = PJActionBase.getMstShains(con, taishoShainNo, null, null, null, null, null, null, nowDate);
+		if (0 < mstShains.size()) {
+			HashMap<String, String> mstShain = mstShains.get(0);
+			eigyoshoCode = mstShain.get("EigyoshoCode");
+			bushoCode = mstShain.get("BushoCode");
+		}
 
 		//登録
 		updateExecute(req, res, con, taishoYM, taishoShainNo, eigyoshoCode, bushoCode);
@@ -844,12 +781,21 @@ public class ChiChinginkeisanshoAction extends PJActionBase {
 		//=====================================================================
 		String taishoYM			= this.getParameter("txtTaishoYM");
 		String taishoShainNo	= this.getParameter("txtShainNO");
-		String eigyoshoCode		= this.getParameter("hidEigyoshoCode");
-		String bushoCode		= this.getParameter("hidBushoCode");
 		// DB接続
 		Connection con		= this.getConnection("kintai", req);
 		//トランザクション開始
 		con.setAutoCommit(false);
+
+		//対象社員の営業所・部署コード取得
+		String nowDate	= PJActionBase.getNowDate();
+		String eigyoshoCode		= "";
+		String bushoCode		= "";
+		ArrayList<HashMap<String, String>> mstShains = PJActionBase.getMstShains(con, taishoShainNo, null, null, null, null, null, null, nowDate);
+		if (0 < mstShains.size()) {
+			HashMap<String, String> mstShain = mstShains.get(0);
+			eigyoshoCode = mstShain.get("EigyoshoCode");
+			bushoCode = mstShain.get("BushoCode");
+		}
 
 		int returnval = 0;
 		returnval = updateExecute(req, res, con, taishoYM, taishoShainNo, eigyoshoCode, bushoCode);
@@ -885,7 +831,7 @@ public class ChiChinginkeisanshoAction extends PJActionBase {
 		//1か月分入力項目があるので1か月分ループ
 		for(int i = 0;i < 31;i++){
 			StringBuilder taishoNengappiKeySb	= new StringBuilder();
-			taishoNengappiKeySb	.append("TaishoNengappi")	.append(String.valueOf(i));
+			taishoNengappiKeySb	.append("txtTaishoNengappi")	.append(String.valueOf(i));
 			String taishoNengappi		= this.getParameter(taishoNengappiKeySb.toString());
 			
 			if(StringUtils.isEmpty(taishoNengappi)) {
@@ -1783,17 +1729,17 @@ public class ChiChinginkeisanshoAction extends PJActionBase {
 		StringBuilder chinginShinseiKbn3KeySb	= new StringBuilder();
 		StringBuilder jikan3KeySb				= new StringBuilder();
 
-		shusshaJiKeySb			.append("ShusshaJi")				.append(String.valueOf(i));
-		shusshaFunKeySb			.append("ShusshaFun")				.append(String.valueOf(i));
-		taishaJiKeySb			.append("TaishaJi")					.append(String.valueOf(i));
-		taishaFunKeySb			.append("TaishaFun")				.append(String.valueOf(i));
-		jitsudoJikanKeySb		.append("JitsudoJikan")				.append(String.valueOf(i));
-		chinginShinseiKbn1KeySb	.append("ChinginShinseiKbn1")		.append(String.valueOf(i));
-		jikan1KeySb				.append("ChinginShinseiJikan1")		.append(String.valueOf(i));
-		chinginShinseiKbn2KeySb	.append("ChinginShinseiKbn2")		.append(String.valueOf(i));
-		jikan2KeySb				.append("ChinginShinseiJikan2")		.append(String.valueOf(i));
-		chinginShinseiKbn3KeySb	.append("ChinginShinseiKbn3")		.append(String.valueOf(i));
-		jikan3KeySb				.append("ChinginShinseiJikan3")		.append(String.valueOf(i));
+		shusshaJiKeySb			.append("numShusshaJi")				.append(String.valueOf(i));
+		shusshaFunKeySb			.append("numShusshaFun")				.append(String.valueOf(i));
+		taishaJiKeySb			.append("numTaishaJi")					.append(String.valueOf(i));
+		taishaFunKeySb			.append("numTaishaFun")				.append(String.valueOf(i));
+		jitsudoJikanKeySb		.append("numJitsudoJikan")				.append(String.valueOf(i));
+		chinginShinseiKbn1KeySb	.append("selChinginShinseiKbn1")		.append(String.valueOf(i));
+		jikan1KeySb				.append("numChinginShinseiJikan1")		.append(String.valueOf(i));
+		chinginShinseiKbn2KeySb	.append("selChinginShinseiKbn2")		.append(String.valueOf(i));
+		jikan2KeySb				.append("numChinginShinseiJikan2")		.append(String.valueOf(i));
+		chinginShinseiKbn3KeySb	.append("selChinginShinseiKbn3")		.append(String.valueOf(i));
+		jikan3KeySb				.append("numChinginShinseiJikan3")		.append(String.valueOf(i));
 		
 		String shusshaJi			= this.getParameter(shusshaJiKeySb.toString());
 		String shusshaFun			= this.getParameter(shusshaFunKeySb.toString());
@@ -2018,17 +1964,17 @@ public class ChiChinginkeisanshoAction extends PJActionBase {
 		StringBuilder chinginShinseiKbn3KeySb	= new StringBuilder();
 		StringBuilder jikan3KeySb				= new StringBuilder();
 
-		shusshaJiKeySb			.append("ShusshaJi")				.append(String.valueOf(i));
-		shusshaFunKeySb			.append("ShusshaFun")				.append(String.valueOf(i));
-		taishaJiKeySb			.append("TaishaJi")					.append(String.valueOf(i));
-		taishaFunKeySb			.append("TaishaFun")				.append(String.valueOf(i));
-		jitsudoJikanKeySb		.append("JitsudoJikan")				.append(String.valueOf(i));
-		chinginShinseiKbn1KeySb	.append("ChinginShinseiKbn1")		.append(String.valueOf(i));
-		jikan1KeySb				.append("ChinginShinseiJikan1")		.append(String.valueOf(i));
-		chinginShinseiKbn2KeySb	.append("ChinginShinseiKbn2")		.append(String.valueOf(i));
-		jikan2KeySb				.append("ChinginShinseiJikan2")		.append(String.valueOf(i));
-		chinginShinseiKbn3KeySb	.append("ChinginShinseiKbn3")		.append(String.valueOf(i));
-		jikan3KeySb				.append("ChinginShinseiJikan3")		.append(String.valueOf(i));
+		shusshaJiKeySb			.append("numShusshaJi")				.append(String.valueOf(i));
+		shusshaFunKeySb			.append("numShusshaFun")				.append(String.valueOf(i));
+		taishaJiKeySb			.append("numTaishaJi")					.append(String.valueOf(i));
+		taishaFunKeySb			.append("numTaishaFun")				.append(String.valueOf(i));
+		jitsudoJikanKeySb		.append("numJitsudoJikan")				.append(String.valueOf(i));
+		chinginShinseiKbn1KeySb	.append("selChinginShinseiKbn1")		.append(String.valueOf(i));
+		jikan1KeySb				.append("numChinginShinseiJikan1")		.append(String.valueOf(i));
+		chinginShinseiKbn2KeySb	.append("selChinginShinseiKbn2")		.append(String.valueOf(i));
+		jikan2KeySb				.append("numChinginShinseiJikan2")		.append(String.valueOf(i));
+		chinginShinseiKbn3KeySb	.append("selChinginShinseiKbn3")		.append(String.valueOf(i));
+		jikan3KeySb				.append("numChinginShinseiJikan3")		.append(String.valueOf(i));
 		
 		String shusshaJi			= this.getParameter(shusshaJiKeySb.toString());
 		String shusshaFun			= this.getParameter(shusshaFunKeySb.toString());
@@ -2322,21 +2268,29 @@ public class ChiChinginkeisanshoAction extends PJActionBase {
 	 * @throws Exception
 	 */
 	public void delete(HttpServletRequest req, HttpServletResponse res) throws Exception {
-		// DB接続
-		Connection con		= this.getConnection("kintai", req);
-
+		boolean result = false;
 		//=====================================================================
 		// パラメータ取得
 		//=====================================================================
 		String taishoYM			= this.getParameter("txtTaishoYM");
 		String taishoShainNo	= this.getParameter("txtShainNO");
-		String eigyoshoCode		= this.getParameter("hidEigyoshoCode");
-		String bushoCode		= this.getParameter("hidBushoCode");
 
+		// DB接続
+		Connection con		= this.getConnection("kintai", req);
 
-		boolean result = false;
 		//トランザクション開始
 		con.setAutoCommit(false);
+
+		//対象社員の営業所・部署コード取得
+		String nowDate	= PJActionBase.getNowDate();
+		String eigyoshoCode		= "";
+		String bushoCode		= "";
+		ArrayList<HashMap<String, String>> mstShains = PJActionBase.getMstShains(con, taishoShainNo, null, null, null, null, null, null, nowDate);
+		if (0 < mstShains.size()) {
+			HashMap<String, String> mstShain = mstShains.get(0);
+			eigyoshoCode = mstShain.get("EigyoshoCode");
+			bushoCode = mstShain.get("BushoCode");
+		}
 
 		//出勤簿明細の削除
 		result = deleteMeisaiRow(con, taishoYM, taishoShainNo);

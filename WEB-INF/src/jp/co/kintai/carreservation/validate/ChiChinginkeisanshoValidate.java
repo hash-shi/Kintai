@@ -54,7 +54,7 @@ public class ChiChinginkeisanshoValidate extends ValidateBase {
 		//1か月分入力項目があるので1か月分ループ
 		for(int i = 0;i < 31;i++){
 			StringBuilder taishoNengappiKeySb	= new StringBuilder();
-			taishoNengappiKeySb	.append("TaishoNengappi")	.append(String.valueOf(i));
+			taishoNengappiKeySb	.append("txtTaishoNengappi")	.append(String.valueOf(i));
 			String taishoNengappi		= this.getParameter(taishoNengappiKeySb.toString());
 			
 			if(StringUtils.isEmpty(taishoNengappi)) {
@@ -68,11 +68,11 @@ public class ChiChinginkeisanshoValidate extends ValidateBase {
 			StringBuilder taishaJiKeySb		= new StringBuilder();
 			StringBuilder taishaFunKeySb	= new StringBuilder();
 			StringBuilder jitsudoJikanKeySb	= new StringBuilder();
-			shusshaJiKeySb		.append("ShusshaJi")	.append(String.valueOf(i));
-			shusshaFunKeySb		.append("ShusshaFun")	.append(String.valueOf(i));
-			taishaJiKeySb		.append("TaishaJi")		.append(String.valueOf(i));
-			taishaFunKeySb		.append("TaishaFun")	.append(String.valueOf(i));
-			jitsudoJikanKeySb	.append("JitsudoJikan")	.append(String.valueOf(i));
+			shusshaJiKeySb		.append("numShusshaJi")	.append(String.valueOf(i));
+			shusshaFunKeySb		.append("numShusshaFun")	.append(String.valueOf(i));
+			taishaJiKeySb		.append("numTaishaJi")		.append(String.valueOf(i));
+			taishaFunKeySb		.append("numTaishaFun")	.append(String.valueOf(i));
+			jitsudoJikanKeySb	.append("numJitsudoJikan")	.append(String.valueOf(i));
 			
 			String shusshaJi		= this.getParameter(shusshaJiKeySb.toString());
 			String shusshaFun		= this.getParameter(shusshaFunKeySb.toString());
@@ -286,8 +286,8 @@ public class ChiChinginkeisanshoValidate extends ValidateBase {
 			for(int j = 1;j <= 3;j++){
 				StringBuilder jikanKeySb		= new StringBuilder();
 				StringBuilder chinginShinseiKbnKeySb	= new StringBuilder();
-				jikanKeySb		.append("ChinginShinseiJikan")		.append(String.valueOf(j)).append(String.valueOf(i));
-				chinginShinseiKbnKeySb	.append("ChinginShinseiKbn")	.append(String.valueOf(j)).append(String.valueOf(i));
+				jikanKeySb		.append("numChinginShinseiJikan")		.append(String.valueOf(j)).append(String.valueOf(i));
+				chinginShinseiKbnKeySb	.append("selChinginShinseiKbn")	.append(String.valueOf(j)).append(String.valueOf(i));
 				
 				String jikan			= this.getParameter(jikanKeySb.toString());
 				String chinginShinseiKbn		= this.getParameter(chinginShinseiKbnKeySb.toString());
