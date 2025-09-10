@@ -99,7 +99,7 @@
 
 			<check class="ChiChinginkeisanshoExclusiveValidate" message="この出勤簿明細データはすでに、別のユーザーに更新されています。もう一度データを確認してください。"></check>
 			<check class="ExclusiveValidate" message="この出勤簿基本データはすでに、別のユーザーに更新されています。もう一度データを確認してください。">
-				<param name="tableName">KIN_SHUKKINBO_KIHON</param>
+				<param name="tableName">CHI_CHINGINKEISANSHO_KIHON</param>
 				<param name="keyName">TaishoNenGetsudo,ShainNO</param>
 				<param name="keyValue">txtTaishoYM,txtShainNO</param>
 				<param name="saishuKoshinDate">txtKihonSaishuKoshinDate</param>

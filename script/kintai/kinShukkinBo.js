@@ -202,6 +202,7 @@ function onDisplayNyuryokuArea(firstHalfFlg){
 		}
 	});
 	
+	let focusIndex = -1;
 	for(let i = 0; i < kinShukkinBoResultAll.length; i++){
 		let record = kinShukkinBoResultAll[i];
 		let taishoNengappi = record["txtTaishoNengappi"];
@@ -349,6 +350,11 @@ function onDisplayNyuryokuArea(firstHalfFlg){
 			(firstHalfFlg == true && record["txtTaishoGetsu"] == kinShukkinBoResultAll[0]["txtTaishoGetsu"]) ||
 			(firstHalfFlg != true && record["txtTaishoGetsu"] != kinShukkinBoResultAll[0]["txtTaishoGetsu"])
 		){
+			//フォーカス処理に備え、出社時が空欄の最初の行を取得
+			if(focusIndex == -1 && (kintaiKbn == "" || kintaiKbn == "00")){
+				focusIndex = i;
+			}
+			
 			kihonNyuryokuAreaHtml =
 				"<tr>" +
 					"<input type=\"hidden\" name=\"txtTaishoNengappi" + i + "\" id=\"txtTaishoNengappi" + i + "\" value=\"" + taishoNengappi + "\">" +
@@ -496,14 +502,26 @@ function onDisplayNyuryokuArea(firstHalfFlg){
 	if(firstHalfFlg == true){
 		document.getElementById("btnFirstHalf").disabled = true;
 		document.getElementById("btnSecondHalf").disabled = false;
-		//前一覧表示時、最初の予定をフォーカス
-		$("#selShukkinYoteiKbn0").focus();
+		if(focusIndex != -1){
+			//一覧表示時、出勤予定区分が空欄の最初の行をフォーカス
+			$("#selShukkinYoteiKbn" + String(focusIndex)).focus();
+		}
+		else{
+			//前一覧表示時、最初の予定をフォーカス
+			$("#selShukkinYoteiKbn0").focus();
+		}
 	}
 	else{
 		document.getElementById("btnFirstHalf").disabled = false;
 		document.getElementById("btnSecondHalf").disabled = true;
-		//次一覧表示時、最後の予定をフォーカス
-		$("#selShukkinYoteiKbn" + (kinShukkinBoResultAll.length - 1)).focus();
+		if(focusIndex != -1){
+			//一覧表示時、出勤予定区分が空欄の最初の行をフォーカス
+			$("#selShukkinYoteiKbn" + String(focusIndex)).focus();
+		}
+		else{
+			//次一覧表示時、最後の予定をフォーカス
+			$("#selShukkinYoteiKbn" + (kinShukkinBoResultAll.length - 1)).focus();
+		}
 	}
 
 }

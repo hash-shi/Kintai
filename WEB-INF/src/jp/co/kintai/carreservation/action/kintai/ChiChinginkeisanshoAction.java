@@ -408,8 +408,8 @@ public class ChiChinginkeisanshoAction extends PJActionBase {
 						record.put("numChinginShinseiJikan3",		StringUtils.stripToEmpty(rset.getString("ChinginShinseiJikan3")));
 						record.put("txtMeisaiSaishuKoshinDate",		StringUtils.stripToEmpty(rset.getString("MeisaiSaishuKoshinDate")));
 						record.put("txtMeisaiSaishuKoshinJikan",	StringUtils.stripToEmpty(rset.getString("MeisaiSaishuKoshinJikan")));
-						record.put("KihonSaishuKoshinDate",			StringUtils.stripToEmpty(rset.getString("KihonSaishuKoshinDate")));
-						record.put("KihonSaishuKoshinJikan",		StringUtils.stripToEmpty(rset.getString("KihonSaishuKoshinJikan")));
+						record.put("txtKihonSaishuKoshinDate",			StringUtils.stripToEmpty(rset.getString("KihonSaishuKoshinDate")));
+						record.put("txtKihonSaishuKoshinJikan",		StringUtils.stripToEmpty(rset.getString("KihonSaishuKoshinJikan")));
 						// 配列の格納
 						ResultDatas.set(i, record);
 					}
@@ -1158,7 +1158,7 @@ public class ChiChinginkeisanshoAction extends PJActionBase {
 		HashMap<String, String> nissuRecord = getNissu(con, taishoYM, taishoShainNo);
 		HashMap<String, String> jikanRecord = getJikan(con, taishoYM, taishoShainNo);
 		
-		String tokkijiko =  this.getParameter("tokkijiko");
+		String tokkijiko =  this.getParameter("txtTokkijiko");
 
 		// チェック対象の社員情報の取得
 		HashMap<String, String> mstShain = new HashMap<>();
@@ -2382,7 +2382,7 @@ public class ChiChinginkeisanshoAction extends PJActionBase {
 		pstmtf.clear();
 		sql.setLength(0);
 		sql.append(" DELETE FROM ");
-		sql.append(" 	KIN_SHUKKINBO_KIHON ");
+		sql.append(" 	CHI_CHINGINKEISANSHO_KIHON ");
 		sql.append(" WHERE ");
 		sql.append(" 	TaishoNenGetsudo = ? AND ");
 		sql.append(" 	ShainNO = ? ");
