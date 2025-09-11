@@ -27,11 +27,11 @@ public class KintaiKakuteiNotHonshaShainValidate extends ValidateBase {
 		// ユーザー情報の取得
 		//=====================================================================
 		UserInformation userInformation = (UserInformation)req.getSession().getAttribute(Define.SESSION_ID);
-		String loginShainNo = userInformation.getEigyoshoCode();
+		String loginUserKbn = userInformation.getUserKbn();
 		
 
-		//ログインユーザーの営業所コード = 本社(200)ならエラー
-		if(!loginShainNo.equals("200")){ return false; }
+		//ログインユーザーのユーザ区分 = 本社(01)でないならエラー
+		if(!loginUserKbn.equals("01")){ return false; }
 		
 		// 結果返却
 		return true;
