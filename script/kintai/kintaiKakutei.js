@@ -3,7 +3,7 @@
 * 対象年月フォーカスアウト時のフォーマット編集処理
 *
 */
-function getTaishoYMFormat(){
+function onChangeTaishoYM(){
 	let strReplacing = $("#srhTxtTaishoYM").val();
 	let strReplaced = "";
 	//全角半角変換
