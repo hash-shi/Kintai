@@ -22,7 +22,7 @@
 		</variable>
 
 		<variable name="dummy" dispName="">
-			<check class="ShainAuthorityValidate" message="ログインしたユーザIDでは処理できません。">
+			<check class="ShainAuthorityValidate" message="ログインした社員Noでは処理できません。">
 				<param name="shainNo">srhTxtShainNO</param>
 			</check>
 			<check class="KinShukkinBoShainTaishokuValidate" message="該当する社員NOは処理できません。">
@@ -55,7 +55,7 @@
 		
 		
 		<variable name="dummy" dispName="">
-			<check class="ShainAuthorityValidate" message="ログインしたユーザIDでは処理できません。">
+			<check class="ShainAuthorityValidate" message="ログインした社員Noでは処理できません。">
 				<param name="shainNo">txtShainNO</param>
 			</check>
 			<check class="KinShukkinBoShainTaishokuValidate" message="該当する社員NOは処理できません。">
@@ -106,7 +106,7 @@
 		
 		
 		<variable name="dummy" dispName="">
-			<check class="ShainAuthorityValidate" message="ログインしたユーザIDでは処理できません。">
+			<check class="ShainAuthorityValidate" message="ログインした社員Noでは処理できません。">
 				<param name="shainNo">txtShainNO</param>
 			</check>
 			<check class="KinShukkinBoShainTaishokuValidate" message="該当する社員NOは処理できません。">
@@ -156,7 +156,7 @@
 		</variable>
 
 		<variable name="dummy" dispName="">
-			<check class="ShainAuthorityValidate" message="ログインしたユーザIDでは処理できません。">
+			<check class="ShainAuthorityValidate" message="ログインした社員Noでは処理できません。">
 				<param name="shainNo">txtShainNO</param>
 			</check>
 			<check class="KinShukkinBoShainTaishokuValidate" message="該当する社員NOは処理できません。">
