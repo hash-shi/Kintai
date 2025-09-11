@@ -73,10 +73,6 @@ function right(str, n) {
 *
 */
 function onSearchChiChinginkeisansho(){
-	document.getElementById("btnDelete").disabled = true;
-	document.getElementById("btnRecalc").disabled = true;
-	document.getElementById("btnUpdate").disabled = true;
-
 	let honshaKakuteizumiFlg = false;
 
 	//検索結果表示
@@ -134,9 +130,6 @@ function onSearchChiChinginkeisansho(){
 				$("#nyuryokuArea").removeClass("upd");
 			}
 			$("#buttonArea").css("visibility", "hidden");
-			document.getElementById("btnDelete").disabled = true;
-			document.getElementById("btnRecalc").disabled = true;
-			document.getElementById("btnUpdate").disabled = true;
 		}
 		else{
 			//取得した更新日付・時間が空の時、新規登録として背景色を変更する
@@ -163,9 +156,6 @@ function onSearchChiChinginkeisansho(){
 				}
 			}
 			$("#buttonArea").css("visibility", "");
-			document.getElementById("btnDelete").disabled = false;
-			document.getElementById("btnRecalc").disabled = false;
-			document.getElementById("btnUpdate").disabled = false;
 		}
 	});
 	
@@ -569,7 +559,7 @@ function calcJitsudoJikan(nowRow){
 *
 */
 function onKeyEventF02(){
-	if(($("#buttonArea").css("visibility") != "hidden") && (document.getElementById("btnDelete").disabled != true)){
+	if($("#buttonArea").css("visibility") != "hidden"){
 		onDelete();
 	}
 }
@@ -616,7 +606,7 @@ function onDelete(){
 *
 */
 function onKeyEventF08(){
-	if(($("#buttonArea").css("visibility") != "hidden") && (document.getElementById("btnRecalc").disabled != true)){
+	if($("#buttonArea").css("visibility") != "hidden"){
 		onRecalc();
 	}
 }
@@ -661,7 +651,7 @@ function onRecalc(){
 *
 */
 function onKeyEventF09(){
-	if(($("#buttonArea").css("visibility") != "hidden") && (document.getElementById("btnUpdate").disabled != true)){
+	if($("#buttonArea").css("visibility") != "hidden"){
 		onUpdate();
 	}
 }

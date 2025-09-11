@@ -337,8 +337,6 @@ public class KinShukkinBoAction extends PJActionBase {
 		// DB接続
 		Connection con		= this.getConnection("kintai", req);
 		
-		ArrayList<HashMap<String, String>> mstDatas = new ArrayList<>();
-		
 		// DB接続
 		StringBuffer sql				= new StringBuffer();
 		PreparedStatement pstmt			= null;
@@ -409,12 +407,6 @@ public class KinShukkinBoAction extends PJActionBase {
 			// 実行
 			rset = pstmt.executeQuery();
 			// 結果取得
-			ResultSetMetaData metaData = rset.getMetaData(); 
-			
-			// カラム数(列数)の取得
-			int colCount = metaData.getColumnCount(); 
-			
-			// レコード数分繰り返す
 			while (rset.next()){
 				for(int i = 0;i < ResultDatas.size();i++) {
 					if(

@@ -69,10 +69,6 @@ function right(str, n) {
 *
 */
 function onSearchKinShukkinBo(){
-
-	//検索結果が0の時のため、画面非表示
-	document.getElementById("btnDelete").disabled = true;
-	document.getElementById("btnUpdate").disabled = true;
 	
 	let honshaKakuteizumiFlg = false;
 
@@ -129,8 +125,6 @@ function onSearchKinShukkinBo(){
 				$("#nyuryokuArea").removeClass("upd");
 			}
 			$("#buttonArea").css("visibility", "hidden");
-			document.getElementById("btnDelete").disabled = true;
-			document.getElementById("btnUpdate").disabled = true;
 		}
 		else{
 			//取得した更新日付・時間が空の時、新規登録として背景色を変更する
@@ -157,8 +151,6 @@ function onSearchKinShukkinBo(){
 				}
 			}
 			$("#buttonArea").css("visibility", "");
-			document.getElementById("btnDelete").disabled = false;
-			document.getElementById("btnUpdate").disabled = false;
 		}
 	});
 
@@ -779,7 +771,7 @@ function calcShinseiJikan(nowCol, nowRow){
 *
 */
 function onKeyEventF02(){
-	if(($("#buttonArea").css("visibility") != "hidden") && (document.getElementById("btnDelete").disabled != true)){
+	if($("#buttonArea").css("visibility") != "hidden"){
 		onDelete();
 	}
 }
@@ -826,7 +818,7 @@ function onDelete(){
 *
 */
 function onKeyEventF09(){
-	if(($("#buttonArea").css("visibility") != "hidden") && (document.getElementById("btnUpdate").disabled != true)){
+	if($("#buttonArea").css("visibility") != "hidden"){
 		onUpdate();
 	}
 }
