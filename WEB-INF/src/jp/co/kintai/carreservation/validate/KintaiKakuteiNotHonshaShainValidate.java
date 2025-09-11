@@ -8,9 +8,9 @@ import jp.co.kintai.carreservation.information.UserInformation;
 import jp.co.tjs_net.java.framework.base.ValidateBase;
 import jp.co.tjs_net.java.framework.information.IndexInformation;
 
-public class ShainHonshaValidate extends ValidateBase {
+public class KintaiKakuteiNotHonshaShainValidate extends ValidateBase {
 
-	public ShainHonshaValidate(HttpServletRequest req, HttpServletResponse res, IndexInformation info) {
+	public KintaiKakuteiNotHonshaShainValidate(HttpServletRequest req, HttpServletResponse res, IndexInformation info) {
 		super(req, res, info);
 	}
 	
