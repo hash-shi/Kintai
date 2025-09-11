@@ -20,7 +20,7 @@
 		<variable name="dummy" dispName="">
 			<check class="SizeComparison" message="営業所コードFROM-TOの大小が不正です。" itemName="{dispName}">
 				<param name="from">srhTxtEigyoshoCodeF</param>
-				<param name="to">srhTxtEigyoshoCodeT"</param>
+				<param name="to">srhTxtEigyoshoCodeT</param>
 				<param name="include">1</param>
 			</check>
 		</variable>
