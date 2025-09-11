@@ -37,15 +37,16 @@ public class ShainExistValidate extends ValidateBase {
 		// パラメータ取得
 		//=====================================================================
 		// チェック対象の社員NO
-		String shainNo					= this.getParameter("txtShainNO");
-		
-		
+		String shainNo	= this.params.get("shainNo").toString();
+
+		String shainNo_	= this.getParameter(shainNo);
+
 		//=====================================================================
 		// 処理
 		//=====================================================================
 		
 		// チェック対象の社員情報の取得
-		ArrayList<HashMap<String, String>> mstShains = PJActionBase.getMstShains(con, shainNo, null, null, null, null, null, null, null);
+		ArrayList<HashMap<String, String>> mstShains = PJActionBase.getMstShains(con, shainNo_, null, null, null, null, null, null, null);
 		
 		if (0 < mstShains.size()) {
 			//社員マスタの検索結果が0件でなければtrue
