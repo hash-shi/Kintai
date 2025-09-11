@@ -25,11 +25,13 @@
 			</check>
 		</variable>
 		<variable name="srhTxtSaishuKoshinDateF" dispName="最終更新日FROM">
+			<check class="IsHalf" message="!#itemName#!には全角文字は入力できません。" itemName="{dispName}"></check>
 			<check class="IsDate" message="!#itemName#!の指定が不正です。(YYYY/MM/DD)" itemName="{dispName}">
 				<param name="format">yyyy/MM/dd</param>
 			</check>
 		</variable>
 		<variable name="srhTxtSaishuKoshinDateT" dispName="最終更新日TO">
+			<check class="IsHalf" message="!#itemName#!には全角文字は入力できません。" itemName="{dispName}"></check>
 			<check class="IsDate" message="!#itemName#!の指定が不正です。(YYYY/MM/DD)" itemName="{dispName}">
 				<param name="format">yyyy/MM/dd</param>
 			</check>
@@ -91,11 +93,13 @@
 			</check>
 		</variable>
 		<variable name="srhTxtSaishuKoshinDateF" dispName="最終更新日FROM">
+			<check class="IsHalf" message="!#itemName#!には全角文字は入力できません。" itemName="{dispName}"></check>
 			<check class="IsDate" message="!#itemName#!の指定が不正です。(YYYY/MM/DD)" itemName="{dispName}">
 				<param name="format">yyyy/MM/dd</param>
 			</check>
 		</variable>
 		<variable name="srhTxtSaishuKoshinDateT" dispName="最終更新日TO">
+			<check class="IsHalf" message="!#itemName#!には全角文字は入力できません。" itemName="{dispName}"></check>
 			<check class="IsDate" message="!#itemName#!の指定が不正です。(YYYY/MM/DD)" itemName="{dispName}">
 				<param name="format">yyyy/MM/dd</param>
 			</check>
@@ -157,11 +161,13 @@
 			</check>
 		</variable>
 		<variable name="srhTxtSaishuKoshinDateF" dispName="最終更新日FROM">
+			<check class="IsHalf" message="!#itemName#!には全角文字は入力できません。" itemName="{dispName}"></check>
 			<check class="IsDate" message="!#itemName#!の指定が不正です。(YYYY/MM/DD)" itemName="{dispName}">
 				<param name="format">yyyy/MM/dd</param>
 			</check>
 		</variable>
 		<variable name="srhTxtSaishuKoshinDateT" dispName="最終更新日TO">
+			<check class="IsHalf" message="!#itemName#!には全角文字は入力できません。" itemName="{dispName}"></check>
 			<check class="IsDate" message="!#itemName#!の指定が不正です。(YYYY/MM/DD)" itemName="{dispName}">
 				<param name="format">yyyy/MM/dd</param>
 			</check>
@@ -200,11 +206,13 @@
 			</check>
 		</variable>
 		<variable name="srhTxtSaishuKoshinDateF" dispName="最終更新日FROM">
+			<check class="IsHalf" message="!#itemName#!には全角文字は入力できません。" itemName="{dispName}"></check>
 			<check class="IsDate" message="!#itemName#!の指定が不正です。(YYYY/MM/DD)" itemName="{dispName}">
 				<param name="format">yyyy/MM/dd</param>
 			</check>
 		</variable>
 		<variable name="srhTxtSaishuKoshinDateT" dispName="最終更新日TO">
+			<check class="IsHalf" message="!#itemName#!には全角文字は入力できません。" itemName="{dispName}"></check>
 			<check class="IsDate" message="!#itemName#!の指定が不正です。(YYYY/MM/DD)" itemName="{dispName}">
 				<param name="format">yyyy/MM/dd</param>
 			</check>
