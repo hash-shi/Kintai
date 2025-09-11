@@ -16,7 +16,9 @@
 			<check class="IsRequired" message="!#itemName#!が入力されていません。" itemName="{dispName}"></check>
 			<check class="IsHalfOnly" message="!#itemName#!には全角文字は入力できません。" itemName="{dispName}"></check>
 			<check class="IsNumeric" message="!#itemName#!には数字を入力してください。" itemName="{dispName}"></check>
-			<check class="ShainExistValidate" message="該当する!#itemName#!が存在しません。" itemName="{dispName}"></check>
+			<check class="ShainExistValidate" message="該当する!#itemName#!が存在しません。" itemName="{dispName}">
+				<param name="shainNo">srhTxtShainNO</param>
+			</check>
 		</variable>
 
 		<variable name="dummy" dispName="">
@@ -26,6 +28,57 @@
 			<check class="KinShukkinBoShainTaishokuValidate" message="該当する社員NOは処理できません。">
 				<param name="shainNo">srhTxtShainNO</param>
 				<param name="taishoYM">srhTxtTaishoYM</param>
+			</check>
+		</variable>
+	</proc>
+
+	<proc func="recalc">
+		<variable name="txtTaishoYM" dispName="対象年月">
+			<check class="IsRequired" message="!#itemName#!が入力されていません。" itemName="{dispName}"></check>
+			<check class="IsLength" message="!#itemName#!の指定が不正です。(YYYY/MM)" itemName="{dispName}">
+				<param name="type">half</param>
+				<param name="comparisonoperator">=</param>
+				<param name="length">7</param>
+			</check>
+			<check class="IsDate" message="!#itemName#!の指定が不正です。(YYYY/MM)" itemName="{dispName}">
+				<param name="format">yyyy/MM</param>
+			</check>
+		</variable>
+		<variable name="txtShainNO" dispName="社員NO">
+			<check class="IsRequired" message="!#itemName#!が入力されていません。" itemName="{dispName}"></check>
+			<check class="IsHalfOnly" message="!#itemName#!には全角文字は入力できません。" itemName="{dispName}"></check>
+			<check class="IsNumeric" message="!#itemName#!には数字を入力してください。" itemName="{dispName}"></check>
+			<check class="ShainExistValidate" message="該当する!#itemName#!が存在しません。" itemName="{dispName}">
+				<param name="shainNo">txtShainNO</param>
+			</check>
+		</variable>
+		
+		
+		<variable name="dummy" dispName="">
+			<check class="ShainAuthorityValidate" message="ログインしたユーザIDでは処理できません。">
+				<param name="shainNo">txtShainNO</param>
+			</check>
+			<check class="KinShukkinBoShainTaishokuValidate" message="該当する社員NOは処理できません。">
+				<param name="shainNo">txtShainNO</param>
+				<param name="taishoYM">txtTaishoYM</param>
+			</check>
+
+			<check class="ChiChinginkeisanshoExclusiveValidate" message="この賃金計算書明細データはすでに、別のユーザーに更新されています。もう一度データを確認してください。"></check>
+			<check class="ExclusiveValidate" message="この賃金計算書基本データはすでに、別のユーザーに更新されています。もう一度データを確認してください。">
+				<param name="tableName">CHI_CHINGINKEISANSHO_KIHON</param>
+				<param name="keyName">TaishoNenGetsudo,ShainNO</param>
+				<param name="keyValue">txtTaishoYM,txtShainNO</param>
+				<param name="saishuKoshinDate">txtKihonSaishuKoshinDate</param>
+				<param name="saishuKoshinJikan">txtKihonSaishuKoshinJikan</param>
+			</check>
+
+			<check class="ChiChinginkeisanshoValidate" message="更新処理でエラーが発生しました。"></check>
+		</variable>
+
+		<variable name="txtTokkijiko" dispName="特記事項">
+			<check class="lengthValidate" message="!#itemName#!が264バイトを超えています。(264バイト = 全角264/2文字, 半角40文字)" itemName="{dispName}">
+				<param name="type">half</param>
+				<param name="length">264</param>
 			</check>
 		</variable>
 	</proc>
@@ -46,7 +99,9 @@
 			<check class="IsRequired" message="!#itemName#!が入力されていません。" itemName="{dispName}"></check>
 			<check class="IsHalfOnly" message="!#itemName#!には全角文字は入力できません。" itemName="{dispName}"></check>
 			<check class="IsNumeric" message="!#itemName#!には数字を入力してください。" itemName="{dispName}"></check>
-			<check class="ShainExistValidate" message="該当する!#itemName#!が存在しません。" itemName="{dispName}"></check>
+			<check class="ShainExistValidate" message="該当する!#itemName#!が存在しません。" itemName="{dispName}">
+				<param name="shainNo">txtShainNO</param>
+			</check>
 		</variable>
 		
 		
@@ -95,8 +150,9 @@
 			<check class="IsRequired" message="!#itemName#!が入力されていません。" itemName="{dispName}"></check>
 			<check class="IsHalfOnly" message="!#itemName#!には全角文字は入力できません。" itemName="{dispName}"></check>
 			<check class="IsNumeric" message="!#itemName#!には数字を入力してください。" itemName="{dispName}"></check>
-			<check class="ShainExistValidate" message="該当する!#itemName#!が存在しません。" itemName="{dispName}"></check>
-			<check class="KinShukkinBoShainTaishokuValidate" message="該当する!#itemName#!は処理できません。" itemName="{dispName}"></check>
+			<check class="ShainExistValidate" message="該当する!#itemName#!が存在しません。" itemName="{dispName}">
+				<param name="shainNo">txtShainNO</param>
+			</check>
 		</variable>
 
 		<variable name="dummy" dispName="">

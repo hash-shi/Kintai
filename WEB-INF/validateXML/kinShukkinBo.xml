@@ -16,7 +16,9 @@
 			<check class="IsRequired" message="!#itemName#!が入力されていません。" itemName="{dispName}"></check>
 			<check class="IsHalfOnly" message="!#itemName#!には全角文字は入力できません。" itemName="{dispName}"></check>
 			<check class="IsNumeric" message="!#itemName#!には数字を入力してください。" itemName="{dispName}"></check>
-			<check class="ShainExistValidate" message="該当する!#itemName#!が存在しません。" itemName="{dispName}"></check>
+			<check class="ShainExistValidate" message="該当する!#itemName#!が存在しません。" itemName="{dispName}">
+				<param name="shainNo">srhTxtShainNO</param>
+			</check>
 		</variable>
 
 		<variable name="dummy" dispName="">
@@ -49,7 +51,9 @@
 			<check class="IsRequired" message="!#itemName#!が入力されていません。" itemName="{dispName}"></check>
 			<check class="IsHalfOnly" message="!#itemName#!には全角文字は入力できません。" itemName="{dispName}"></check>
 			<check class="IsNumeric" message="!#itemName#!には数字を入力してください。" itemName="{dispName}"></check>
-			<check class="ShainExistValidate" message="該当する!#itemName#!が存在しません。" itemName="{dispName}"></check>
+			<check class="ShainExistValidate" message="該当する!#itemName#!が存在しません。" itemName="{dispName}">
+				<param name="shainNo">txtShainNO</param>
+			</check>
 		</variable>
 		
 		
@@ -117,7 +121,9 @@
 			<check class="IsRequired" message="!#itemName#!が入力されていません。" itemName="{dispName}"></check>
 			<check class="IsHalfOnly" message="!#itemName#!には全角文字は入力できません。" itemName="{dispName}"></check>
 			<check class="IsNumeric" message="!#itemName#!には数字を入力してください。" itemName="{dispName}"></check>
-			<check class="ShainExistValidate" message="該当する!#itemName#!が存在しません。" itemName="{dispName}"></check>
+			<check class="ShainExistValidate" message="該当する!#itemName#!が存在しません。" itemName="{dispName}">
+				<param name="shainNo">txtShainNO</param>
+			</check>
 		</variable>
 
 		<variable name="dummy" dispName="">
