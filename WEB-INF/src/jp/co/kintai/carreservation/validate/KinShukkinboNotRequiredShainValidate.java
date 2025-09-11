@@ -11,9 +11,9 @@ import jp.co.kintai.carreservation.base.PJActionBase;
 import jp.co.tjs_net.java.framework.base.ValidateBase;
 import jp.co.tjs_net.java.framework.information.IndexInformation;
 
-public class ShainKbnValidate extends ValidateBase {
+public class KinShukkinboNotRequiredShainValidate extends ValidateBase {
 
-	public ShainKbnValidate(HttpServletRequest req, HttpServletResponse res, IndexInformation info) {
+	public KinShukkinboNotRequiredShainValidate(HttpServletRequest req, HttpServletResponse res, IndexInformation info) {
 		super(req, res, info);
 	}
 	
@@ -35,7 +35,7 @@ public class ShainKbnValidate extends ValidateBase {
 		// パラメータ取得
 		//=====================================================================
 		// チェック対象の社員NO
-		String shainNo					= this.getParameter("txtShainNO");
+		String shainNo	= req.getParameter(this.params.get("shainNo").toString());
 		
 		//=====================================================================
 		// 処理
