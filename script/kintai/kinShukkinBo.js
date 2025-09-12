@@ -735,8 +735,6 @@ function calcShinseiJikan(nowCol, nowRow){
 		kaishiFun != "" && checkIfNumber.test(kaishiFun) &&
 		shuryoJi != "" && checkIfNumber.test(shuryoJi) &&
 		shuryoFun != "" && checkIfNumber.test(shuryoFun)
-//		 &&
-//		(jikan == "" || Number(jikan) == 0)
 	){
 		let kaishiJiNum = Number(kaishiJi);
 		let kaishiFunNum = Number(kaishiFun);
@@ -777,11 +775,11 @@ function onKeyEventF02(){
 }
 function onDelete(){
 	if ($("#nyuryokuArea").hasClass("upd")) {
-		var result = window.confirm('データの削除を行います。\nよろしいですか？');
-		    
-		if( result ) {
+		proc("delete", {}, function(data){
+			// 確認メッセージ
+			if(!confirm("データの削除を行います。\nよろしいですか？")) { return; }
 			//削除処理呼び出し
-			proc("delete", {}, function(data){
+			proc("delete_", {}, function(data){
 		
 				if (data == undefined){ return; }
 				if (data["contents"] == undefined){ return; }
@@ -808,7 +806,7 @@ function onDelete(){
 					alert("このデータはすでに、別のユーザーに更新されています。\r\nもう一度データを確認してください。");
 				}
 			});
-		}
+		});
 	}
 }
 
@@ -823,11 +821,11 @@ function onKeyEventF09(){
 	}
 }
 function onUpdate(){
-	var result = window.confirm('データの更新を行います。\nよろしいですか？');
-	    
-    if( result ) {
+    proc("update", {}, function(data){
+		// 確認メッセージ
+		if(!confirm("データの更新を行います。\nよろしいですか？")) { return; }
 		//更新処理呼び出し
-		proc("update", {}, function(data){
+		proc("update_", {}, function(data){
 	
 			if (data == undefined){ return; }
 			if (data["contents"] == undefined){ return; }
@@ -859,5 +857,5 @@ function onUpdate(){
 				alert("このデータはすでに、別のユーザーに更新されています。\r\nもう一度データを確認してください。");
 			}
 		});
-	}
+	});
 }

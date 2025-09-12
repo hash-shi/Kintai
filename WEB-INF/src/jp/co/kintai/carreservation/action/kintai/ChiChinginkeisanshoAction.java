@@ -776,6 +776,9 @@ public class ChiChinginkeisanshoAction extends PJActionBase {
 	 * @throws Exception
 	 */
 	public void update(HttpServletRequest req, HttpServletResponse res) throws Exception {
+		// 入力値チェック用の受けメソッドなので特に処理はない。
+	}
+	public void update_(HttpServletRequest req, HttpServletResponse res) throws Exception {
 		//=====================================================================
 		// パラメータ取得
 		//=====================================================================
@@ -2268,6 +2271,9 @@ public class ChiChinginkeisanshoAction extends PJActionBase {
 	 * @throws Exception
 	 */
 	public void delete(HttpServletRequest req, HttpServletResponse res) throws Exception {
+		// 入力値チェック用の受けメソッドなので特に処理はない。
+	}
+	public void delete_(HttpServletRequest req, HttpServletResponse res) throws Exception {
 		boolean result = false;
 		//=====================================================================
 		// パラメータ取得
