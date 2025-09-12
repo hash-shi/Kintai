@@ -87,36 +87,36 @@ public class KinShukkinBoValidate extends ValidateBase {
 			String jitsudoJikan		= this.getParameter(jitsudoJikanKeySb.toString());
 			String biko					= this.getParameter(bikoKeySb.toString());
 			
-			ArrayList<String> kintaiShinseiKbnList	= new ArrayList<String>(Arrays.asList("", "", ""));
-			ArrayList<String> kaishiJiList			= new ArrayList<String>(Arrays.asList("", "", ""));
-			ArrayList<String> kaishiFunList			= new ArrayList<String>(Arrays.asList("", "", ""));
-			ArrayList<String> shuryoJiList			= new ArrayList<String>(Arrays.asList("", "", ""));
-			ArrayList<String> shuryoFunList			= new ArrayList<String>(Arrays.asList("", "", ""));
-			ArrayList<String> jikanList				= new ArrayList<String>(Arrays.asList("", "", ""));
-			ArrayList<Double> dblJikanList			= new ArrayList<Double>(Arrays.asList(0.0, 0.0, 0.0));
+			ArrayList<String> kintaiShinseiKbnList			= new ArrayList<String>(Arrays.asList("", "", ""));
+			ArrayList<String> kaishiJiList					= new ArrayList<String>(Arrays.asList("", "", ""));
+			ArrayList<String> kaishiFunList					= new ArrayList<String>(Arrays.asList("", "", ""));
+			ArrayList<String> shuryoJiList					= new ArrayList<String>(Arrays.asList("", "", ""));
+			ArrayList<String> shuryoFunList					= new ArrayList<String>(Arrays.asList("", "", ""));
+			ArrayList<String> kintaiShinseiJikanList			= new ArrayList<String>(Arrays.asList("", "", ""));
+			ArrayList<BigDecimal> dcmKintaiShinseiJikanList	= new ArrayList<BigDecimal>(Arrays.asList(BigDecimal.ZERO, BigDecimal.ZERO, BigDecimal.ZERO));
 
 			for(int j = 1;j <= 3;j++){
-				StringBuilder kintaiShinseiKbnKeySb	= new StringBuilder();
-				StringBuilder kaishiJiKeySb			= new StringBuilder();
-				StringBuilder kaishiFunKeySb			= new StringBuilder();
-				StringBuilder shuryoJiKeySb			= new StringBuilder();
-				StringBuilder shuryoFunKeySb			= new StringBuilder();
-				StringBuilder jikanKeySb				= new StringBuilder();
+				StringBuilder kintaiShinseiKbnKeySb		= new StringBuilder();
+				StringBuilder kaishiJiKeySb				= new StringBuilder();
+				StringBuilder kaishiFunKeySb				= new StringBuilder();
+				StringBuilder shuryoJiKeySb				= new StringBuilder();
+				StringBuilder shuryoFunKeySb				= new StringBuilder();
+				StringBuilder kintaiShinseiJikanKeySb	= new StringBuilder();
 				kintaiShinseiKbnKeySb	.append("selKintaiShinseiKbn")			.append(String.valueOf(j)).append(String.valueOf(i));
 				kaishiJiKeySb			.append("numKintaiShinseiKaishiJi")		.append(String.valueOf(j)).append(String.valueOf(i));
 				kaishiFunKeySb			.append("numKintaiShinseiKaishiFun")	.append(String.valueOf(j)).append(String.valueOf(i));
 				shuryoJiKeySb			.append("numKintaiShinseiShuryoJi")		.append(String.valueOf(j)).append(String.valueOf(i));
 				shuryoFunKeySb			.append("numKintaiShinseiShuryoFun")	.append(String.valueOf(j)).append(String.valueOf(i));
-				jikanKeySb				.append("numKintaiShinseiJikan")		.append(String.valueOf(j)).append(String.valueOf(i));
+				kintaiShinseiJikanKeySb	.append("numKintaiShinseiJikan")		.append(String.valueOf(j)).append(String.valueOf(i));
 				
 				kintaiShinseiKbnList.set(j-1,	this.getParameter(kintaiShinseiKbnKeySb.toString()));
 				kaishiJiList.set(j-1,			this.getParameter(kaishiJiKeySb.toString()));
 				kaishiFunList.set(j-1,			this.getParameter(kaishiFunKeySb.toString()));
 				shuryoJiList.set(j-1,			this.getParameter(shuryoJiKeySb.toString()));
 				shuryoFunList.set(j-1,			this.getParameter(shuryoFunKeySb.toString()));
-				jikanList.set(j-1,				this.getParameter(jikanKeySb.toString()));
+				kintaiShinseiJikanList.set(j-1,	this.getParameter(kintaiShinseiJikanKeySb.toString()));
 				try {
-					dblJikanList.set(j-1, Double.parseDouble(jikanList.get(0)));
+					dcmKintaiShinseiJikanList.set(j-1, (new BigDecimal(this.getParameter(kintaiShinseiJikanKeySb.toString()))));
 				}
 				catch(Exception e) {}
 			}
@@ -129,17 +129,17 @@ public class KinShukkinBoValidate extends ValidateBase {
 				}
 			}
 
-			double dblJitsudoJikan = 0;
+			BigDecimal dcmJitsudoJikan	= BigDecimal.ZERO;
 			try {
-				dblJitsudoJikan = Double.parseDouble(jitsudoJikan);
+				dcmJitsudoJikan = new BigDecimal(jitsudoJikan);
+			} catch (Exception e) {
 			}
-			catch(Exception e) {}
 			if(
 					("".equals(shusshaJi) == false) ||
 					("".equals(shusshaFun) == false) ||
 					("".equals(taishaJi) == false) ||
 					("".equals(taishaFun) == false) ||
-					(("".equals(jitsudoJikan) || dblJitsudoJikan <= 0)== false) ||
+					(("".equals(jitsudoJikan) || dcmJitsudoJikan.compareTo(BigDecimal.ZERO) <= 0)== false) ||
 					("".equals(biko)== false) ||
 					(
 							(
@@ -151,7 +151,7 @@ public class KinShukkinBoValidate extends ValidateBase {
 					("".equals(kaishiFunList.get(0)) == false) ||
 					("".equals(shuryoJiList.get(0)) == false) ||
 					("".equals(shuryoFunList.get(0)) == false) ||
-					(("".equals(jikanList.get(0)) || dblJikanList.get(0) <= 0)== false) ||
+					(("".equals(kintaiShinseiJikanList.get(0)) || dcmKintaiShinseiJikanList.get(0).compareTo(BigDecimal.ZERO) <= 0)== false) ||
 					(
 							(
 									"".equals(kintaiShinseiKbnList.get(1)) ||
@@ -162,7 +162,7 @@ public class KinShukkinBoValidate extends ValidateBase {
 					("".equals(kaishiFunList.get(1)) == false) ||
 					("".equals(shuryoJiList.get(1)) == false) ||
 					("".equals(shuryoFunList.get(1)) == false) ||
-					(("".equals(jikanList.get(1)) || dblJikanList.get(1) <= 0)== false) ||
+					(("".equals(kintaiShinseiJikanList.get(1)) || dcmKintaiShinseiJikanList.get(1).compareTo(BigDecimal.ZERO) <= 0)== false) ||
 					(
 							(
 									"".equals(kintaiShinseiKbnList.get(2)) ||
@@ -173,7 +173,7 @@ public class KinShukkinBoValidate extends ValidateBase {
 					("".equals(kaishiFunList.get(2)) == false) ||
 					("".equals(shuryoJiList.get(2)) == false) ||
 					("".equals(shuryoFunList.get(2)) == false) ||
-					(("".equals(jikanList.get(2)) || dblJikanList.get(2) <= 0)== false)
+					(("".equals(kintaiShinseiJikanList.get(2)) || dcmKintaiShinseiJikanList.get(2).compareTo(BigDecimal.ZERO) <= 0)== false)
 				){
 				//同行に何かしら入力されているとき、勤怠区分が空だとエラー
 				if(StringUtils.isEmpty(kintaiKbn) || "00".equals(kintaiKbn)) {
@@ -467,16 +467,8 @@ public class KinShukkinBoValidate extends ValidateBase {
 				}
 			}
 
-			BigDecimal dcmJitsudoJikan	= BigDecimal.ZERO;
-			try {
-				if("".equals(jitsudoJikan) == false){
-					dcmJitsudoJikan = new BigDecimal(jitsudoJikan);
-				}
-				if((dcmJitsudoJikan.precision() - dcmJitsudoJikan.scale() > 2) || (dcmJitsudoJikan.scale() > 2)){
-						this.addValidateMessage(taishoNengappi + "の実働時間の桁数が不正です。");
-						return false;
-					}
-			} catch (Exception e) {
+			if((dcmJitsudoJikan.precision() - dcmJitsudoJikan.scale() > 2) || (dcmJitsudoJikan.scale() > 2)){
+				this.addValidateMessage(taishoNengappi + "の実働時間の桁数が不正です。");
 				return false;
 			}
 
@@ -490,25 +482,20 @@ public class KinShukkinBoValidate extends ValidateBase {
 			}
 
 			for(int j = 1;j <= 3;j++){
-				String kintaiShinseiKbn		= kintaiShinseiKbnList.get(j-1);
-				String kaishiJi				= kaishiJiList.get(j-1);
-				String kaishiFun				= kaishiFunList.get(j-1);
-				String shuryoJi				= shuryoJiList.get(j-1);
-				String shuryoFun				= shuryoFunList.get(j-1);
-				String jikan					= jikanList.get(j-1);
-
-				double dblKintaiShinseiJikan = 0;
-				try {
-					dblKintaiShinseiJikan = Double.parseDouble(jikan);
-				}
-				catch(Exception e) {}
-
+				String kintaiShinseiKbn			= kintaiShinseiKbnList.get(j-1);
+				String kaishiJi					= kaishiJiList.get(j-1);
+				String kaishiFun					= kaishiFunList.get(j-1);
+				String shuryoJi					= shuryoJiList.get(j-1);
+				String shuryoFun					= shuryoFunList.get(j-1);
+				String kintaiShinseiJikan		= kintaiShinseiJikanList.get(j-1);
+				BigDecimal dcmKintaiShinseiJikan	= dcmKintaiShinseiJikanList.get(j-1);
+				
 				if(
 						("".equals(kaishiJi) == false) ||
 						("".equals(kaishiFun) == false) ||
 						("".equals(shuryoJi) == false) ||
 						("".equals(shuryoFun) == false) ||
-						(("".equals(jikan) || dblKintaiShinseiJikan <= 0)== false)
+						(("".equals(kintaiShinseiJikan) || dcmKintaiShinseiJikan.compareTo(BigDecimal.ZERO) <= 0)== false)
 					){
 					//時間が入力されているとき、申請区分が空だとエラー
 					if(StringUtils.isEmpty(kintaiShinseiKbn) || "00".equals(kintaiShinseiKbn)) {
@@ -700,20 +687,20 @@ public class KinShukkinBoValidate extends ValidateBase {
 				if((StringUtils.isEmpty(kintaiShinseiKbn) || "00".equals(kintaiShinseiKbn)) == false) {
 					//申請区分が空でない場合のみ、未入力や0のチェックを行う
 					isRequiredValidate.setParams(this.params);
-					if(isRequiredValidate.doValidate(req, res, jikan, info) == false) {
+					if(isRequiredValidate.doValidate(req, res, kintaiShinseiJikan, info) == false) {
 						this.addValidateMessage(taishoNengappi + "の勤怠申請時間" + String.valueOf(j) + "が入力されていません。");
 						return false;
 					}
 				}
 
 				isNumberValidate.setParams(this.params);
-				if(isNumberValidate.doValidate(req, res, jikan, info) == false) {
+				if(isNumberValidate.doValidate(req, res, kintaiShinseiJikan, info) == false) {
 					this.addValidateMessage(taishoNengappi + "の勤怠申請時間" + String.valueOf(j) + "には数値を入力してください。");
 					return false;
 				}
 				this.params.put("length", "0");
 				minNumberLimitValidate.setParams(this.params);
-				if(minNumberLimitValidate.doValidate(req, res, jikan, info) == false) {
+				if(minNumberLimitValidate.doValidate(req, res, kintaiShinseiJikan, info) == false) {
 					this.addValidateMessage(taishoNengappi + "の勤怠申請時間" + String.valueOf(j) + "にはマイナスは設定できません。");
 					return false;
 				}
@@ -723,22 +710,14 @@ public class KinShukkinBoValidate extends ValidateBase {
 					this.params.put("length", "0");
 					this.params.put("comparisonoperator", "<");
 					numberLimitValidate.setParams(this.params);
-					if(numberLimitValidate.doValidate(req, res, jikan, info) == false) {
+					if(numberLimitValidate.doValidate(req, res, kintaiShinseiJikan, info) == false) {
 						this.addValidateMessage(taishoNengappi + "の勤怠申請時間" + String.valueOf(j) + "が入力されていません。");
 						return false;
 					}
 				}
 				
-				BigDecimal dcmJikan	= BigDecimal.ZERO;
-				try {
-					if("".equals(jikan) == false){
-						dcmJikan = new BigDecimal(jikan);
-					}
-					if((dcmJikan.precision() - dcmJikan.scale() > 2) || (dcmJikan.scale() > 2)){
-						this.addValidateMessage(taishoNengappi + "の勤怠申請時間" + String.valueOf(j) + "の桁数が不正です。");
-							return false;
-						}
-				} catch (Exception e) {
+				if((dcmKintaiShinseiJikan.precision() - dcmKintaiShinseiJikan.scale() > 2) || (dcmKintaiShinseiJikan.scale() > 2)){
+					this.addValidateMessage(taishoNengappi + "の勤怠申請時間" + String.valueOf(j) + "の桁数が不正です。");
 					return false;
 				}
 				
