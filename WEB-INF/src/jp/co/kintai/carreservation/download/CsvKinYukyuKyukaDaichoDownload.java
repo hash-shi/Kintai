@@ -46,6 +46,49 @@ public class CsvKinYukyuKyukaDaichoDownload extends DownloadBase {
 		String toShainNo			= req.getParameter("srhTxtShainNoT");
 		String order				= req.getParameter("srhRdoOrder");
 		
+		// パラメータを取得した場合は、0詰め処理を行う
+		if (StringUtils.isNotBlank(fromEigyoshoCode)) {
+			// 数値に変換
+			int fromEigyoshoCode_ = Integer.parseInt(fromEigyoshoCode);
+			// 3桁0詰めに変換
+			fromEigyoshoCode = String.format("%03d", fromEigyoshoCode_);
+		}
+		
+		if (StringUtils.isNotBlank(toEigyoshoCode)) {
+			// 数値に変換
+			int toEigyoshoCode_ = Integer.parseInt(toEigyoshoCode);
+			// 3桁0詰めに変換
+			toEigyoshoCode = String.format("%03d", toEigyoshoCode_);
+		}
+				
+		if (StringUtils.isNotBlank(fromBushoCode)) {
+			// 数値に変換
+			int fromBushoCode_ = Integer.parseInt(fromBushoCode);
+			// 4桁0詰めに変換
+			fromBushoCode = String.format("%04d", fromBushoCode_);
+		}
+		
+		if (StringUtils.isNotBlank(toBushoCode)) {
+			// 数値に変換
+			int toBushoCode_ = Integer.parseInt(toBushoCode);
+			// 4桁0詰めに変換
+			toBushoCode = String.format("%04d", toBushoCode_);
+		}
+		
+		if (StringUtils.isNotBlank(fromShainNo)) {
+			// 数値に変換
+			int fromShainNo_ = Integer.parseInt(fromShainNo);
+			// 4桁0詰めに変換
+			fromShainNo = String.format("%04d", fromShainNo_);
+		}
+		
+		if (StringUtils.isNotBlank(toShainNo)) {
+			// 数値に変換
+			int toShainNo_ = Integer.parseInt(toShainNo);
+			// 4桁0詰めに変換
+			toShainNo = String.format("%04d", toShainNo_);
+		}
+		
 		// ログインユーザが処理可能な営業所コードの取得
 		UserInformation userInformation = (UserInformation)req.getSession().getAttribute(Define.SESSION_ID);
 		ArrayList<String> shoriKanoEigyoshoCode = userInformation.getShoriKanoEigyoshoCode();
