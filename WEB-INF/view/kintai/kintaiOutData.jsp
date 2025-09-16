@@ -23,7 +23,7 @@ ArrayList<HashMap<String, String>> mstKubun			= (ArrayList<HashMap<String, Strin
 				<tr>
 					<td class="title center w100">処理選択</td>
 					<td class="value w220">
-						<select class="w160" name="selShoriSentaku"  id="selShoriSentaku" >
+						<select class="w160" name="selShoriSentaku"  id="selShoriSentaku"  autofocus >
 							<% for (int count = 0 ; count < mstKubun.size() ; count++){ HashMap<String, String> record = mstKubun.get(count);%>
 								<option value="<%=UtilEscape.htmlspecialchars(record.get("Code")) %>"><%=UtilEscape.htmlspecialchars(record.get("KbnName")) %></option>
 							<% } %>

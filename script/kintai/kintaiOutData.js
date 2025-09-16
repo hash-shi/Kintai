@@ -21,6 +21,7 @@ function setShoriSentaku(){
 	// mainAreaを表示する。
 	$("#mainArea").css("visibility", "visible");
 	$("#buttonArea").css("visibility", "visible");
+	$("#srhTxtTaishoNengetsuF").focus();
 	
 	// 既に背景色が設定されている場合は一旦削除
 	$("#mainArea").removeClass('ins');
