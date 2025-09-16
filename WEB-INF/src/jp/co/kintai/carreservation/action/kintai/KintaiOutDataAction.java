@@ -33,6 +33,16 @@ public class KintaiOutDataAction extends PJActionBase {
 		ArrayList<HashMap<String, String>> mstKubun = PJActionBase.getMstKubuns(con, "0503", "", "");
 		req.setAttribute("mstKubun", mstKubun);
 		
+		//対象年月初期値の取得
+		String taishoDate = "";
+		// 取得
+		ArrayList<HashMap<String, String>> mstKanris = PJActionBase.getMstKanris(con, "01");
+		// 送信データを減らすため不要なカラムは削って対象年月のみ返す。
+		for (HashMap<String, String> hashMap : mstKanris) {
+			taishoDate = hashMap.get("GenzaishoriNengetsudo");
+		}
+		
+		req.setAttribute("result", taishoDate);
 		this.setView("success");
 	}
 	

@@ -42,6 +42,8 @@ ArrayList<HashMap<String, String>> mstKubun			= (ArrayList<HashMap<String, Strin
 					<td class="title center w100">処理選択</td>
 					<td class="value w220">
 						<input type="text" class="w210"  name="txtShoriSentaku" id="txtShoriSentaku" value="" readonly>
+						<input type="hidden" id="defaultTaishoDate" value="<%= UtilEscape.htmlspecialchars((String)request.getAttribute("result")) %>">
+						
 					</td>
 				</tr>
 			</table>
