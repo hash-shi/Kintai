@@ -40,6 +40,16 @@ public class KintaiListAction extends PJActionBase {
 		ArrayList<HashMap<String, String>> mstKubun0050 = PJActionBase.getMstKubuns(con, "0050", "", "");
 		req.setAttribute("mstKubun0050", mstKubun0050);
 		
+		//対象年月初期値の取得
+		String taishoNengetsu = "";
+		// 取得
+		ArrayList<HashMap<String, String>> mstKanris = PJActionBase.getMstKanris(con, "01");
+		// 送信データを減らすため不要なカラムは削って対象年月のみ返す。
+		for (HashMap<String, String> hashMap : mstKanris) {
+			taishoNengetsu = hashMap.get("GenzaishoriNengetsudo");
+		}
+		
+		req.setAttribute("result", taishoNengetsu);
 		this.setView("success");
 	}
 	

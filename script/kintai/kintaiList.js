@@ -59,21 +59,14 @@ function setShoriSentaku(){
 		$("#output").css("display", "none");
 	}
 	
-	// 対象年月にシステム日付を格納する
-	// 	システム日付が15日までの場合、その年月。
-	//  システム日付が16日以降の場合、その翌月の年月
-	var dateTime = new Date();
-	var date = new Date();
-	if (dateTime.getDate() <= 15) {
-		date = new Date(dateTime.getFullYear(), dateTime.getMonth(), dateTime.getDate());
-	} else {
-		date = new Date(dateTime.getFullYear(), (dateTime.getMonth() + 1), dateTime.getDate());
-	}
+	// 対象年月に管理マスタの現在処理年月度を格納
+	var taishoNengetsu = $("#hdnTaishoNengetsu").val();
+	$("#srhTxtTaishoNengetsuF").val(taishoNengetsu);
+	$("#srhTxtTaishoNengetsuT").val(taishoNengetsu);
 	
-	$("#srhTxtTaishoNengetsuF").val(formatDateYYYYMM(date, "/"));
-	$("#srhTxtTaishoNengetsuT").val(formatDateYYYYMM(date, "/"));
-	$("#srhTxtTaishoNendoF").val(formatDateYYYY(date));
-	$("#srhTxtTaishoNendoT").val(formatDateYYYY(date));
+	var taishoNendo = taishoNengetsu.split('/')[0];
+	$("#srhTxtTaishoNendoF").val(taishoNendo);
+	$("#srhTxtTaishoNendoT").val(taishoNendo);
 	
 	// ユーザー権限による初期値/活性制御
 	var shainNo = $("#hdnShainNo").val();

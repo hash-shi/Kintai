@@ -77,6 +77,7 @@ ArrayList<HashMap<String, String>> mstKubun0050 = (ArrayList<HashMap<String, Str
 			
 				<tr id="taishoNengetsu" style="display: none">
 					<td class="title center w100 req">対象年月度</td>
+					<input type="hidden" id="hdnTaishoNengetsu" value="<%= UtilEscape.htmlspecialchars((String)request.getAttribute("result")) %>">
 					<td class="value w600">
 						<input type="text" class="w60 right" maxlength="7" name="srhTxtTaishoNengetsuF" id="srhTxtTaishoNengetsuF" value="">
 						-
@@ -87,6 +88,7 @@ ArrayList<HashMap<String, String>> mstKubun0050 = (ArrayList<HashMap<String, Str
 				
 				<tr id="taishoNendo" style="display: none;">
 					<td class="title center w100 req">対象年度</td>
+					<input type="hidden" id="hdnTaishoNengetsu" value="<%= UtilEscape.htmlspecialchars((String)request.getAttribute("result")) %>">
 					<td class="value w600">
 						<input type="text" class="w60 right" maxlength="4" name="srhTxtTaishoNendoF" id="srhTxtTaishoNendoF" value="">
 						-
