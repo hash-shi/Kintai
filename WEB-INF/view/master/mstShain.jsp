@@ -29,7 +29,7 @@ ArrayList<HashMap<String, String>> mstKubun0013 = (ArrayList<HashMap<String, Str
 						<a href="#" onclick="opnDialog('srhMstShain','srhTxtShainNO'); return false;">社員NO</a>
 					</td>
 					<td class="value w165">
-						<input type="text" class="w80" maxlength="4" name="srhTxtShainNO" id="srhTxtShainNO"  value="" onblur="getShainName('srhTxtShainNO', '');">
+						<input type="text" class="w80" maxlength="4" name="srhTxtShainNO" id="srhTxtShainNO"  value="" onblur="getShainName('srhTxtShainNO', '');" autofocus>
 						<img class="img border" src="./images/search.png"  onclick="opnDialog('srhMstShain','srhTxtShainNO');">
 						<button type="button" onclick="getMstShain();">検索</button>
 					</td>

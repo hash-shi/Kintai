@@ -25,6 +25,7 @@ function getMstShain() {
 		// mainAreaを表示する。
 		$("#mainArea").css("visibility", "visible");
 		$("#buttonArea").css("visibility", "visible");
+		$("#txtShainName").focus();
 
 		// 既に背景色が設定されている場合は一旦削除
 		$("#mainArea").removeClass('ins');
