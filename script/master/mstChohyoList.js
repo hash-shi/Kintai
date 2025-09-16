@@ -33,6 +33,7 @@ function setShoriSentaku(){
 		$("#shain").css("display", "none");
 		$("#kubun").css("display", "none");
 		$("#saishuKoshin").css("display", "table-row");
+		$("#srhTxtEigyoshoCodeF").focus();
 	}
 	else if (value == "02") {
 		// 部署
@@ -41,6 +42,7 @@ function setShoriSentaku(){
 		$("#shain").css("display", "none");
 		$("#kubun").css("display", "none");
 		$("#saishuKoshin").css("display", "table-row");
+		$("#srhTxtEigyoshoCodeF").focus();
 	}
 	else if (value == "03") {
 		// 社員
@@ -49,6 +51,7 @@ function setShoriSentaku(){
 		$("#shain").css("display", "table-row");
 		$("#kubun").css("display", "none");
 		$("#saishuKoshin").css("display", "table-row");
+		$("#srhTxtEigyoshoCodeF").focus();
 	}
 	else if (value == "04") {
 		// 区分
@@ -57,6 +60,7 @@ function setShoriSentaku(){
 		$("#shain").css("display", "none");
 		$("#kubun").css("display", "table-row");
 		$("#saishuKoshin").css("display", "table-row");
+		$("#srhTxtKbnCodeF").focus();
 	} else {
 		$("#eigyosho").css("display", "none");
 		$("#busho").css("display", "none");
