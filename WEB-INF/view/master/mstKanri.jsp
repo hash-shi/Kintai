@@ -20,7 +20,7 @@
 						<td class="title center w100">管理コード</td>
 						<td class="value w150">
 						<input type="text" class="w80" maxlength="2" name="srhKanriCode" id="srhKanriCode" value="01" readonly>
-							<button type="button" onclick="getMstKanri();">検索</button></td>
+							<button type="button" onclick="getMstKanri();"autofocus>検索</button></td>
 					</tr>
 				</table>
 			</div>
