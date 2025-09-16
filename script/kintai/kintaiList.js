@@ -37,6 +37,7 @@ function setShoriSentaku(){
 		$("#joken").css("display", "table-row");
 		$("#order").css("display", "table-row");
 		$("#output").css("display", "table-row");
+		$("#srhTxtTaishoNengetsuF").focus();
 	}
 	else if (value == "03") {
 		$("#taishoNengetsu").css("display", "none");
@@ -47,6 +48,7 @@ function setShoriSentaku(){
 		$("#joken").css("display", "none");
 		$("#order").css("display", "table-row");
 		$("#output").css("display", "table-row");
+		$("#srhTxtTaishoNendoF").focus();
 	}
 	else {
 		$("#taishoNengetsu").css("display", "none");
