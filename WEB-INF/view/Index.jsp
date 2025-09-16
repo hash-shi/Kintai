@@ -11,7 +11,7 @@
 			<tr>
 				<td class="title right w90">社員NO</td>
 				<td class="value">
-					<input type="text" class="w150" name="txtShainNO" id="txtShainNO" value="" >
+					<input type="text" class="w150" name="txtShainNO" id="txtShainNO" value="" autofocus>
 				</td>
 			</tr>
 			<tr>

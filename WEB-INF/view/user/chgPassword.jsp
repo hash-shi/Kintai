@@ -50,7 +50,7 @@
 					<td class="title w160">現在のパスワード</td>
 					<td class="value w200">
 						<input type="hidden" class="" name="hdnPassword" id="hdnPassword"  value="<%=UtilEscape.htmlspecialchars(password) %>" >
-						<input type="password" class="w190"  maxlength="50" name="txtPasswordNow" id="txtPasswordNow"  value="" >
+						<input type="password" class="w190"  maxlength="50" name="txtPasswordNow" id="txtPasswordNow"  value="" autofocus>
 					</td>
 				</tr>
 				<tr>
