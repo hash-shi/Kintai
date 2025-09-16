@@ -56,6 +56,7 @@ function onSearchKintaiKakutei(){
 		$("#nyuryokuArea").css("visibility", "");
 		$("#nyuryokuArea").addClass("upd");
 		$("#buttonArea").css("visibility", "");
+		$("#srhTxtTaishoYM").focus();
 		
 		let result			= contents["result"];
 		
