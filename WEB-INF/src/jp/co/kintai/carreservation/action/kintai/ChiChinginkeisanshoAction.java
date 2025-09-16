@@ -28,13 +28,27 @@ public class ChiChinginkeisanshoAction extends PJActionBase {
 	
 	@Override
 	public void doRun(HttpServletRequest req, HttpServletResponse res) throws Exception {
-		HashMap<String, Object> Result = new HashMap<>();
+		HashMap<String, Object> result = new HashMap<>();
 		
 		//対象年月初期値取得
 		String taishoYM = getTaishoYM(req, res);
-		Result.put("taishoYM", taishoYM);
+		result.put("taishoYM", taishoYM);
 		
-		req.setAttribute("result", taishoYM);
+		result.put("kintaiShinseiKbnRyaku01", "");
+		result.put("kintaiShinseiKbnRyaku02", "");
+		result.put("kintaiShinseiKbnRyaku03", "");
+		result.put("kintaiShinseiKbnRyaku04", "");
+		result.put("kintaiShinseiKbnRyaku05", "");
+		result.put("kintaiShinseiKbnRyaku07", "");
+		result.put("kintaiShinseiKbnRyaku09", "");
+		result.put("kintaiShinseiKbnRyaku11", "");
+		ArrayList<HashMap<String, String>> mstKubuns = getShukeiAreaColumnName(req, res);
+		for(int i = 0;i < mstKubuns.size(); i++) {
+			HashMap<String, String> mstKubun = mstKubuns.get(i);
+			result.put("kintaiShinseiKbnRyaku" + mstKubun.get("Code"), mstKubun.get("KbnRyaku"));
+		}
+
+		req.setAttribute("result", result);
 		// 画面表示
 		this.setView("success");
 	}
@@ -47,7 +61,6 @@ public class ChiChinginkeisanshoAction extends PJActionBase {
 	 * @throws Exception
 	 */
 	public String getTaishoYM(HttpServletRequest req, HttpServletResponse res) throws Exception {
-		
 		String result = "";
 
 		// DB接続
@@ -65,6 +78,26 @@ public class ChiChinginkeisanshoAction extends PJActionBase {
 		// 結果返却
 		//=====================================================================
 		return result;
+	}
+	
+	/**
+	 * 集計エリアの列名取得
+	 * 
+	 * @param req
+	 * @param res
+	 * @throws Exception
+	 */
+	public ArrayList<HashMap<String, String>> getShukeiAreaColumnName(HttpServletRequest req, HttpServletResponse res) throws Exception {
+		// DB接続
+		Connection con		= this.getConnection("kintai", req);
+		
+		// チェック対象の社員情報の取得
+		ArrayList<HashMap<String, String>> mstKubuns = PJActionBase.getMstKubuns(con, "0201", null, null);
+		
+		//=====================================================================
+		// 結果返却
+		//=====================================================================
+		return mstKubuns;
 	}
 	
 	/**

@@ -2,6 +2,7 @@
 <%@ page import="jp.co.tjs_net.java.framework.common.UtilEscape" %>
 <%@ page import="jp.co.kintai.carreservation.define.Define" %>
 <%@ page import="jp.co.kintai.carreservation.information.UserInformation" %>
+<%@ page import="java.util.HashMap" %>
 
 <%
 
@@ -24,7 +25,18 @@
 	}
 	
 	//対象年月初期値の取得
-	String	taishoDate = (String)request.getAttribute("result");
+	HashMap<String, Object> result = (HashMap<String, Object>)request.getAttribute("result");
+	String	taishoDate = String.valueOf(result.get("taishoYM"));
+	
+	//集計項目の項目名の取得
+	String kbnRyaku01 = String.valueOf(result.get("kintaiShinseiKbnRyaku01"));
+	String kbnRyaku02 = String.valueOf(result.get("kintaiShinseiKbnRyaku02"));
+	String kbnRyaku03 = String.valueOf(result.get("kintaiShinseiKbnRyaku03"));
+	String kbnRyaku04 = String.valueOf(result.get("kintaiShinseiKbnRyaku04"));
+	String kbnRyaku05 = String.valueOf(result.get("kintaiShinseiKbnRyaku05"));
+	String kbnRyaku07 = String.valueOf(result.get("kintaiShinseiKbnRyaku07"));
+	String kbnRyaku09 = String.valueOf(result.get("kintaiShinseiKbnRyaku09"));
+	String kbnRyaku11 = String.valueOf(result.get("kintaiShinseiKbnRyaku11"));
 %>
 
 <main id="main-content" class="nom">
@@ -169,7 +181,7 @@
 								</tr>
 								<tr>
 									<th class="title center w120">
-										<a >勤務時間</a>
+										<a ><%=UtilEscape.htmlspecialchars(kbnRyaku01) %></a>
 									</th>
 									<td class="value right w70">
 										<a id="lblShinseinissu01" name="lblShinseinissu01"></a>
@@ -186,7 +198,7 @@
 								</tr>
 								<tr>
 									<th class="title center w120">
-										<a >休日勤務</a>
+										<a ><%=UtilEscape.htmlspecialchars(kbnRyaku04) %></a>
 									</th>
 									<td class="value right w70">
 										<a id="lblShinseinissu04" name="lblShinseinissu04"></a>
@@ -203,7 +215,7 @@
 								</tr>
 								<tr>
 									<th class="title center w120">
-										<a >時間外勤務</a>
+										<a ><%=UtilEscape.htmlspecialchars(kbnRyaku02) %></a>
 									</th>
 									<td class="value right w70">
 										<a id="lblShinseinissu02" name="lblShinseinissu02"></a>
@@ -220,7 +232,7 @@
 								</tr>
 								<tr>
 									<th class="title center w120">
-										<a >深夜勤務</a>
+										<a ><%=UtilEscape.htmlspecialchars(kbnRyaku03) %></a>
 									</th>
 									<td class="value right w70">
 										<a id="lblShinseinissu03" name="lblShinseinissu03"></a>
@@ -237,7 +249,7 @@
 								</tr>
 								<tr>
 									<th class="title center w120">
-										<a >有給休暇</a>
+										<a ><%=UtilEscape.htmlspecialchars(kbnRyaku05) %></a>
 									</th>
 									<td class="value right w70">
 										<a id="lblShinseinissu05" name="lblShinseinissu05"></a>
@@ -254,7 +266,7 @@
 								</tr>
 								<tr>
 									<th class="title center w120">
-										<a >特別有給休暇</a>
+										<a ><%=UtilEscape.htmlspecialchars(kbnRyaku11) %></a>
 									</th>
 									<td class="value right w70">
 										<a id="lblShinseinissu11" name="lblShinseinissu11"></a>
@@ -271,7 +283,7 @@
 								</tr>
 								<tr>
 									<th class="title center w120">
-										<a >通勤費</a>
+										<a ><%=UtilEscape.htmlspecialchars(kbnRyaku09) %></a>
 									</th>
 									<td class="value right w70">
 										<a id="lblShinseinissu09" name="lblShinseinissu09"></a>
@@ -288,7 +300,7 @@
 								</tr>
 								<tr>
 									<th class="title center w120">
-										<a >控除</a>
+										<a ><%=UtilEscape.htmlspecialchars(kbnRyaku07) %></a>
 									</th>
 									<td class="value right w70">
 										<a id="lblShinseinissu07" name="lblShinseinissu07"></a>

@@ -257,8 +257,6 @@ function onDisplayNyuryokuArea(firstHalfFlg){
 		
 		let result			= contents["result"];
 
-		console.log("getDDLのresult");
-		console.log(result);
 		for(let record of result){
 			sinseiKubunList.push(record);
 		}
