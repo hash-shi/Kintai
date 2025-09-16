@@ -88,7 +88,7 @@ public class ChiChinginkeisanshoValidate extends ValidateBase {
 				StringBuilder chinginShinseiKbnKeySb		= new StringBuilder();
 				StringBuilder chinginShinseiJikanKeySb	= new StringBuilder();
 				chinginShinseiKbnKeySb		.append("selChinginShinseiKbn")		.append(String.valueOf(j)).append(String.valueOf(i));
-				chinginShinseiJikanKeySb	.append("numKintaiShinseiJikan")	.append(String.valueOf(j)).append(String.valueOf(i));
+				chinginShinseiJikanKeySb	.append("numChinginShinseiJikan")	.append(String.valueOf(j)).append(String.valueOf(i));
 				
 				chinginShinseiKbnList.set(j-1,		this.getParameter(chinginShinseiKbnKeySb.toString()));
 				chinginShinseiJikanList.set(j-1,	this.getParameter(chinginShinseiJikanKeySb.toString()));
