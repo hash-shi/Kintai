@@ -8,8 +8,6 @@ import java.util.HashMap;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 
-import org.apache.commons.lang3.StringUtils;
-
 import jp.co.kintai.carreservation.base.PJActionBase;
 import jp.co.kintai.carreservation.define.Define;
 import jp.co.kintai.carreservation.information.UserInformation;
@@ -185,19 +183,20 @@ public class MstKubunAction extends PJActionBase {
 		// 2桁0詰めに変換
 		Code = String.format("%02d", Code_);
 
-		// 4桁0詰めに統一するための処理
-		// 数値に変換
-		// 4桁0詰めに変換
-		if(StringUtils.isNotBlank(GroupCode1)) {
-			int GroupCode1_ = Integer.parseInt(GroupCode1);
-			GroupCode1 = String.format("%04d", GroupCode1_);
-		} 
-		
-		if(StringUtils.isNotBlank(GroupCode2)) {
-			int GroupCode2_ = Integer.parseInt(GroupCode2);
-			GroupCode2 = String.format("%04d", GroupCode2_);
-		} 
-		
+//		// ↓主キーと異なり必ず4桁固定ではないので0詰め廃止
+//		// 4桁0詰めに統一するための処理
+//		// 数値に変換
+//		// 4桁0詰めに変換
+//		if(StringUtils.isNotBlank(GroupCode1)) {
+//			int GroupCode1_ = Integer.parseInt(GroupCode1);
+//			GroupCode1 = String.format("%04d", GroupCode1_);
+//		} 
+//		
+//		if(StringUtils.isNotBlank(GroupCode2)) {
+//			int GroupCode2_ = Integer.parseInt(GroupCode2);
+//			GroupCode2 = String.format("%04d", GroupCode2_);
+//		} 
+//		// ↑主キーと異なり必ず4桁固定ではないので0詰め廃止
 		
 		//=====================================================================
 		// ユーザー情報の取得
@@ -293,18 +292,20 @@ public class MstKubunAction extends PJActionBase {
 		// 2桁0詰めに変換
 		Code = String.format("%02d", Code_);
 
-		// 4桁0詰めに統一するための処理
-		// 数値に変換
-		// 4桁0詰めに変換
-		if(StringUtils.isNotBlank(GroupCode1)) {
-			int GroupCode1_ = Integer.parseInt(GroupCode1);
-			GroupCode1 = String.format("%04d", GroupCode1_);
-		} 
-		
-		if(StringUtils.isNotBlank(GroupCode2)) {
-			int GroupCode2_ = Integer.parseInt(GroupCode2);
-			GroupCode2 = String.format("%04d", GroupCode2_);
-		}
+//		// ↓主キーと異なり必ず4桁固定ではないので0詰め廃止
+//		// 4桁0詰めに統一するための処理
+//		// 数値に変換
+//		// 4桁0詰めに変換
+//		if(StringUtils.isNotBlank(GroupCode1)) {
+//			int GroupCode1_ = Integer.parseInt(GroupCode1);
+//			GroupCode1 = String.format("%04d", GroupCode1_);
+//		} 
+//		
+//		if(StringUtils.isNotBlank(GroupCode2)) {
+//			int GroupCode2_ = Integer.parseInt(GroupCode2);
+//			GroupCode2 = String.format("%04d", GroupCode2_);
+//		}
+//		// ↑主キーと異なり必ず4桁固定ではないので0詰め廃止
 		
 		//=====================================================================
 		// ユーザー情報の取得
