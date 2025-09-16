@@ -22,7 +22,7 @@
 						<a href="#" onclick="opnDialog('srhMstBusho','srhTxtBushoCode'); return false;">部署</a>
 					</td>
 					<td class="value w165">
-						<input type="text" class="w80" maxlength="4" name="srhTxtBushoCode" id="srhTxtBushoCode" value="" onblur="getBushoName('srhTxtBushoCode', '');" >
+						<input type="text" class="w80" maxlength="4" name="srhTxtBushoCode" id="srhTxtBushoCode" value="" onblur="getBushoName('srhTxtBushoCode', '');" autofocus >
 						<img class="img border" src="./images/search.png"  onclick="opnDialog('srhMstBusho','srhTxtBushoCode');">
 						<button type="button" onclick="getMstBusho()">検索</button>
 					</td>
