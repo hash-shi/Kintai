@@ -327,17 +327,16 @@ function onChangeTaisyokuDate(){
 	let checkIfNumber = /^[0-9]+$/;
 	if (checkIfNumber.test(strReplacing)) {
 		if(strReplacing.length === 8) {
-			// YYYYMMDD
+			// YYYYMMDD → YYYY/MM/DD
 			let y = strReplacing.substring(0, 4);
 			let m = strReplacing.substring(4, 6);
 			let d = strReplacing.substring(6, 8);
 			strReplaced = y + "/" + m + "/" + d;
 		} else if(strReplacing.length === 7) {
-			// YYYYMDD → YYYY/0M/DD
+			// YYYYMDD or YYYYMMD→ YYYY/MDD or YYYY/MMD
 			let y = strReplacing.substring(0, 4);
-			let m = "0" + strReplacing.substring(4, 5);
-			let d = strReplacing.substring(5, 7);
-			strReplaced = y + "/" + m + "/" + d;
+			let md = strReplacing.substring(4); // 5〜7文字目
+			strReplaced = y + "/" + md; 
 		} else if(strReplacing.length === 6) {
 			// YYYYMD → YYYY/0M/0D
 			let y = strReplacing.substring(0, 4);
