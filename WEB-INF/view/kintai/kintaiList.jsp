@@ -79,9 +79,9 @@ ArrayList<HashMap<String, String>> mstKubun0050 = (ArrayList<HashMap<String, Str
 					<td class="title center w100 req">対象年月度</td>
 					<input type="hidden" id="hdnTaishoNengetsu" value="<%= UtilEscape.htmlspecialchars((String)request.getAttribute("result")) %>">
 					<td class="value w600">
-						<input type="text" class="w60 right" maxlength="7" name="srhTxtTaishoNengetsuF" id="srhTxtTaishoNengetsuF" value="">
+						<input type="text" class="w60 right" maxlength="7" name="srhTxtTaishoNengetsuF" id="srhTxtTaishoNengetsuF" onchange="onChangeYM('srhTxtTaishoNengetsuF')"  value="">
 						-
-						<input type="text" class="w60 right" maxlength="7" name="srhTxtTaishoNengetsuT" id="srhTxtTaishoNengetsuT" value="">
+						<input type="text" class="w60 right" maxlength="7" name="srhTxtTaishoNengetsuT" id="srhTxtTaishoNengetsuT" onchange="onChangeYM('srhTxtTaishoNengetsuT')" value="">
 						(YYYY/MM)
 					</td>
 				</tr>
