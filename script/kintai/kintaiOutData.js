@@ -65,6 +65,13 @@ function onChangeTaishoYM(targetId){
 		strReplaced += "/0";
 		strReplaced += strReplacing.substring(4, 5);
 	}
+	// スラッシュ区切りの場合、YYYY/0Mとする
+	else if(strReplacing.includes("/")) {
+		let parts = strReplacing.split("/");
+		let y = parts[0];
+		let m = (parts[1] || "").padStart(2,"0");
+		strReplaced = y + "/" + m;
+	}
 	// それ以外の場合、そのまま
 	else {
 		strReplaced = strReplacing;
