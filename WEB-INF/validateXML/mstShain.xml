@@ -183,7 +183,7 @@
 	<!-- 01 勤務時間 単価 -->
 		<variable name="txtShinseiTanka01" dispName="01 勤務時間 単価">
 			<check class="IsHalf" message="!#itemName#!には全角文字は入力できません。" itemName="{dispName}"></check>
-			<check class="IsNumber" message="!#itemName#!には数字を入力してください。" itemName="{dispName}"></check>
+			<check class="IsNumeric" message="!#itemName#!には数字を入力してください。" itemName="{dispName}"></check>
 			<check class="NumberLimit" message="!#itemName#!にはマイナスは設定できません。" itemName="{dispName}">
 				<param name="length">0</param>
 				<param name="comparisonoperator">&lt;=</param>
@@ -197,7 +197,7 @@
 	<!-- 02 勤務時間 単価 -->
 		<variable name="txtShinseiTanka02" dispName="02 勤務時間 単価">
 			<check class="IsHalf" message="!#itemName#!には全角文字は入力できません。" itemName="{dispName}"></check>
-			<check class="IsNumber" message="!#itemName#!には数字を入力してください。" itemName="{dispName}"></check>
+			<check class="IsNumeric" message="!#itemName#!には数字を入力してください。" itemName="{dispName}"></check>
 			<check class="NumberLimit" message="!#itemName#!にはマイナスは設定できません。" itemName="{dispName}">
 				<param name="length">0</param>
 				<param name="comparisonoperator">&lt;=</param>
@@ -211,7 +211,7 @@
 	<!-- 03 深夜勤務 単価 -->
 		<variable name="txtShinseiTanka03" dispName="03 深夜勤務 単価">
 			<check class="IsHalf" message="!#itemName#!には全角文字は入力できません。" itemName="{dispName}"></check>
-			<check class="IsNumber" message="!#itemName#!には数字を入力してください。" itemName="{dispName}"></check>
+			<check class="IsNumeric" message="!#itemName#!には数字を入力してください。" itemName="{dispName}"></check>
 			<check class="NumberLimit" message="!#itemName#!にはマイナスは設定できません。" itemName="{dispName}">
 				<param name="length">0</param>
 				<param name="comparisonoperator">&lt;=</param>
@@ -225,7 +225,7 @@
 	<!-- 04 休日勤務 単価 -->
 		<variable name="txtShinseiTanka04" dispName="04 休日勤務 単価">
 			<check class="IsHalf" message="!#itemName#!には全角文字は入力できません。" itemName="{dispName}"></check>
-			<check class="IsNumber" message="!#itemName#!には数字を入力してください。" itemName="{dispName}"></check>
+			<check class="IsNumeric" message="!#itemName#!には数字を入力してください。" itemName="{dispName}"></check>
 			<check class="NumberLimit" message="!#itemName#!にはマイナスは設定できません。" itemName="{dispName}">
 				<param name="length">0</param>
 				<param name="comparisonoperator">&lt;=</param>
@@ -239,7 +239,7 @@
 	<!-- 05 有給休暇 単価 -->
 		<variable name="txtShinseiTanka05" dispName="05 有給休暇 単価">
 			<check class="IsHalf" message="!#itemName#!には全角文字は入力できません。" itemName="{dispName}"></check>
-			<check class="IsNumber" message="!#itemName#!には数字を入力してください。" itemName="{dispName}"></check>
+			<check class="IsNumeric" message="!#itemName#!には数字を入力してください。" itemName="{dispName}"></check>
 			<check class="NumberLimit" message="!#itemName#!にはマイナスは設定できません。" itemName="{dispName}">
 				<param name="length">0</param>
 				<param name="comparisonoperator">&lt;=</param>
@@ -253,7 +253,7 @@
 	<!-- 06 半日有給 単価 -->
 		<variable name="txtShinseiTanka06" dispName="06 半日有給 単価">
 			<check class="IsHalf" message="!#itemName#!には全角文字は入力できません。" itemName="{dispName}"></check>
-			<check class="IsNumber" message="!#itemName#!には数字を入力してください。" itemName="{dispName}"></check>
+			<check class="IsNumeric" message="!#itemName#!には数字を入力してください。" itemName="{dispName}"></check>
 			<check class="NumberLimit" message="!#itemName#!にはマイナスは設定できません。" itemName="{dispName}">
 				<param name="length">0</param>
 				<param name="comparisonoperator">&lt;=</param>
@@ -267,7 +267,7 @@
 	<!-- 07 控除 単価 -->
 			<variable name="txtShinseiTanka07" dispName="07 控除 単価">
 			<check class="IsHalf" message="!#itemName#!には全角文字は入力できません。" itemName="{dispName}"></check>
-			<check class="IsNumber" message="!#itemName#!には数字を入力してください。" itemName="{dispName}"></check>
+			<check class="IsNumeric" message="!#itemName#!には数字を入力してください。" itemName="{dispName}"></check>
 			<check class="NumberLimit" message="!#itemName#!にはマイナスは設定できません。" itemName="{dispName}">
 				<param name="length">0</param>
 				<param name="comparisonoperator">&lt;=</param>
@@ -281,7 +281,7 @@
 	<!-- 08 単価 -->
 		<variable name="txtShinseiTanka08" dispName="08 単価">
 			<check class="IsHalf" message="!#itemName#!には全角文字は入力できません。" itemName="{dispName}"></check>
-			<check class="IsNumber" message="!#itemName#!には数字を入力してください。" itemName="{dispName}"></check>
+			<check class="IsNumeric" message="!#itemName#!には数字を入力してください。" itemName="{dispName}"></check>
 			<check class="NumberLimit" message="!#itemName#!にはマイナスは設定できません。" itemName="{dispName}">
 				<param name="length">0</param>
 				<param name="comparisonoperator">&lt;=</param>
@@ -295,7 +295,7 @@
 	<!-- 09 通勤費 単価／月給 -->
 		<variable name="txtShinseiTanka09" dispName="09 通勤費 単価／月給">
 			<check class="IsHalf" message="!#itemName#!には全角文字は入力できません。" itemName="{dispName}"></check>
-			<check class="IsNumber" message="!#itemName#!には数字を入力してください。" itemName="{dispName}"></check>
+			<check class="IsNumeric" message="!#itemName#!には数字を入力してください。" itemName="{dispName}"></check>
 			<check class="NumberLimit" message="!#itemName#!にはマイナスは設定できません。" itemName="{dispName}">
 				<param name="length">0</param>
 				<param name="comparisonoperator">&lt;=</param>
@@ -309,7 +309,7 @@
 	<!-- 10 時間外勤務 単価 -->
 		<variable name="txtShinseiTanka10" dispName="10 時間外勤務 単価">
 			<check class="IsHalf" message="!#itemName#!には全角文字は入力できません。" itemName="{dispName}"></check>
-			<check class="IsNumber" message="!#itemName#!には数字を入力してください。" itemName="{dispName}"></check>
+			<check class="IsNumeric" message="!#itemName#!には数字を入力してください。" itemName="{dispName}"></check>
 			<check class="NumberLimit" message="!#itemName#!にはマイナスは設定できません。" itemName="{dispName}">
 				<param name="length">0</param>
 				<param name="comparisonoperator">&lt;=</param>
@@ -323,7 +323,7 @@
 	<!-- 11 特別有給休暇 単価 -->
 		<variable name="txtShinseiTanka11" dispName="11 特別有給休暇 単価">
 			<check class="IsHalf" message="!#itemName#!には全角文字は入力できません。" itemName="{dispName}"></check>
-			<check class="IsNumber" message="!#itemName#!には数字を入力してください。" itemName="{dispName}"></check>
+			<check class="IsNumeric" message="!#itemName#!には数字を入力してください。" itemName="{dispName}"></check>
 			<check class="NumberLimit" message="!#itemName#!にはマイナスは設定できません。" itemName="{dispName}">
 				<param name="length">0</param>
 				<param name="comparisonoperator">&lt;=</param>
