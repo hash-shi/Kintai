@@ -99,9 +99,9 @@
 				<tr id="saishuKoshin" class ="inputArea" style="display: none;">
 					<td class="title center w100">最終更新日</td>
 					<td class="value w310">
-						<input type="text" class=""  style="width: 80px; text-align: right;"" name="srhTxtSaishuKoshinDateF" id="srhTxtSaishuKoshinDateF" maxlength="10" value="" onchange="onChangeSaishuKoshinDate('srhTxtSaishuKoshinDateF')">
+						<input type="text" class=""  style="width: 80px; text-align: right;"" name="srhTxtSaishuKoshinDateF" id="srhTxtSaishuKoshinDateF" maxlength="10" value="" onchange="onChangeYMD('srhTxtSaishuKoshinDateF')">
 						～
-						<input type="text" class=""  style="width: 80px; text-align: right;"" name="srhTxtSaishuKoshinDateT" id="srhTxtSaishuKoshinDateT" maxlength="10" value="" onchange="onChangeSaishuKoshinDate('srhTxtSaishuKoshinDateT')">
+						<input type="text" class=""  style="width: 80px; text-align: right;"" name="srhTxtSaishuKoshinDateT" id="srhTxtSaishuKoshinDateT" maxlength="10" value="" onchange="onChangeYMD('srhTxtSaishuKoshinDateT')">
 						(YYYY/MM/DD)
 					</td>
 				</tr>
