@@ -53,9 +53,9 @@ ArrayList<HashMap<String, String>> mstKubun			= (ArrayList<HashMap<String, Strin
 				<tr>
 					<td class="title center w100 req">対象年月度</td>
 					<td class="value w600">
-						<input type="text" class="w60 right" maxlength="7" name="srhTxtTaishoNengetsuF" id="srhTxtTaishoNengetsuF" onchange="onChangeTaishoYM('srhTxtTaishoNengetsuF')" value="">
+						<input type="text" class="w60 right" maxlength="7" name="srhTxtTaishoNengetsuF" id="srhTxtTaishoNengetsuF" onchange="onChangeYM('srhTxtTaishoNengetsuF')" value="">
 						-
-						<input type="text" class="w60 right" maxlength="7" name="srhTxtTaishoNengetsuT" id="srhTxtTaishoNengetsuT" onchange="onChangeTaishoYM('srhTxtTaishoNengetsuT')" value="">
+						<input type="text" class="w60 right" maxlength="7" name="srhTxtTaishoNengetsuT" id="srhTxtTaishoNengetsuT" onchange="onChangeYM('srhTxtTaishoNengetsuT')" value="">
 						(YYYY/MM)
 					</td>
 				</tr>

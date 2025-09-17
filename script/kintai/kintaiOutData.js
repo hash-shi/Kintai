@@ -35,51 +35,6 @@ function setShoriSentaku(){
 }
 
 //****************************************************************************
-// 対象年月フォーカスアウト時のフォーマット編集処理
-//
-//
-//
-//
-//****************************************************************************
-function onChangeTaishoYM(targetId){
-	let strReplacing = $("#" + targetId).val();
-	let strReplaced = "";
-	//全角半角変換
-	strReplacing = strReplacing.replace(/[０-９]/g, function(s) {
-		return String.fromCharCode(s.charCodeAt(0) - 0xFEE0);
-	});
-	strReplacing = strReplacing.replace("／","/");
-
-	let checkIfNumber = /^[0-9]+$/;
-	
-	// 日付のフォーマットを変換する
-	// 全て数字で6文字の場合、YYYYMMとする
-	if(strReplacing.length == 6 && checkIfNumber.test(strReplacing)) {
-		strReplaced += strReplacing.substring(0, 4);
-		strReplaced += "/";
-		strReplaced += strReplacing.substring(4, 6);
-	}
-	// 全て数字で5文字の場合、YYYYMとする
-	else if(strReplacing.length == 5 && checkIfNumber.test(strReplacing)) {
-		strReplaced += strReplacing.substring(0, 4);
-		strReplaced += "/0";
-		strReplaced += strReplacing.substring(4, 5);
-	}
-	// スラッシュ区切りの場合、YYYY/0Mとする
-	else if(strReplacing.includes("/")) {
-		let parts = strReplacing.split("/");
-		let y = parts[0];
-		let m = (parts[1] || "").padStart(2,"0");
-		strReplaced = y + "/" + m;
-	}
-	// それ以外の場合、そのまま
-	else {
-		strReplaced = strReplacing;
-	}
-
-	$("#" + targetId).val(strReplaced);
-}
-//****************************************************************************
 // onDownload
 //
 //
