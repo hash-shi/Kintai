@@ -50,7 +50,7 @@
 					<tr>
 						<td class="title center w150 req">現在処理年月度</td>
 						<td class="value w500">
-						<input type="text" class="" style="width: 80px; text-align: right;" " name="txtGenzaishoriNengetsudo" id="txtGenzaishoriNengetsudo" maxlength="7" value="" class="w80">(YYYY/MM)</td>
+						<input type="text"  class="w80" style="width: 80px; text-align: right;" " name="txtGenzaishoriNengetsudo" id="txtGenzaishoriNengetsudo" maxlength="7" onchange="onChangeYM('txtGenzaishoriNengetsudo')" value="">(YYYY/MM)</td>
 					</tr>
 
 					<tr>
