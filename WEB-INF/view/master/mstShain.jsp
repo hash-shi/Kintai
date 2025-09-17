@@ -266,7 +266,7 @@ ArrayList<HashMap<String, String>> mstKubun0013 = (ArrayList<HashMap<String, Str
 				<tr>
 					<td class="title center w150">退職年月日</td>
 					<td class="value w500">
-						<input type="text" class="w80"  maxlength="10"  name="txtTaisyokuDate" id="txtTaisyokuDate"  value="" onchange="onChangeTaisyokuDate()">
+						<input type="text" class="w80"  maxlength="10"  name="txtTaisyokuDate" id="txtTaisyokuDate"  value="" onchange="onChangeYMD('txtTaisyokuDate')">
 						(YYYY/MM/DD)
 					</td>
 				</tr>

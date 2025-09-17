@@ -305,64 +305,6 @@ function renderEigyoshoTable() {
 }
 
 //****************************************************************************
-// 退職年月日フォーカスアウト時のフォーマット編集処理
-//
-//
-//
-//
-//****************************************************************************
-
-function onChangeTaisyokuDate(){
-	let strReplacing = $("#txtTaisyokuDate").val().trim();
-	let strReplaced = "";
-	
-	// 全角→半角
-	strReplacing = strReplacing.replace(/[０-９]/g, function(s) {
-		return String.fromCharCode(s.charCodeAt(0) - 0xFEE0);
-	});
-	// ／や/を統一
-	strReplacing = strReplacing.replace(/[／\/]/g,"/");
-	
-	// --- 数字だけで入力された場合 ---
-	let checkIfNumber = /^[0-9]+$/;
-	if (checkIfNumber.test(strReplacing)) {
-		if(strReplacing.length === 8) {
-			// YYYYMMDD → YYYY/MM/DD
-			let y = strReplacing.substring(0, 4);
-			let m = strReplacing.substring(4, 6);
-			let d = strReplacing.substring(6, 8);
-			strReplaced = y + "/" + m + "/" + d;
-		} else if(strReplacing.length === 7) {
-			// YYYYMDD or YYYYMMD→ YYYY/MDD or YYYY/MMD
-			let y = strReplacing.substring(0, 4);
-			let md = strReplacing.substring(4); // 5〜7文字目
-			strReplaced = y + "/" + md; 
-		} else if(strReplacing.length === 6) {
-			// YYYYMD → YYYY/0M/0D
-			let y = strReplacing.substring(0, 4);
-			let m = "0" + strReplacing.substring(4, 5);
-			let d = "0" + strReplacing.substring(5, 6);
-			strReplaced = y + "/" + m + "/" + d;
-		}
-	}
-	
-	// --- スラッシュ区切りで入力された場合 (YYYY/M/D) ---
-	if(strReplaced === ""){
-		let parts = strReplacing.split("/");
-		if(parts.length === 3){
-			let y = parts[0];
-			let m = parts[1].padStart(2,"0");
-			let d = parts[2].padStart(2,"0");
-			strReplaced = y + "/" + m + "/" + d;
-		} else {
-			strReplaced = strReplacing;
-		}
-	}
-	
-	$("#txtTaisyokuDate").val(strReplaced);
-}
-
-//****************************************************************************
 // onDelete
 //
 //
