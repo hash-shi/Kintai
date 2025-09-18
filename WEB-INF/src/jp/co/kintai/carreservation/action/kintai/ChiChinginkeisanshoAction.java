@@ -968,6 +968,7 @@ public class ChiChinginkeisanshoAction extends PJActionBase {
 		sql.append(" WITH CteNissu AS ");
 		sql.append(" ( ");
 		
+		// 現行ソースのコメント　Start ChinginShinseiKbn1, 2が両方とも'00'でないものの中から、'02'でないものの日数の和
 		sql.append("     SELECT ");
 		sql.append("         '01' AS Kbn, ");
 		sql.append("         SUM(Q1.ChinginShinseiNisuu) AS ChinginShinseiNisuu ");
@@ -996,8 +997,9 @@ public class ChiChinginkeisanshoAction extends PJActionBase {
 		sql.append("             AND MEISAI.JitsudoJikan = 0 ");
 		
 		sql.append("      ) Q1 ");
-		sql.append("      WHERE Q1.ChinginShinseiKbn1 <> '04' AND Q1.ChinginShinseiKbn2 <> '04' ");
-		sql.append("            AND Q1.ChinginKbn NOT IN ('05', '06') "); // 有給、半給は除く
+		sql.append("      WHERE Q1.ChinginShinseiKbn1 <> '04' AND Q1.ChinginShinseiKbn2 <> '04' AND Q1.ChinginShinseiKbn3 <> '04' ");//休日出勤を除く
+		sql.append("            AND Q1.ChinginKbn NOT IN ('05', '06') "); // 有給、半給は除く	TODO 特給も除く必要がある
+		// End
 		
 		sql.append("     UNION ALL ");
 
@@ -1012,9 +1014,8 @@ public class ChiChinginkeisanshoAction extends PJActionBase {
 		sql.append("         AND M1.Code <> '01' ");
 		sql.append("     WHERE ");
 		sql.append("         MEISAI.ShusshaJi <> '00' ");
-		sql.append("         AND MEISAI.ShainNO = ? ");
 		sql.append("         AND MEISAI.TaishoNenGetsudo = ? ");
-		sql.append("         and MEISAI.ChinginShinseiKbn1 <> '02' and MEISAI.ChinginShinseiKbn2 <> '02' and MEISAI.ChinginShinseiKbn3 <> '02' ");
+		sql.append("         AND MEISAI.ShainNO = ? ");
 		sql.append("     GROUP BY ");
 		sql.append("         LEFT(M1.GroupCode1, 2) ");
 		sql.append(" ) ");
