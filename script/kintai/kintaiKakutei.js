@@ -195,54 +195,6 @@ function onKakuteiKaijo(){
 }
 
 //****************************************************************************
-// onRecalc
-//
-//
-//
-//
-//****************************************************************************
-function onRecalc(){
-	//更新処理呼び出し
-	proc("recalc", {}, function(data){
-		
-		if (data == undefined){ return; }
-		if (data["contents"] == undefined){ return; }
-			
-		let contents		= data["contents"];
-		if (contents["result"] == undefined){ return; }
-		$("#nyuryokuArea").css("visibility", "");
-		$("#nyuryokuArea").addClass("upd");
-		$("#buttonArea").css("visibility", "");
-		$("#srhTxtTaishoYM").focus();
-		
-		//更新処理に備え、検索条件を保持
-		$("#txtTaishoYM").val($("#srhTxtTaishoYM").val());
-
-		let result			= contents["result"];
-
-		onDisplayNyuryokuArea(result);
-
-		// 全選択チェックボックスの取得
-		const selectAllCheckbox = document.getElementById('cbxKakuteiAll');
-		// 個別チェックボックスの取得
-		const checkboxes = document.querySelectorAll('.cbxKakutei');
-						
-		// 初期状態で全選択
-		selectAllCheckbox.checked = true;
-		selectAllCheckbox.value = "01";
-		checkboxes.forEach(checkbox => {
-			checkbox.checked = true;
-			checkbox.value	 = selectAllCheckbox.value;
-		});
-
-		let kintaiKakuteiResultAll = [];
-		kintaiKakuteiResultAll = result;
-		$("#txtKakuteiCount").val(kintaiKakuteiResultAll.length);
-
-	});
-}
-
-//****************************************************************************
 // onKakutei
 //
 //
@@ -294,25 +246,6 @@ function onKeyEventF02() {
 	if (display == "visible") {
 		// 該当の処理を呼び出す。
 		onKakuteiKaijo();
-	}
-}
-
-//****************************************************************************
-// ファンクションキーF8
-//
-//
-//
-//
-//****************************************************************************
-function onKeyEventF08(){
-	
-	// buttonAreaの表示状態を取得
-		var display = $("#buttonArea").css("visibility");
-		
-		// buttonAreaが非表示(初期表示時)はスキップする。
-		if (display == "visible") {
-			// 該当の処理を呼び出す。
-		onRecalc();
 	}
 }
 
