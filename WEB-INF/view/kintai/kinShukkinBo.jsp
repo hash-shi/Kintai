@@ -42,7 +42,7 @@
 							<a >対象年月</a>
 						</td>
 						<td class="value w100">
-							<input type="text" class=""  style="width: 80px; text-align: right;" name="srhTxtTaishoYM" id="srhTxtTaishoYM" value="<%=UtilEscape.htmlspecialchars(taishoYM) %>" maxlength="7" onblur="onChangeTaishoYM();" autofocus onfocus="this.setSelectionRange(7, 7)">
+							<input type="text" class=""  style="width: 80px; text-align: right;" name="srhTxtTaishoYM" id="srhTxtTaishoYM" value="<%=UtilEscape.htmlspecialchars(taishoYM) %>" maxlength="7" onblur="onChangeYM('srhTxtTaishoYM');" autofocus onfocus="this.setSelectionRange(7, 7)">
 							<input type="hidden" name="txtTaishoYM" id="txtTaishoYM" value="<%=UtilEscape.htmlspecialchars(taishoYM) %>">
 						</td>
 						<td class="title center w100 req">
