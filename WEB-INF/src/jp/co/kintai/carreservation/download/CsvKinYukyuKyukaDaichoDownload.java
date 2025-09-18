@@ -638,6 +638,6 @@ public class CsvKinYukyuKyukaDaichoDownload extends DownloadBase {
 		// CSVデータの格納
 		this.setData(csvString.toString().getBytes("Shift_JIS"));
 		// 名前を付けて保存
-		this.setFilename("csvKinYukyuKyukaDaicho_" + formattedDateTime + ".csv");
+		this.setFilename("CsvKinYukyuKyukaDaicho_" + formattedDateTime + ".csv");
 	}
 }

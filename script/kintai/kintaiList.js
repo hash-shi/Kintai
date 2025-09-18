@@ -129,7 +129,7 @@ function setShoriSentaku(){
 	$("#srhTxtShainNoT").val(shainNo);
 	getShainName('srhTxtShainNoT', 'srhTxtShainNameT');
 	// 条件
-	$("#srhSelJoken option[value='00']").prop('selected', true);
+	$("#srhSelJoken option[value='']").prop('selected', true);
 	// 出力順
 	$("#srhRdoOrder[value='01']").prop('checked', true);	
 	// 出力形式

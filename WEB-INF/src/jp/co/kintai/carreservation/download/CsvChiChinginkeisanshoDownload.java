@@ -420,7 +420,7 @@ public class CsvChiChinginkeisanshoDownload extends DownloadBase {
 		// CSVデータの格納
 		this.setData(csvString.toString().getBytes("Shift_JIS"));
 		// 名前を付けて保存
-		this.setFilename("csvChiChinginkeisansho_" + formattedDateTime + ".csv");
+		this.setFilename("CsvChiChinginkeisansho_" + formattedDateTime + ".csv");
 		
 	}
 }

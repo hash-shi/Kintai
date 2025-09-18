@@ -629,7 +629,7 @@ public class PdfKinYukyuKyukaDaichoDownload extends DownloadBase {
 				String nendo = record.get("TaishoNendo");
 				String shainNo = record.get("ShainNO");
 				
-				String key = nendo + "_" + shainNo;
+				String key = nendo + "年分_" + shainNo;
 				
 				// シート作成＆コピー
 				Worksheet newSheet = workbook.getWorksheets().add(key);
