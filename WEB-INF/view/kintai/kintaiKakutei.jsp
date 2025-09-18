@@ -52,6 +52,7 @@
 	
 	<div class="buttonArea right" id="buttonArea" style="visibility:hidden;">
 	    <button type="button" onclick="onKakuteiKaijo();">確定解除 [ F2 ] </button>
+	    <button type="button" onclick="onRecalc();">再表示 [ F8 ]</button>
 		<button type="button" onclick="onKakutei();">確定 [ F9 ] </button>
 	</div>
 	

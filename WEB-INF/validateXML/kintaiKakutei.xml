@@ -21,7 +21,15 @@
 			</check>
 		</variable>
 	</proc>
-
+	
+	<proc func="recalc">
+		<variable name="dummy" dispName="">
+			<check class="KintaiKakuteiValidate" message="更新処理でエラーが発生しました。">
+				<param name="count">txtKakuteiCount</param>
+			</check>
+		</variable>
+	</proc>
+	
 	<proc func="kaijo">
 		<variable name="dummy" dispName="">
 			<check class="KintaiKakuteiNotHonshaShainValidate" message="確定解除は本社ユーザのみ可能です。"></check>
