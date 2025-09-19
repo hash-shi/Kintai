@@ -18,7 +18,7 @@
 		 	</table>
 			<table>
 				<tr>
-					<td class="title center w100">
+					<td class="title center w100 req">
 						<a href="#" onclick="opnDialog('srhMstBusho','srhTxtBushoCode'); return false;">部署</a>
 					</td>
 					<td class="value w165">

@@ -16,14 +16,14 @@
 			</table>
 			<table>
 				<tr>
-					<td class="title center w100">
+					<td class="title center w100 req">
 						<a href="#" onclick="opnDialog('srhMstKubun','srhTxtKbnCode,srhTxtCode',''); return false;">区分コード</a>
 					</td>
 					<td class="value w90">
 						<input type="text" class="w50" maxlength="4" name="srhTxtKbnCode" id="srhTxtKbnCode" value="" onblur="getKbnName('srhTxtKbnCode', 'srhTxtKbnCode','');"  autofocus>
 						<img class="img border" src="./images/search.png"  onclick="opnDialog('srhMstKubun','srhTxtKbnCode,srhTxtCode','');">
 					</td>
-					<td class="title center w100">
+					<td class="title center w100 req">
 						<a href="#" onclick="opnDialog('srhMstKubun','srhTxtKbnCode,srhTxtCode',''); return false;">コード</a>
 					</td>
 					<td class="value w140">

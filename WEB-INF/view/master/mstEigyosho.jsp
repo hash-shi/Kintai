@@ -20,7 +20,7 @@
 			</table>
 			<table>
 				<tr>
-					<td class="title center w100">
+					<td class="title center w100 req">
 						<a href="#" onclick="opnDialog('srhMstEigyosho','srhTxtEigyoshoCode'); return false;">営業所</a>
 					</td>
 					<td class="value w165">
