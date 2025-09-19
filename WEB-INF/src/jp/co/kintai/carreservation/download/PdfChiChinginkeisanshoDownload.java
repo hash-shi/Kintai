@@ -622,26 +622,6 @@ public class PdfChiChinginkeisanshoDownload extends DownloadBase {
 				String ShinseiTanka05 = formatAsCurrency(data.get(i).get("ShinseiTanka05"));
 				String ShinseiTanka09 = formatAsCurrency(data.get(i).get("ShinseiTanka09"));
 				String ShinseiTanka11 = formatAsCurrency(data.get(i).get("ShinseiTanka11"));
-//				int ShinseiTanka01_ = Integer.parseInt(data.get(i).get("ShinseiTanka01"));
-//				String ShinseiTanka01 = String.format("%,3d", ShinseiTanka01_);
-//				
-//				int ShinseiTanka04_ = Integer.parseInt(data.get(i).get("ShinseiTanka04"));
-//				String ShinseiTanka04 = String.format("%,3d", ShinseiTanka04_);
-//				
-//				int ShinseiTanka02_ = Integer.parseInt(data.get(i).get("ShinseiTanka02"));
-//				String ShinseiTanka02 = String.format("%,3d", ShinseiTanka02_);
-//				
-//				int ShinseiTanka03_ = Integer.parseInt(data.get(i).get("ShinseiTanka03"));
-//				String ShinseiTanka03 = String.format("%,3d", ShinseiTanka03_);
-//				
-//				int ShinseiTanka05_ = Integer.parseInt(data.get(i).get("ShinseiTanka05"));
-//				String ShinseiTanka05 = String.format("%,3d", ShinseiTanka05_);
-//				
-//				int ShinseiTanka09_ = Integer.parseInt(data.get(i).get("ShinseiTanka09"));
-//				String ShinseiTanka09 = String.format("%,3d", ShinseiTanka09_);
-//				
-//				int ShinseiTanka11_ = Integer.parseInt(data.get(i).get("ShinseiTanka11"));
-//				String ShinseiTanka11 = String.format("%,3d", ShinseiTanka11_);
 				
 				// 金額項目の値を３桁ごとにカンマ区切りにする
 				String ShinseiKingakuGoukei01 = formatAsCurrency(data.get(i).get("ShinseiKingakuGoukei01"));
@@ -652,30 +632,6 @@ public class PdfChiChinginkeisanshoDownload extends DownloadBase {
 				String ShinseiKingakuGoukei09 = formatAsCurrency(data.get(i).get("ShinseiKingakuGoukei09"));
 				String ShinseiKingakuGoukei11 = formatAsCurrency(data.get(i).get("ShinseiKingakuGoukei11"));
 				String ShinseiKingakuGoukeiGoukei = formatAsCurrency(data.get(i).get("ShinseiKingakuGoukeiGoukei"));
-				
-//				int ShinseiKingakuGoukei01_ = Integer.parseInt(data.get(i).get("ShinseiKingakuGoukei01"));
-//				String ShinseiKingakuGoukei01 = String.format("%,3d", ShinseiKingakuGoukei01_);
-//				
-//				int ShinseiKingakuGoukei04_ = Integer.parseInt(data.get(i).get("ShinseiKingakuGoukei04"));
-//				String ShinseiKingakuGoukei04 = String.format("%,3d", ShinseiKingakuGoukei04_);
-//				
-//				int ShinseiKingakuGoukei02_ = Integer.parseInt(data.get(i).get("ShinseiKingakuGoukei02"));
-//				String ShinseiKingakuGoukei02 = String.format("%,3d", ShinseiKingakuGoukei02_);
-//				
-//				int ShinseiKingakuGoukei03_ = Integer.parseInt(data.get(i).get("ShinseiKingakuGoukei03"));
-//				String ShinseiKingakuGoukei03 = String.format("%,3d", ShinseiKingakuGoukei03_);
-//				
-//				int ShinseiKingakuGoukei05_ = Integer.parseInt(data.get(i).get("ShinseiKingakuGoukei05"));
-//				String ShinseiKingakuGoukei05 = String.format("%,3d", ShinseiKingakuGoukei05_);
-//				
-//				int ShinseiKingakuGoukei09_ = Integer.parseInt(data.get(i).get("ShinseiKingakuGoukei09"));
-//				String ShinseiKingakuGoukei09 = String.format("%,3d", ShinseiKingakuGoukei09_);
-//				
-//				int ShinseiKingakuGoukei11_ = Integer.parseInt(data.get(i).get("ShinseiKingakuGoukei11"));
-//				String ShinseiKingakuGoukei11 = String.format("%,3d", ShinseiKingakuGoukei11_);
-//				
-//				int ShinseiKingakuGoukeiGoukei_ = Integer.parseInt(data.get(i).get("ShinseiKingakuGoukeiGoukei"));
-//				String ShinseiKingakuGoukeiGoukei = String.format("%,3d", ShinseiKingakuGoukeiGoukei_);
 				
 				// 特定のセルを取得し値を設定
 				// 新しいシートを作成した場合のみ上部と下部に値を設定
@@ -843,9 +799,11 @@ public class PdfChiChinginkeisanshoDownload extends DownloadBase {
 
 		
 	}
+	
+	// データがない場合は0を入れる
 	private String formatAsCurrency(String value) {
 	    if (value == null || value.isEmpty()) {
-	        return ""; // 空欄にする
+	        return "0";
 	    }
 	    return String.format("%,3d", Integer.parseInt(value));
 	}
