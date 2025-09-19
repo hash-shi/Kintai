@@ -998,7 +998,7 @@ public class ChiChinginkeisanshoAction extends PJActionBase {
 		
 		sql.append("      ) Q1 ");
 		sql.append("      WHERE Q1.ChinginShinseiKbn1 <> '04' AND Q1.ChinginShinseiKbn2 <> '04' AND Q1.ChinginShinseiKbn3 <> '04' ");//休日出勤を除く
-		sql.append("            AND Q1.ChinginKbn NOT IN ('05', '06') "); // 有給、半給は除く	TODO 特給も除く必要がある
+		sql.append("            AND Q1.ChinginKbn NOT IN ('05', '06', '11') "); // 有給、半給、特給は除く
 		// End
 		
 		sql.append("     UNION ALL ");
