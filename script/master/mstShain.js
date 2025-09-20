@@ -132,6 +132,10 @@ function getMstShain() {
 		getEigyoshoName('txtShoriKanoEigyoshoCode', 'txtShoriKanoEigyoshoName');
 		// 活性・非活性切り替え
 		updateActiveSwitch();
+		// 単価フィールドにカンマ付与
+		for (let i = 1; i <= 11; i++) {
+		    formatNumberWithComma("txtShinseiTanka" + String(i).padStart(2, '0'));
+		}
 	});
 }
 
@@ -305,6 +309,60 @@ function renderEigyoshoTable() {
 }
 
 //****************************************************************************
+// 単価系カンマ処理
+//
+//
+//
+//
+//****************************************************************************
+
+// フォーカス時にカンマを削除
+function removeCommasOnFocus(idOrElement) {
+	let $input = (typeof idOrElement === "string") 
+		? $("#" + idOrElement) 
+		: $(idOrElement);
+	
+	let val = $input.val();
+	if (val) {
+		$input.val(val.replace(/,/g, ""));
+	}
+}
+
+// カンマ付与（フォーカスアウト時）
+function formatNumberWithComma(idOrElement) {
+	let $input = (typeof idOrElement === "string") 
+		? $("#" + idOrElement) 
+		: $(idOrElement);
+	
+	let val = $input.val();
+	
+	if (!val) { 
+		$input.val("");
+		return;
+	}
+	
+	// 数字とカンマ以外の文字が含まれていたらそのまま返す
+	if (/[^0-9,]/.test(val)) {
+		return;
+	}
+	
+	// 数字部分だけ取り出す
+	let numeric = val.replace(/,/g, "");
+	
+	// カンマ付与
+	let withComma = numeric.replace(/\B(?=(\d{3})+(?!\d))/g, ",");
+	$input.val(withComma);
+}
+
+
+// カンマ削除処理（class="tanka-input" の項目を対象にする）
+function removeCommas() {
+	$(".tanka-input").each(function() {
+		$(this).val($(this).val().replace(/,/g, ""));
+	});
+}
+
+//****************************************************************************
 // onDelete
 //
 //
@@ -334,6 +392,9 @@ function onDelete() {
 //
 //****************************************************************************
 function onUpdate() {
+	
+	// 更新前にカンマを削除
+	removeCommas();
 
 	// 新規モードと更新モードで分岐
 	var isNew = $("#hdnIsNew").val();
