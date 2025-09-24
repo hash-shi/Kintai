@@ -1552,27 +1552,27 @@ public class ChiChinginkeisanshoAction extends PJActionBase {
 		pstmtf.addValue("String", jikanRecord.get("JikanGoukei"));
 
 		sql.append(" 	?, ");
-		pstmtf.addValue("String", jikanRecord.get("ShinseiTanka01"));
+		pstmtf.addValue("String", mstShain.get("ShinseiTanka01"));
 		sql.append(" 	?, ");
-		pstmtf.addValue("String", jikanRecord.get("ShinseiTanka02"));
+		pstmtf.addValue("String", mstShain.get("ShinseiTanka02"));
 		sql.append(" 	?, ");
-		pstmtf.addValue("String", jikanRecord.get("ShinseiTanka03"));
+		pstmtf.addValue("String", mstShain.get("ShinseiTanka03"));
 		sql.append(" 	?, ");
-		pstmtf.addValue("String", jikanRecord.get("ShinseiTanka04"));
+		pstmtf.addValue("String", mstShain.get("ShinseiTanka04"));
 		sql.append(" 	?, ");
-		pstmtf.addValue("String", jikanRecord.get("ShinseiTanka05"));
+		pstmtf.addValue("String", mstShain.get("ShinseiTanka05"));
 		sql.append(" 	?, ");
-		pstmtf.addValue("String", jikanRecord.get("ShinseiTanka06"));
+		pstmtf.addValue("String", mstShain.get("ShinseiTanka06"));
 		sql.append(" 	?, ");
-		pstmtf.addValue("String", jikanRecord.get("ShinseiTanka07"));
+		pstmtf.addValue("String", mstShain.get("ShinseiTanka07"));
 		sql.append(" 	?, ");
-		pstmtf.addValue("String", jikanRecord.get("ShinseiTanka08"));
+		pstmtf.addValue("String", mstShain.get("ShinseiTanka08"));
 		sql.append(" 	?, ");
-		pstmtf.addValue("String", jikanRecord.get("ShinseiTanka09"));
+		pstmtf.addValue("String", mstShain.get("ShinseiTanka09"));
 		sql.append(" 	?, ");
-		pstmtf.addValue("String", jikanRecord.get("ShinseiTanka10"));
+		pstmtf.addValue("String", mstShain.get("ShinseiTanka10"));
 		sql.append(" 	?, ");
-		pstmtf.addValue("String", jikanRecord.get("ShinseiTanka11"));
+		pstmtf.addValue("String", mstShain.get("ShinseiTanka11"));
 		
 		//時給日給区分 = "01"(時給)
 		if("01".equals(mstShain.get("JikyuNikkyuKbn"))) {
