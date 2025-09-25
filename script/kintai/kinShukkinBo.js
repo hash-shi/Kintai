@@ -673,8 +673,8 @@ function calcJitsudoJikan(nowRow){
 			let jikanJi = Math.floor(jikanWk / 60);
 			//3.勤怠申請時間の分部分を計算
 			let jikanFun = jikanWk % 60;
-			//4.実際に項目に表示する値を計算 TODO 小数点以下について分表示かパーセント表示か確認中
-//			jikanFun = Math.trunc((jikanFun / 60) * 100);//パーセント表示の場合、このコメントアウトを活性化
+			//4.実際に項目に表示する値を計算 小数点以下部分は、100分率表示とする(30分を0.5時間とする)
+			jikanFun = Math.trunc((jikanFun / 60) * 100);
 			let jikanDisp = String(jikanJi) + "." + (("00" + String(jikanFun)).slice(-2));
 			
 			kinShukkinBoResultAll[nowRow]["numJitsudoJikan"] = jikanDisp;
@@ -724,8 +724,8 @@ function calcShinseiJikan(nowCol, nowRow){
 			let jikanJi = Math.floor(jikanWk / 60);
 			//3.勤怠申請時間の分部分を計算
 			let jikanFun = jikanWk % 60;
-			//4.実際に項目に表示する値を計算 TODO 小数点以下について分表示かパーセント表示か確認中
-//			jikanFun = Math.trunc((jikanFun / 60) * 100);//パーセント表示の場合、このコメントアウトを活性化
+			//4.実際に項目に表示する値を計算 小数点以下部分は、100分率表示とする(30分を0.5時間とする)
+			jikanFun = Math.trunc((jikanFun / 60) * 100);
 			let jikanDisp = String(jikanJi) + "." + (("00" + String(jikanFun)).slice(-2));
 			
 			kinShukkinBoResultAll[nowRow]["numKintaiShinseiJikan" + nowCol] = jikanDisp;
