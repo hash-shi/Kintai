@@ -662,8 +662,6 @@ public class PdfKinYukyuKyukaDaichoDownload extends DownloadBase {
 				
 				int rowsPerBlock = 20;
 				
-				System.out.println(record);
-				
 				// 1から60までのデータを3ブロックに分けてセット
 				for (int i = 1; i <= 60; i++) {
 					String month = record.get("month" + i);

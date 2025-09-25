@@ -305,7 +305,7 @@ public class PdfChiChinginkeisanshoDownload extends DownloadBase {
 		sql.append(" 					ChinginShinseiJikan3 = 0 ");
 		sql.append(" 			) AS DECIMAL(4,1) ");
 		sql.append(" 		) AS VARCHAR ");
-		sql.append(" 	) AS ShinseiNisuuGoukei ");
+		sql.append(" 	) AS ShinseiNissuGoukei ");
 		
 		// 有給残 WHERE条件は対象年の4月から対象年月までの日数
 		sql.append(" 	,CAST ( ");
@@ -570,180 +570,226 @@ public class PdfChiChinginkeisanshoDownload extends DownloadBase {
 			Worksheet worksheetTmp = workbook.getWorksheets().get(0);
 			
 			int rowCnt = 0;
-			int pageCnt = 0;
+			int pageIndex = 0;
 			
 			for (int i = 0; i < data.size(); i++) {
+				String nengetsudo	= data.get(i).get("TaishoNenGetsudo");
+				String shainNo		= data.get(i).get("ShainNO");
+				
+				String key = nengetsudo + "_" + shainNo;
 				
 				// 最初のシートを作成
 				if(i == 0) {
 					// 新しいシートを作成
 					// シート名が重複しないように別名にする
-					Worksheet worksheetNew = workbook.getWorksheets().add(data.get(i).get("TaishoNenGetsudo") + "_" + data.get(i).get("ShainNO"));
+					Worksheet worksheetNew = workbook.getWorksheets().add(key);
 					//最初のシートを2番目のシートに複製する
 					worksheetNew.copyFrom(worksheetTmp);
 					// 行数カウントをリセットする
 					rowCnt = 0;
 					// ページ数を数える
-					pageCnt++;
+					pageIndex++;
 				}
 				// 社員Noが変わる場合はシートを新しく作成
-				else if(!(data.get(i-1).get("ShainNO").equals(data.get(i).get("ShainNO")))) {
+				else if(!(data.get(i-1).get("ShainNO").equals(shainNo))) {
 					// 新しいシートを作成
 					// シート名が重複しないように別名にする
-					Worksheet worksheetNew = workbook.getWorksheets().add(data.get(i).get("TaishoNenGetsudo") + "_" + data.get(i).get("ShainNO"));
+					Worksheet worksheetNew = workbook.getWorksheets().add(key);
 					//最初のシートを2番目のシートに複製する
 					worksheetNew.copyFrom(worksheetTmp);
 					// 行数カウントをリセットする
 					rowCnt = 0;
 					// ページ数を数える
-					pageCnt++;
+					pageIndex++;
 				} 
 				// 対象年月が変わる場合はシートを新しく作成
-				else if(!(data.get(i-1).get("TaishoNenGetsudo").equals(data.get(i).get("TaishoNenGetsudo")))) {
+				else if(!(data.get(i-1).get("TaishoNenGetsudo").equals(nengetsudo))) {
 					// 新しいシートを作成
 					// シート名が重複しないように別名にする
-					Worksheet worksheetNew = workbook.getWorksheets().add(data.get(i).get("TaishoNenGetsudo") + "_" + data.get(i).get("ShainNO"));
+					Worksheet worksheetNew = workbook.getWorksheets().add(key);
 					//最初のシートを2番目のシートに複製する
 					worksheetNew.copyFrom(worksheetTmp);
 					// 行数カウントをリセットする
 					rowCnt = 0;
 					// ページ数を数える
-					pageCnt++;
+					pageIndex++;
 				} 
 				
 				// 編集するワークシートを選択
-				Worksheet worksheet = workbook.getWorksheets().get(data.get(i).get("TaishoNenGetsudo") + "_" + data.get(i).get("ShainNO"));
+				Worksheet worksheet = workbook.getWorksheets().get(key);
+				
+				String sakuseiDate 			= data.get(i).get("SakuseiDate");
+				String kakuteiKbn 			= data.get(i).get("KakuteiKbn");
+				String eigyoshoName 		= data.get(i).get("EigyoshoName");
+				String bushoName 			= data.get(i).get("BushoName");
+				String shainName			= data.get(i).get("ShainName");
+				String kinmuKaishiJikoku	= data.get(i).get("KinmuKaishiJikoku");
+				String kinmuShuryoJikoku	= data.get(i).get("KinmuShuryoJikoku");
+				String KeiyakuJitsudoJikan 	= data.get(i).get("KeiyakuJitsudoJikan");
+				
+				String shinseiNissu01 			= data.get(i).get("ShinseiNissu01");
+				String shinseiNissu04 			= data.get(i).get("ShinseiNissu04");
+				String shinseiNissu02 			= data.get(i).get("ShinseiNissu02");
+				String shinseiNissu03 			= data.get(i).get("ShinseiNissu03");
+				String shinseiNissu05 			= data.get(i).get("ShinseiNissu05");
+				String shinseiNissu09 			= data.get(i).get("ShinseiNissu09");
+				String shinseiNissu11 			= data.get(i).get("ShinseiNissu11");
+				String shinseiNissuKyujitsu		= data.get(i).get("ShinseiNissuKyujitsu");
+				String shinseiNisuuGoukei		= data.get(i).get("ShinseiNissuGoukei");
+				
+				String shinseiJikan01 		= data.get(i).get("ShinseiJikan01");
+				String shinseiJikan04 		= data.get(i).get("ShinseiJikan04");
+				String shinseiJikan02 		= data.get(i).get("ShinseiJikan02");
+				String shinseiJikan03 		= data.get(i).get("ShinseiJikan03");
+				String shinseiJikan05		= data.get(i).get("ShinseiJikan05");
+				String shinseiJikan11 		= data.get(i).get("ShinseiJikan11");
+				String shinseiJikanGoukei 	= data.get(i).get("ShinseiJikanGoukei");
 				
 				// 単価項目の値を３桁ごとにカンマ区切りにする
-				String ShinseiTanka01 = formatAsCurrency(data.get(i).get("ShinseiTanka01"));
-				String ShinseiTanka04 = formatAsCurrency(data.get(i).get("ShinseiTanka04"));
-				String ShinseiTanka02 = formatAsCurrency(data.get(i).get("ShinseiTanka02"));
-				String ShinseiTanka03 = formatAsCurrency(data.get(i).get("ShinseiTanka03"));
-				String ShinseiTanka05 = formatAsCurrency(data.get(i).get("ShinseiTanka05"));
-				String ShinseiTanka09 = formatAsCurrency(data.get(i).get("ShinseiTanka09"));
-				String ShinseiTanka11 = formatAsCurrency(data.get(i).get("ShinseiTanka11"));
+				String shinseiTanka01 = formatAsCurrency(data.get(i).get("ShinseiTanka01"));
+				String shinseiTanka04 = formatAsCurrency(data.get(i).get("ShinseiTanka04"));
+				String shinseiTanka02 = formatAsCurrency(data.get(i).get("ShinseiTanka02"));
+				String shinseiTanka03 = formatAsCurrency(data.get(i).get("ShinseiTanka03"));
+				String shinseiTanka05 = formatAsCurrency(data.get(i).get("ShinseiTanka05"));
+				String shinseiTanka09 = formatAsCurrency(data.get(i).get("ShinseiTanka09"));
+				String shinseiTanka11 = formatAsCurrency(data.get(i).get("ShinseiTanka11"));
 				
 				// 金額項目の値を３桁ごとにカンマ区切りにする
-				String ShinseiKingakuGoukei01 = formatAsCurrency(data.get(i).get("ShinseiKingakuGoukei01"));
-				String ShinseiKingakuGoukei04 = formatAsCurrency(data.get(i).get("ShinseiKingakuGoukei04"));
-				String ShinseiKingakuGoukei02 = formatAsCurrency(data.get(i).get("ShinseiKingakuGoukei02"));
-				String ShinseiKingakuGoukei03 = formatAsCurrency(data.get(i).get("ShinseiKingakuGoukei03"));
-				String ShinseiKingakuGoukei05 = formatAsCurrency(data.get(i).get("ShinseiKingakuGoukei05"));
-				String ShinseiKingakuGoukei09 = formatAsCurrency(data.get(i).get("ShinseiKingakuGoukei09"));
-				String ShinseiKingakuGoukei11 = formatAsCurrency(data.get(i).get("ShinseiKingakuGoukei11"));
-				String ShinseiKingakuGoukeiGoukei = formatAsCurrency(data.get(i).get("ShinseiKingakuGoukeiGoukei"));
+				String shinseiKingakuGoukei01		= formatAsCurrency(data.get(i).get("ShinseiKingakuGoukei01"));
+				String shinseiKingakuGoukei04		= formatAsCurrency(data.get(i).get("ShinseiKingakuGoukei04"));
+				String shinseiKingakuGoukei02		= formatAsCurrency(data.get(i).get("ShinseiKingakuGoukei02"));
+				String shinseiKingakuGoukei03		= formatAsCurrency(data.get(i).get("ShinseiKingakuGoukei03"));
+				String shinseiKingakuGoukei05		= formatAsCurrency(data.get(i).get("ShinseiKingakuGoukei05"));
+				String shinseiKingakuGoukei09		= formatAsCurrency(data.get(i).get("ShinseiKingakuGoukei09"));
+				String shinseiKingakuGoukei11		= formatAsCurrency(data.get(i).get("ShinseiKingakuGoukei11"));
+				String shinseiKingakuGoukeiGoukei	= formatAsCurrency(data.get(i).get("ShinseiKingakuGoukeiGoukei"));
+				
+				String tokkiJiko = data.get(i).get("TokkiJiko1") + data.get(i).get("TokkiJiko2") + data.get(i).get("TokkiJiko3") + data.get(i).get("TokkiJiko4");
+				String yukyuKyukaZan = data.get(i).get("YukyuKyukaZan");
 				
 				// 特定のセルを取得し値を設定
 				// 新しいシートを作成した場合のみ上部と下部に値を設定
 				if(i == 0 
-						|| !(data.get(i-1).get("ShainNO").equals(data.get(i).get("ShainNO"))) 
-						|| !(data.get(i-1).get("TaishoNenGetsudo").equals(data.get(i).get("TaishoNenGetsudo")))) {
+						|| !(data.get(i-1).get("ShainNO").equals(shainNo)) 
+						|| !(data.get(i-1).get("TaishoNenGetsudo").equals(nengetsudo))) {
 					// 上部：基本情報を設定
-					worksheet.getCellRange("AR3").setText(data.get(i).get("SakuseiDate"));
-					worksheet.getCellRange("AX3").setText("PAGE:   " + pageCnt);
-					worksheet.getCellRange("A4").setText(data.get(i).get("TaishoNenGetsudo"));
-					worksheet.getCellRange("AR4").setText(data.get(i).get("KakuteiKbn"));
-					worksheet.getCellRange("A5").setText(data.get(i).get("EigyoshoName"));
-					worksheet.getCellRange("K5").setText(data.get(i).get("BushoName"));
-					worksheet.getCellRange("AN5").setText(data.get(i).get("ShainNO"));
-					worksheet.getCellRange("AR5").setText(data.get(i).get("ShainName"));
-					worksheet.getCellRange("K7").setText(data.get(i).get("KinmuKaishiJikoku"));
-					worksheet.getCellRange("Q7").setText(data.get(i).get("KinmuShuryoJikoku"));
-					worksheet.getCellRange("AA7").setText(data.get(i).get("KeiyakuJitsudoJikan"));
+					worksheet.getCellRange("AR3").setText(sakuseiDate);
+					worksheet.getCellRange("AX3").setText("PAGE:   " + pageIndex);
+					worksheet.getCellRange("A4").setText(nengetsudo);
+					worksheet.getCellRange("AR4").setText(kakuteiKbn);
+					worksheet.getCellRange("A5").setText(eigyoshoName);
+					worksheet.getCellRange("K5").setText(bushoName);
+					worksheet.getCellRange("AN5").setText(shainNo);
+					worksheet.getCellRange("AR5").setText(shainName);
+					worksheet.getCellRange("K7").setText(kinmuKaishiJikoku);
+					worksheet.getCellRange("Q7").setText(kinmuShuryoJikoku);
+					worksheet.getCellRange("AA7").setText(KeiyakuJitsudoJikan);
 					
 					// 下部：集計内容を設定
-					worksheet.getCellRange("F44").setText(data.get(i).get("ShinseiNissu01"));
-					worksheet.getCellRange("I44").setText(data.get(i).get("ShinseiJikan01"));
-					worksheet.getCellRange("L44").setText(ShinseiTanka01);
-					worksheet.getCellRange("O44").setText(ShinseiKingakuGoukei01);
-					worksheet.getCellRange("F45").setText(data.get(i).get("ShinseiNissu04"));
-					worksheet.getCellRange("I45").setText(data.get(i).get("ShinseiJikan04"));
-					worksheet.getCellRange("L45").setText(ShinseiTanka04);
-					worksheet.getCellRange("O45").setText(ShinseiKingakuGoukei04);
-					worksheet.getCellRange("F46").setText(data.get(i).get("ShinseiNissu02"));
-					worksheet.getCellRange("I46").setText(data.get(i).get("ShinseiJikan02"));
-					worksheet.getCellRange("L46").setText(ShinseiTanka02);
-					worksheet.getCellRange("O46").setText(ShinseiKingakuGoukei02);
-					worksheet.getCellRange("F47").setText(data.get(i).get("ShinseiNissu03"));
-					worksheet.getCellRange("I47").setText(data.get(i).get("ShinseiJikan03"));
-					worksheet.getCellRange("L47").setText(ShinseiTanka03);
-					worksheet.getCellRange("O47").setText(ShinseiKingakuGoukei03);
-					worksheet.getCellRange("F48").setText(data.get(i).get("ShinseiNissu05"));
-					worksheet.getCellRange("I48").setText(data.get(i).get("ShinseiJikan05"));
-					worksheet.getCellRange("L48").setText(ShinseiTanka05);
-					worksheet.getCellRange("O48").setText(ShinseiKingakuGoukei05);
-					worksheet.getCellRange("F49").setText(data.get(i).get("ShinseiNissu09"));
-					worksheet.getCellRange("L49").setText(ShinseiTanka09);
-					worksheet.getCellRange("O49").setText(ShinseiKingakuGoukei09);
-					worksheet.getCellRange("F50").setText(data.get(i).get("ShinseiNissu11"));
-					worksheet.getCellRange("I50").setText(data.get(i).get("ShinseiJikan11"));
-					worksheet.getCellRange("L50").setText(ShinseiTanka11);
-					worksheet.getCellRange("O50").setText(ShinseiKingakuGoukei11);
-					worksheet.getCellRange("F51").setText(data.get(i).get("ShinseiNissuKyujitsu"));
-					worksheet.getCellRange("F52").setText(data.get(i).get("ShinseiNisuuGoukei"));
-					worksheet.getCellRange("I52").setText(data.get(i).get("ShinseiJikanGoukei"));
-					worksheet.getCellRange("O52").setText(ShinseiKingakuGoukeiGoukei);
+					worksheet.getCellRange("F44").setText(shinseiNissu01);
+					worksheet.getCellRange("F45").setText(shinseiNissu04);
+					worksheet.getCellRange("F46").setText(shinseiNissu02);
+					worksheet.getCellRange("F47").setText(shinseiNissu03);
+					worksheet.getCellRange("F48").setText(shinseiNissu05);
+					worksheet.getCellRange("F49").setText(shinseiNissu09);
+					worksheet.getCellRange("F50").setText(shinseiNissu11);
+					worksheet.getCellRange("F51").setText(shinseiNissuKyujitsu);
+					worksheet.getCellRange("F52").setText(shinseiNisuuGoukei);
+					worksheet.getCellRange("I44").setText(shinseiJikan01);
+					worksheet.getCellRange("I45").setText(shinseiJikan04);
+					worksheet.getCellRange("I46").setText(shinseiJikan02);
+					worksheet.getCellRange("I47").setText(shinseiJikan03);
+					worksheet.getCellRange("I48").setText(shinseiJikan05);
+					worksheet.getCellRange("I50").setText(shinseiJikan11);
+					worksheet.getCellRange("I52").setText(shinseiJikanGoukei);
+					worksheet.getCellRange("L44").setText(shinseiTanka01);
+					worksheet.getCellRange("L45").setText(shinseiTanka04);
+					worksheet.getCellRange("L46").setText(shinseiTanka02);
+					worksheet.getCellRange("L47").setText(shinseiTanka03);
+					worksheet.getCellRange("L48").setText(shinseiTanka05);
+					worksheet.getCellRange("L49").setText(shinseiTanka09);
+					worksheet.getCellRange("L50").setText(shinseiTanka11);
+					worksheet.getCellRange("O44").setText(shinseiKingakuGoukei01);
+					worksheet.getCellRange("O45").setText(shinseiKingakuGoukei04);
+					worksheet.getCellRange("O46").setText(shinseiKingakuGoukei02);
+					worksheet.getCellRange("O47").setText(shinseiKingakuGoukei03);
+					worksheet.getCellRange("O48").setText(shinseiKingakuGoukei05);
+					worksheet.getCellRange("O49").setText(shinseiKingakuGoukei09);
+					worksheet.getCellRange("O50").setText(shinseiKingakuGoukei11);
+					worksheet.getCellRange("O52").setText(shinseiKingakuGoukeiGoukei);
 					
-					worksheet.getCellRange("AE44").setText(data.get(i).get("TokkiJiko1") + data.get(i).get("TokkiJiko2") 
-														+ data.get(i).get("TokkiJiko3") + data.get(i).get("TokkiJiko4"));
-					worksheet.getCellRange("AE52").setText(data.get(i).get("YukyuKyukaZan"));
+					worksheet.getCellRange("AE44").setText(tokkiJiko);
+					worksheet.getCellRange("AE52").setText(yukyuKyukaZan);
 				}
 				
+				String month				= data.get(i).get("Month");
+				String day					= data.get(i).get("Day");
+				String yobiKbn				= data.get(i).get("YobiKbn");
+				String shusshaJikoku		= data.get(i).get("ShusshaJikoku");
+				String taishaJikoku			= data.get(i).get("TaishaJikoku");
+				String jitsudoJikan			= data.get(i).get("JitsudoJikan");
+				String chinginShinseiKbn1	= data.get(i).get("ChinginShinseiKbn1");
+				String chinginShinseiJikan1	= data.get(i).get("ChinginShinseiJikan1");
+				String chinginShinseiKbn2	= data.get(i).get("ChinginShinseiKbn2");
+				String chinginShinseiJikan2	= data.get(i).get("ChinginShinseiJikan2");
+				String chinginShinseiKbn3	= data.get(i).get("ChinginShinseiKbn3");
+				String chinginShinseiJikan3	= data.get(i).get("ChinginShinseiJikan3");
+				
 				// 中央部：明細部を設定
-				worksheet.getCellRange("A" + (11 + rowCnt)).setText(data.get(i).get("Month"));
-				worksheet.getCellRange("B" + (11 + rowCnt)).setText(data.get(i).get("Day"));
-				worksheet.getCellRange("C" + (11 + rowCnt)).setText(data.get(i).get("YobiKbn"));
+				worksheet.getCellRange("A" + (11 + rowCnt)).setText(month);
+				worksheet.getCellRange("B" + (11 + rowCnt)).setText(day);
+				worksheet.getCellRange("C" + (11 + rowCnt)).setText(yobiKbn);
 				
 				// 勤務時間のデータがない場合は空文字を出力	
 				// 「出社時刻　～　退社時刻」の形で表示
-				if(data.get(i).get("ShusshaJikoku").isBlank() && data.get(i).get("TaishaJikoku").isBlank()) {
+				if(shusshaJikoku.isBlank() && taishaJikoku.isBlank()) {
 					worksheet.getCellRange("E" + (11 + rowCnt)).setText("");
 				} else {
-					worksheet.getCellRange("E" + (11 + rowCnt)).setText(data.get(i).get("ShusshaJikoku") + " ～ " + data.get(i).get("TaishaJikoku"));
+					worksheet.getCellRange("E" + (11 + rowCnt)).setText(shusshaJikoku + " ～ " + taishaJikoku);
 				}
 				
 				// 勤務時間のデータがない場合は空文字を出力
 				// 未入力項目に0.00が出力されることを防ぐ
-				if(data.get(i).get("JitsudoJikan").isBlank() || data.get(i).get("JitsudoJikan").equals("0.00")) {
+				if(jitsudoJikan.isBlank() || jitsudoJikan.equals("0.00")) {
 					worksheet.getCellRange("L" + (11 + rowCnt)).setText("");
 				} else {
-					worksheet.getCellRange("L" + (11 + rowCnt)).setText(data.get(i).get("JitsudoJikan"));
+					worksheet.getCellRange("L" + (11 + rowCnt)).setText(jitsudoJikan);
 				}
 				
-				worksheet.getCellRange("O" + (11 + rowCnt)).setText(data.get(i).get("ChinginShinseiKbn1"));
+				worksheet.getCellRange("O" + (11 + rowCnt)).setText(chinginShinseiKbn1);
 				
 				// 申請時間1のデータがない場合は空文字を出力
 				// 未入力項目に0.00が出力されることを防ぐ
-				if(data.get(i).get("ChinginShinseiJikan1").isBlank() || data.get(i).get("ChinginShinseiJikan1").equals("0.00")) {
+				if(chinginShinseiJikan1.isBlank() || chinginShinseiJikan1.equals("0.00")) {
 					worksheet.getCellRange("S" + (11 + rowCnt)).setText("");
 				} else {
-					worksheet.getCellRange("S" + (11 + rowCnt)).setText(data.get(i).get("ChinginShinseiJikan1"));
+					worksheet.getCellRange("S" + (11 + rowCnt)).setText(chinginShinseiJikan1);
 				}
 				
-				worksheet.getCellRange("V" + (11 + rowCnt)).setText(data.get(i).get("ChinginShinseiKbn2"));
+				worksheet.getCellRange("V" + (11 + rowCnt)).setText(chinginShinseiKbn2);
 				
 				// 申請時間2のデータがない場合は空文字を出力
 				// 未入力項目に0.00が出力されることを防ぐ
-				if(data.get(i).get("ChinginShinseiJikan2").isBlank() || data.get(i).get("ChinginShinseiJikan2").equals("0.00")) {
+				if(chinginShinseiJikan2.isBlank() || chinginShinseiJikan2.equals("0.00")) {
 					worksheet.getCellRange("Z" + (11 + rowCnt)).setText("");
 				} else {
-					worksheet.getCellRange("Z" + (11 + rowCnt)).setText(data.get(i).get("ChinginShinseiJikan2"));
+					worksheet.getCellRange("Z" + (11 + rowCnt)).setText(chinginShinseiJikan2);
 				}
 				
-				worksheet.getCellRange("AC" + (11 + rowCnt)).setText(data.get(i).get("ChinginShinseiKbn3"));
+				worksheet.getCellRange("AC" + (11 + rowCnt)).setText(chinginShinseiKbn3);
 				
 				// 申請時間3のデータがない場合は空文字を出力
 				// 未入力項目に0.00が出力されることを防ぐ
-				if(data.get(i).get("ChinginShinseiJikan3").isBlank() || data.get(i).get("ChinginShinseiJikan3").equals("0.00")) {
+				if(chinginShinseiJikan3.isBlank() || chinginShinseiJikan3.equals("0.00")) {
 					worksheet.getCellRange("AG" + (11 + rowCnt)).setText("");
 				} else {
-					worksheet.getCellRange("AG" + (11 + rowCnt)).setText(data.get(i).get("ChinginShinseiJikan3"));
+					worksheet.getCellRange("AG" + (11 + rowCnt)).setText(chinginShinseiJikan3);
 				}
 				
 				// 曜日区分が土の場合は青色、日の場合は赤色
-				if(data.get(i).get("YobiKbn").equals("土")) {
+				if(yobiKbn.equals("土")) {
 					worksheet.getCellRange("C" + (11 + rowCnt)).getCellStyle().getExcelFont().setColor(Color.blue);
-				} else if(data.get(i).get("YobiKbn").equals("日")) {
+				} else if(yobiKbn.equals("日")) {
 					worksheet.getCellRange("C" + (11 + rowCnt)).getCellStyle().getExcelFont().setColor(Color.red);
 				}
 				
