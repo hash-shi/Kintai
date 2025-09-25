@@ -491,21 +491,25 @@ function calcJitsudoJikan(nowRow){
 		let kaishiFunNum = Number(kaishiFun);
 		let shuryoJiNum = Number(shuryoJi);
 		let shuryoFunNum = Number(shuryoFun);
-		//すべて時や分に合う　かつ　開始時分＜終了時分の場合のみ自動計算する
+		//すべて時や分に合う場合のみ自動計算する
 		if(
 			kaishiJiNum < 24 &&
 			kaishiFunNum < 60 &&
 			shuryoJiNum < 24 &&
-			shuryoFunNum < 60 &&
-			((kaishiJiNum * 60 + kaishiFunNum) <= (shuryoJiNum * 60 + shuryoFunNum))
+			shuryoFunNum < 60
 		){
+			//開始時分＞終了時分の場合、24:00を回ったと判定する
+			if((kaishiJiNum * 60 + kaishiFunNum) > (shuryoJiNum * 60 + shuryoFunNum)){
+				shuryoJiNum = shuryoJiNum + 24;
+			}
 			//1.分単位で時間計算
 			let jikanWk = (shuryoJiNum * 60 + shuryoFunNum) - (kaishiJiNum * 60 + kaishiFunNum);
 			//2.勤怠申請時間の時部分を計算
 			let jikanJi = Math.floor(jikanWk / 60);
 			//3.勤怠申請時間の分部分を計算
 			let jikanFun = jikanWk % 60;
-			//4.実際に項目に表示する値を計算
+			//4.実際に項目に表示する値を計算 TODO 小数点以下について分表示かパーセント表示か確認中
+//			jikanFun = Math.trunc((jikanFun / 60) * 100);//パーセント表示の場合、このコメントアウトを活性化
 			let jikanDisp = String(jikanJi) + "." + (("00" + String(jikanFun)).slice(-2));
 			
 			chiChinginkeisanshoResultAll[nowRow]["numJitsudoJikan"] = jikanDisp;

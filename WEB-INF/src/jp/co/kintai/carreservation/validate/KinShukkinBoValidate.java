@@ -379,37 +379,37 @@ public class KinShukkinBoValidate extends ValidateBase {
 			}
 			
 			
-			int intShusshaJi		= 0;
-			int intShusshaFun		= 0;
-			int intTaishaJi			= 0;
-			int intTaishaFun		= 0;
-			try {
-				if("".equals(shusshaJi) == false){
-					intShusshaJi = Integer.parseInt(shusshaJi);
-				}
-				if("".equals(shusshaFun) == false){
-					intShusshaFun = Integer.parseInt(shusshaFun);
-				}
-				if("".equals(taishaJi) == false){
-					intTaishaJi = Integer.parseInt(taishaJi);
-				}
-				if("".equals(taishaFun) == false){
-					intTaishaFun = Integer.parseInt(taishaFun);
-				}
-			} catch (Exception e) {
-				return false;
-			}
-
-			if(
-				("".equals(shusshaJi) == false) &&
-				("".equals(shusshaFun) == false) &&
-				("".equals(taishaJi) == false) &&
-				("".equals(taishaFun) == false) &&
-				((intShusshaJi * 60 + intShusshaFun) > (intTaishaJi * 60 + intTaishaFun))
-			){
-				this.addValidateMessage(taishoNengappi + "の出社時刻が退社時刻以降になっています。");
-				return false;
-			}
+//			int intShusshaJi		= 0;
+//			int intShusshaFun		= 0;
+//			int intTaishaJi			= 0;
+//			int intTaishaFun		= 0;
+//			try {
+//				if("".equals(shusshaJi) == false){
+//					intShusshaJi = Integer.parseInt(shusshaJi);
+//				}
+//				if("".equals(shusshaFun) == false){
+//					intShusshaFun = Integer.parseInt(shusshaFun);
+//				}
+//				if("".equals(taishaJi) == false){
+//					intTaishaJi = Integer.parseInt(taishaJi);
+//				}
+//				if("".equals(taishaFun) == false){
+//					intTaishaFun = Integer.parseInt(taishaFun);
+//				}
+//			} catch (Exception e) {
+//				return false;
+//			}
+//
+//			if(
+//				("".equals(shusshaJi) == false) &&
+//				("".equals(shusshaFun) == false) &&
+//				("".equals(taishaJi) == false) &&
+//				("".equals(taishaFun) == false) &&
+//				((intShusshaJi * 60 + intShusshaFun) > (intTaishaJi * 60 + intTaishaFun))
+//			){
+//				this.addValidateMessage(taishoNengappi + "の出社時刻が退社時刻以降になっています。");
+//				return false;
+//			}
 
 			if(
 					(
@@ -652,37 +652,37 @@ public class KinShukkinBoValidate extends ValidateBase {
 					return false;
 				}
 				
-				int intKaishiJi		= 0;
-				int intKaishiFun	= 0;
-				int intShuryoJi		= 0;
-				int intShuryoFun	= 0;
-				try {
-					if("".equals(kaishiJi) == false){
-						intKaishiJi = Integer.parseInt(kaishiJi);
-					}
-					if("".equals(kaishiFun) == false){
-						intKaishiFun = Integer.parseInt(kaishiFun);
-					}
-					if("".equals(shuryoJi) == false){
-						intShuryoJi = Integer.parseInt(shuryoJi);
-					}
-					if("".equals(shuryoFun) == false){
-						intShuryoFun = Integer.parseInt(shuryoFun);
-					}
-				} catch (Exception e) {
-					return false;
-				}
-
-				if(
-					("".equals(kaishiJi) == false) &&
-					("".equals(kaishiFun) == false) &&
-					("".equals(shuryoJi) == false) &&
-					("".equals(shuryoFun) == false) &&
-					((intKaishiJi * 60 + intKaishiFun) > (intShuryoJi * 60 + intShuryoFun))
-				){
-					this.addValidateMessage(taishoNengappi + "の勤怠申請時間" + String.valueOf(j) + "の開始時刻が終了時刻以降になっています。");
-					return false;
-				}
+//				int intKaishiJi		= 0;
+//				int intKaishiFun	= 0;
+//				int intShuryoJi		= 0;
+//				int intShuryoFun	= 0;
+//				try {
+//					if("".equals(kaishiJi) == false){
+//						intKaishiJi = Integer.parseInt(kaishiJi);
+//					}
+//					if("".equals(kaishiFun) == false){
+//						intKaishiFun = Integer.parseInt(kaishiFun);
+//					}
+//					if("".equals(shuryoJi) == false){
+//						intShuryoJi = Integer.parseInt(shuryoJi);
+//					}
+//					if("".equals(shuryoFun) == false){
+//						intShuryoFun = Integer.parseInt(shuryoFun);
+//					}
+//				} catch (Exception e) {
+//					return false;
+//				}
+//
+//				if(
+//					("".equals(kaishiJi) == false) &&
+//					("".equals(kaishiFun) == false) &&
+//					("".equals(shuryoJi) == false) &&
+//					("".equals(shuryoFun) == false) &&
+//					((intKaishiJi * 60 + intKaishiFun) > (intShuryoJi * 60 + intShuryoFun))
+//				){
+//					this.addValidateMessage(taishoNengappi + "の勤怠申請時間" + String.valueOf(j) + "の開始時刻が終了時刻以降になっています。");
+//					return false;
+//				}
 
 				if((StringUtils.isEmpty(kintaiShinseiKbn) || "00".equals(kintaiShinseiKbn)) == false) {
 					//申請区分が空でない場合のみ、未入力や0のチェックを行う

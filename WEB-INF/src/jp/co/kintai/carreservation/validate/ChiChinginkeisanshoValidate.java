@@ -254,36 +254,36 @@ public class ChiChinginkeisanshoValidate extends ValidateBase {
 				return false;
 			}
 			
-			int intShusshaJi		= 0;
-			int intShusshaFun		= 0;
-			int intTaishaJi			= 0;
-			int intTaishaFun		= 0;
-			try {
-				if("".equals(shusshaJi) == false){
-					intShusshaJi = Integer.parseInt(shusshaJi);
-				}
-				if("".equals(shusshaFun) == false){
-					intShusshaFun = Integer.parseInt(shusshaFun);
-				}
-				if("".equals(taishaJi) == false){
-					intTaishaJi = Integer.parseInt(taishaJi);
-				}
-				if("".equals(taishaFun) == false){
-					intTaishaFun = Integer.parseInt(taishaFun);
-				}
-				if(
-					("".equals(shusshaJi) == false) &&
-					("".equals(shusshaFun) == false) &&
-					("".equals(taishaJi) == false) &&
-					("".equals(taishaFun) == false) &&
-					((intShusshaJi * 60 + intShusshaFun) > (intTaishaJi * 60 + intTaishaFun))
-				){
-					this.addValidateMessage(taishoNengappi + "の出社時刻が退社時刻以降になっています。");
-					return false;
-				}
-			} catch (Exception e) {
-				return false;
-			}
+//			int intShusshaJi		= 0;
+//			int intShusshaFun		= 0;
+//			int intTaishaJi			= 0;
+//			int intTaishaFun		= 0;
+//			try {
+//				if("".equals(shusshaJi) == false){
+//					intShusshaJi = Integer.parseInt(shusshaJi);
+//				}
+//				if("".equals(shusshaFun) == false){
+//					intShusshaFun = Integer.parseInt(shusshaFun);
+//				}
+//				if("".equals(taishaJi) == false){
+//					intTaishaJi = Integer.parseInt(taishaJi);
+//				}
+//				if("".equals(taishaFun) == false){
+//					intTaishaFun = Integer.parseInt(taishaFun);
+//				}
+//				if(
+//					("".equals(shusshaJi) == false) &&
+//					("".equals(shusshaFun) == false) &&
+//					("".equals(taishaJi) == false) &&
+//					("".equals(taishaFun) == false) &&
+//					((intShusshaJi * 60 + intShusshaFun) > (intTaishaJi * 60 + intTaishaFun))
+//				){
+//					this.addValidateMessage(taishoNengappi + "の出社時刻が退社時刻以降になっています。");
+//					return false;
+//				}
+//			} catch (Exception e) {
+//				return false;
+//			}
 			
 			if(
 				("".equals(shusshaJi) == false) ||
