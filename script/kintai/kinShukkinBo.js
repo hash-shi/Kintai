@@ -2,6 +2,12 @@ let kinShukkinBoResultAll = [];
 let shinseiKingaku01 = 0;
 let shinseiKingaku02 = 0;
 
+let shukinboKbn = "";
+let kinmuKaishiJi = "";
+let kinmuKaishiFun = "";
+let kinmuShuryoJi = "";
+let kinmuShuryoFun = "";
+
 /*
 *
 * 社員名フォーカスアウト時のフォーマット編集処理
@@ -34,6 +40,32 @@ function right(str, n) {
 function onSearchKinShukkinBo(){
 	
 	let honshaKakuteizumiFlg = false;
+
+	shukinboKbn = "";
+	kinmuKaishiJi = "";
+	kinmuKaishiFun = "";
+	kinmuShuryoJi = "";
+	kinmuShuryoFun = "";
+
+	//検索対象の社員の出勤簿入力区分、勤務開始/終了時刻の取得
+	proc("getShukkinboNyuuryokuKbn", {}, function(data){
+
+		if (data == undefined){ return; }
+		if (data["contents"] == undefined){ return; }
+		
+		let contents		= data["contents"];
+		if (contents["result"] == undefined){ return; }
+		
+		let result			= contents["result"];
+		
+		//出勤簿入力区分、勤務開始/終了時刻の取得
+		shukinboKbn =		result["ShukinboKbn"];
+		kinmuKaishiJi =		result["KinmuKaishiJi"];
+		kinmuKaishiFun =	result["KinmuKaishiFun"];
+		kinmuShuryoJi =		result["KinmuShuryoJi"];
+		kinmuShuryoFun =	result["KinmuShuryoFun"];
+		
+	});
 
 	//検索結果表示
 	proc("search", {}, function(data){
@@ -244,7 +276,7 @@ function onDisplayNyuryokuArea(firstHalfFlg){
 		else{
 			kintaiSelectBox += 		"style = \"COLOR: black\" ";
 		}
-		kintaiSelectBox += 		"onchange=\"kintaiChangeColor(this);setShukkinBo('selKintaiKbn', " + i + ");\" >" ;
+		kintaiSelectBox += 		"onchange=\"kintaiChangeColor(this);setShukkinBo('selKintaiKbn', " + i + ");setDefaultJitsudoJikan(" + i + ")\" >" ;
 
 		for(let kintaiKubunRecord of kintaiKubunList){
 			kintaiSelectBox += 		"<option value=\"" + kintaiKubunRecord["Code"] + "\" ";
@@ -487,7 +519,7 @@ function changeShukkinYotei(nowRow){
 		$("#selShukkinYoteiKbn" + nowRow).val() == "" ||
 		$("#selShukkinYoteiKbn" + nowRow).val() == "00"
 	){
-		let fieldName = "KintaiKbn";
+		let fieldName = "selKintaiKbn";
 		$("#" + fieldName + nowRow).val("00");
 		setShukkinBo(fieldName, nowRow);
 		
@@ -631,6 +663,31 @@ function kintaiChangeColor(kintai){
 	}
 }
 
+function setDefaultJitsudoJikan(nowRow){
+	let fieldName = "selKintaiKbn";
+	//勤怠区分が"01"(出勤)または"02"(出張)　かつ　出勤簿入力区分が"00"(月給)の場合のみ実行する
+	if(
+		($("#" + fieldName + nowRow).val() == "01") || ($("#" + fieldName + nowRow).val() == "02") &&
+		shukinboKbn == "00"
+	){
+		//取得しておいた勤務開始/終了時刻を設定
+		fieldName = "numShusshaJi";
+		$("#" + fieldName + nowRow).val(kinmuKaishiJi);
+		setShukkinBo(fieldName, nowRow);
+		fieldName = "numShusshaFun";
+		$("#" + fieldName + nowRow).val(kinmuKaishiFun);
+		setShukkinBo(fieldName, nowRow);
+		fieldName = "numTaishaJi";
+		$("#" + fieldName + nowRow).val(kinmuShuryoJi);
+		setShukkinBo(fieldName, nowRow);
+		fieldName = "numTaishaFun";
+		$("#" + fieldName + nowRow).val(kinmuShuryoFun);
+		setShukkinBo(fieldName, nowRow);
+
+		//実働時間の計算
+		calcJitsudoJikan(nowRow);
+	}
+}
 /*
 *
 * 開始時分、終了時分から時間を計算

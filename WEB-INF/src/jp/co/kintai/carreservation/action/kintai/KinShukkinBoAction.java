@@ -319,6 +319,38 @@ public class KinShukkinBoAction extends PJActionBase {
 	}
 	
 	/**
+	 * 検索対象社員の出勤簿入力区分、勤務開始/終了時刻の取得
+	 * 
+	 * @param req
+	 * @param res
+	 * @throws Exception
+	 */
+	public void getShukkinboNyuuryokuKbn(HttpServletRequest req, HttpServletResponse res) throws Exception {
+		
+		HashMap<String, String> returnRecord = new HashMap<String, String>();
+		
+		// 検索条件取得
+		String taishoShainNo	= this.getParameter("srhTxtShainNO");
+		// 現在日付の取得
+		String nowDate	= PJActionBase.getNowDate();
+		// DB接続
+		Connection con		= this.getConnection("kintai", req);
+		
+		// チェック対象の社員情報の取得
+		ArrayList<HashMap<String, String>> mstShains = PJActionBase.getMstShains(con, taishoShainNo, null, null, null, null, null, null, nowDate);
+
+		if (0 < mstShains.size()) {
+			HashMap<String, String> mstShain = mstShains.get(0);
+			returnRecord.put("ShukinboKbn", mstShain.get("ShukinboKbn"));
+			returnRecord.put("KinmuKaishiJi", mstShain.get("KinmuKaishiJi"));
+			returnRecord.put("KinmuKaishiFun", mstShain.get("KinmuKaishiFun"));
+			returnRecord.put("KinmuShuryoJi", mstShain.get("KinmuShuryoJi"));
+			returnRecord.put("KinmuShuryoFun", mstShain.get("KinmuShuryoFun"));
+		}
+		this.addContent("result", returnRecord);
+	}
+	
+	/**
 	 * 出勤簿の取得
 	 * 
 	 * @param req
