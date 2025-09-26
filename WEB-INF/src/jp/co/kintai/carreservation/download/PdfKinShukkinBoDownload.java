@@ -594,15 +594,7 @@ public class PdfKinShukkinBoDownload extends DownloadBase {
 					worksheet.getCellRange("A4").setText(eigyoshoName);
 					worksheet.getCellRange("J4").setText(bushoName);
 					worksheet.getCellRange("AT4").setText(kakuteiKbn);
-					
-					// 労働時間のデータがない場合は空文字を出力	
-					// 「労働時間FROM　～　労働時間TO」の形で表示
-					if(rodoJikanFrom.isBlank() && rodoJikanTo.isBlank()) {
-						worksheet.getCellRange("J5").setText("");
-					} else {
-						worksheet.getCellRange("J5").setText(rodoJikanFrom + "　～　" + rodoJikanTo);
-					}
-					
+					worksheet.getCellRange("J5").setText(rodoJikanFrom + "　～　" + rodoJikanTo);
 					worksheet.getCellRange("AP5").setText(shainNo);
 					worksheet.getCellRange("AT5").setText(shainName);
 					

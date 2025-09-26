@@ -147,13 +147,13 @@ function setShoriSentaku(){
 function onPdfCsvDownload(){
 	
 	// 処理選択を取得
-	var value = $("#selShoriSentaku").val();
+	var value = $("#txtShoriSentaku").val();
 	console.log(value);
 	// 出力形式を取得
 	var pdfcsv = $("#srhRdoOutput:checked").val();
 	console.log(pdfcsv);
 	
-	if (value == "01") {
+	if (value == "出勤簿出力") {
 		proc("kinShukkinBo",{}, function(data, dataType){
 			
 			if (data == undefined){ return; }
@@ -175,7 +175,7 @@ function onPdfCsvDownload(){
 			}
 		});
 	}
-	else if (value == "02") {
+	else if (value == "賃金計算書出力") {
 		proc("chiChinginkeisansho",{}, function(data, dataType){
 			
 			if (data == undefined){ return; }
@@ -197,7 +197,7 @@ function onPdfCsvDownload(){
 			}
 		});	
 	}
-	else if (value == "03") {
+	else if (value == "年次有給休暇台帳出力") {
 		proc("kinYukyuKyukaDaicho",{}, function(data, dataType){
 			
 			if (data == undefined){ return; }
