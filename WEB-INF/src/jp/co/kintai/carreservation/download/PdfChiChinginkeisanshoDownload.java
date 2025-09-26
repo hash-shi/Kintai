@@ -849,8 +849,8 @@ public class PdfChiChinginkeisanshoDownload extends DownloadBase {
 	// データがない場合は0を入れる
 	private String formatAsCurrency(String value) {
 	    if (value == null || value.isEmpty()) {
-	        return "0";
+	        return "0  ";
 	    }
-	    return String.format("%,3d", Integer.parseInt(value));
+	    return String.format("%,3d  ", Integer.parseInt(value));
 	}
 }
