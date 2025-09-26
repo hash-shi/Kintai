@@ -181,6 +181,7 @@
 								</tr>
 								<tr>
 									<th class="title center w120">
+										<!-- 勤務時間 -->
 										<a ><%=UtilEscape.htmlspecialchars(kbnRyaku01) %></a>
 									</th>
 									<td class="value right w70">
@@ -198,6 +199,7 @@
 								</tr>
 								<tr>
 									<th class="title center w120">
+										<!-- 休日勤務 -->
 										<a ><%=UtilEscape.htmlspecialchars(kbnRyaku04) %></a>
 									</th>
 									<td class="value right w70">
@@ -215,6 +217,7 @@
 								</tr>
 								<tr>
 									<th class="title center w120">
+										<!-- 時間外勤務 -->
 										<a ><%=UtilEscape.htmlspecialchars(kbnRyaku02) %></a>
 									</th>
 									<td class="value right w70">
@@ -232,6 +235,7 @@
 								</tr>
 								<tr>
 									<th class="title center w120">
+										<!-- 深夜勤務 -->
 										<a ><%=UtilEscape.htmlspecialchars(kbnRyaku03) %></a>
 									</th>
 									<td class="value right w70">
@@ -249,6 +253,7 @@
 								</tr>
 								<tr>
 									<th class="title center w120">
+										<!-- 有給休暇 -->
 										<a ><%=UtilEscape.htmlspecialchars(kbnRyaku05) %></a>
 									</th>
 									<td class="value right w70">
@@ -266,6 +271,7 @@
 								</tr>
 								<tr>
 									<th class="title center w120">
+										<!-- 特別有給 -->
 										<a ><%=UtilEscape.htmlspecialchars(kbnRyaku11) %></a>
 									</th>
 									<td class="value right w70">
@@ -283,6 +289,7 @@
 								</tr>
 								<tr>
 									<th class="title center w120">
+										<!-- 通勤費 -->
 										<a ><%=UtilEscape.htmlspecialchars(kbnRyaku09) %></a>
 									</th>
 									<td class="value right w70">
@@ -298,8 +305,9 @@
 										<a id="lblShinseikingakugoukei09" name="lblShinseikingakugoukei09"></a>
 									</td>
 								</tr>
-								<tr>
+								<tr style="display:none;">
 									<th class="title center w120">
+										<!-- 控除 -->
 										<a ><%=UtilEscape.htmlspecialchars(kbnRyaku07) %></a>
 									</th>
 									<td class="value right w70">

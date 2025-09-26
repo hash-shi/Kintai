@@ -66,7 +66,7 @@ public class ChiChinginkeisanshoAction extends PJActionBase {
 		// DB接続
 		Connection con		= this.getConnection("kintai", req);
 		
-		// チェック対象の社員情報の取得
+		// チェック対象の管理マスタの取得
 		ArrayList<HashMap<String, String>> mstKanris = PJActionBase.getMstKanris(con, null);
 
 		if (0 < mstKanris.size()) {
@@ -112,23 +112,10 @@ public class ChiChinginkeisanshoAction extends PJActionBase {
 		
 		// DB接続
 		Connection con		= this.getConnection("kintai", req);
-
-		
-		// チェック対象の社員NO
-		String shainNo			= this.getParameter("srhTxtShainNO");
-		String JikyuNikkyuKbn = "";
 		
 		//=====================================================================
 		// 処理
 		//=====================================================================
-		// チェック対象の社員の存在確認、時給日給区分取得
-		ArrayList<HashMap<String, String>> mstShains = PJActionBase.getMstShains(con, shainNo, null, null, null, null, null, null, null);
-		
-		//社員が存在すれば時給日給区分取得する
-		if (0 < mstShains.size()){
-			JikyuNikkyuKbn = mstShains.get(0).get("JikyuNikkyuKbn"); 
-		}
-		
 		
 		//申請区分DDL検索 ソート順が独自なので独自実装
 		StringBuffer sql					= new StringBuffer();
@@ -144,6 +131,8 @@ public class ChiChinginkeisanshoAction extends PJActionBase {
 		sql.append("	WHERE ");
 		sql.append("		KbnCode = '0201' ");
 		sql.append("	AND	LEFT(GroupCode2, 2) <> '' ");
+		sql.append("	AND	COALESCE (KbnName, '') <> '' ");	//区分名が空の場合スキップ
+		sql.append("	AND	Code NOT IN ('01','07','08') ");	//Codeが"01"(通常)はスキップ	日給を廃止するので、Codeが"07"(遅刻),"08"(早退)は常時スキップ
 		sql.append("	ORDER BY ");
 		sql.append("		LEFT(GroupCode2, 2) ");
 		
@@ -156,27 +145,6 @@ public class ChiChinginkeisanshoAction extends PJActionBase {
 			rset = pstmt.executeQuery();
 			// レコード数分繰り返す
 			while (rset.next()){
-				//区分名が空の場合スキップ
-				if(StringUtils.isEmpty(rset.getString("KbnName"))){
-					continue;
-				}
-				
-				//Codeが"01"はスキップ
-				if("01".equals(rset.getString("Code"))) {
-					continue;
-				}
-				
-				//社員が時給　かつ　Codeが"07","08","09"の場合スキップ
-				if(
-					"01".equals(JikyuNikkyuKbn) &&
-					(
-						"07".equals(rset.getString("Code")) ||
-						"08".equals(rset.getString("Code")) ||
-						"09".equals(rset.getString("Code"))
-					)
-				) {
-					continue;
-				}
 				// 1レコード分の配列を用意
 				HashMap<String, String> returnRecord = new HashMap<String, String>();
 
@@ -592,17 +560,18 @@ public class ChiChinginkeisanshoAction extends PJActionBase {
 		
 		sql.append(" SELECT ");
 		sql.append("     KakuteiKbn, ");
-		sql.append("     ShinseiNissu01, ");
-		sql.append("     ShinseiNissu02, ");
-		sql.append("     ShinseiNissu03, ");
-		sql.append("     ShinseiNissu04, ");
-		sql.append("     ShinseiNissu05 + ShinseiNissu06 AS ShinseiNissu05, ");
-		sql.append("     ShinseiNissu06, ");
-		sql.append("     ShinseiNissu07, ");
-		sql.append("     ShinseiNissu08, ");
-		sql.append("     ShinseiNissu09, ");
-		sql.append("     ShinseiNissu10, ");
-		sql.append("     ShinseiNissu11, ");
+		//日数
+		sql.append("     ShinseiNissu01 + ShinseiNissu06 as ShinseiNissu01, ");		//勤務時間 ShinseiNissu01にはすでに「半休の勤務部分」が合計されている　表示上半休を1日として計算するため、半休を足す
+		sql.append("     0 AS ShinseiNissu02, ");	//時間外勤務
+		sql.append("     0 AS ShinseiNissu03, ");	//深夜勤務
+		sql.append("     ShinseiNissu04, ");		//休日勤務
+		sql.append("     ShinseiNissu05, ");		//有給休暇
+		sql.append("     ShinseiNissu06, ");		//半休　非表示
+		sql.append("     ShinseiNissu07, ");		//控除　非表示
+		sql.append("     ShinseiNissu08, ");		//早退　非表示
+		sql.append("     ShinseiNissu09, ");		//通勤費
+		sql.append("     ShinseiNissu10, ");		//早出　非表示
+		sql.append("     ShinseiNissu11, ");		//特別有給
 		
 		// 休日
 		sql.append("     ( ");
@@ -682,7 +651,7 @@ public class ChiChinginkeisanshoAction extends PJActionBase {
 		sql.append("     ) + ");
 		
 		sql.append("     ShinseiNissu01 + ");
-		sql.append("     ShinseiNissu04 + ShinseiNissu05 + ShinseiNissu06 AS ShinseiNisuuGoukei, ");
+		sql.append("     ShinseiNissu04 + ShinseiNissu05 + ShinseiNissu06 + ShinseiNissu11 AS ShinseiNisuuGoukei, ");
 		
 		sql.append("     ShinseiJikan01 + ");
 		sql.append("     ShinseiJikan02 + ");
@@ -1020,17 +989,17 @@ public class ChiChinginkeisanshoAction extends PJActionBase {
 		sql.append("         LEFT(M1.GroupCode1, 2) ");
 		sql.append(" ) ");
 		sql.append(" SELECT ");
-		sql.append("     ISNULL(SUM(CASE WHEN Kbn IN ('01', '06') THEN ChinginShinseiNisuu END), 0) AS Nissu01, ");
-		sql.append("     ISNULL(SUM(CASE WHEN Kbn = '02' THEN ChinginShinseiNisuu END), 0) AS Nissu02, ");
-		sql.append("     ISNULL(SUM(CASE WHEN Kbn = '03' THEN ChinginShinseiNisuu END), 0) AS Nissu03, ");
-		sql.append("     ISNULL(SUM(CASE WHEN Kbn = '04' THEN ChinginShinseiNisuu END), 0) AS Nissu04, ");
-		sql.append("     ISNULL(SUM(CASE WHEN Kbn = '05' THEN ChinginShinseiNisuu END), 0) AS Nissu05, ");
-		sql.append("     ISNULL(SUM(CASE WHEN Kbn = '06' THEN ChinginShinseiNisuu END), 0) AS Nissu06, ");
-		sql.append("     ISNULL(SUM(CASE WHEN Kbn = '07' THEN ChinginShinseiNisuu END), 0) AS Nissu07, ");
-		sql.append("     ISNULL(SUM(CASE WHEN Kbn = '08' THEN ChinginShinseiNisuu END), 0) AS Nissu08, ");
-		sql.append("     ISNULL(SUM(CASE WHEN Kbn IN ('01', '04') THEN ChinginShinseiNisuu END) + SUM(CASE WHEN Kbn IN ('06') THEN ChinginShinseiNisuu * 2 ELSE 0 END), 0) AS Nissu09, ");
-		sql.append("     ISNULL(SUM(CASE WHEN Kbn = '10' THEN ChinginShinseiNisuu END), 0) AS Nissu10,  ");
-		sql.append("     ISNULL(SUM(CASE WHEN Kbn = '11' THEN ChinginShinseiNisuu END), 0) AS Nissu11  ");
+		sql.append("     ISNULL(SUM(CASE WHEN Kbn IN ('01', '06') THEN ChinginShinseiNisuu END), 0) AS Nissu01, ");	//勤務時間
+		sql.append("     ISNULL(SUM(CASE WHEN Kbn = '02' THEN ChinginShinseiNisuu END), 0) AS Nissu02, ");		//時間外勤務(残業、早出)
+		sql.append("     ISNULL(SUM(CASE WHEN Kbn = '03' THEN ChinginShinseiNisuu END), 0) AS Nissu03, ");		//深夜勤務
+		sql.append("     ISNULL(SUM(CASE WHEN Kbn = '04' THEN ChinginShinseiNisuu END), 0) AS Nissu04, ");		//休日出勤
+		sql.append("     ISNULL(SUM(CASE WHEN Kbn = '05' THEN ChinginShinseiNisuu END), 0) AS Nissu05, ");		//有給休暇
+		sql.append("     ISNULL(SUM(CASE WHEN Kbn = '06' THEN ChinginShinseiNisuu END), 0) AS Nissu06, ");		//半休　非表示
+		sql.append("     ISNULL(SUM(CASE WHEN Kbn = '07' THEN ChinginShinseiNisuu END), 0) AS Nissu07, ");		//控除(遅刻早退)　非表示
+		sql.append("     ISNULL(SUM(CASE WHEN Kbn = '08' THEN ChinginShinseiNisuu END), 0) AS Nissu08, ");		//早退？　MST_KUBUNの都合上必ず0になる
+		sql.append("     ISNULL(SUM(CASE WHEN Kbn IN ('01', '04') THEN ChinginShinseiNisuu END) + SUM(CASE WHEN Kbn IN ('06') THEN ChinginShinseiNisuu * 2 ELSE 0 END), 0) AS Nissu09, ");//通勤費
+		sql.append("     ISNULL(SUM(CASE WHEN Kbn = '10' THEN ChinginShinseiNisuu END), 0) AS Nissu10,  ");		//早出？　MST_KUBUNの都合上必ず0になる
+		sql.append("     ISNULL(SUM(CASE WHEN Kbn = '11' THEN ChinginShinseiNisuu END), 0) AS Nissu11  ");		//特別有給
 		sql.append(" FROM CteNissu ");
 		
 		pstmtf.addValue("String", taishoYM);
@@ -2229,15 +2198,6 @@ public class ChiChinginkeisanshoAction extends PJActionBase {
 		PreparedStatementFactory pstmtf	= new PreparedStatementFactory();
 		ResultSet rset					= null;
 		
-
-		String JikyuNikkyuKbn = "";
-		// チェック対象の社員の存在確認、時給日給区分取得
-		ArrayList<HashMap<String, String>> mstShains = PJActionBase.getMstShains(con, taishoShainNo, null, null, null, null, null, null, null);
-		//社員が存在すれば時給日給区分を取得する
-		if (0 < mstShains.size()){
-			JikyuNikkyuKbn = mstShains.get(0).get("JikyuNikkyuKbn"); 
-		}
-		
 		sql.append(" SELECT ");
 		sql.append(" 	KintaiKbn, ");
 		sql.append(" 	ShinseiKbn1, ");
@@ -2259,10 +2219,7 @@ public class ChiChinginkeisanshoAction extends PJActionBase {
 		sql.append(" AND ShinseiKbn1 = ? ");
 		sql.append(" AND ShinseiKbn2 = ? ");
 		sql.append(" AND ShinseiKbn3 = ? ");
-		//社員が日給の場合、一部除外
-		if("02".equals(JikyuNikkyuKbn)) {
-			sql.append(" AND KintaiKbn NOT IN ('07', '08') ");
-		}
+		sql.append(" AND KintaiKbn NOT IN ('07', '08') ");
 
 		pstmtf.addValue("String", chinginShinseiKbn1);
 		pstmtf.addValue("String", chinginShinseiKbn2);
