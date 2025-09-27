@@ -656,50 +656,20 @@ public class PdfKinShukkinBoDownload extends DownloadBase {
 					worksheet.getCellRange("J" + (9 + rowCnt)).setText(shusshaJikoku + " ～ " + taishaJikoku);
 				}
 				
-				// 勤務時間のデータがない場合は空文字を出力
-				// 未入力項目に0.00が出力されることを防ぐ
-				if(jitsudoJikan.isBlank() || jitsudoJikan.equals("0.00")) {
-					worksheet.getCellRange("O" + (9 + rowCnt)).setText("");
-				} else {
-					worksheet.getCellRange("O" + (9 + rowCnt)).setText(jitsudoJikan);
-				}
-				
+				worksheet.getCellRange("O"  + (9 + rowCnt)).setText(formatTimeForCell(jitsudoJikan));
 				worksheet.getCellRange("Q" 	+ (9 + rowCnt)).setText(kintaiShinseiBiko);
 				worksheet.getCellRange("V" 	+ (9 + rowCnt)).setText(kintaiShinseiKbn1);
 				worksheet.getCellRange("Y" 	+ (9 + rowCnt)).setText(kintaiShinseiKaishiJikoku1);
 				worksheet.getCellRange("AB" + (9 + rowCnt)).setText(kintaiShinseiShuryoJikoku1);
-				
-				// 申請時間1のデータがない場合は空文字を出力
-				// 未入力項目に0.00が出力されることを防ぐ
-				if(kintaiShinseiJikan1.isBlank() || kintaiShinseiJikan1.equals("0.00")) {
-					worksheet.getCellRange("AE" + (9 + rowCnt)).setText("");
-				} else {
-					worksheet.getCellRange("AE" + (9 + rowCnt)).setText(kintaiShinseiJikan1);
-				}
-				
+				worksheet.getCellRange("AE" + (9 + rowCnt)).setText(formatTimeForCell(kintaiShinseiJikan1));
 				worksheet.getCellRange("AH" + (9 + rowCnt)).setText(kintaiShinseiKbn2);
 				worksheet.getCellRange("AK" + (9 + rowCnt)).setText(kintaiShinseiKaishiJikoku2);
 				worksheet.getCellRange("AN" + (9 + rowCnt)).setText(kintaiShinseiShuryoJikoku2);
-				
-				// 申請時間2のデータがない場合は空文字を出力
-				// 未入力項目に0.00が出力されることを防ぐ
-				if(kintaiShinseiJikan2.isBlank() || kintaiShinseiJikan2.equals("0.00")) {
-					worksheet.getCellRange("AQ" + (9 + rowCnt)).setText("");
-				} else {
-					worksheet.getCellRange("AQ" + (9 + rowCnt)).setText(kintaiShinseiJikan2);
-				}
-				
+				worksheet.getCellRange("AE" + (9 + rowCnt)).setText(formatTimeForCell(kintaiShinseiJikan2));
 				worksheet.getCellRange("AT" + (9 + rowCnt)).setText(kintaiShinseiKbn3);
 				worksheet.getCellRange("AW" + (9 + rowCnt)).setText(kintaiShinseiKaishiJikoku3);
 				worksheet.getCellRange("AZ" + (9 + rowCnt)).setText(kintaiShinseiShuryoJikoku3);
-
-				// 申請時間3のデータがない場合は空文字を出力
-				// 未入力項目に0.00が出力されることを防ぐ
-				if(kintaiShinseiJikan3.isBlank() || kintaiShinseiJikan3.equals("0.00")) {
-					worksheet.getCellRange("BC" + (9 + rowCnt)).setText("");
-				} else {
-					worksheet.getCellRange("BC" + (9 + rowCnt)).setText(kintaiShinseiJikan3);
-				}
+				worksheet.getCellRange("AE" + (9 + rowCnt)).setText(formatTimeForCell(kintaiShinseiJikan3));
 				
 				// 曜日区分が土の場合は青色、日の場合は赤色
 				if(yobiKbn.equals("土")) {
@@ -709,9 +679,8 @@ public class PdfKinShukkinBoDownload extends DownloadBase {
 				}
 				
 				// 出勤予定が休・有休の場合は赤色
-				if(shukkinYoteiKbn.equals("休")) {
-					worksheet.getCellRange("E" + (9 + rowCnt)).getCellStyle().getExcelFont().setColor(Color.red);
-				} else if(shukkinYoteiKbn.equals("有休")) {
+				if(shukkinYoteiKbn.equals("休")
+						|| shukkinYoteiKbn.equals("有休")) {
 					worksheet.getCellRange("E" + (9 + rowCnt)).getCellStyle().getExcelFont().setColor(Color.red);
 				}
 				
@@ -777,4 +746,14 @@ public class PdfKinShukkinBoDownload extends DownloadBase {
 		}
 		
 	}
+	
+	// 勤務時間・申請時間のデータがない場合は空文字を出力
+	// 未入力項目に0.00が出力されることを防ぐ
+	public static String formatTimeForCell(String timeStr) {
+	    if (timeStr == null || timeStr.isBlank() || timeStr.equals("0.00")) {
+	        return "";
+	    }
+	    return timeStr;
+	}
+	
 }
