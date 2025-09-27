@@ -76,7 +76,7 @@
 		</variable>
 
 		<variable name="txtTokkijiko" dispName="特記事項">
-			<check class="lengthValidate" message="!#itemName#!が264バイトを超えています。(264バイト = 全角264/2文字, 半角40文字)" itemName="{dispName}">
+			<check class="MaxLength" message="!#itemName#!が264バイトを超えています。(264バイト = 全角264/2文字, 半角264文字)" itemName="{dispName}">
 				<param name="type">half</param>
 				<param name="length">264</param>
 			</check>
@@ -127,7 +127,7 @@
 		</variable>
 
 		<variable name="txtTokkijiko" dispName="特記事項">
-			<check class="lengthValidate" message="!#itemName#!が264バイトを超えています。(264バイト = 全角264/2文字, 半角40文字)" itemName="{dispName}">
+			<check class="MaxLength" message="!#itemName#!が264バイトを超えています。(264バイト = 全角264/2文字, 半角264文字)" itemName="{dispName}">
 				<param name="type">half</param>
 				<param name="length">264</param>
 			</check>
