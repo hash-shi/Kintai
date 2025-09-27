@@ -561,7 +561,7 @@ public class ChiChinginkeisanshoAction extends PJActionBase {
 		sql.append(" SELECT ");
 		sql.append("     KakuteiKbn, ");
 		//日数
-		sql.append("     ShinseiNissu01 + ShinseiNissu06 as ShinseiNissu01, ");		//勤務時間 ShinseiNissu01にはすでに「半休の勤務部分」が合計されている　表示上半休を1日として計算するため、半休を足す
+		sql.append("     ShinseiNissu01 + ShinseiNissu06 as ShinseiNissu01, ");		//勤務時間 ShinseiNissu01にはすでに「半休の勤務部分」が合計されている　表示上半休を1日として計算するため、ShinseiNissu06(半休の休み部分)を足す
 		sql.append("     0 AS ShinseiNissu02, ");	//時間外勤務
 		sql.append("     0 AS ShinseiNissu03, ");	//深夜勤務
 		sql.append("     ShinseiNissu04, ");		//休日勤務
