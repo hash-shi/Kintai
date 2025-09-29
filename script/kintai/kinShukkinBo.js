@@ -795,18 +795,18 @@ function calcShinseiJikan(nowCol, nowRow){
 			let jikanFun = jikanWk % 60;
 			//4.実際に項目に表示する値を計算 小数点以下部分は、100分率表示とする(30分を0.5時間とする)
 			jikanFun = Math.trunc((jikanFun / 60) * 100);
-			//12:00～13:00が含まれていたら、その分を除く TODO 申請時間もこれをやるか要確認
-//			if(
-//				(
-//					((kaishiJiNum * 60 + kaishiFunNum) <= 12*60) &&	//開始時が12:00以前
-//					((shuryoJiNum * 60 + shuryoFunNum) >= 13*60)	//終了時が13:00以降
-//				) ||
-//				(
-//					(shuryoJiNum * 60 + shuryoFunNum) >= (13+24)*60	//終了時が24:00を回ったうえで13:00以降
-//				)
-//			){
-//				jikanJi = jikanJi - 1;
-//			}
+			//12:00～13:00が含まれていたら、その分を除く
+			if(
+				(
+					((kaishiJiNum * 60 + kaishiFunNum) <= 12*60) &&	//開始時が12:00以前
+					((shuryoJiNum * 60 + shuryoFunNum) >= 13*60)	//終了時が13:00以降
+				) ||
+				(
+					(shuryoJiNum * 60 + shuryoFunNum) >= (13+24)*60	//終了時が24:00を回ったうえで13:00以降
+				)
+			){
+				jikanJi = jikanJi - 1;
+			}
 			let jikanDisp = String(jikanJi) + "." + (("00" + String(jikanFun)).slice(-2));
 			
 			kinShukkinBoResultAll[nowRow]["numKintaiShinseiJikan" + nowCol] = jikanDisp;
