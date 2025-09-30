@@ -119,6 +119,14 @@ function onSearchChiChinginkeisansho(){
 				}
 			}
 			$("#buttonArea").css("visibility", "");
+			if ($("#nyuryokuArea").hasClass("upd")) {
+				//更新モードの時、削除ボタン活性化
+				document.getElementById("btnDelete").disabled = false;
+			}
+			else{
+				//更新モード以外の時、削除ボタン非活性化
+				document.getElementById("btnDelete").disabled = true;
+			}
 		}
 	});
 	
