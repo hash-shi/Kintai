@@ -185,11 +185,12 @@ public class PdfChiChinginkeisanshoDownload extends DownloadBase {
 		sql.append(" 	,SUBSTRING(CONVERT(TEXT, TokkiJiko), 133, 66) AS TokkiJiko3 ");
 		sql.append(" 	,SUBSTRING(CONVERT(TEXT, TokkiJiko), 198, 66) AS TokkiJiko4 ");
 		
-		sql.append(" 	,CAST(CAST(K.ShinseiNissu01 AS DECIMAL(4,1)) AS VARCHAR) AS ShinseiNissu01 ");
+		// 勤務時間 ShinseiNissu01にはすでに「半休の勤務部分」が合計されている　表示上半休を1日として計算するため、ShinseiNissu06(半休の休み部分)を足す ※正しいか要確認
+		sql.append(" 	,CAST(CAST(K.ShinseiNissu01 + K.ShinseiNissu06 AS DECIMAL(4,1)) AS VARCHAR) AS ShinseiNissu01 ");
 		sql.append(" 	,CAST(CAST(K.ShinseiNissu02 AS DECIMAL(4,1)) AS VARCHAR) AS ShinseiNissu02 ");
 		sql.append(" 	,CAST(CAST(K.ShinseiNissu03 AS DECIMAL(4,1)) AS VARCHAR) AS ShinseiNissu03 ");
 		sql.append(" 	,CAST(CAST(K.ShinseiNissu04 AS DECIMAL(4,1)) AS VARCHAR) AS ShinseiNissu04 ");
-		sql.append(" 	,CAST(CAST(K.ShinseiNissu05 + K.ShinseiNissu06 AS DECIMAL(4,1)) AS VARCHAR) AS ShinseiNissu05 "); // 半日有給0.5日
+		sql.append(" 	,CAST(CAST(K.ShinseiNissu05 AS DECIMAL(4,1)) AS VARCHAR) AS ShinseiNissu05 ");
 		sql.append(" 	,CAST(CAST(K.ShinseiNissu06 AS DECIMAL(4,1)) AS VARCHAR) AS ShinseiNissu06 ");
 		sql.append(" 	,CAST(CAST(K.ShinseiNissu07 AS DECIMAL(4,1)) AS VARCHAR) AS ShinseiNissu07 ");
 		sql.append(" 	,CAST(CAST(K.ShinseiNissu08 AS DECIMAL(4,1)) AS VARCHAR) AS ShinseiNissu08 ");
