@@ -269,9 +269,9 @@ public class PdfChiChinginkeisanshoDownload extends DownloadBase {
 		sql.append(" 		) AS DECIMAL(4,1) ");
 		sql.append(" 	) AS ShinseiNissuKyujitsu");
 		
-		// 申請日数合計
+		// 申請日数合計 ※K.ShinseiNissu11を追加 正しいか要確認
 		sql.append(" 	,CAST(");
-		sql.append(" 		CAST(K.ShinseiNissu01 + K.ShinseiNissu04 + K.ShinseiNissu05 + K.ShinseiNissu06 + ");
+		sql.append(" 		CAST(K.ShinseiNissu01 + K.ShinseiNissu04 + K.ShinseiNissu05 + K.ShinseiNissu06 + K.ShinseiNissu11 + ");
 		sql.append(" 			( ");
 		sql.append(" 				SELECT ");
 		sql.append(" 					CAST(COUNT('a') AS DECIMAL) ");
@@ -349,17 +349,17 @@ public class PdfChiChinginkeisanshoDownload extends DownloadBase {
 		sql.append(" 		) AS DECIMAL(4,1) ");
 		sql.append(" 	) AS YukyuKyukaZan ");
 		
-		// 申請時間合計
+		// 申請時間合計 ※K.ShinseiJikan11を追加 正しいか要確認
 		sql.append(" 	,CAST( ");
 		sql.append(" 		K.ShinseiJikan01 + K.ShinseiJikan02 + K.ShinseiJikan03 + K.ShinseiJikan04 + K.ShinseiJikan05 ");
-		sql.append(" 			+  K.ShinseiJikan06 + K.ShinseiJikan07 + K.ShinseiJikan08 + K.ShinseiJikan09 + K.ShinseiJikan10 AS VARCHAR ");
+		sql.append(" 			+  K.ShinseiJikan06 + K.ShinseiJikan07 + K.ShinseiJikan08 + K.ShinseiJikan09 + K.ShinseiJikan10 + K.ShinseiJikan11 AS VARCHAR ");
 		sql.append(" 	) AS ShinseiJikanGoukei");
 		
-		//　申請金額合計
+		// 申請金額合計 ※K.ShinseiKingakuGoukei11を追加 正しいか要確認
 		sql.append(" 	,CAST( ");
 		sql.append(" 		K.ShinseiKingakuGoukei01 + K.ShinseiKingakuGoukei02 + K.ShinseiKingakuGoukei03 + K.ShinseiKingakuGoukei04 ");
 		sql.append(" 			+ K.ShinseiKingakuGoukei05 + K.ShinseiKingakuGoukei06 + K.ShinseiKingakuGoukei07 + K.ShinseiKingakuGoukei08 ");
-		sql.append(" 			+ K.ShinseiKingakuGoukei09 + K.ShinseiKingakuGoukei10 AS VARCHAR");
+		sql.append(" 			+ K.ShinseiKingakuGoukei09 + K.ShinseiKingakuGoukei10 + K.ShinseiKingakuGoukei11 AS VARCHAR");
 		sql.append(" 	) AS ShinseiKingakuGoukeiGoukei");
 		
 		sql.append(" FROM ");
@@ -691,8 +691,8 @@ public class PdfChiChinginkeisanshoDownload extends DownloadBase {
 					worksheet.getCellRange("F46").setText(shinseiNissu02);
 					worksheet.getCellRange("F47").setText(shinseiNissu03);
 					worksheet.getCellRange("F48").setText(shinseiNissu05);
-					worksheet.getCellRange("F49").setText(shinseiNissu09);
-					worksheet.getCellRange("F50").setText(shinseiNissu11);
+					worksheet.getCellRange("F49").setText(shinseiNissu11);
+					worksheet.getCellRange("F50").setText(shinseiNissu09);
 					worksheet.getCellRange("F51").setText(shinseiNissuKyujitsu);
 					worksheet.getCellRange("F52").setText(shinseiNisuuGoukei);
 					worksheet.getCellRange("I44").setText(shinseiJikan01);
@@ -700,22 +700,22 @@ public class PdfChiChinginkeisanshoDownload extends DownloadBase {
 					worksheet.getCellRange("I46").setText(shinseiJikan02);
 					worksheet.getCellRange("I47").setText(shinseiJikan03);
 					worksheet.getCellRange("I48").setText(shinseiJikan05);
-					worksheet.getCellRange("I50").setText(shinseiJikan11);
+					worksheet.getCellRange("I49").setText(shinseiJikan11);
 					worksheet.getCellRange("I52").setText(shinseiJikanGoukei);
 					worksheet.getCellRange("L44").setText(shinseiTanka01);
 					worksheet.getCellRange("L45").setText(shinseiTanka04);
 					worksheet.getCellRange("L46").setText(shinseiTanka02);
 					worksheet.getCellRange("L47").setText(shinseiTanka03);
 					worksheet.getCellRange("L48").setText(shinseiTanka05);
-					worksheet.getCellRange("L49").setText(shinseiTanka09);
-					worksheet.getCellRange("L50").setText(shinseiTanka11);
+					worksheet.getCellRange("L49").setText(shinseiTanka11);
+					worksheet.getCellRange("L50").setText(shinseiTanka09);
 					worksheet.getCellRange("O44").setText(shinseiKingakuGoukei01);
 					worksheet.getCellRange("O45").setText(shinseiKingakuGoukei04);
 					worksheet.getCellRange("O46").setText(shinseiKingakuGoukei02);
 					worksheet.getCellRange("O47").setText(shinseiKingakuGoukei03);
 					worksheet.getCellRange("O48").setText(shinseiKingakuGoukei05);
-					worksheet.getCellRange("O49").setText(shinseiKingakuGoukei09);
-					worksheet.getCellRange("O50").setText(shinseiKingakuGoukei11);
+					worksheet.getCellRange("O49").setText(shinseiKingakuGoukei11);
+					worksheet.getCellRange("O50").setText(shinseiKingakuGoukei09);
 					worksheet.getCellRange("O52").setText(shinseiKingakuGoukeiGoukei);
 					
 					worksheet.getCellRange("AE44").setText(tokkiJiko);
