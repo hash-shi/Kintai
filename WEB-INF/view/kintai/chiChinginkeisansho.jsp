@@ -305,9 +305,10 @@
 										<a id="lblShinseikingakugoukei09" name="lblShinseikingakugoukei09"></a>
 									</td>
 								</tr>
-								<tr style="display:none;">
+								<!-- 控除 -->
+								<!--  
+								<tr>
 									<th class="title center w120">
-										<!-- 控除 -->
 										<a ><%=UtilEscape.htmlspecialchars(kbnRyaku07) %></a>
 									</th>
 									<td class="value right w70">
@@ -323,6 +324,7 @@
 										<a id="lblShinseikingakugoukei07" name="lblShinseikingakugoukei07"></a>
 									</td>
 								</tr>
+								-->
 								<tr>
 									<th class="title center w120">
 										<a >休日</a>
