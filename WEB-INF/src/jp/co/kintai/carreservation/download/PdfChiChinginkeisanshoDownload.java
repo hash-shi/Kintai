@@ -185,10 +185,9 @@ public class PdfChiChinginkeisanshoDownload extends DownloadBase {
 		sql.append(" 	,SUBSTRING(CONVERT(TEXT, TokkiJiko), 133, 66) AS TokkiJiko3 ");
 		sql.append(" 	,SUBSTRING(CONVERT(TEXT, TokkiJiko), 198, 66) AS TokkiJiko4 ");
 		
-		// 勤務時間 ShinseiNissu01にはすでに「半休の勤務部分」が合計されている　表示上半休を1日として計算するため、ShinseiNissu06(半休の休み部分)を足す ※正しいか要確認
 		sql.append(" 	,CAST(CAST(K.ShinseiNissu01 + K.ShinseiNissu06 AS DECIMAL(4,1)) AS VARCHAR) AS ShinseiNissu01 ");
-		sql.append(" 	,CAST(CAST(0.0 AS DECIMAL(4,1)) AS VARCHAR) AS ShinseiNissu02 ");
-		sql.append(" 	,CAST(CAST(0.0 AS DECIMAL(4,1)) AS VARCHAR) AS ShinseiNissu03 ");
+		sql.append(" 	,CAST(0.0 AS VARCHAR) AS ShinseiNissu02 ");
+		sql.append(" 	,CAST(0.0 AS VARCHAR) AS ShinseiNissu03 ");
 		sql.append(" 	,CAST(CAST(K.ShinseiNissu04 AS DECIMAL(4,1)) AS VARCHAR) AS ShinseiNissu04 ");
 		sql.append(" 	,CAST(CAST(K.ShinseiNissu05 AS DECIMAL(4,1)) AS VARCHAR) AS ShinseiNissu05 ");
 		sql.append(" 	,CAST(CAST(K.ShinseiNissu06 AS DECIMAL(4,1)) AS VARCHAR) AS ShinseiNissu06 ");
@@ -270,7 +269,7 @@ public class PdfChiChinginkeisanshoDownload extends DownloadBase {
 		sql.append(" 		) AS DECIMAL(4,1) ");
 		sql.append(" 	) AS ShinseiNissuKyujitsu");
 		
-		// 申請日数合計 ※K.ShinseiNissu11を追加 正しいか要確認
+		// 申請日数合計
 		sql.append(" 	,CAST(");
 		sql.append(" 		CAST(K.ShinseiNissu01 + K.ShinseiNissu04 + K.ShinseiNissu05 + K.ShinseiNissu06 + K.ShinseiNissu11 + ");
 		sql.append(" 			( ");
@@ -350,13 +349,13 @@ public class PdfChiChinginkeisanshoDownload extends DownloadBase {
 		sql.append(" 		) AS DECIMAL(4,1) ");
 		sql.append(" 	) AS YukyuKyukaZan ");
 		
-		// 申請時間合計 ※K.ShinseiJikan11を追加 正しいか要確認
+		// 申請時間合計
 		sql.append(" 	,CAST( ");
 		sql.append(" 		K.ShinseiJikan01 + K.ShinseiJikan02 + K.ShinseiJikan03 + K.ShinseiJikan04 + K.ShinseiJikan05 ");
 		sql.append(" 			+  K.ShinseiJikan06 + K.ShinseiJikan07 + K.ShinseiJikan08 + K.ShinseiJikan09 + K.ShinseiJikan10 + K.ShinseiJikan11 AS VARCHAR ");
 		sql.append(" 	) AS ShinseiJikanGoukei");
 		
-		// 申請金額合計 ※K.ShinseiKingakuGoukei11を追加 正しいか要確認
+		// 申請金額合計
 		sql.append(" 	,CAST( ");
 		sql.append(" 		K.ShinseiKingakuGoukei01 + K.ShinseiKingakuGoukei02 + K.ShinseiKingakuGoukei03 + K.ShinseiKingakuGoukei04 ");
 		sql.append(" 			+ K.ShinseiKingakuGoukei05 + K.ShinseiKingakuGoukei06 + K.ShinseiKingakuGoukei07 + K.ShinseiKingakuGoukei08 ");
