@@ -469,9 +469,6 @@ function updateActiveSwitch() {
 	$("#txtJikyuNikkyuKbn").prop("disabled", !enable);
 	$("#selJikyuNikkyuKbnName").prop("disabled", !enable);
 
-	// 勤務実働時間
-	$("#txtKeiyakuJitsudoJikan").prop("disabled", !enable);
-
 	// 単価01～11
 	for (var i = 1; i <= 11; i++) {
 		$("#txtShinseiTanka" + (i < 10 ? "0" + i : i)).prop("disabled", !enable);
