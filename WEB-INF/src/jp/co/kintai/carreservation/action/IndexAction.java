@@ -3,6 +3,7 @@ package jp.co.kintai.carreservation.action;
 import java.sql.Connection;
 import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.HashSet;
 
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
@@ -65,6 +66,8 @@ public class IndexAction extends PJActionBase {
 				for(HashMap<String, String> mstShainEigyosho : mstShainEigyoshos) {
 					shoriKanoEigyoshoCode.add(mstShainEigyosho.get("EigyoshoCode"));
 				}
+				// 重複している営業所コードは取り除く
+				shoriKanoEigyoshoCode = new ArrayList<>(new HashSet<>(shoriKanoEigyoshoCode));
 
 				// ユーザ情報の呼び出し
 				UserInformation userInformation	= new UserInformation();
