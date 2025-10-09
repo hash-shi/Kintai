@@ -78,8 +78,10 @@ function setShoriSentaku(){
 	// 処理可能営業所をカンマ区切りの配列に変換
 	shoriKanoEigyoshoCode = shoriKanoEigyoshoCode.split(",");
 	
-	if (bushoKbn == "00" && userKbn == "01" || shoriKanoEigyoshoCode.length >= 2) {
-		// 部署区分が「00；本社」かつユーザ区分が「01：本社」もしくは処理可能営業所が複数
+	if ((bushoKbn == "00" && userKbn == "01") || (userKbn == "01" && shoriKanoEigyoshoCode.length >= 2) || (userKbn == "02" && shoriKanoEigyoshoCode.length >= 2)) {
+		// 部署区分が「00；本社」かつユーザ区分が「01：本社」
+		// 部署区分が「00；本社」以外かつユーザ区分が「01：本社」かつ処理可能営業所が複数
+		// ユーザ区分が「02：営業所」かつ処理可能営業所が複数
 		// 営業所
 		eigyoshoCode = "";
 		// 部署
@@ -94,7 +96,8 @@ function setShoriSentaku(){
 		$("#srhTxtShainNoF").prop('readonly', false);
 		$("#srhTxtShainNoT").prop('readonly', false);
 	}
-	else if (userKbn == "02" && shoriKanoEigyoshoCode.length == 1) {
+	else if ((userKbn == "01" && shoriKanoEigyoshoCode.length == 1) || (userKbn == "02" && shoriKanoEigyoshoCode.length == 1)) {
+//		// ユーザ区分が「01：営業所」かつ処理可能営業所が1つ(所属している営業所のみ)
 //		// ユーザ区分が「02：営業所」かつ処理可能営業所が1つ(所属している営業所のみ)
 //		// 営業所
 //		eigyoshoCode = "";
