@@ -10,10 +10,8 @@ function setShoriSentaku(){
 	// 選択した処理内容を格納
 	// 値を取得する方法
 	var value = $("#selShoriSentaku").val();
-	console.log(value);
 	// テキスト内容を取得する方法
 	var name = $("#selShoriSentaku option:selected").text();
-	console.log(name);
 	
 	// 処理選択に格納する。
 	$("#txtShoriSentaku").val(name);
@@ -70,33 +68,82 @@ function setShoriSentaku(){
 	$("#srhTxtTaishoNendoF").val(taishoNendo);
 	$("#srhTxtTaishoNendoT").val(taishoNendo);
 	
-	// ユーザー権限による初期値/活性制御
+	// ユーザ区分、処理可能営業所による初期値/活性制御
 	var shainNo = $("#hdnShainNo").val();
 	var eigyoshoCode = $("#hdnEigyoshoCode").val();
 	var bushoCode = $("#hdnBushoCode").val();
 	var bushoKbn = $("#hdnBushoKbn").val();
 	var userKbn = $("#hdnUserKbn").val();
-	console.log(bushoKbn);
-	console.log(userKbn);
+	var shoriKanoEigyoshoCode = $("#hdnShoriKanoEigyoshoCode").val();
+	// 処理可能営業所をカンマ区切りの配列に変換
+	shoriKanoEigyoshoCode = shoriKanoEigyoshoCode.split(",");
 	
-	if (bushoKbn == "00" && userKbn == "01") {
-		// 管理者(権限有り)
+	if (bushoKbn == "00" && userKbn == "01" || shoriKanoEigyoshoCode.length >= 2) {
+		// 部署区分が「00；本社」かつユーザ区分が「01：本社」もしくは処理可能営業所が複数
 		// 営業所
 		eigyoshoCode = "";
 		// 部署
 		bushoCode = "";
 		// 社員
 		shainNo = "";
-		// 活性
+		// 全て活性
 		$("#srhTxtEigyoshoCodeF").prop('readonly', false);
 		$("#srhTxtEigyoshoCodeT").prop('readonly', false);
 		$("#srhTxtBushoCodeF").prop('readonly', false);
 		$("#srhTxtBushoCodeT").prop('readonly', false);
 		$("#srhTxtShainNoF").prop('readonly', false);
 		$("#srhTxtShainNoT").prop('readonly', false);
-		
-	} else {
-//		// 一般(権限なし)
+	}
+	else if (userKbn == "02" && shoriKanoEigyoshoCode.length == 1) {
+//		// ユーザ区分が「02：営業所」かつ処理可能営業所が1つ(所属している営業所のみ)
+//		// 営業所
+//		eigyoshoCode = "";
+		// 部署
+		bushoCode = "";
+		// 社員
+		shainNo = "";
+		// 営業所のみ非活性
+		$("#srhTxtEigyoshoCodeF").prop('readonly', true);
+		$("#srhTxtEigyoshoCodeT").prop('readonly', true);
+		$("#srhTxtBushoCodeF").prop('readonly', false);
+		$("#srhTxtBushoCodeT").prop('readonly', false);
+		$("#srhTxtShainNoF").prop('readonly', false);
+		$("#srhTxtShainNoT").prop('readonly', false);
+	}
+	else if (userKbn == "03") {
+//		// ユーザ区分が「03：部署」
+//		// 営業所
+//		eigyoshoCode = "";
+//		// 部署
+//		bushoCode = "";
+		// 社員
+		shainNo = "";
+		// 営業所、部署は非活性
+		$("#srhTxtEigyoshoCodeF").prop('readonly', true);
+		$("#srhTxtEigyoshoCodeT").prop('readonly', true);
+		$("#srhTxtBushoCodeF").prop('readonly', true);
+		$("#srhTxtBushoCodeT").prop('readonly', true);
+		$("#srhTxtShainNoF").prop('readonly', false);
+		$("#srhTxtShainNoT").prop('readonly', false);	
+	}
+	else if (userKbn == "04") {
+//		// ユーザ区分が「04：個人」
+//		// 営業所
+//		eigyoshoCode = "";
+//		// 部署
+//		bushoCode = "";
+//		// 社員
+//		shainNo = "";
+		// 全て非活性
+		$("#srhTxtEigyoshoCodeF").prop('readonly', true);
+		$("#srhTxtEigyoshoCodeT").prop('readonly', true);
+		$("#srhTxtBushoCodeF").prop('readonly', true);
+		$("#srhTxtBushoCodeT").prop('readonly', true);
+		$("#srhTxtShainNoF").prop('readonly', true);
+		$("#srhTxtShainNoT").prop('readonly', true);
+	}
+	else {
+//		// ユーザ区分なし
 //		// 営業所
 //		eigyoshoCode = "";
 //		// 部署
@@ -148,10 +195,8 @@ function onPdfCsvDownload(){
 	
 	// 処理選択を取得
 	var value = $("#txtShoriSentaku").val();
-	console.log(value);
 	// 出力形式を取得
 	var pdfcsv = $("#srhRdoOutput:checked").val();
-	console.log(pdfcsv);
 	
 	if (value == "出勤簿出力") {
 		proc("kinShukkinBo",{}, function(data, dataType){

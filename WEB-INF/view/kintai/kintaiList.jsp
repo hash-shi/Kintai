@@ -1,4 +1,5 @@
 <%@ page contentType="text/html; charset=UTF-8" pageEncoding="UTF-8" %>
+<%@ page import="java.util.List"%>
 <%@ page import="java.util.ArrayList"%>
 <%@ page import="java.util.HashMap"%>
 <%@ page import="jp.co.tjs_net.java.framework.common.UtilEscape" %>
@@ -12,15 +13,23 @@ String eigyoshoCode = "";
 String bushoCode = "";
 String userKbn = "";
 String bushoKbn = "";
+String shoriKanoEigyoshoCode = "";
+ArrayList<String> shoriKanoEigyoshoCodes = new ArrayList<String>();
 
 // ユーザー情報の取得
 UserInformation userInformation = (UserInformation)request.getSession().getAttribute(Define.SESSION_ID);
 if (userInformation != null) {
 	shainNo						= userInformation.getShainNO();
-	eigyoshoCode			= userInformation.getEigyoshoCode();
+	eigyoshoCode				= userInformation.getEigyoshoCode();
 	bushoCode					= userInformation.getBushoCode();
 	userKbn						= userInformation.getUserKbn();
 	bushoKbn					= userInformation.getBushoKbn();
+	
+	shoriKanoEigyoshoCodes = userInformation.getShoriKanoEigyoshoCode();
+	for (int i = 0; i < shoriKanoEigyoshoCodes.size(); i++) {
+		if (i!=0) {shoriKanoEigyoshoCode += ","; }
+		shoriKanoEigyoshoCode += shoriKanoEigyoshoCodes.get(i);
+	}
 }
 
 //処理区分の取得
@@ -41,6 +50,7 @@ ArrayList<HashMap<String, String>> mstKubun0050 = (ArrayList<HashMap<String, Str
 					<input type="hidden" class="" name="hdnBushoCode" id="hdnBushoCode"  value="<%=UtilEscape.htmlspecialchars(bushoCode) %>" >
 					<input type="hidden" class="" name="hdnUserKbn" id="hdnUserKbn"  value="<%=UtilEscape.htmlspecialchars(userKbn) %>" >
 					<input type="hidden" class="" name="hdnBushoKbn" id="hdnBushoKbn"  value="<%=UtilEscape.htmlspecialchars(bushoKbn) %>" >
+					<input type="hidden" class="" name="hdnShoriKanoEigyoshoCode" id="hdnShoriKanoEigyoshoCode"  value="<%=UtilEscape.htmlspecialchars(shoriKanoEigyoshoCode)%>" >
 				</tr>
 			</table>
 			<table>

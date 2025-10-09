@@ -258,9 +258,9 @@ public class PdfKinShukkinBoDownload extends DownloadBase {
 		sql.append(" 	,ShinseiKingaku01 ");
 		sql.append(" 	,ShinseiKingaku02 ");
 		
-		sql.append(" 	,COALESCE(Y.YukyuKyukaFuyoNissu, S.YukyuKyukaFuyoNissu) ");
+		sql.append(" 	,COALESCE(Y.YukyuKyukaFuyoNissu, S.YukyuKyukaFuyoNissu) - ");
 		
-		sql.append(" 	,CAST ( ");
+		sql.append(" 	CAST ( ");
 		sql.append(" 		( ");
 		sql.append(" 			SELECT ");
 		sql.append(" 				SUM(KIHON.ShinseiNissu04 + KIHON.ShinseiNissu05 * 0.5) ");
@@ -665,11 +665,11 @@ public class PdfKinShukkinBoDownload extends DownloadBase {
 				worksheet.getCellRange("AH" + (9 + rowCnt)).setText(kintaiShinseiKbn2);
 				worksheet.getCellRange("AK" + (9 + rowCnt)).setText(kintaiShinseiKaishiJikoku2);
 				worksheet.getCellRange("AN" + (9 + rowCnt)).setText(kintaiShinseiShuryoJikoku2);
-				worksheet.getCellRange("AE" + (9 + rowCnt)).setText(formatTimeForCell(kintaiShinseiJikan2));
+				worksheet.getCellRange("AQ" + (9 + rowCnt)).setText(formatTimeForCell(kintaiShinseiJikan2));
 				worksheet.getCellRange("AT" + (9 + rowCnt)).setText(kintaiShinseiKbn3);
 				worksheet.getCellRange("AW" + (9 + rowCnt)).setText(kintaiShinseiKaishiJikoku3);
 				worksheet.getCellRange("AZ" + (9 + rowCnt)).setText(kintaiShinseiShuryoJikoku3);
-				worksheet.getCellRange("AE" + (9 + rowCnt)).setText(formatTimeForCell(kintaiShinseiJikan3));
+				worksheet.getCellRange("BC" + (9 + rowCnt)).setText(formatTimeForCell(kintaiShinseiJikan3));
 				
 				// 曜日区分が土の場合は青色、日の場合は赤色
 				if(yobiKbn.equals("土")) {
