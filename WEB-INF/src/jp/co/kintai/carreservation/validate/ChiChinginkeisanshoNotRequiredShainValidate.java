@@ -11,9 +11,9 @@ import jp.co.kintai.carreservation.base.PJActionBase;
 import jp.co.tjs_net.java.framework.base.ValidateBase;
 import jp.co.tjs_net.java.framework.information.IndexInformation;
 
-public class KinShukkinboNotRequiredShainValidate extends ValidateBase {
+public class ChiChinginkeisanshoNotRequiredShainValidate extends ValidateBase {
 
-	public KinShukkinboNotRequiredShainValidate(HttpServletRequest req, HttpServletResponse res, IndexInformation info) {
+	public ChiChinginkeisanshoNotRequiredShainValidate(HttpServletRequest req, HttpServletResponse res, IndexInformation info) {
 		super(req, res, info);
 	}
 	
@@ -48,8 +48,8 @@ public class KinShukkinboNotRequiredShainValidate extends ValidateBase {
 		
 		HashMap<String, String> mstShain = mstShains.get(0);
 
-		//出勤簿入力区分が"00"(月給制)以外なら処理終了
-		if("00".equals(mstShain.get("ShukinboKbn")) == false){ return false; }
+		//出勤簿入力区分が"01"(時給日給制)以外なら処理終了
+		if("01".equals(mstShain.get("ShukinboKbn")) == false){ return false; }
 		
 		// 結果返却
 		return true;

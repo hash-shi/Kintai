@@ -346,6 +346,7 @@ public class KinShukkinBoAction extends PJActionBase {
 			returnRecord.put("KinmuKaishiFun", mstShain.get("KinmuKaishiFun"));
 			returnRecord.put("KinmuShuryoJi", mstShain.get("KinmuShuryoJi"));
 			returnRecord.put("KinmuShuryoFun", mstShain.get("KinmuShuryoFun"));
+			returnRecord.put("KeiyakuJitsudoJikan", mstShain.get("KeiyakuJitsudoJikan"));
 		}
 		this.addContent("result", returnRecord);
 	}

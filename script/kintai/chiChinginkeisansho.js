@@ -329,40 +329,40 @@ function onDisplayNyuryokuArea(firstHalfFlg){
 					"<td class=\"value center\"><a class=\"" + yobiColorClass + "\">" + yobiKbn + "</a></td>" +
 	
 					"<td class=\"value center\">" + 
-						"<input type=\"text\" class=\"\"  style=\"width: 40px; text-align: right;\" maxlength=\"2\" name=\"numShusshaJi" + i + "\" id=\"numShusshaJi" + i + "\"  value=\"" + shusshaJi + "\"  onchange=\"changeShusshaJi(" + i + ");setShukkinBo('numShusshaJi', " + i + ");calcJitsudoJikan(" + i + ");\" >" + 
+						"<input type=\"text\" class=\"\"  style=\"width: 40px; text-align: right;\" maxlength=\"2\" name=\"numShusshaJi" + i + "\" id=\"numShusshaJi" + i + "\"  value=\"" + shusshaJi + "\"  onchange=\"set2ketaFormat('numShusshaJi', " + i + ");changeShusshaJi(" + i + ");setShukkinBo('numShusshaJi', " + i + ");calcJitsudoJikan(" + i + ");\" >" + 
 					"</td>" +
 					"<td class=\"value center\">" + 
-						"<input type=\"text\" class=\"\"  style=\"width: 40px; text-align: right;\" maxlength=\"2\" name=\"numShusshaFun" + i + "\" id=\"numShusshaFun" + i + "\"  value=\"" + shusshaFun + "\"  onchange=\"setShukkinBo('numShusshaFun', " + i + ");calcJitsudoJikan(" + i + ");\" >" + 
+						"<input type=\"text\" class=\"\"  style=\"width: 40px; text-align: right;\" maxlength=\"2\" name=\"numShusshaFun" + i + "\" id=\"numShusshaFun" + i + "\"  value=\"" + shusshaFun + "\"  onchange=\"set2ketaFormat('numShusshaFun', " + i + ");setShukkinBo('numShusshaFun', " + i + ");calcJitsudoJikan(" + i + ");\" >" + 
 					"</td>" +
 					"<td class=\"value center\">" + 
 						"<a >-</a>" + 
 					"</td>" +
 					"<td class=\"value center\">" + 
-						"<input type=\"text\" class=\"\"  style=\"width: 40px; text-align: right;\" maxlength=\"2\" name=\"numTaishaJi" + i + "\" id=\"numTaishaJi" + i + "\"  value=\"" + taishaJi + "\"  onchange=\"setShukkinBo('numTaishaJi', " + i + ");calcJitsudoJikan(" + i + ");\" >" + 
+						"<input type=\"text\" class=\"\"  style=\"width: 40px; text-align: right;\" maxlength=\"2\" name=\"numTaishaJi" + i + "\" id=\"numTaishaJi" + i + "\"  value=\"" + taishaJi + "\"  onchange=\"set2ketaFormat('numTaishaJi', " + i + ");setShukkinBo('numTaishaJi', " + i + ");calcJitsudoJikan(" + i + ");\" >" + 
 					"</td>" +
 					"<td class=\"value center\">" + 
-						"<input type=\"text\" class=\"\"  style=\"width: 40px; text-align: right;\" maxlength=\"2\" name=\"numTaishaFun" + i + "\" id=\"numTaishaFun" + i + "\"  value=\"" + taishaFun + "\"  onchange=\"setShukkinBo('numTaishaFun', " + i + ");calcJitsudoJikan(" + i + ");\" >" + 
+						"<input type=\"text\" class=\"\"  style=\"width: 40px; text-align: right;\" maxlength=\"2\" name=\"numTaishaFun" + i + "\" id=\"numTaishaFun" + i + "\"  value=\"" + taishaFun + "\"  onchange=\"set2ketaFormat('numTaishaFun', " + i + ");setShukkinBo('numTaishaFun', " + i + ");calcJitsudoJikan(" + i + ");\" >" + 
 					"</td>" +
 					"<td class=\"value center\">" + 
-						"<input type=\"text\" class=\"\"  style=\"width: 40px; text-align: right;\" maxlength=\"5\" name=\"numJitsudoJikan" + i + "\" id=\"numJitsudoJikan" + i + "\"  value=\"" + jitsudoJikan + "\"  onchange=\"setShukkinBo('numJitsudoJikan', " + i + ");\" >" + 
+						"<input type=\"text\" class=\"\"  style=\"width: 40px; text-align: right;\" maxlength=\"5\" name=\"numJitsudoJikan" + i + "\" id=\"numJitsudoJikan" + i + "\"  value=\"" + jitsudoJikan + "\"  onchange=\"setDecimalPoint2ketaFormat('numJitsudoJikan', " + i + ");setShukkinBo('numJitsudoJikan', " + i + ");\" >" + 
 					"</td>" +
 					"<td class=\"value center\">" + 
 						sinsei1SelectBox + 
 					"</td>" +
 					"<td class=\"value center\">" + 
-						"<input type=\"text\" class=\"\"  style=\"width: 40px; text-align: right;\" maxlength=\"5\" name=\"numChinginShinseiJikan1" + i + "\" id=\"numChinginShinseiJikan1" + i + "\"  value=\"" + chinginShinseiJikan1 + "\"  onchange=\"setShukkinBo('numChinginShinseiJikan1', " + i + ");\" >" + 
+						"<input type=\"text\" class=\"\"  style=\"width: 40px; text-align: right;\" maxlength=\"5\" name=\"numChinginShinseiJikan1" + i + "\" id=\"numChinginShinseiJikan1" + i + "\"  value=\"" + chinginShinseiJikan1 + "\"  onchange=\"setDecimalPoint2ketaFormat('numChinginShinseiJikan1', " + i + ");setShukkinBo('numChinginShinseiJikan1', " + i + ");\" >" + 
 					"</td>" +
 					"<td class=\"value center\">" + 
 						sinsei2SelectBox + 
 					"</td>" +
 					"<td class=\"value center\">" + 
-						"<input type=\"text\" class=\"\"  style=\"width: 40px; text-align: right;\" maxlength=\"5\" name=\"numChinginShinseiJikan2" + i + "\" id=\"numChinginShinseiJikan2" + i + "\"  value=\"" + chinginShinseiJikan2 + "\"  onchange=\"setShukkinBo('numChinginShinseiJikan2', " + i + ");\" >" + 
+						"<input type=\"text\" class=\"\"  style=\"width: 40px; text-align: right;\" maxlength=\"5\" name=\"numChinginShinseiJikan2" + i + "\" id=\"numChinginShinseiJikan2" + i + "\"  value=\"" + chinginShinseiJikan2 + "\"  onchange=\"setDecimalPoint2ketaFormat('numChinginShinseiJikan2', " + i + ");setShukkinBo('numChinginShinseiJikan2', " + i + ");\" >" + 
 					"</td>" +
 					"<td class=\"value center\">" + 
 						sinsei3SelectBox + 
 					"</td>" +
 					"<td class=\"value center\">" + 
-						"<input type=\"text\" class=\"\"  style=\"width: 40px; text-align: right;\" maxlength=\"5\" name=\"numChinginShinseiJikan3" + i + "\" id=\"numChinginShinseiJikan3" + i + "\"  value=\"" + chinginShinseiJikan3 + "\"  onchange=\"setShukkinBo('numChinginShinseiJikan3', " + i + ");\" >" + 
+						"<input type=\"text\" class=\"\"  style=\"width: 40px; text-align: right;\" maxlength=\"5\" name=\"numChinginShinseiJikan3" + i + "\" id=\"numChinginShinseiJikan3" + i + "\"  value=\"" + chinginShinseiJikan3 + "\"  onchange=\"setDecimalPoint2ketaFormat('numChinginShinseiJikan3', " + i + ");setShukkinBo('numChinginShinseiJikan3', " + i + ");\" >" + 
 					"</td>" +
 				"</tr>";
 		}
@@ -463,6 +463,33 @@ function changeShusshaJi(nowRow){
 		
 	}
 	
+}
+
+/*
+*
+* 入力した値を0埋め2桁に変換
+*
+*/
+function set2ketaFormat(fieldName, nowRow){
+	let wk = $("#" + fieldName + nowRow).val();
+	let checkIfNumber = /^[0-9]+$/;
+	//数字で入力済みの時のみ0埋めする
+	if(wk != "" && checkIfNumber.test(wk)){
+		$("#" + fieldName + nowRow).val(("00" + String(wk)).slice(-2));
+	}
+}
+
+/*
+*
+* 入力した値を小数点以下2桁0埋めに変換
+*
+*/
+function setDecimalPoint2ketaFormat(fieldName, nowRow){
+	let wk = Number($("#" + fieldName + nowRow).val());
+	//入力された値が数値なら小数点以下2桁0埋め処理を行う
+	if(Number.isNaN(wk) == false){
+		$("#" + fieldName + nowRow).val(wk.toFixed(2));
+	}
 }
 
 /*

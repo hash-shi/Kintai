@@ -25,6 +25,9 @@
 			<check class="ShainAuthorityValidate" message="ログインした社員Noでは処理できません。">
 				<param name="shainNo">srhTxtShainNO</param>
 			</check>
+			<check class="ChiChinginkeisanshoNotRequiredShainValidate" message="該当する社員NOは賃金計算書不要です。">
+				<param name="shainNo">srhTxtShainNO</param>
+			</check>
 			<check class="KinShukkinBoShainTaishokuValidate" message="該当する社員NOは処理できません。">
 				<param name="shainNo">srhTxtShainNO</param>
 				<param name="taishoYM">srhTxtTaishoYM</param>
