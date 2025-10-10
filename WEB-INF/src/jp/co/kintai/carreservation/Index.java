@@ -5,7 +5,6 @@ import jakarta.servlet.http.HttpServletResponse;
 
 import jp.co.tjs_net.java.framework.information.IndexInformation;
 
-@SuppressWarnings("serial")
 public class Index extends jp.co.tjs_net.java.framework.core.Index {
 
 	@Override

@@ -24,7 +24,7 @@ public class UserAuthority extends AuthorityBase {
 		try {
 			
 			res.setContentType("text/html");
-			String clientIp = req.getRemoteAddr();
+//			String clientIp = req.getRemoteAddr();
 			
 			setAuthorityResult(true);
 			return;

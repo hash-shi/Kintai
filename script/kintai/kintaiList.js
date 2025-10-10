@@ -202,7 +202,7 @@ function onPdfCsvDownload(){
 	var pdfcsv = $("#srhRdoOutput:checked").val();
 	
 	if (value == "出勤簿出力") {
-		proc("kinShukkinBo",{}, function(data, dataType){
+		proc("kinShukkinBo",{}, function(data){
 			
 			if (data == undefined){ return; }
 			if (data["contents"] == undefined){ return; }
@@ -224,7 +224,7 @@ function onPdfCsvDownload(){
 		});
 	}
 	else if (value == "賃金計算書出力") {
-		proc("chiChinginkeisansho",{}, function(data, dataType){
+		proc("chiChinginkeisansho",{}, function(data){
 			
 			if (data == undefined){ return; }
 			if (data["contents"] == undefined){ return; }
@@ -246,7 +246,7 @@ function onPdfCsvDownload(){
 		});	
 	}
 	else if (value == "年次有給休暇台帳出力") {
-		proc("kinYukyuKyukaDaicho",{}, function(data, dataType){
+		proc("kinYukyuKyukaDaicho",{}, function(data){
 			
 			if (data == undefined){ return; }
 			if (data["contents"] == undefined){ return; }
