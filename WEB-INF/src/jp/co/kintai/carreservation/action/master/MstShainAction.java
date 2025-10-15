@@ -93,6 +93,10 @@ public class MstShainAction extends PJActionBase {
 		// パラメータ取得
 		//=====================================================================
 		String shainNo = req.getParameter("srhTxtShainNO");
+		
+		// ログインユーザの営業所を取得
+		UserInformation userInformation = (UserInformation)req.getSession().getAttribute(Define.SESSION_ID);
+		String eigyoshoCode	= userInformation.getEigyoshoCode();
 
 		//=====================================================================
 		// 0詰め処理
@@ -124,7 +128,7 @@ public class MstShainAction extends PJActionBase {
 			record.put("UserKbn", "");
 			record.put("ShainKbn", "");
 			record.put("ShukinboKbn", "");
-			record.put("EigyoshoCode", "");
+			record.put("EigyoshoCode", eigyoshoCode);
 			record.put("BushoCode", "");
 			record.put("YukyuKyukaFuyoNissu", "0.0");
 			record.put("JikyuNikkyuKbn", "");
