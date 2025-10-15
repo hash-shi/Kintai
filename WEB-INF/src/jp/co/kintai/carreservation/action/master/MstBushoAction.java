@@ -57,6 +57,11 @@ public class MstBushoAction extends PJActionBase {
 		// 4桁0詰めに変換
 		bushoCode = String.format("%04d", bushoCode_);
 		
+		// ログインユーザの営業所を取得
+		UserInformation userInformation = (UserInformation)req.getSession().getAttribute(Define.SESSION_ID);
+		String eigyoshoCode	= userInformation.getEigyoshoCode();
+		String eigyoshoName = userInformation.getEigyoshoName(); 
+		
 		//=====================================================================
 		// DB接続
 		//=====================================================================
@@ -79,8 +84,8 @@ public class MstBushoAction extends PJActionBase {
 			record.put("BushoName", "");
 			record.put("BushoKbn", "");
 			record.put("KbnName", "");
-			record.put("EigyoshoCode", "");
-			record.put("EigyoshoName", "");
+			record.put("EigyoshoCode", eigyoshoCode);
+			record.put("EigyoshoName", eigyoshoName);
 			record.put("SaishuKoshinShainNO", "");
 			record.put("SaishuKoshinShainName", "");
 			record.put("SaishuKoshinDate", "");
