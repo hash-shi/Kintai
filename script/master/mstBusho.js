@@ -54,7 +54,6 @@ function getMstBusho(){
 			$("#txtBushoKbn").val(mstDatas[i]["BushoKbn"]);
 			$("#selBushoKbnName").val(mstDatas[i]["BushoKbn"]);
 			$("#txtEigyoshoCode").val(mstDatas[i]["EigyoshoCode"]);
-			$("#txtEigyoshoName").val(mstDatas[i]["EigyoshoName"]);					
 			// $("#lblSaishuKoshinShainNO").html(mstDatas[i]["SaishuKoshinShainNO"]);
 			$("#lblSaishuKoshinShainName").html(mstDatas[i]["SaishuKoshinShainName"]);
 			$("#lblSaishuKoshinDate").html(mstDatas[i]["SaishuKoshinDate"]);
@@ -66,6 +65,9 @@ function getMstBusho(){
 			$("#hdnSaishuKoshinDate").val(mstDatas[i]["SaishuKoshinDate"]);
 			$("#hdnSaishuKoshinJikan").val(mstDatas[i]["SaishuKoshinJikan"]);
 		}
+		
+		// 営業所名の取得
+		getEigyoshoName('txtEigyoshoCode', 'txtEigyoshoName');
 		
 	});
 
