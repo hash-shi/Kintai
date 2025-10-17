@@ -393,17 +393,17 @@ public class CsvKinShukkinBoDownload extends DownloadBase {
 		csvStringTitle.addItem( "勤怠申請区分1",true);
 		csvStringTitle.addItem( "勤怠申請開始時間1",true);
 		csvStringTitle.addItem( "勤怠申請終了時間1",true);
-		csvStringTitle.addItem( "勤怠申請申請時間1",true);
+		csvStringTitle.addItem( "勤怠申請時間1",true);
 		csvStringTitle.addItem( "勤怠申請休憩時間1",true);
 		csvStringTitle.addItem( "勤怠申請区分2",true);
 		csvStringTitle.addItem( "勤怠申請開始時間2",true);
 		csvStringTitle.addItem( "勤怠申請終了時間2",true);
-		csvStringTitle.addItem( "勤怠申請申請時間2",true);
+		csvStringTitle.addItem( "勤怠申請時間2",true);
 		csvStringTitle.addItem( "勤怠申請休憩時間2",true);
 		csvStringTitle.addItem( "勤怠申請区分3",true);
 		csvStringTitle.addItem( "勤怠申請開始時間3",true);
 		csvStringTitle.addItem( "勤怠申請終了時間3",true);
-		csvStringTitle.addItem( "勤怠申請申請時間3",true);
+		csvStringTitle.addItem( "勤怠申請時間3",true);
 		csvStringTitle.addItem( "勤怠申請休憩時間3",true);
 		csvStringTitle.addItem( "勤怠申請備考",true);
 			

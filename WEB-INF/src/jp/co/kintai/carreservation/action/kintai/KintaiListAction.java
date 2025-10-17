@@ -504,9 +504,17 @@ public class KintaiListAction extends PJActionBase {
 		sql.append(" FROM ");
 		sql.append(" 	KIN_YUKYU_KYUKA_DAICHO Y ");
 		sql.append(" LEFT OUTER JOIN ");
+		sql.append(" 	KIN_SHUKKINBO_KIHON SK ");
+		sql.append(" ON ");
+		sql.append(" 	Y.ShainNO = SK.ShainNO ");
+		sql.append(" LEFT OUTER JOIN ");
+		sql.append(" 	CHI_CHINGINKEISANSHO_KIHON CK ");
+		sql.append(" ON ");
+		sql.append(" 	Y.ShainNO = CK.ShainNO ");
+		sql.append(" LEFT OUTER JOIN ");
 		sql.append(" 	MST_SHAIN S ");
 		sql.append(" ON ");
-		sql.append(" 	S.ShainNO = Y.ShainNO");
+		sql.append(" 	S.ShainNO = Y.ShainNO ");
 		sql.append(" LEFT OUTER JOIN ");
 		sql.append(" 	MST_EIGYOSHO E ");
 		sql.append(" ON ");
@@ -520,11 +528,35 @@ public class KintaiListAction extends PJActionBase {
 		
 		if (StringUtils.isNotBlank(fromTaishoNendo)) {
 			sql.append(" AND Y.TaishoNendo >=  ? ");
+			sql.append(" OR CASE ");
+			sql.append(" 	WHEN RIGHT(SK.TaishoNenGetsudo, 2) IN ('01', '02', '03') ");
+			sql.append(" 	THEN CAST(CAST(LEFT(SK.TaishoNenGetsudo, 4) AS INT) - 1 AS VARCHAR) ");
+			sql.append(" 	ELSE LEFT(SK.TaishoNenGetsudo, 4) ");
+			sql.append(" END >= ?");
+			sql.append(" OR CASE ");
+			sql.append(" 	WHEN RIGHT(CK.TaishoNenGetsudo, 2) IN ('01', '02', '03') ");
+			sql.append(" 	THEN CAST(CAST(LEFT(CK.TaishoNenGetsudo, 4) AS INT) - 1 AS VARCHAR) ");
+			sql.append(" 	ELSE LEFT(CK.TaishoNenGetsudo, 4) ");
+			sql.append(" END >= ?");
+			pstmtf.addValue("String", fromTaishoNendo);
+			pstmtf.addValue("String", fromTaishoNendo);
 			pstmtf.addValue("String", fromTaishoNendo);
 		}
 		
 		if (StringUtils.isNotBlank(toTaishoNendo)) {
-			sql.append(" AND Y.TaishoNendo <=  ? ");
+			sql.append(" AND Y.TaishoNendo <=  ? ");			
+			sql.append(" OR CASE ");
+			sql.append(" 	WHEN RIGHT(SK.TaishoNenGetsudo, 2) IN ('01', '02', '03') ");
+			sql.append(" 	THEN CAST(CAST(LEFT(SK.TaishoNenGetsudo, 4) AS INT) - 1 AS VARCHAR) ");
+			sql.append(" 	ELSE LEFT(SK.TaishoNenGetsudo, 4) ");
+			sql.append(" END <= ?");
+			sql.append(" OR CASE ");
+			sql.append(" 	WHEN RIGHT(CK.TaishoNenGetsudo, 2) IN ('01', '02', '03') ");
+			sql.append(" 	THEN CAST(CAST(LEFT(CK.TaishoNenGetsudo, 4) AS INT) - 1 AS VARCHAR) ");
+			sql.append(" 	ELSE LEFT(CK.TaishoNenGetsudo, 4) ");
+			sql.append(" END <= ?");
+			pstmtf.addValue("String", toTaishoNendo);
+			pstmtf.addValue("String", toTaishoNendo);
 			pstmtf.addValue("String", toTaishoNendo);
 		}
 
