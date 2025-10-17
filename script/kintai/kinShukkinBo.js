@@ -532,6 +532,7 @@ function changeShukkinYotei(nowRow){
 	){
 		let fieldName = "selKintaiKbn";
 		$("#" + fieldName + nowRow).val("00");
+		kintaiChangeColor(document.getElementById (fieldName + nowRow));
 		setShukkinBo(fieldName, nowRow);
 		
 		fieldName = "numShusshaJi";
