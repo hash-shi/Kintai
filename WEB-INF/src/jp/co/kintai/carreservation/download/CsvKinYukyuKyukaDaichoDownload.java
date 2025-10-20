@@ -595,9 +595,9 @@ public class CsvKinYukyuKyukaDaichoDownload extends DownloadBase {
 		csvStringTitle.addItem("有給休暇期首日数",true);
 		
 		for (int cnt = 1; cnt <= 60; cnt++) {
-			csvStringTitle.addItem("有給休暇取得日(月)"+ cnt,true);
-			csvStringTitle.addItem("有給休暇取得日(日)"+ cnt,true);
-			csvStringTitle.addItem("有給休暇取得日(半休)"+ cnt,true);
+			csvStringTitle.addItem("有給休暇取得日_月"+ cnt,true);
+			csvStringTitle.addItem("有給休暇取得日_日"+ cnt,true);
+			csvStringTitle.addItem("有給休暇取得日_半休"+ cnt,true);
 		}
 		
 		csvStringTitle.addItem("有給休暇残日数",true);
