@@ -22,15 +22,15 @@
 		</variable>
 
 		<variable name="dummy" dispName="">
-			<check class="ShainAuthorityValidate" message="ログインした社員Noでは処理できません。">
-				<param name="shainNo">srhTxtShainNO</param>
-			</check>
 			<check class="KinShukkinboNotRequiredShainValidate" message="該当する社員NOは出勤簿不要です。">
 				<param name="shainNo">srhTxtShainNO</param>
 			</check>
 			<check class="KinShukkinBoShainTaishokuValidate" message="該当する社員NOは処理できません。">
 				<param name="shainNo">srhTxtShainNO</param>
 				<param name="taishoYM">srhTxtTaishoYM</param>
+			</check>
+			<check class="ShainAuthorityValidate" message="ログインした社員Noでは処理できません。">
+				<param name="shainNo">srhTxtShainNO</param>
 			</check>
 		</variable>
 	</proc>
@@ -58,15 +58,15 @@
 		
 		
 		<variable name="dummy" dispName="">
-			<check class="ShainAuthorityValidate" message="ログインした社員Noでは処理できません。">
-				<param name="shainNo">txtShainNO</param>
-			</check>
 			<check class="KinShukkinboNotRequiredShainValidate" message="該当する社員NOは出勤簿不要です。">
 				<param name="shainNo">txtShainNO</param>
 			</check>
 			<check class="KinShukkinBoShainTaishokuValidate" message="該当する社員NOは処理できません。">
 				<param name="shainNo">txtShainNO</param>
 				<param name="taishoYM">txtTaishoYM</param>
+			</check>
+			<check class="ShainAuthorityValidate" message="ログインした社員Noでは処理できません。">
+				<param name="shainNo">txtShainNO</param>
 			</check>
 
 			<check class="KinShukkinBoExclusiveValidate" message="この出勤簿明細データはすでに、別のユーザーに更新されています。もう一度データを確認してください。"></check>
@@ -127,15 +127,15 @@
 		</variable>
 
 		<variable name="dummy" dispName="">
-			<check class="ShainAuthorityValidate" message="ログインした社員Noでは処理できません。">
-				<param name="shainNo">txtShainNO</param>
-			</check>
 			<check class="KinShukkinboNotRequiredShainValidate" message="該当する社員NOは出勤簿不要です。">
 				<param name="shainNo">txtShainNO</param>
 			</check>
 			<check class="KinShukkinBoShainTaishokuValidate" message="該当する社員NOは処理できません。">
 				<param name="shainNo">txtShainNO</param>
 				<param name="taishoYM">txtTaishoYM</param>
+			</check>
+			<check class="ShainAuthorityValidate" message="ログインした社員Noでは処理できません。">
+				<param name="shainNo">txtShainNO</param>
 			</check>
 
 			<check class="KinShukkinBoExclusiveValidate" message="この出勤簿明細データはすでに、別のユーザーに更新されています。もう一度データを確認してください。"></check>
