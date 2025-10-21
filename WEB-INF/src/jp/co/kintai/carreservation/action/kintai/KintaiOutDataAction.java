@@ -69,6 +69,8 @@ public class KintaiOutDataAction extends PJActionBase {
 		sql.append("SELECT COUNT(*) AS CNT ");
 		sql.append("FROM KIN_SHUKKINBO_KIHON skihon ");
 		sql.append("WHERE 1 = 1 ");
+		
+		sql.append(" AND skihon.KakuteiKbn = '03' ");
 
 		if (StringUtils.isNotBlank(taishoNengetsuF)) {
 			sql.append(" AND skihon.TaishoNenGetsudo >= ? ");
