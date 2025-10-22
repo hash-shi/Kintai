@@ -60,8 +60,6 @@ public class CsvKyuyokeisanDataDownload extends DownloadBase {
 		// データ取得
 		//=====================================================================
 		
-		String[] targetCols = {"01", "03", "04", "06", "07", "08", "09", "10", "11", "12"};
-		
 		sql.append("SELECT ");
 		sql.append("	FORMAT(GETDATE(), 'yyyy/MM/dd') AS SystemDate, ");
 		sql.append("	skihon.*, ");
@@ -69,17 +67,84 @@ public class CsvKyuyokeisanDataDownload extends DownloadBase {
 		sql.append("	shain.EigyoshoCode, ");
 		sql.append("		LEFT(skihon.TaishoNenGetsudo, 4) AS Nendo, ");
 		sql.append("		RIGHT(skihon.TaishoNenGetsudo, 2) AS Getsudo, ");
-		sql.append("	( ");
-		for (int idx = 0; idx < targetCols.length; idx++) {
-			if (idx > 0) {
-				sql.append(" + ");
-			}
-			sql.append("COALESCE(skihon.ShinseiNissu").append(targetCols[idx]).append(", 0)");
-		}
+		
+		sql.append("	COALESCE(skihon.ShinseiNissu01, 0) AS ShinseiNissu01, ");		
+		
+		// 出張
+		sql.append("	(SELECT ISNULL(SUM(CASE WHEN Q1.KintaiKbn = '02' THEN Q1.KintaiShinseiNisuu END), 0) ");
+		sql.append("		FROM ( ");
+		sql.append("			SELECT MEISAI.KintaiKbn, LEFT(M1.GroupCode1, 2) AS Kbn, MEISAI.KintaiShinseiNisuu ");
+		sql.append("			FROM KIN_SHUKKINBO_MEISAI MEISAI ");
+		sql.append("			LEFT OUTER JOIN MST_KUBUN M1 ");
+		sql.append("			ON MEISAI.KintaiKbn = M1.Code AND M1.KbnCode = '0100' ");
+		sql.append("			WHERE MEISAI.KintaiKbn <> '00' ");
+		sql.append("				AND MEISAI.TaishoNenGetsudo = skihon.TaishoNenGetsudo ");
+		sql.append("				AND MEISAI.ShainNO = skihon.ShainNO ");
+		sql.append("		) Q1) AS ShinseiNissu02, ");
+		
+		sql.append("	COALESCE(skihon.ShinseiNissu03, 0) AS ShinseiNissu03, ");
+		
+		// 有給
+		sql.append("	(SELECT ISNULL(SUM(CASE WHEN Q1.KintaiKbn = '04' THEN Q1.KintaiShinseiNisuu END), 0) ");
+		sql.append("		FROM ( ");
+		sql.append("			SELECT MEISAI.KintaiKbn, LEFT(M1.GroupCode1, 2) AS Kbn, MEISAI.KintaiShinseiNisuu ");
+		sql.append("			FROM KIN_SHUKKINBO_MEISAI MEISAI ");
+		sql.append("			LEFT OUTER JOIN MST_KUBUN M1 ");
+		sql.append("			ON MEISAI.KintaiKbn = M1.Code AND M1.KbnCode = '0100' ");
+		sql.append("			WHERE MEISAI.KintaiKbn <> '00' ");
+		sql.append("				AND MEISAI.TaishoNenGetsudo = skihon.TaishoNenGetsudo ");
+		sql.append("				AND MEISAI.ShainNO = skihon.ShainNO ");
+		sql.append("		) Q1) AS ShinseiNissu04, ");
+		
+		// 半給
+		sql.append("	(SELECT ISNULL(SUM(CASE WHEN Q1.KintaiKbn = '05' THEN Q1.KintaiShinseiNisuu END), 0) ");
+		sql.append("		FROM ( ");
+		sql.append("			SELECT MEISAI.KintaiKbn, LEFT(M1.GroupCode1, 2) AS Kbn, MEISAI.KintaiShinseiNisuu ");
+		sql.append("			FROM KIN_SHUKKINBO_MEISAI MEISAI ");
+		sql.append("			LEFT OUTER JOIN MST_KUBUN M1 ");
+		sql.append("			ON MEISAI.KintaiKbn = M1.Code AND M1.KbnCode = '0100' ");
+		sql.append("			WHERE MEISAI.KintaiKbn <> '00' ");
+		sql.append("				AND MEISAI.TaishoNenGetsudo = skihon.TaishoNenGetsudo ");
+		sql.append("				AND MEISAI.ShainNO = skihon.ShainNO ");
+		sql.append("		) Q1) AS ShinseiNissu05, ");
+		
+		// 積給
+		sql.append("	(SELECT ISNULL(SUM(CASE WHEN Q1.KintaiKbn = '06' THEN Q1.KintaiShinseiNisuu END), 0) ");
+		sql.append("		FROM ( ");
+		sql.append("			SELECT MEISAI.KintaiKbn, LEFT(M1.GroupCode1, 2) AS Kbn, MEISAI.KintaiShinseiNisuu ");
+		sql.append("			FROM KIN_SHUKKINBO_MEISAI MEISAI ");
+		sql.append("			LEFT OUTER JOIN MST_KUBUN M1 ");
+		sql.append("			ON MEISAI.KintaiKbn = M1.Code AND M1.KbnCode = '0100' ");
+		sql.append("			WHERE MEISAI.KintaiKbn <> '00' ");
+		sql.append("				AND MEISAI.TaishoNenGetsudo = skihon.TaishoNenGetsudo ");
+		sql.append("				AND MEISAI.ShainNO = skihon.ShainNO ");
+		sql.append("		) Q1) AS ShinseiNissu06, ");
+		
+		sql.append("	COALESCE(skihon.ShinseiNissu07, 0) AS ShinseiNissu07, ");
+		sql.append("	COALESCE(skihon.ShinseiNissu08, 0) AS ShinseiNissu08, ");
+		sql.append("	COALESCE(skihon.ShinseiNissu09, 0) AS ShinseiNissu09, ");
+		sql.append("	COALESCE(skihon.ShinseiNissu10, 0) AS ShinseiNissu10, ");
+		sql.append("	COALESCE(skihon.ShinseiNissu11, 0) AS ShinseiNissu11, ");
+		sql.append("	COALESCE(skihon.ShinseiNissu12, 0) AS ShinseiNissu12, ");
+		
+		// 合計日数
+		sql.append("	(COALESCE(skihon.ShinseiNissu01, 0) ");
+		sql.append("	+ COALESCE(skihon.ShinseiNissu03, 0) ");
+		sql.append("	+ COALESCE(skihon.ShinseiNissu04, 0) ");
+		sql.append("	+ COALESCE(skihon.ShinseiNissu07, 0) ");
+		sql.append("	+ COALESCE(skihon.ShinseiNissu08, 0) ");
+		sql.append("	+ COALESCE(skihon.ShinseiNissu09, 0) ");
+		sql.append("	+ COALESCE(skihon.ShinseiNissu10, 0) ");
+		sql.append("	+ COALESCE(skihon.ShinseiNissu11, 0) ");
+		sql.append("	+ COALESCE(skihon.ShinseiNissu12, 0) ");
 		sql.append("	) AS GoukeiNissu, ");
-		sql.append("	COALESCE(skihon.ShinseiJikan01, 0) ");
-		sql.append("  + COALESCE(skihon.ShinseiJikan03, 0) ");
-		sql.append("	AS JikangaiKei ");
+		
+		// 時間外計
+		sql.append("	(COALESCE(skihon.ShinseiJikan01, 0) ");
+		sql.append("	+ COALESCE(skihon.ShinseiJikan03, 0) ");
+		sql.append("	) AS JikangaiKei ");
+		
+		
 		sql.append("FROM KIN_SHUKKINBO_KIHON skihon ");
 		sql.append("LEFT JOIN MST_SHAIN shain ON skihon.ShainNO = shain.ShainNO ");
 		sql.append("WHERE 1 = 1 ");
@@ -185,10 +250,10 @@ public class CsvKyuyokeisanDataDownload extends DownloadBase {
 			csvStringRecord.addItem(d.get("EigyoshoCode"), PJActionBase.getQuotation(columns, "EigyoshoCode", d.get("EigyoshoCode")));
 
 			// 小数点第2位までの表示に変換してCSVに追加
-			csvStringRecord.addItem(String.format("%.2f", new BigDecimal(StringUtils.defaultIfBlank(d.get("ShinseiJikan01"), "0"))), PJActionBase.getQuotation(columns, "ShinseiJikan01", d.get("ShinseiJikan01")));
-			csvStringRecord.addItem(String.format("%.2f", new BigDecimal(StringUtils.defaultIfBlank(d.get("ShinseiJikan02"), "0"))), PJActionBase.getQuotation(columns, "ShinseiJikan02", d.get("ShinseiJikan02")));
-			csvStringRecord.addItem(String.format("%.2f", new BigDecimal(StringUtils.defaultIfBlank(d.get("ShinseiJikan03"), "0"))), PJActionBase.getQuotation(columns, "ShinseiJikan03", d.get("ShinseiJikan03")));
-			csvStringRecord.addItem(String.format("%.2f", new BigDecimal(StringUtils.defaultIfBlank(d.get("ShinseiJikan04"), "0"))), PJActionBase.getQuotation(columns, "ShinseiJikan04", d.get("ShinseiJikan04")));
+			csvStringRecord.addItem(String.format("%.2f", new BigDecimal(StringUtils.defaultIfBlank(d.get("ShinseiNissu01"), "0"))), PJActionBase.getQuotation(columns, "ShinseiNissu01", d.get("ShinseiNissu01")));
+			csvStringRecord.addItem(String.format("%.2f", new BigDecimal(StringUtils.defaultIfBlank(d.get("ShinseiNissu02"), "0"))), PJActionBase.getQuotation(columns, "ShinseiNissu02", d.get("ShinseiNissu02")));
+			csvStringRecord.addItem(String.format("%.2f", new BigDecimal(StringUtils.defaultIfBlank(d.get("ShinseiNissu03"), "0"))), PJActionBase.getQuotation(columns, "ShinseiNissu03", d.get("ShinseiNissu03")));
+			csvStringRecord.addItem(String.format("%.2f", new BigDecimal(StringUtils.defaultIfBlank(d.get("ShinseiNissu04"), "0"))), PJActionBase.getQuotation(columns, "ShinseiNissu04", d.get("ShinseiNissu04")));
 
 			csvStringRecord.addItem(String.format("%.2f", new BigDecimal(StringUtils.defaultIfBlank(d.get("ShinseiNissu05"), "0"))), PJActionBase.getQuotation(columns, "ShinseiNissu05", d.get("ShinseiNissu05")));
 			csvStringRecord.addItem(String.format("%.2f", new BigDecimal(StringUtils.defaultIfBlank(d.get("ShinseiNissu06"), "0"))), PJActionBase.getQuotation(columns, "ShinseiNissu06", d.get("ShinseiNissu06")));
