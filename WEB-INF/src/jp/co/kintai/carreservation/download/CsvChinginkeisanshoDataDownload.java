@@ -145,6 +145,8 @@ public class CsvChinginkeisanshoDataDownload extends DownloadBase {
 			sql.append(" AND kihon.TaishoNenGetsudo <= ? ");
 			pstmtf.addValue("String", taishoNengetsuT);
 		}
+		
+		sql.append(" AND kihon.KakuteiKbn = '03' ");
 		sql.append(" ORDER BY kihon.TaishoNenGetsudo, shain.ShainNO ");
 		
 		try {

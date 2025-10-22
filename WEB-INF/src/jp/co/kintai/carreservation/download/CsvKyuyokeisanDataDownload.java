@@ -93,6 +93,8 @@ public class CsvKyuyokeisanDataDownload extends DownloadBase {
 			sql.append(" AND skihon.TaishoNenGetsudo <= ? ");
 			pstmtf.addValue("String", taishoNengetsuT);
 		}
+		
+		sql.append(" AND skihon.KakuteiKbn = '03' ");
 		sql.append(" ORDER BY skihon.TaishoNenGetsudo, skihon.ShainNO ");
 		
 		try {
