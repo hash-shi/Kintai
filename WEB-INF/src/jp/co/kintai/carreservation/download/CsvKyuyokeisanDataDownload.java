@@ -131,6 +131,7 @@ public class CsvKyuyokeisanDataDownload extends DownloadBase {
 		sql.append("	(COALESCE(skihon.ShinseiNissu01, 0) ");
 		sql.append("	+ COALESCE(skihon.ShinseiNissu03, 0) ");
 		sql.append("	+ COALESCE(skihon.ShinseiNissu04, 0) ");
+		sql.append("	+ COALESCE(skihon.ShinseiNissu06, 0) ");
 		sql.append("	+ COALESCE(skihon.ShinseiNissu07, 0) ");
 		sql.append("	+ COALESCE(skihon.ShinseiNissu08, 0) ");
 		sql.append("	+ COALESCE(skihon.ShinseiNissu09, 0) ");
