@@ -108,7 +108,7 @@ public class CsvKyuyokeisanDataDownload extends DownloadBase {
 		sql.append("				AND smeisai.ShainNO = skihon.ShainNO ");
 		sql.append("		) Q1) AS ShinseiNissu05, ");
 		
-		// 積給
+		// 積休
 		sql.append("	(SELECT ISNULL(SUM(CASE WHEN Q1.KintaiKbn = '06' THEN Q1.KintaiShinseiNisuu END), 0) ");
 		sql.append("		FROM ( ");
 		sql.append("			SELECT smeisai.KintaiKbn, LEFT(M1.GroupCode1, 2) AS Kbn, smeisai.KintaiShinseiNisuu ");
