@@ -73,13 +73,13 @@ public class CsvKyuyokeisanDataDownload extends DownloadBase {
 		// 出張
 		sql.append("	(SELECT ISNULL(SUM(CASE WHEN Q1.KintaiKbn = '02' THEN Q1.KintaiShinseiNisuu END), 0) ");
 		sql.append("		FROM ( ");
-		sql.append("			SELECT MEISAI.KintaiKbn, LEFT(M1.GroupCode1, 2) AS Kbn, MEISAI.KintaiShinseiNisuu ");
-		sql.append("			FROM KIN_SHUKKINBO_MEISAI MEISAI ");
+		sql.append("			SELECT smeisai.KintaiKbn, LEFT(M1.GroupCode1, 2) AS Kbn, smeisai.KintaiShinseiNisuu ");
+		sql.append("			FROM KIN_SHUKKINBO_MEISAI smeisai ");
 		sql.append("			LEFT OUTER JOIN MST_KUBUN M1 ");
-		sql.append("			ON MEISAI.KintaiKbn = M1.Code AND M1.KbnCode = '0100' ");
-		sql.append("			WHERE MEISAI.KintaiKbn <> '00' ");
-		sql.append("				AND MEISAI.TaishoNenGetsudo = skihon.TaishoNenGetsudo ");
-		sql.append("				AND MEISAI.ShainNO = skihon.ShainNO ");
+		sql.append("			ON smeisai.KintaiKbn = M1.Code AND M1.KbnCode = '0100' ");
+		sql.append("			WHERE smeisai.KintaiKbn <> '00' ");
+		sql.append("				AND smeisai.TaishoNenGetsudo = skihon.TaishoNenGetsudo ");
+		sql.append("				AND smeisai.ShainNO = skihon.ShainNO ");
 		sql.append("		) Q1) AS ShinseiNissu02, ");
 		
 		sql.append("	COALESCE(skihon.ShinseiNissu03, 0) AS ShinseiNissu03, ");
@@ -87,37 +87,37 @@ public class CsvKyuyokeisanDataDownload extends DownloadBase {
 		// 有給
 		sql.append("	(SELECT ISNULL(SUM(CASE WHEN Q1.KintaiKbn = '04' THEN Q1.KintaiShinseiNisuu END), 0) ");
 		sql.append("		FROM ( ");
-		sql.append("			SELECT MEISAI.KintaiKbn, LEFT(M1.GroupCode1, 2) AS Kbn, MEISAI.KintaiShinseiNisuu ");
-		sql.append("			FROM KIN_SHUKKINBO_MEISAI MEISAI ");
+		sql.append("			SELECT smeisai.KintaiKbn, LEFT(M1.GroupCode1, 2) AS Kbn, smeisai.KintaiShinseiNisuu ");
+		sql.append("			FROM KIN_SHUKKINBO_MEISAI smeisai ");
 		sql.append("			LEFT OUTER JOIN MST_KUBUN M1 ");
-		sql.append("			ON MEISAI.KintaiKbn = M1.Code AND M1.KbnCode = '0100' ");
-		sql.append("			WHERE MEISAI.KintaiKbn <> '00' ");
-		sql.append("				AND MEISAI.TaishoNenGetsudo = skihon.TaishoNenGetsudo ");
-		sql.append("				AND MEISAI.ShainNO = skihon.ShainNO ");
+		sql.append("			ON smeisai.KintaiKbn = M1.Code AND M1.KbnCode = '0100' ");
+		sql.append("			WHERE smeisai.KintaiKbn <> '00' ");
+		sql.append("				AND smeisai.TaishoNenGetsudo = skihon.TaishoNenGetsudo ");
+		sql.append("				AND smeisai.ShainNO = skihon.ShainNO ");
 		sql.append("		) Q1) AS ShinseiNissu04, ");
 		
 		// 半給
 		sql.append("	(SELECT ISNULL(SUM(CASE WHEN Q1.KintaiKbn = '05' THEN Q1.KintaiShinseiNisuu END), 0) ");
 		sql.append("		FROM ( ");
-		sql.append("			SELECT MEISAI.KintaiKbn, LEFT(M1.GroupCode1, 2) AS Kbn, MEISAI.KintaiShinseiNisuu ");
-		sql.append("			FROM KIN_SHUKKINBO_MEISAI MEISAI ");
+		sql.append("			SELECT smeisai.KintaiKbn, LEFT(M1.GroupCode1, 2) AS Kbn, smeisai.KintaiShinseiNisuu ");
+		sql.append("			FROM KIN_SHUKKINBO_MEISAI smeisai ");
 		sql.append("			LEFT OUTER JOIN MST_KUBUN M1 ");
-		sql.append("			ON MEISAI.KintaiKbn = M1.Code AND M1.KbnCode = '0100' ");
-		sql.append("			WHERE MEISAI.KintaiKbn <> '00' ");
-		sql.append("				AND MEISAI.TaishoNenGetsudo = skihon.TaishoNenGetsudo ");
-		sql.append("				AND MEISAI.ShainNO = skihon.ShainNO ");
+		sql.append("			ON smeisai.KintaiKbn = M1.Code AND M1.KbnCode = '0100' ");
+		sql.append("			WHERE smeisai.KintaiKbn <> '00' ");
+		sql.append("				AND smeisai.TaishoNenGetsudo = skihon.TaishoNenGetsudo ");
+		sql.append("				AND smeisai.ShainNO = skihon.ShainNO ");
 		sql.append("		) Q1) AS ShinseiNissu05, ");
 		
 		// 積給
 		sql.append("	(SELECT ISNULL(SUM(CASE WHEN Q1.KintaiKbn = '06' THEN Q1.KintaiShinseiNisuu END), 0) ");
 		sql.append("		FROM ( ");
-		sql.append("			SELECT MEISAI.KintaiKbn, LEFT(M1.GroupCode1, 2) AS Kbn, MEISAI.KintaiShinseiNisuu ");
-		sql.append("			FROM KIN_SHUKKINBO_MEISAI MEISAI ");
+		sql.append("			SELECT smeisai.KintaiKbn, LEFT(M1.GroupCode1, 2) AS Kbn, smeisai.KintaiShinseiNisuu ");
+		sql.append("			FROM KIN_SHUKKINBO_MEISAI smeisai ");
 		sql.append("			LEFT OUTER JOIN MST_KUBUN M1 ");
-		sql.append("			ON MEISAI.KintaiKbn = M1.Code AND M1.KbnCode = '0100' ");
-		sql.append("			WHERE MEISAI.KintaiKbn <> '00' ");
-		sql.append("				AND MEISAI.TaishoNenGetsudo = skihon.TaishoNenGetsudo ");
-		sql.append("				AND MEISAI.ShainNO = skihon.ShainNO ");
+		sql.append("			ON smeisai.KintaiKbn = M1.Code AND M1.KbnCode = '0100' ");
+		sql.append("			WHERE smeisai.KintaiKbn <> '00' ");
+		sql.append("				AND smeisai.TaishoNenGetsudo = skihon.TaishoNenGetsudo ");
+		sql.append("				AND smeisai.ShainNO = skihon.ShainNO ");
 		sql.append("		) Q1) AS ShinseiNissu06, ");
 		
 		sql.append("	COALESCE(skihon.ShinseiNissu07, 0) AS ShinseiNissu07, ");
