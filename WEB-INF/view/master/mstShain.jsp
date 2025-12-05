@@ -162,7 +162,7 @@ ArrayList<HashMap<String, String>> mstKubun0013 = (ArrayList<HashMap<String, Str
 						<input type="hidden" id="hdnKinmuShuryoJi" value="0052">
 						<input type="hidden" class="" name="txtKinmuShuryoJiKbn" id="txtKinmuShuryoJiKbn" value="" onchange="getKubunName('hdnKinmuShuryoJi', 'txtKinmuShuryoJiKbn', 'txtKinmuShuryoJiKbnName');">
 						<input type="hidden" class="" name="txtKinmuShuryoJiKbnName" id="txtKinmuShuryoJiKbnName" value="">
-						<select class="w50" name="selKinmuShuryoJiKbnName" id="selKinmuShuryoJiKbnName" onchange="setInputFromSelect('selectKinmuShuryoJiKbnName','txtKinmuShuryoJiKbn');">
+						<select class="w50" name="selKinmuShuryoJiKbnName" id="selKinmuShuryoJiKbnName" onchange="setInputFromSelect('selKinmuShuryoJiKbnName','txtKinmuShuryoJiKbn');">
 						<option value=""> </option>
 							<% for (int count = 0 ; count < mstKubun0052.size() ; count++){ HashMap<String, String> record = mstKubun0052.get(count);%>
 								<option value="<%=UtilEscape.htmlspecialchars(record.get("Code")) %>"><%=UtilEscape.htmlspecialchars(record.get("KbnName")) %></option>

@@ -428,7 +428,8 @@ public abstract class PJActionBase extends ActionBase {
 		}
 
 		sql.append(" ORDER BY ");
-		sql.append("     B.BushoCode ");
+		sql.append("     B.EigyoshoCode ");
+		sql.append("     ,B.BushoCode ");
 		
 		try {
 			// パラメータ付きSQL文の生成

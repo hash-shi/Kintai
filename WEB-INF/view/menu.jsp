@@ -9,7 +9,7 @@
 
 
 <main id="main-content">
-
+<!-- 
 	<div class="inputArea">
 		<h2>ようこそ</h2>
 		<p>これはメインエリアです。</p>
@@ -77,5 +77,5 @@
 			</tr>
 		</table>
 	</div>
-
+ -->
 </main>
