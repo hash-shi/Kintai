@@ -73,7 +73,7 @@
 	</div>
 	
 	<div class="buttonArea right" id="buttonArea" style="visibility:hidden;">
-		<button type="button" class="" name="btnDelete" id="btnDelete" onclick="onDelete()">削除 [ F2 ] </button>
+		<button type="button" class="" name="btnDelete" id="btnDelete" onclick="onDelete()" data-focus="off">削除 [ F2 ] </button>
 		<button type="button" class="" name="btnUpdate" id="btnUpdate" onclick="onUpdate()">確定 [ F9 ] </button>
 	</div>
 	

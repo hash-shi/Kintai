@@ -383,8 +383,8 @@
 		</div>
 	</div>
 	<div class="buttonArea right" id="buttonArea" style="visibility:hidden;">
-		<button type="button" id="btnDelete" onclick="onDelete();">削除 [ F2 ]</button>
-		<button type="button" id="btnRecalc" onclick="onRecalc();">再表示 [ F8 ]</button>
+		<button type="button" id="btnDelete" onclick="onDelete();" data-focus="off">削除 [ F2 ]</button>
+		<button type="button" id="btnRecalc" onclick="onRecalc();" data-focus="off">再表示 [ F8 ]</button>
 		<button type="button" id="btnUpdate" onclick="onUpdate();">確定 [ F9 ]</button>
 	</div>
 </main>

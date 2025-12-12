@@ -42,6 +42,8 @@ function onSearchKintaiKakutei(){
 		kintaiKakuteiResultAll = result;
 		$("#txtKakuteiCount").val(kintaiKakuteiResultAll.length);
 		
+		// 全選択にフォーカスが来るように調整。
+		$("#cbxKakuteiAll").focus();
 	});
 	
 }

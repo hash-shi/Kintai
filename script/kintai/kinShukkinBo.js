@@ -371,22 +371,22 @@ function onDisplayNyuryokuArea(firstHalfFlg){
 						kintaiSelectBox + 
 					"</td>" +
 					"<td class=\"value center\">" + 
-						"<input type=\"text\" class=\"kinShukkinBoText kaishishuryoTextBox\"  maxlength=\"2\" name=\"numShusshaJi" + i + "\" id=\"numShusshaJi" + i + "\"  value=\"" + shusshaJi + "\"  onchange=\"set2ketaFormat('numShusshaJi', " + i + ");setShukkinBo('numShusshaJi', " + i + ");calcJitsudoJikan(" + i + ");\" >" + 
+						"<input type=\"tel\" class=\"kinShukkinBoText kaishishuryoTextBox\"  maxlength=\"2\" name=\"numShusshaJi" + i + "\" id=\"numShusshaJi" + i + "\"  value=\"" + shusshaJi + "\"  onchange=\"set2ketaFormat('numShusshaJi', " + i + ");setShukkinBo('numShusshaJi', " + i + ");calcJitsudoJikan(" + i + ");\" >" + 
 					"</td>" +
 					"<td class=\"value center\">" + 
-						"<input type=\"text\" class=\"kinShukkinBoText kaishishuryoTextBox\"  maxlength=\"2\" name=\"numShusshaFun" + i + "\" id=\"numShusshaFun" + i + "\"  value=\"" + shusshaFun + "\"  onchange=\"set2ketaFormat('numShusshaFun', " + i + ");setShukkinBo('numShusshaFun', " + i + ");calcJitsudoJikan(" + i + ");\" >" + 
+						"<input type=\"tel\" class=\"kinShukkinBoText kaishishuryoTextBox\"  maxlength=\"2\" name=\"numShusshaFun" + i + "\" id=\"numShusshaFun" + i + "\"  value=\"" + shusshaFun + "\"  onchange=\"set2ketaFormat('numShusshaFun', " + i + ");setShukkinBo('numShusshaFun', " + i + ");calcJitsudoJikan(" + i + ");\" >" + 
 					"</td>" +
 					"<td class=\"value center\">" + 
 						"<a class=\"kinShukkinBoText\">-</a>" + 
 					"</td>" +
 					"<td class=\"value center\">" + 
-						"<input type=\"text\" class=\"kinShukkinBoText kaishishuryoTextBox\"  maxlength=\"2\" name=\"numTaishaJi" + i + "\" id=\"numTaishaJi" + i + "\"  value=\"" + taishaJi + "\"  onchange=\"set2ketaFormat('numTaishaJi', " + i + ");setShukkinBo('numTaishaJi', " + i + ");calcJitsudoJikan(" + i + ");\" >" + 
+						"<input type=\"tel\" class=\"kinShukkinBoText kaishishuryoTextBox\"  maxlength=\"2\" name=\"numTaishaJi" + i + "\" id=\"numTaishaJi" + i + "\"  value=\"" + taishaJi + "\"  onchange=\"set2ketaFormat('numTaishaJi', " + i + ");setShukkinBo('numTaishaJi', " + i + ");calcJitsudoJikan(" + i + ");\" >" + 
 					"</td>" +
 					"<td class=\"value center\">" + 
-						"<input type=\"text\" class=\"kinShukkinBoText kaishishuryoTextBox\"  maxlength=\"2\" name=\"numTaishaFun" + i + "\" id=\"numTaishaFun" + i + "\"  value=\"" + taishaFun + "\"  onchange=\"set2ketaFormat('numTaishaFun', " + i + ");setShukkinBo('numTaishaFun', " + i + ");calcJitsudoJikan(" + i + ");\" >" + 
+						"<input type=\"tel\" class=\"kinShukkinBoText kaishishuryoTextBox\"  maxlength=\"2\" name=\"numTaishaFun" + i + "\" id=\"numTaishaFun" + i + "\"  value=\"" + taishaFun + "\"  onchange=\"set2ketaFormat('numTaishaFun', " + i + ");setShukkinBo('numTaishaFun', " + i + ");calcJitsudoJikan(" + i + ");\" >" + 
 					"</td>" +
 					"<td class=\"value center\">" + 
-						"<input type=\"text\" class=\"kinShukkinBoText jikanTextBox\"  maxlength=\"5\" name=\"numJitsudoJikan" + i + "\" id=\"numJitsudoJikan" + i + "\"  value=\"" + jitsudoJikan + "\"  onchange=\"setDecimalPoint2ketaFormat('numJitsudoJikan', " + i + ");setShukkinBo('numJitsudoJikan', " + i + ");\" >" + 
+						"<input type=\"tel\" class=\"kinShukkinBoText jikanTextBox\"  maxlength=\"5\" name=\"numJitsudoJikan" + i + "\" id=\"numJitsudoJikan" + i + "\"  value=\"" + jitsudoJikan + "\"  onchange=\"setDecimalPoint2ketaFormat('numJitsudoJikan', " + i + ");setShukkinBo('numJitsudoJikan', " + i + ");\" >" + 
 					"</td>" +
 					"<td class=\"value center\">" + 
 						"<input type=\"text\" class=\"kinShukkinBoText bikoTextBox\"  maxlength=\"40\" name=\"txtKintaiShinseiBiko" + i + "\" id=\"txtKintaiShinseiBiko" + i + "\"  value=\"" + kintaiShinseiBiko + "\"  onchange=\"setShukkinBo('txtKintaiShinseiBiko', " + i + ");\" >" + 
@@ -395,55 +395,55 @@ function onDisplayNyuryokuArea(firstHalfFlg){
 						sinsei1SelectBox + 
 					"</td>" +
 					"<td class=\"value center\">" + 
-						"<input type=\"text\" class=\"kinShukkinBoText kaishishuryoTextBox\"  maxlength=\"2\" name=\"numKintaiShinseiKaishiJi1" + i + "\" id=\"numKintaiShinseiKaishiJi1" + i + "\"  value=\"" + kintaiShinseiKaishiJi1 + "\"  onchange=\"set2ketaFormat('numKintaiShinseiKaishiJi1', " + i + ");setShukkinBo('numKintaiShinseiKaishiJi1', " + i + ");calcShinseiJikan(1, " + i + ");\" >" + 
+						"<input type=\"tel\" class=\"kinShukkinBoText kaishishuryoTextBox\"  maxlength=\"2\" name=\"numKintaiShinseiKaishiJi1" + i + "\" id=\"numKintaiShinseiKaishiJi1" + i + "\"  value=\"" + kintaiShinseiKaishiJi1 + "\"  onchange=\"set2ketaFormat('numKintaiShinseiKaishiJi1', " + i + ");setShukkinBo('numKintaiShinseiKaishiJi1', " + i + ");calcShinseiJikan(1, " + i + ");\" >" + 
 					"</td>" +
 					"<td class=\"value center\">" + 
-						"<input type=\"text\" class=\"kinShukkinBoText kaishishuryoTextBox\"  maxlength=\"2\" name=\"numKintaiShinseiKaishiFun1" + i + "\" id=\"numKintaiShinseiKaishiFun1" + i + "\"  value=\"" + kintaiShinseiKaishiFun1 + "\"  onchange=\"set2ketaFormat('numKintaiShinseiKaishiFun1', " + i + ");setShukkinBo('numKintaiShinseiKaishiFun1', " + i + ");calcShinseiJikan(1, " + i + ");\" >" + 
+						"<input type=\"tel\" class=\"kinShukkinBoText kaishishuryoTextBox\"  maxlength=\"2\" name=\"numKintaiShinseiKaishiFun1" + i + "\" id=\"numKintaiShinseiKaishiFun1" + i + "\"  value=\"" + kintaiShinseiKaishiFun1 + "\"  onchange=\"set2ketaFormat('numKintaiShinseiKaishiFun1', " + i + ");setShukkinBo('numKintaiShinseiKaishiFun1', " + i + ");calcShinseiJikan(1, " + i + ");\" >" + 
 					"</td>" +
 					"<td class=\"value center\">" + 
-						"<input type=\"text\" class=\"kinShukkinBoText kaishishuryoTextBox\"  maxlength=\"2\" name=\"numKintaiShinseiShuryoJi1" + i + "\" id=\"numKintaiShinseiShuryoJi1" + i + "\"  value=\"" + kintaiShinseiShuryoJi1 + "\"  onchange=\"set2ketaFormat('numKintaiShinseiShuryoJi1', " + i + ");setShukkinBo('numKintaiShinseiShuryoJi1', " + i + ");calcShinseiJikan(1, " + i + ");\" >" + 
+						"<input type=\"tel\" class=\"kinShukkinBoText kaishishuryoTextBox\"  maxlength=\"2\" name=\"numKintaiShinseiShuryoJi1" + i + "\" id=\"numKintaiShinseiShuryoJi1" + i + "\"  value=\"" + kintaiShinseiShuryoJi1 + "\"  onchange=\"set2ketaFormat('numKintaiShinseiShuryoJi1', " + i + ");setShukkinBo('numKintaiShinseiShuryoJi1', " + i + ");calcShinseiJikan(1, " + i + ");\" >" + 
 					"</td>" +
 					"<td class=\"value center\">" + 
-						"<input type=\"text\" class=\"kinShukkinBoText kaishishuryoTextBox\"  maxlength=\"2\" name=\"numKintaiShinseiShuryoFun1" + i + "\" id=\"numKintaiShinseiShuryoFun1" + i + "\"  value=\"" + kintaiShinseiShuryoFun1 + "\"  onchange=\"set2ketaFormat('numKintaiShinseiShuryoFun1', " + i + ");setShukkinBo('numKintaiShinseiShuryoFun1', " + i + ");calcShinseiJikan(1, " + i + ");\" >" + 
+						"<input type=\"tel\" class=\"kinShukkinBoText kaishishuryoTextBox\"  maxlength=\"2\" name=\"numKintaiShinseiShuryoFun1" + i + "\" id=\"numKintaiShinseiShuryoFun1" + i + "\"  value=\"" + kintaiShinseiShuryoFun1 + "\"  onchange=\"set2ketaFormat('numKintaiShinseiShuryoFun1', " + i + ");setShukkinBo('numKintaiShinseiShuryoFun1', " + i + ");calcShinseiJikan(1, " + i + ");\" >" + 
 					"</td>" +
 					"<td class=\"value center\">" + 
-						"<input type=\"text\" class=\"kinShukkinBoText jikanTextBox\"  maxlength=\"5\" name=\"numKintaiShinseiJikan1" + i + "\" id=\"numKintaiShinseiJikan1" + i + "\"  value=\"" + kintaiShinseiJikan1 + "\"  onchange=\"setDecimalPoint2ketaFormat('numKintaiShinseiJikan1', " + i + ");setShukkinBo('numKintaiShinseiJikan1', " + i + ");\" >" + 
+						"<input type=\"tel\" class=\"kinShukkinBoText jikanTextBox\"  maxlength=\"5\" name=\"numKintaiShinseiJikan1" + i + "\" id=\"numKintaiShinseiJikan1" + i + "\"  value=\"" + kintaiShinseiJikan1 + "\"  onchange=\"setDecimalPoint2ketaFormat('numKintaiShinseiJikan1', " + i + ");setShukkinBo('numKintaiShinseiJikan1', " + i + ");\" >" + 
 					"</td>" +
 					"<td class=\"value center\">" + 
 						sinsei2SelectBox + 
 					"</td>" +
 					"<td class=\"value center\">" + 
-						"<input type=\"text\" class=\"kinShukkinBoText kaishishuryoTextBox\"  maxlength=\"2\" name=\"numKintaiShinseiKaishiJi2" + i + "\" id=\"numKintaiShinseiKaishiJi2" + i + "\"  value=\"" + kintaiShinseiKaishiJi2 + "\"  onchange=\"set2ketaFormat('numKintaiShinseiKaishiJi2', " + i + ");setShukkinBo('numKintaiShinseiKaishiJi2', " + i + ");calcShinseiJikan(2, " + i + ");\" >" + 
+						"<input type=\"tel\" class=\"kinShukkinBoText kaishishuryoTextBox\"  maxlength=\"2\" name=\"numKintaiShinseiKaishiJi2" + i + "\" id=\"numKintaiShinseiKaishiJi2" + i + "\"  value=\"" + kintaiShinseiKaishiJi2 + "\"  onchange=\"set2ketaFormat('numKintaiShinseiKaishiJi2', " + i + ");setShukkinBo('numKintaiShinseiKaishiJi2', " + i + ");calcShinseiJikan(2, " + i + ");\" >" + 
 					"</td>" +
 					"<td class=\"value center\">" + 
-						"<input type=\"text\" class=\"kinShukkinBoText kaishishuryoTextBox\"  maxlength=\"2\" name=\"numKintaiShinseiKaishiFun2" + i + "\" id=\"numKintaiShinseiKaishiFun2" + i + "\"  value=\"" + kintaiShinseiKaishiFun2 + "\"  onchange=\"set2ketaFormat('numKintaiShinseiKaishiFun2', " + i + ");setShukkinBo('numKintaiShinseiKaishiFun2', " + i + ");calcShinseiJikan(2, " + i + ");\" >" + 
+						"<input type=\"tel\" class=\"kinShukkinBoText kaishishuryoTextBox\"  maxlength=\"2\" name=\"numKintaiShinseiKaishiFun2" + i + "\" id=\"numKintaiShinseiKaishiFun2" + i + "\"  value=\"" + kintaiShinseiKaishiFun2 + "\"  onchange=\"set2ketaFormat('numKintaiShinseiKaishiFun2', " + i + ");setShukkinBo('numKintaiShinseiKaishiFun2', " + i + ");calcShinseiJikan(2, " + i + ");\" >" + 
 					"</td>" +
 					"<td class=\"value center\">" + 
-						"<input type=\"text\" class=\"kinShukkinBoText kaishishuryoTextBox\"  maxlength=\"2\" name=\"numKintaiShinseiShuryoJi2" + i + "\" id=\"numKintaiShinseiShuryoJi2" + i + "\"  value=\"" + kintaiShinseiShuryoJi2 + "\"  onchange=\"set2ketaFormat('numKintaiShinseiShuryoJi2', " + i + ");setShukkinBo('numKintaiShinseiShuryoJi2', " + i + ");calcShinseiJikan(2, " + i + ");\" >" + 
+						"<input type=\"tel\" class=\"kinShukkinBoText kaishishuryoTextBox\"  maxlength=\"2\" name=\"numKintaiShinseiShuryoJi2" + i + "\" id=\"numKintaiShinseiShuryoJi2" + i + "\"  value=\"" + kintaiShinseiShuryoJi2 + "\"  onchange=\"set2ketaFormat('numKintaiShinseiShuryoJi2', " + i + ");setShukkinBo('numKintaiShinseiShuryoJi2', " + i + ");calcShinseiJikan(2, " + i + ");\" >" + 
 					"</td>" +
 					"<td class=\"value center\">" + 
-						"<input type=\"text\" class=\"kinShukkinBoText kaishishuryoTextBox\"  maxlength=\"2\" name=\"numKintaiShinseiShuryoFun2" + i + "\" id=\"numKintaiShinseiShuryoFun2" + i + "\"  value=\"" + kintaiShinseiShuryoFun2 + "\"  onchange=\"set2ketaFormat('numKintaiShinseiShuryoFun2', " + i + ");setShukkinBo('numKintaiShinseiShuryoFun2', " + i + ");calcShinseiJikan(2, " + i + ");\" >" + 
+						"<input type=\"tel\" class=\"kinShukkinBoText kaishishuryoTextBox\"  maxlength=\"2\" name=\"numKintaiShinseiShuryoFun2" + i + "\" id=\"numKintaiShinseiShuryoFun2" + i + "\"  value=\"" + kintaiShinseiShuryoFun2 + "\"  onchange=\"set2ketaFormat('numKintaiShinseiShuryoFun2', " + i + ");setShukkinBo('numKintaiShinseiShuryoFun2', " + i + ");calcShinseiJikan(2, " + i + ");\" >" + 
 					"</td>" +
 					"<td class=\"value center\">" + 
-						"<input type=\"text\" class=\"kinShukkinBoText jikanTextBox\"  maxlength=\"5\" name=\"numKintaiShinseiJikan2" + i + "\" id=\"numKintaiShinseiJikan2" + i + "\"  value=\"" + kintaiShinseiJikan2 + "\"  onchange=\"setDecimalPoint2ketaFormat('numKintaiShinseiJikan2', " + i + ");setShukkinBo('numKintaiShinseiJikan2', " + i + ");\" >" + 
+						"<input type=\"tel\" class=\"kinShukkinBoText jikanTextBox\"  maxlength=\"5\" name=\"numKintaiShinseiJikan2" + i + "\" id=\"numKintaiShinseiJikan2" + i + "\"  value=\"" + kintaiShinseiJikan2 + "\"  onchange=\"setDecimalPoint2ketaFormat('numKintaiShinseiJikan2', " + i + ");setShukkinBo('numKintaiShinseiJikan2', " + i + ");\" >" + 
 					"</td>" +
 					"<td class=\"value center\">" + 
 						sinsei3SelectBox + 
 					"</td>" +
 					"<td class=\"value center\">" + 
-						"<input type=\"text\" class=\"kinShukkinBoText kaishishuryoTextBox\"  maxlength=\"2\" name=\"numKintaiShinseiKaishiJi3" + i + "\" id=\"numKintaiShinseiKaishiJi3" + i + "\"  value=\"" + kintaiShinseiKaishiJi3 + "\"  onchange=\"set2ketaFormat('numKintaiShinseiKaishiJi3', " + i + ");setShukkinBo('numKintaiShinseiKaishiJi3', " + i + ");calcShinseiJikan(3, " + i + ");\" >" + 
+						"<input type=\"tel\" class=\"kinShukkinBoText kaishishuryoTextBox\"  maxlength=\"2\" name=\"numKintaiShinseiKaishiJi3" + i + "\" id=\"numKintaiShinseiKaishiJi3" + i + "\"  value=\"" + kintaiShinseiKaishiJi3 + "\"  onchange=\"set2ketaFormat('numKintaiShinseiKaishiJi3', " + i + ");setShukkinBo('numKintaiShinseiKaishiJi3', " + i + ");calcShinseiJikan(3, " + i + ");\" >" + 
 					"</td>" +
 					"<td class=\"value center\">" + 
-						"<input type=\"text\" class=\"kinShukkinBoText kaishishuryoTextBox\"  maxlength=\"2\" name=\"numKintaiShinseiKaishiFun3" + i + "\" id=\"numKintaiShinseiKaishiFun3" + i + "\"  value=\"" + kintaiShinseiKaishiFun3 + "\"  onchange=\"set2ketaFormat('numKintaiShinseiKaishiFun3', " + i + ");setShukkinBo('numKintaiShinseiKaishiFun3', " + i + ");calcShinseiJikan(3, " + i + ");\" >" + 
+						"<input type=\"tel\" class=\"kinShukkinBoText kaishishuryoTextBox\"  maxlength=\"2\" name=\"numKintaiShinseiKaishiFun3" + i + "\" id=\"numKintaiShinseiKaishiFun3" + i + "\"  value=\"" + kintaiShinseiKaishiFun3 + "\"  onchange=\"set2ketaFormat('numKintaiShinseiKaishiFun3', " + i + ");setShukkinBo('numKintaiShinseiKaishiFun3', " + i + ");calcShinseiJikan(3, " + i + ");\" >" + 
 					"</td>" +
 					"<td class=\"value center\">" + 
-						"<input type=\"text\" class=\"kinShukkinBoText kaishishuryoTextBox\"  maxlength=\"2\" name=\"numKintaiShinseiShuryoJi3" + i + "\" id=\"numKintaiShinseiShuryoJi3" + i + "\"  value=\"" + kintaiShinseiShuryoJi3 + "\"  onchange=\"set2ketaFormat('numKintaiShinseiShuryoJi3', " + i + ");setShukkinBo('numKintaiShinseiShuryoJi3', " + i + ");calcShinseiJikan(3, " + i + ");\" >" + 
+						"<input type=\"tel\" class=\"kinShukkinBoText kaishishuryoTextBox\"  maxlength=\"2\" name=\"numKintaiShinseiShuryoJi3" + i + "\" id=\"numKintaiShinseiShuryoJi3" + i + "\"  value=\"" + kintaiShinseiShuryoJi3 + "\"  onchange=\"set2ketaFormat('numKintaiShinseiShuryoJi3', " + i + ");setShukkinBo('numKintaiShinseiShuryoJi3', " + i + ");calcShinseiJikan(3, " + i + ");\" >" + 
 					"</td>" +
 					"<td class=\"value center\">" + 
-						"<input type=\"text\" class=\"kinShukkinBoText kaishishuryoTextBox\"  maxlength=\"2\" name=\"numKintaiShinseiShuryoFun3" + i + "\" id=\"numKintaiShinseiShuryoFun3" + i + "\"  value=\"" + kintaiShinseiShuryoFun3 + "\"  onchange=\"set2ketaFormat('numKintaiShinseiShuryoFun3', " + i + ");setShukkinBo('numKintaiShinseiShuryoFun3', " + i + ");calcShinseiJikan(3, " + i + ");\" >" + 
+						"<input type=\"tel\" class=\"kinShukkinBoText kaishishuryoTextBox\"  maxlength=\"2\" name=\"numKintaiShinseiShuryoFun3" + i + "\" id=\"numKintaiShinseiShuryoFun3" + i + "\"  value=\"" + kintaiShinseiShuryoFun3 + "\"  onchange=\"set2ketaFormat('numKintaiShinseiShuryoFun3', " + i + ");setShukkinBo('numKintaiShinseiShuryoFun3', " + i + ");calcShinseiJikan(3, " + i + ");\" >" + 
 					"</td>" +
 					"<td class=\"value center\">" + 
-						"<input type=\"text\" class=\"kinShukkinBoText jikanTextBox\"  maxlength=\"5\" name=\"numKintaiShinseiJikan3" + i + "\" id=\"numKintaiShinseiJikan3" + i + "\"  value=\"" + kintaiShinseiJikan3 + "\"  onchange=\"setDecimalPoint2ketaFormat('numKintaiShinseiJikan3', " + i + ");setShukkinBo('numKintaiShinseiJikan3', " + i + ");\" >" + 
+						"<input type=\"tel\" class=\"kinShukkinBoText jikanTextBox\"  maxlength=\"5\" name=\"numKintaiShinseiJikan3" + i + "\" id=\"numKintaiShinseiJikan3" + i + "\"  value=\"" + kintaiShinseiJikan3 + "\"  onchange=\"setDecimalPoint2ketaFormat('numKintaiShinseiJikan3', " + i + ");setShukkinBo('numKintaiShinseiJikan3', " + i + ");\" >" + 
 					"</td>" +
 				"</tr>";
 		}

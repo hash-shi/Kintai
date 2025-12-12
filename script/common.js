@@ -7,8 +7,124 @@
 //****************************************************************************
 $(document).ready(function(){
 	// onkeydownイベントハンドラに、key_event関数を登録
-	document.onkeydown = onFunctionKeyEvent;
+	document.onkeydown = onKeyEvent;
 });
+
+//****************************************************************************
+// キー押下制御
+//
+//
+//
+//
+//****************************************************************************
+function onKeyEvent(event) {
+	// 発生したイベントのキーコードを取得
+	var keyCode = event.keyCode;
+	console.log("keyCode:" + keyCode);
+	
+	// Enterキー または F1-F12キー以外はスキップ
+	if(keyCode != 13 && (keyCode < 112 && 123 < keyCode)) { return ; }
+	
+	if (keyCode == 13) {
+		// Enterキーの場合
+		onEnterKeyEvent(event);
+	}
+	else if(112 <= keyCode && keyCode <= 123) {
+		// F1-F12キーの場合
+		onFunctionKeyEvent(event);
+	}
+	
+}
+
+//****************************************************************************
+// キー押下制御
+//
+//
+//
+//
+//****************************************************************************
+function onEnterKeyEvent(event) {
+	
+	// フォーカス対象(入力項目/チェックボックス/ラジオボタン/リスト/ボタン)
+	const selector = `
+		input[type="text"],
+		input[type="tel"],
+		input[type="number"],
+		input[type="email"],
+		input[type="url"],
+		input[type="password"],
+		input[type="checkbox"],
+		input[type="radio"],
+		textarea,
+		select,
+		button
+	`;
+	
+	// 現在のフォーカス要素
+	const $current = $(event.target);
+	
+	// textarea型項目は改行をする都合上、フォーカス移動させない。
+	if ($current.is('textarea')) {
+		return;
+	}
+	
+	// textarea以外はEnterのデフォルト動作を禁止
+	event.preventDefault();
+	
+	// ボタンの場合はフォーカス移動させず、各ボタン処理を実行する。
+	if ($current.is('button')) {
+		$current.click();
+		return;
+	}
+	
+	// ---- フォーカス対象一覧を作成 ----
+	let $focusables = $(selector)
+	
+		// 非表示はフォーカスしない
+		.filter(':visible')
+		
+		// disabled はフォーカスしない
+		.filter(':not([disabled])')
+		
+		// readonly はフォーカスしない
+		.filter(function () {
+			if ($(this).is('input') && $(this).prop('readonly')) {
+				return false;
+			}
+			return true;
+		})
+		// button は特定属性を持つものだけフォーカス
+		.filter(function () {
+			
+			if ($(this).is('button')) {
+				
+				// buttonAreaがhiddenの場合は、data-focusのon/offに関係なくフォーカスしない
+				const $parentArea = $(this).closest('#buttonArea');
+				if ($parentArea.length && $parentArea.css('visibility') === 'hidden') {
+					return false;
+				}
+				
+				// ※data-focus="off" のボタンだけフォーカスしない
+				return !($(this).data('focus') === 'off');
+			}
+			return true;
+			
+		});
+	
+	// 現在のインデックス
+	const index = $focusables.index($current);
+
+	// 次の要素へフォーカス移動
+	if (index >= 0 && index < $focusables.length - 1) {
+	    $focusables.eq(index + 1).focus();
+	} else {
+		// 最初の項目にフォーカス移動
+		if (0 < $focusables.length) {
+			$focusables.eq(0).focus();
+		}
+	}
+	
+}
 
 //****************************************************************************
 // ファンクションキー押下制御
@@ -19,9 +135,9 @@ $(document).ready(function(){
 //****************************************************************************
 function onFunctionKeyEvent(event) {
 	
-	// 発生したイベントのキーコードを取得
-	var keyCode = event.keyCode;
-	console.log("keyCode:" + keyCode);
+//	// 発生したイベントのキーコードを取得
+//	var keyCode = event.keyCode;
+//	console.log("keyCode:" + keyCode);
 	
 	// F1-F12キー以外はスキップ
 	if(keyCode < 112 && 123 < keyCode) { return ; }

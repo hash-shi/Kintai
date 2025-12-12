@@ -62,7 +62,7 @@ ArrayList<HashMap<String, String>> mstKubun0013 = (ArrayList<HashMap<String, Str
 				<tr>
 					<td class="title center w150 req">ユーザ区分</td>
 					<td class="value w500">
-				  		<input type="text" class="w80"  maxlength="2" name="txtUserKbn" id="txtUserKbn"  value="" onblur="setSelectFromInput('txtUserKbn','selUserKbnName');" >		
+				  	<input type="text" class="w80"  maxlength="2" name="txtUserKbn" id="txtUserKbn"  value="" onblur="setSelectFromInput('txtUserKbn','selUserKbnName');" >		
 						<select class="w65" name="selUserKbnName" id="selUserKbnName" onchange="setInputFromSelect('selUserKbnName','txtUserKbn');">
 						<option value=""> </option>
 							<% for (int count = 0 ; count < mstKubun0500.size() ; count++){ HashMap<String, String> record = mstKubun0500.get(count);%>
@@ -271,7 +271,7 @@ ArrayList<HashMap<String, String>> mstKubun0013 = (ArrayList<HashMap<String, Str
 					</td>
 				</tr>
 			</table>
-				<button type="button" onclick="addShoriKanoEigyosho();">追加</button>
+				<button type="button" onclick="addShoriKanoEigyosho();" data-focus="off">追加</button>
 			<table>
 				<tbody id="ShoriKanoEigyoshoResult">
 				</tbody>
@@ -297,7 +297,7 @@ ArrayList<HashMap<String, String>> mstKubun0013 = (ArrayList<HashMap<String, Str
 	</div>
 
 	<div class="buttonArea right" id="buttonArea" style="visibility:hidden;">
-		<button type="button" class="" name="btnDelete" id="btnDelete" onclick="onDelete()">削除 [ F2 ] </button>
+		<button type="button" class="" name="btnDelete" id="btnDelete" onclick="onDelete()" data-focus="off">削除 [ F2 ] </button>
 		<button type="button" class="" name="btnUpdate" id="btnUpdate" onclick="onUpdate()">確定 [ F9 ] </button>
 	</div>
 </main>
