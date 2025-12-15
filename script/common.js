@@ -135,9 +135,9 @@ function onEnterKeyEvent(event) {
 //****************************************************************************
 function onFunctionKeyEvent(event) {
 	
-//	// 発生したイベントのキーコードを取得
-//	var keyCode = event.keyCode;
-//	console.log("keyCode:" + keyCode);
+	// 発生したイベントのキーコードを取得
+	var keyCode = event.keyCode;
+	// console.log("keyCode:" + keyCode);
 	
 	// F1-F12キー以外はスキップ
 	if(keyCode < 112 && 123 < keyCode) { return ; }
