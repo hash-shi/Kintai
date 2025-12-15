@@ -1097,6 +1097,24 @@ public class ChiChinginkeisanshoAction extends PJActionBase {
 		sql.append("         AND M1.Code <> '01' ");
 		sql.append("     GROUP BY ");
 		sql.append("         LEFT(M1.GroupCode1, 2) ");
+
+		sql.append("     UNION ALL ");
+
+		sql.append("     SELECT ");
+		sql.append("         LEFT(M1.GroupCode1, 2) AS Kbn, ");
+		sql.append("         SUM(MEISAI.ChinginShinseiJikanKeisan2) AS ChinginShinseiJikanKeisan ");
+		sql.append("     FROM ");
+		sql.append("         CHI_CHINGINKEISANSHO_MEISAI MEISAI WITH(NOLOCK) ");
+		sql.append("     LEFT OUTER JOIN MST_KUBUN M1 WITH(NOLOCK) ");
+		sql.append("         ON  M1.KbnCode = '0201' ");
+		sql.append("         AND M1.Code = MEISAI.ChinginShinseiKbn3 ");
+		sql.append("     WHERE ");
+		sql.append("         MEISAI.ChinginShinseiKbn3 <> '00' ");
+		sql.append("         AND MEISAI.TaishoNenGetsudo = ? ");
+		sql.append("         AND MEISAI.ShainNO = ? ");
+		sql.append("         AND M1.Code <> '01' ");
+		sql.append("     GROUP BY ");
+		sql.append("         LEFT(M1.GroupCode1, 2) ");
 		sql.append(" ) ");
 		sql.append(" SELECT ");
 		sql.append("     ISNULL(SUM(CASE WHEN Kbn = '01' THEN ChinginShinseiJikanKeisan END), 0) AS Jikan01, ");
@@ -1114,6 +1132,8 @@ public class ChiChinginkeisanshoAction extends PJActionBase {
 		sql.append(" FROM ");
 		sql.append("     CteJikan ");
 		
+		pstmtf.addValue("String", taishoYM);
+		pstmtf.addValue("String", taishoShainNo);
 		pstmtf.addValue("String", taishoYM);
 		pstmtf.addValue("String", taishoShainNo);
 		pstmtf.addValue("String", taishoYM);
