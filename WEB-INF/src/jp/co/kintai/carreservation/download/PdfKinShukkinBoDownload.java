@@ -221,7 +221,26 @@ public class PdfKinShukkinBoDownload extends DownloadBase {
 		
 		sql.append(" 	,ShinseiNissu01 ");
 		sql.append(" 	,ShinseiNissu03 ");
-		sql.append(" 	,ShinseiNissu04 ");
+		sql.append(" 	,ShinseiNissu04 - ");
+		sql.append(" 	CAST( ");
+		sql.append(" 		(");
+		sql.append(" 			SELECT ");
+		sql.append(" 				COUNT(MEISAI.KintaiKbn) ");
+		sql.append(" 			FROM ");
+		sql.append(" 				KIN_SHUKKINBO_MEISAI MEISAI ");
+		sql.append(" 			WHERE ");
+		sql.append(" 				MEISAI.ShainNO = M.ShainNO AND ");
+		sql.append(" 				CASE ");
+		sql.append(" 					WHEN RIGHT(M.TaishoNenGetsudo, 2) IN ('01', '02', '03') ");
+		sql.append(" 	 				THEN CAST(CAST(LEFT(M.TaishoNenGetsudo, 4) AS INT) - 1 AS VARCHAR) ");
+		sql.append(" 					ELSE LEFT(M.TaishoNenGetsudo, 4) ");
+		sql.append(" 				END + '/04' <= MEISAI.TaishoNenGetsudo ");
+		sql.append(" 			AND ");
+		sql.append(" 				MEISAI.TaishoNenGetsudo <= M.TaishoNenGetsudo ");
+		sql.append(" 			AND ");
+		sql.append(" 				MEISAI.KintaiKbn = '06' ");
+		sql.append(" 	 	) AS DECIMAL(4,2) ");
+		sql.append(" 	 ) AS ShinseiNissu04 ");
 		sql.append(" 	,ShinseiNissu07 ");
 		sql.append(" 	,CAST( ");
 		sql.append(" 		(");
@@ -240,7 +259,7 @@ public class PdfKinShukkinBoDownload extends DownloadBase {
 		sql.append(" 				MEISAI.TaishoNenGetsudo <= M.TaishoNenGetsudo ");
 		sql.append(" 			AND ");
 		sql.append(" 				MEISAI.KintaiKbn = '06' ");
-		sql.append(" 	 	) AS DECIMAL(4,1) ");
+		sql.append(" 	 	) AS DECIMAL(4,2) ");
 		sql.append(" 	 ) AS ShinseiNissu06 ");
 		sql.append(" 	,ShinseiNissu08 ");
 		sql.append(" 	,ShinseiNissu09 ");
@@ -259,7 +278,6 @@ public class PdfKinShukkinBoDownload extends DownloadBase {
 		sql.append(" 	,ShinseiKingaku02 ");
 		
 		sql.append(" 	,COALESCE(Y.YukyuKyukaFuyoNissu, S.YukyuKyukaFuyoNissu) - ");
-		
 		sql.append(" 	CAST ( ");
 		sql.append(" 		( ");
 		sql.append(" 			SELECT ");
@@ -275,7 +293,7 @@ public class PdfKinShukkinBoDownload extends DownloadBase {
 		sql.append(" 				END + '/04' <= KIHON.TaishoNenGetsudo AND ");
 		sql.append(" 				KIHON.TaishoNenGetsudo <= K.TaishoNenGetsudo ");
 		sql.append(" 	 	) ");
-		sql.append(" 		+ ");
+		sql.append(" 		- ");
 		sql.append(" 		( ");
 		sql.append(" 			SELECT ");
 		sql.append(" 				COUNT(MEISAI.KintaiKbn) ");
