@@ -95,7 +95,7 @@
 							<th class="title center" colspan="2">	<a class="kinShukkinBoText">出社</a></th>
 							<th class="title center">				<a class="kinShukkinBoText">-</a></th>
 							<th class="title center" colspan="2">	<a class="kinShukkinBoText">退社</a></th>
-							<th class="title center">				<a class="kinShukkinBoText">通常勤務</a></th>
+							<th class="title center">				<a class="kinShukkinBoText">勤務時間</a></th>
 
 							<th class="title center0">				<a class="kinShukkinBoText">備考</a></th>
 							<th class="title center">				<a class="kinShukkinBoText">申請区分１</a></th>

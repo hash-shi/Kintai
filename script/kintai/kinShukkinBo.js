@@ -309,7 +309,7 @@ function onDisplayNyuryokuArea(firstHalfFlg){
 		
 		//申請区分1のセレクトボックス
 		let sinsei1SelectBox = "";
-		sinsei1SelectBox += 	"<select class=\"kinShukkinBoText\" name=\"selKintaiShinseiKbn1" + i + "\" id=\"selKintaiShinseiKbn1" + i + "\" value=\"" + kintaiShinseiKbn1 + "\"  onchange=\"setShukkinBo('selKintaiShinseiKbn1', " + i + ");\" >" ;
+		sinsei1SelectBox += 	"<select class=\"kinShukkinBoText\" name=\"selKintaiShinseiKbn1" + i + "\" id=\"selKintaiShinseiKbn1" + i + "\" value=\"" + kintaiShinseiKbn1 + "\"  onchange=\"setShukkinBo('selKintaiShinseiKbn1', " + i + ");resetJikan('1', " + i + ");\" >" ;
 
 		for(let sinseiKubunRecord of sinseiKubunList){
 			sinsei1SelectBox += 		"<option value=\"" + sinseiKubunRecord["Code"] + "\" ";
@@ -321,7 +321,7 @@ function onDisplayNyuryokuArea(firstHalfFlg){
 		
 		//申請区分2のセレクトボックス
 		let sinsei2SelectBox = "";
-		sinsei2SelectBox += 	"<select class=\"kinShukkinBoText\" name=\"selKintaiShinseiKbn2" + i + "\" id=\"selKintaiShinseiKbn2" + i + "\" value=\"" + kintaiShinseiKbn2 + "\"  onchange=\"setShukkinBo('selKintaiShinseiKbn2', " + i + ");\" >" ;
+		sinsei2SelectBox += 	"<select class=\"kinShukkinBoText\" name=\"selKintaiShinseiKbn2" + i + "\" id=\"selKintaiShinseiKbn2" + i + "\" value=\"" + kintaiShinseiKbn2 + "\"  onchange=\"setShukkinBo('selKintaiShinseiKbn2', " + i + ");resetJikan('2', " + i + ");\" >" ;
 
 		for(let sinseiKubunRecord of sinseiKubunList){
 			sinsei2SelectBox += 		"<option value=\"" + sinseiKubunRecord["Code"] + "\" ";
@@ -333,7 +333,7 @@ function onDisplayNyuryokuArea(firstHalfFlg){
 		
 		//申請区分3のセレクトボックス
 		let sinsei3SelectBox = "";
-		sinsei3SelectBox += 	"<select class=\"kinShukkinBoText\" name=\"selKintaiShinseiKbn3" + i + "\" id=\"selKintaiShinseiKbn3" + i + "\" value=\"" + kintaiShinseiKbn3 + "\"  onchange=\"setShukkinBo('selKintaiShinseiKbn3', " + i + ");\" >" ;
+		sinsei3SelectBox += 	"<select class=\"kinShukkinBoText\" name=\"selKintaiShinseiKbn3" + i + "\" id=\"selKintaiShinseiKbn3" + i + "\" value=\"" + kintaiShinseiKbn3 + "\"  onchange=\"setShukkinBo('selKintaiShinseiKbn3', " + i + ");resetJikan('3', " + i + ");\" >" ;
 
 		for(let sinseiKubunRecord of sinseiKubunList){
 			sinsei3SelectBox += 		"<option value=\"" + sinseiKubunRecord["Code"] + "\" ";
@@ -704,8 +704,29 @@ function kintaiChangeColor(kintai){
 
 function setDefaultJitsudoJikan(nowRow){
 	let fieldName = "selKintaiKbn";
+	
+	//勤怠区分が"00"(-)の場合は出社退社時間をクリアする
+	if(($("#" + fieldName + nowRow).val() == "00")){
+		fieldName = "numShusshaJi";
+		$("#" + fieldName + nowRow).val("");
+		setShukkinBo(fieldName, nowRow);
+		fieldName = "numShusshaFun";
+		$("#" + fieldName + nowRow).val("");
+		setShukkinBo(fieldName, nowRow);
+		fieldName = "numTaishaJi";
+		$("#" + fieldName + nowRow).val("");
+		setShukkinBo(fieldName, nowRow);
+		fieldName = "numTaishaFun";
+		$("#" + fieldName + nowRow).val("");
+		setShukkinBo(fieldName, nowRow);
+
+		//取得しておいた実働時間を設定
+		fieldName = "numJitsudoJikan";
+		$("#" + fieldName + nowRow).val("0.00");
+		setShukkinBo(fieldName, nowRow);
+	}
 	//勤怠区分が"01"(出勤)または"02"(出張)　かつ　出勤簿入力区分が"00"(月給)の場合のみ実行する
-	if(
+	else if(
 		($("#" + fieldName + nowRow).val() == "01") || ($("#" + fieldName + nowRow).val() == "02") &&
 		shukinboKbn == "00"
 	){
@@ -726,6 +747,29 @@ function setDefaultJitsudoJikan(nowRow){
 		//取得しておいた実働時間を設定
 		fieldName = "numJitsudoJikan";
 		$("#" + fieldName + nowRow).val(keiyakuJitsudoJikan);
+		setShukkinBo(fieldName, nowRow);
+	}
+}
+
+function resetJikan(nowCol,nowRow){
+	let fieldName = "selKintaiKbn" + nowCol;
+	
+	//勤怠区分が"00"(-)の場合は出社退社時間をクリアする
+	if(($("#selKintaiShinseiKbn"+ nowRow).val() == "00")){
+		fieldName = "numKintaiShinseiKaishiJi" + nowCol;
+		$("#" + fieldName + nowRow).val("");
+		setShukkinBo(fieldName, nowRow);
+		fieldName = "numKintaiShinseiKaishiFun" + nowCol;
+		$("#" + fieldName + nowRow).val("");
+		setShukkinBo(fieldName, nowRow);
+		fieldName = "numKintaiShinseiShuryoJi" + nowCol;
+		$("#" + fieldName + nowRow).val("");
+		setShukkinBo(fieldName, nowRow);
+		fieldName = "numKintaiShinseiShuryoFun" + nowCol;
+		$("#" + fieldName + nowRow).val("");
+		setShukkinBo(fieldName, nowRow);
+		fieldName = "numKintaiShinseiJikan" + nowCol;
+		$("#" + fieldName + nowRow).val("0.00");
 		setShukkinBo(fieldName, nowRow);
 	}
 }
