@@ -752,10 +752,10 @@ function setDefaultJitsudoJikan(nowRow){
 }
 
 function resetJikan(nowCol,nowRow){
-	let fieldName = "selKintaiKbn" + nowCol;
+	let fieldName = "selKintaiShinseiKbn" + nowCol;
 	
 	//勤怠区分が"00"(-)の場合は出社退社時間をクリアする
-	if(($("#selKintaiShinseiKbn"+ nowRow).val() == "00")){
+	if(($("#" + fieldName + nowRow).val() == "00")){
 		fieldName = "numKintaiShinseiKaishiJi" + nowCol;
 		$("#" + fieldName + nowRow).val("");
 		setShukkinBo(fieldName, nowRow);
