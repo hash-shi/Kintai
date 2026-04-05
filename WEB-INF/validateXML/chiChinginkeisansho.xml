@@ -54,6 +54,9 @@
 			<check class="ShainExistValidate" message="該当する!#itemName#!が存在しません。" itemName="{dispName}">
 				<param name="shainNo">txtShainNO</param>
 			</check>
+			<check class="IsEquals" message="!#itemName#!が変更されています。再表示してください。" itemName="{dispName}">
+				<param name="targetvalue">srhTxtShainNO</param>
+			</check>
 		</variable>
 		
 		
@@ -108,6 +111,9 @@
 			<check class="ShainExistValidate" message="該当する!#itemName#!が存在しません。" itemName="{dispName}">
 				<param name="shainNo">txtShainNO</param>
 			</check>
+			<check class="IsEquals" message="!#itemName#!が変更されています。再表示してください。" itemName="{dispName}">
+				<param name="targetvalue">srhTxtShainNO</param>
+			</check>
 		</variable>
 		
 		
@@ -161,6 +167,9 @@
 			<check class="IsNumeric" message="!#itemName#!には数字を入力してください。" itemName="{dispName}"></check>
 			<check class="ShainExistValidate" message="該当する!#itemName#!が存在しません。" itemName="{dispName}">
 				<param name="shainNo">txtShainNO</param>
+			</check>
+			<check class="IsEquals" message="!#itemName#!が変更されています。再表示してください。" itemName="{dispName}">
+				<param name="targetvalue">srhTxtShainNO</param>
 			</check>
 		</variable>
 

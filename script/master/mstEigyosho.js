@@ -22,7 +22,10 @@ function getMstEigyosho() {
 		// mainAreaを表示する。
 		$("#mainArea").css("visibility", "visible");
 		$("#buttonArea").css("visibility", "visible");
-		$("#txtEigyoshoName").focus();
+		// 20260228-初期フォーカス位置の変更
+		// $("#txtEigyoshoName").focus();
+		$("#txtEigyoshoCode").focus();
+		// 20260228-初期フォーカス位置の変更
 		
 		// 既に背景色が設定されている場合は一旦削除
 		$("#mainArea").removeClass('ins');

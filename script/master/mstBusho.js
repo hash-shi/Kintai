@@ -22,8 +22,11 @@ function getMstBusho(){
 		// mainAreaを表示する。
 		$("#mainArea").css("visibility", "visible");
 		$("#buttonArea").css("visibility", "visible");
-		$("#txtBushoName").focus();
-				
+		// 20260228-初期フォーカス位置の変更
+		// $("#txtBushoName").focus();
+		$("#txtBushoCode").focus();
+		// 20260228-初期フォーカス位置の変更
+		
 		// 既に背景色が設定されている場合は一旦削除
 		$("#mainArea").removeClass('ins');
 		$("#mainArea").removeClass('upd');
