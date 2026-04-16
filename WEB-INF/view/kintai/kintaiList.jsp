@@ -16,6 +16,12 @@ String bushoKbn = "";
 String shoriKanoEigyoshoCode = "";
 ArrayList<String> shoriKanoEigyoshoCodes = new ArrayList<String>();
 
+// ↓20260416_hash-shi_虫眼鏡の活性非活性を追加
+boolean eigyoshoReadonly = true;
+boolean bushoReadonly = true;
+boolean shainReadonly = true;
+// ↑20260416_hash-shi_虫眼鏡の活性非活性を追加
+
 // ユーザー情報の取得
 UserInformation userInformation = (UserInformation)request.getSession().getAttribute(Define.SESSION_ID);
 if (userInformation != null) {
@@ -36,6 +42,51 @@ if (userInformation != null) {
 ArrayList<HashMap<String, String>> mstKubun0504 = (ArrayList<HashMap<String, String>>)request.getAttribute("mstKubun0504");
 ArrayList<HashMap<String, String>> mstKubun0050 = (ArrayList<HashMap<String, String>>)request.getAttribute("mstKubun0050");
 
+//↓20260416_hash-shi_虫眼鏡の活性非活性を追加
+if (("00".equals(bushoKbn) && "01".equals(userKbn)) || ("01".equals(userKbn) && 2 <= shoriKanoEigyoshoCodes.size()) || ("02".equals(userKbn) && 2 <= shoriKanoEigyoshoCodes.size())) {
+	// 部署区分が「00；本社」かつユーザ区分が「01：本社」
+	// 部署区分が「00；本社」以外かつユーザ区分が「01：本社」かつ処理可能営業所が複数
+	// ユーザ区分が「02：営業所」かつ処理可能営業所が複数
+	// 営業所
+	eigyoshoReadonly = false;
+	// 部署
+	bushoReadonly = false;
+	// 社員
+	shainReadonly = false;
+} else if (("01".equals(userKbn) && shoriKanoEigyoshoCodes.size() == 1) || ("02".equals(userKbn) && shoriKanoEigyoshoCodes.size() == 1)) {
+	// ユーザ区分が「01：営業所」かつ処理可能営業所が1つ(所属している営業所のみ)
+	// ユーザ区分が「02：営業所」かつ処理可能営業所が1つ(所属している営業所のみ)
+	// 営業所
+	eigyoshoReadonly = true;
+	// 部署
+	bushoReadonly = false;
+	// 社員
+	shainReadonly = false;
+} else if ("03".equals(userKbn)) {
+	// ユーザ区分が「03：部署」
+	// 営業所
+	eigyoshoReadonly = true;
+	// 部署
+	bushoReadonly = true;
+	// 社員
+	shainReadonly = false;
+} else if ("04".equals(userKbn)) {
+	// ユーザ区分が「04：個人」
+	// 営業所
+	eigyoshoReadonly = true;
+	// 部署
+	bushoReadonly = true;
+	// 社員
+	shainReadonly = true;
+} else {
+	// 営業所
+	eigyoshoReadonly = true;
+	// 部署
+	bushoReadonly = true;
+	// 社員
+	shainReadonly = true;
+}
+//↑20260416_hash-shi_虫眼鏡の活性非活性を追加
 %>
 
 <main id="main-content" class="nom">
@@ -111,11 +162,19 @@ ArrayList<HashMap<String, String>> mstKubun0050 = (ArrayList<HashMap<String, Str
 					<td class="title center w100">営業所</td>
 					<td class="value w600">
 						<input type="text" class=""  style="width: 80px"  maxlength="3" name="srhTxtEigyoshoCodeF" id="srhTxtEigyoshoCodeF"  value=""  onblur="getEigyoshoName('srhTxtEigyoshoCodeF', 'srhTxtEigyoshoNameF');" >
-						<img class="img border" src="./images/search.png" onclick="opnDialog('srhMstEigyosho','srhTxtEigyoshoCodeF','srhTxtEigyoshoNameF');">
+						<img class="img border" src="./images/search.png" 
+							<% if (eigyoshoReadonly == false) { %>
+								onclick="opnDialog('srhMstEigyosho','srhTxtEigyoshoCodeF','srhTxtEigyoshoNameF');"
+							<% } %>
+						>
 						<input type="text" class=""  style="width: 120px" name="srhTxtEigyoshoNameF" id="srhTxtEigyoshoNameF" value="" readonly>
 						～
 						<input type="text" class=""  style="width: 80px"  maxlength="3" name="srhTxtEigyoshoCodeT" id="srhTxtEigyoshoCodeT"  value=""  onblur="getEigyoshoName('srhTxtEigyoshoCodeT', 'srhTxtEigyoshoNameT');" >
-						<img class="img border" src="./images/search.png" onclick="opnDialog('srhMstEigyosho','srhTxtEigyoshoCodeT','srhTxtEigyoshoNameT');">
+						<img class="img border" src="./images/search.png" 
+							<% if (eigyoshoReadonly == false) { %>
+								onclick="opnDialog('srhMstEigyosho','srhTxtEigyoshoCodeT','srhTxtEigyoshoNameT');"
+							<% } %>
+						>
 						<input type="text" class=""  style="width: 120px" name="srhTxtEigyoshoNameT" id="srhTxtEigyoshoNameT" value="" readonly>
 					</td>
 				</tr>
@@ -124,11 +183,19 @@ ArrayList<HashMap<String, String>> mstKubun0050 = (ArrayList<HashMap<String, Str
 					<td class="title center w100">部署</td>
 					<td class="value w600">
 						<input type="text" class=""  style="width: 80px"  maxlength="4" name="srhTxtBushoCodeF" id="srhTxtBushoCodeF"  value=""  onblur="getBushoName('srhTxtBushoCodeF', 'srhTxtBushoNameF');" >
-						<img class="img border" src="./images/search.png" onclick="opnDialog('srhMstBusho','srhTxtBushoCodeF','srhTxtBushoNameF');">
+						<img class="img border" src="./images/search.png" 
+							<% if (bushoReadonly == false) { %>
+								onclick="opnDialog('srhMstBusho','srhTxtBushoCodeF','srhTxtBushoNameF');"
+							<% } %>
+						>
 						<input type="text" class=""  style="width: 120px" name="srhTxtBushoNameF" id="srhTxtBushoNameF" value="" readonly>
 						～
 						<input type="text" class=""  style="width: 80px"  maxlength="4" name="srhTxtBushoCodeT" id="srhTxtBushoCodeT"  value=""  onblur="getBushoName('srhTxtBushoCodeT', 'srhTxtBushoNameT');" >
-						<img class="img border" src="./images/search.png" onclick="opnDialog('srhMstBusho','srhTxtBushoCodeT','srhTxtBushoNameT');">
+						<img class="img border" src="./images/search.png" 
+							<% if (bushoReadonly == false) { %>
+								onclick="opnDialog('srhMstBusho','srhTxtBushoCodeT','srhTxtBushoNameT');"
+							<% } %>
+						>
 						<input type="text" class=""  style="width: 120px" name="srhTxtBushoNameT" id="srhTxtBushoNameT" value="" readonly>
 					</td>
 				</tr>
@@ -137,11 +204,19 @@ ArrayList<HashMap<String, String>> mstKubun0050 = (ArrayList<HashMap<String, Str
 					<td class="title center w100">社員NO</td>
 					<td class="value w600">
 						<input type="text" class=""  style="width: 80px"  maxlength="4" name="srhTxtShainNoF" id="srhTxtShainNoF"  value=""  onblur="getShainName('srhTxtShainNoF', 'srhTxtShainNameF');" >
-						<img class="img border" src="./images/search.png" onclick="opnDialog('srhMstShain','srhTxtShainNoF','srhTxtShainNameF');">
+						<img class="img border" src="./images/search.png" 
+							<% if (shainReadonly == false) { %>
+								onclick="opnDialog('srhMstShain','srhTxtShainNoF','srhTxtShainNameF');"
+							<% } %>
+						>
 						<input type="text" class=""  style="width: 120px" name="srhTxtShainNameF" id="srhTxtShainNameF" value="" readonly>
 						～
 						<input type="text" class=""  style="width: 80px"  maxlength="4" name="srhTxtShainNoT" id="srhTxtShainNoT"  value=""  onblur="getShainName('srhTxtShainNoT', 'srhTxtShainNameT');" >
-						<img class="img border" src="./images/search.png" onclick="opnDialog('srhMstShain','srhTxtShainNoT','srhTxtShainNameT');">
+						<img class="img border" src="./images/search.png" 
+							<% if (shainReadonly == false) { %>
+								onclick="opnDialog('srhMstShain','srhTxtShainNoT','srhTxtShainNameT');"
+							<% } %>
+						>
 						<input type="text" class=""  style="width: 120px" name="srhTxtShainNameT" id="srhTxtShainNameT" value="" readonly>
 					</td>
 				</tr>

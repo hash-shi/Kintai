@@ -434,7 +434,9 @@ public class PdfKinShukkinBoDownload extends DownloadBase {
 			pstmtf.addValue("String", joken);
 		}
 		
-		sql.append(" 	AND S.ShainKbn <> '04' ");
+		// ↓20260416_hash-shi_社員区分4(役付)も表示する。
+		// sql.append(" 	AND S.ShainKbn <> '04' ");
+		// ↑20260416_hash-shi_社員区分4(役付)も表示する。
 		
 		sql.append(" ORDER BY ");
 		sql.append("     K.TaishoNenGetsudo ");
