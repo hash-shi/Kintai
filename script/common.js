@@ -77,6 +77,17 @@ function onEnterKeyEvent(event) {
 		return;
 	}
 	
+	//20260820 追加
+	//出勤簿入力の予定、勤怠区分にフォーカスする時、別の処理を行う。
+	let id = $current.attr("id");
+	
+	if(location.pathname.endsWith('/Kintai/kinShukkinBo') &&
+		id.startsWith("selKintaiKbn")
+	 ){
+		onShukkinBoEnterKeyEvent($current);
+		return;
+	}
+	
 	// ---- フォーカス対象一覧を作成 ----
 	let $focusables = $(selector)
 	
@@ -1035,3 +1046,15 @@ $(document).on("mousemove", function(e){
 });
 
 //****************************************************************************
+
+//********************************************************************************************
+// 項目選択時　全選択
+// 2026/08/13 追加
+//********************************************************************************************
+$(document).ready(function(){
+	
+	$(document).on('focus','input[type="text"],input[type="tel"],input[type="password"]',function(){
+		$(this).select();
+	});
+});
+

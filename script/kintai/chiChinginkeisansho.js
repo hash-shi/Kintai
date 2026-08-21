@@ -271,7 +271,7 @@ function onDisplayNyuryokuArea(firstHalfFlg){
 		
 		//申請区分1のセレクトボックス
 		let sinsei1SelectBox = "";
-		sinsei1SelectBox += 	"<select name=\"selChinginShinseiKbn1" + i + "\" id=\"selChinginShinseiKbn1" + i + "\" value=\"" + chinginShinseiKbn1 + "\"  onchange=\"setShukkinBo('selChinginShinseiKbn1', " + i + ");resetJikan('1', " + i + ");\" >" ;
+		sinsei1SelectBox += 	"<select name=\"selChinginShinseiKbn1" + i + "\" id=\"selChinginShinseiKbn1" + i + "\" value=\"" + chinginShinseiKbn1 + "\"  onchange=\"setShukkinBo('selChinginShinseiKbn1', " + i + ");resetJikan('1', " + i + "); selKyuShutsu(" + i +");\" >" ;
 
 		for(let sinseiKubunRecord of sinseiKubunList){
 			sinsei1SelectBox += 		"<option value=\"" + sinseiKubunRecord["Code"] + "\" ";
@@ -404,6 +404,11 @@ function onDisplayNyuryokuArea(firstHalfFlg){
 		else{
 			//一覧表示時、最初の行をフォーカス
 			$("#numShusshaJi0").focus();
+			setTimeout(function(){
+				$("#numShusshaJi0").select();
+				//20260813-全選択追加
+			});
+
 		}
 	}
 	else{
@@ -416,6 +421,11 @@ function onDisplayNyuryokuArea(firstHalfFlg){
 		else{
 			//一覧表示時、最後の行をフォーカス
 			$("#numShusshaJi" + (chiChinginkeisanshoResultAll.length - 1)).focus();
+			setTimeout(function(){
+				$("#numShusshaJi" + (chiChinginkeisanshoResultAll.length - 1)).select();
+				//20260813-全選択追加
+			});
+
 		}
 	}
 
@@ -569,11 +579,58 @@ function calcJitsudoJikan(nowRow){
 			}
 			let jikanDisp = String(jikanJi) + "." + (("00" + String(jikanFun)).slice(-2));
 			
-			chiChinginkeisanshoResultAll[nowRow]["numJitsudoJikan"] = jikanDisp;
-			$("#numJitsudoJikan" + nowRow).val(jikanDisp);
+			if( $("#selChinginShinseiKbn1"+ nowRow).val() == "04"){
+				
+				chiChinginkeisanshoResultAll[nowRow]["numChinginShinseiJikan1"] = jikanDisp;
+				$("#numChinginShinseiJikan1" + nowRow).val(jikanDisp);
+				
+			}
+			else if($("#selChinginShinseiKbn2"+ nowRow).val() == "04"){
+				
+				chiChinginkeisanshoResultAll[nowRow]["numChinginShinseiJikan2"] = jikanDisp;
+				$("#numChinginShinseiJikan2" + nowRow).val(jikanDisp);
+			}
+			else if($("#selChinginShinseiKbn3"+ nowRow).val() == "04"){
+				
+				chiChinginkeisanshoResultAll[nowRow]["numhinginShinseiJikan3"] = jikanDisp;
+				$("#numChinginShinseiJikan3" + nowRow).val(jikanDisp);
+			}
+			else{
+				chiChinginkeisanshoResultAll[nowRow]["numJitsudoJikan"] = jikanDisp;
+				$("#numJitsudoJikan" + nowRow).val(jikanDisp);
+			}
 		}
 	}
 }
+/*
+*
+*20260818 休出選択時 通常勤務変更
+*
+*/
+function selKyuShutsu(nowRow){
+	let fieldName = "selChinginShinseiKbn1";
+	
+	// 申請区分が04(休出)か判定
+	if($("#" + fieldName + nowRow).val() == "04"){
+		
+		fieldName = "numJitsudoJikan";
+		
+		//通常勤務の値が変更されているか判定
+		if($("#" + fieldName + nowRow).val() != "0.00"){
+			
+			let jikan = $("#" + fieldName + nowRow).val(); 
+			
+			chiChinginkeisanshoResultAll[nowRow]["numChinginShinseiJikan1"] = jikan
+			$("#numChinginShinseiJikan1" + nowRow).val(jikan);
+			
+			chiChinginkeisanshoResultAll[nowRow]["numJitsudoJikan"] = "0.00"
+			$("#" + fieldName + nowRow).val("0.00");
+			
+		}
+	}
+}
+
+
 
 /*
 *
@@ -701,14 +758,17 @@ function onUpdate(){
 				}
 				//再検索する
 				//更新処理に備え、検索条件を保持
-				$("#srhTxtTaishoYM").val($("#txtTaishoYM").val());
-				$("#srhTxtShainNO").val($("#txtShainNO").val());
-				onSearchShainName();//社員名再取得
-	
+//				$("#srhTxtTaishoYM").val($("#txtTaishoYM").val());
+//				$("#srhTxtShainNO").val($("#txtShainNO").val());
+//				onSearchShainName();//社員名再取得
+//	
 				//検索結果が0の時のため、画面非表示
-				$("#nyuryokuArea").css("visibility", "hidden");
-				$("#buttonArea").css("visibility", "hidden");
-				onSearchChiChinginkeisansho();
+//				$("#nyuryokuArea").css("visibility", "hidden");
+//				$("#buttonArea").css("visibility", "hidden");
+//				onSearchChiChinginkeisansho();
+				
+				//20260815 初期表示に変更
+				movContents('chiChinginkeisansho');
 			}
 			else{
 				alert("このデータはすでに、別のユーザーに更新されています。\r\nもう一度データを確認してください。");

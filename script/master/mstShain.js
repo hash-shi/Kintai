@@ -29,6 +29,10 @@ function getMstShain() {
 		// $("#txtShainName").focus();
 		$("#txtShainNO").focus();
 		// 20260228-初期フォーカス位置の変更
+		setTimeout(function(){
+			$("#txtShainNO").select();
+		});
+		//20260813-全選択追加
 		
 		// 既に背景色が設定されている場合は一旦削除
 		$("#mainArea").removeClass('ins');
@@ -329,6 +333,11 @@ function removeCommasOnFocus(idOrElement) {
 	if (val) {
 		$input.val(val.replace(/,/g, ""));
 	}
+	//20260814 全選択追加
+	setTimeout(function(){
+		$(idOrElement).select();
+	});
+	
 }
 
 // カンマ付与（フォーカスアウト時）
@@ -417,8 +426,10 @@ function onUpdate() {
 				alert("データが正常に更新されました。");
 				// 画面のクリアなど何かしらの処理
 				// 処理した社員NOで再読込
-				$("#srhTxtShainNO").val($("#txtShainNO").val());
-				getMstShain();
+				//$("#srhTxtShainNO").val($("#txtShainNO").val());
+				//getMstShain();
+				//20260815 初期表示に変更
+				movContents('mstShain');
 			});
 		});
 	} else {
@@ -435,8 +446,10 @@ function onUpdate() {
 					alert("データが正常に更新されました。");
 					// 画面のクリアなど何かしらの処理
 					// 処理した社員NOで再読込
-					$("#srhTxtShainNO").val($("#txtShainNO").val());
-					getMstShain();
+					//$("#srhTxtShainNO").val($("#txtShainNO").val());
+					//getMstShain();
+					//20260815 初期表示に変更
+					movContents('mstShain');
 				});
 			} else {
 				// 画面項目と隠し項目が異なる値 = データコピー(画面で入力した新しい値で登録)
@@ -449,8 +462,11 @@ function onUpdate() {
 					alert("データが正常に更新されました。");
 					// 画面のクリアなど何かしらの処理
 					// 処理した社員NOで再読込
-					$("#srhTxtShainNO").val($("#txtShainNO").val());
-					getMstShain();
+					//$("#srhTxtShainNO").val($("#txtShainNO").val());
+					//getMstShain();
+					//20260815 初期表示に変更
+					movContents('mstShain');
+					
 				});
 			}
 		});

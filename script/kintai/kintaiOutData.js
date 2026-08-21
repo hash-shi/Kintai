@@ -22,6 +22,11 @@ function setShoriSentaku(){
 	$("#mainArea").css("visibility", "visible");
 	$("#buttonArea").css("visibility", "visible");
 	$("#srhTxtTaishoNengetsuF").focus();
+	setTimeout(function(){
+		$("#srhTxtTaishoNengetsuF").select();
+		//20260813-全選択追加
+	});
+
 	
 	// 既に背景色が設定されている場合は一旦削除
 	$("#mainArea").removeClass('ins');

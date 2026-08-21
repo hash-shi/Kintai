@@ -25,7 +25,7 @@
 				<tr>
 					<td class="title center w100">処理選択</td>
 					<td class="value w180">
-						<select name = "selShoriSentaku" class="w120"  id="selShoriSentaku" autofocus>
+						<select name = "selShoriSentaku" class="w120"  id="selShoriSentaku" autofocus >
 							<% for (int count = 0 ; count < mstKubun0501.size() ; count++){ HashMap<String, String> record = mstKubun0501.get(count);%>
 								<option value="<%=UtilEscape.htmlspecialchars(record.get("Code")) %>"><%=UtilEscape.htmlspecialchars(record.get("KbnName")) %></option>
 							<% } %>

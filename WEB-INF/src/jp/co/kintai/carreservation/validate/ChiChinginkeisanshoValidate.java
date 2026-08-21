@@ -317,13 +317,19 @@ public class ChiChinginkeisanshoValidate extends ValidateBase {
 					("".equals(taishaJi) == false) ||
 					("".equals(taishaFun) == false)
 			){
-				//出社退社時分が空でない場合のみ、未入力や0のチェックを行う
-				this.params.put("length", "0");
-				this.params.put("comparisonoperator", "<");
-				numberLimitValidate.setParams(this.params);
-				if(numberLimitValidate.doValidate(req, res, jitsudoJikan, info) == false) {
-					this.addValidateMessage(taishoNengappi + "の実働時間が入力されていません。");
-					return false;
+				if(!"04".equals(chinginShinseiKbnList.get(0))) {
+					//出社退社時分が空でない場合のみ、未入力や0のチェックを行う
+					//202608 申請区分が休出でない場合 条件追加　
+					this.params.put("length", "0");
+					this.params.put("comparisonoperator", "<");
+					numberLimitValidate.setParams(this.params);
+					if(numberLimitValidate.doValidate(req, res, jitsudoJikan, info) == false) {
+							
+						this.addValidateMessage(taishoNengappi + "の実働時間が入力されていません。");
+						return false;
+					}
+
+					
 				}
 			}
 

@@ -287,7 +287,7 @@ function onDisplayNyuryokuArea(firstHalfFlg){
 		else{
 			kintaiSelectBox += 		"style = \"COLOR: black\" ";
 		}
-		kintaiSelectBox += 		"onchange=\"kintaiChangeColor(this);setShukkinBo('selKintaiKbn', " + i + ");setDefaultJitsudoJikan(" + i + ")\" >" ;
+		kintaiSelectBox += 		"onchange=\"kintaiChangeColor(this);setShukkinBo('selKintaiKbn', " + i + ");setDefaultJitsudoJikan(" + i + ");disabledShusshaTaishaJikan(" + i +");\">" ;
 
 		for(let kintaiKubunRecord of kintaiKubunList){
 			kintaiSelectBox += 		"<option value=\"" + kintaiKubunRecord["Code"] + "\" ";
@@ -371,20 +371,37 @@ function onDisplayNyuryokuArea(firstHalfFlg){
 						kintaiSelectBox + 
 					"</td>" +
 					"<td class=\"value center\">" + 
-						"<input type=\"tel\" class=\"kinShukkinBoText kaishishuryoTextBox\"  maxlength=\"2\" name=\"numShusshaJi" + i + "\" id=\"numShusshaJi" + i + "\"  value=\"" + shusshaJi + "\"  onchange=\"set2ketaFormat('numShusshaJi', " + i + ");setShukkinBo('numShusshaJi', " + i + ");calcJitsudoJikan(" + i + ");\" >" + 
-					"</td>" +
+						"<input type=\"tel\" class=\"kinShukkinBoText kaishishuryoTextBox\"  maxlength=\"2\" name=\"numShusshaJi" + i + "\" id=\"numShusshaJi" + i + "\"  value=\"" + shusshaJi + "\"  onchange=\"set2ketaFormat('numShusshaJi', " + i + ");setShukkinBo('numShusshaJi', " + i + ");calcJitsudoJikan(" + i + ");\"" ; 
+						//20260818 出社退社時間制御　追加
+						if(    kintaiKbn == "03" || kintaiKbn == "04"|| kintaiKbn == "06" || kintaiKbn == "07"
+							|| kintaiKbn == "08" || kintaiKbn == "09"|| kintaiKbn == "10"){
+								kihonNyuryokuAreaHtml += "disabled";
+						}
+					kihonNyuryokuAreaHtml += " > </td>" +
 					"<td class=\"value center\">" + 
-						"<input type=\"tel\" class=\"kinShukkinBoText kaishishuryoTextBox\"  maxlength=\"2\" name=\"numShusshaFun" + i + "\" id=\"numShusshaFun" + i + "\"  value=\"" + shusshaFun + "\"  onchange=\"set2ketaFormat('numShusshaFun', " + i + ");setShukkinBo('numShusshaFun', " + i + ");calcJitsudoJikan(" + i + ");\" >" + 
-					"</td>" +
+						"<input type=\"tel\" class=\"kinShukkinBoText kaishishuryoTextBox\"  maxlength=\"2\" name=\"numShusshaFun" + i + "\" id=\"numShusshaFun" + i + "\"  value=\"" + shusshaFun + "\"  onchange=\"set2ketaFormat('numShusshaFun', " + i + ");setShukkinBo('numShusshaFun', " + i + ");calcJitsudoJikan(" + i + ");\"" ; 
+						if(    kintaiKbn == "03" || kintaiKbn == "04" || kintaiKbn == "06" || kintaiKbn == "07"
+							|| kintaiKbn == "08" || kintaiKbn == "09" || kintaiKbn == "10"){
+								kihonNyuryokuAreaHtml += "disabled";
+						}
+						kihonNyuryokuAreaHtml += " > </td>" +
 					"<td class=\"value center\">" + 
 						"<a class=\"kinShukkinBoText\">-</a>" + 
 					"</td>" +
 					"<td class=\"value center\">" + 
-						"<input type=\"tel\" class=\"kinShukkinBoText kaishishuryoTextBox\"  maxlength=\"2\" name=\"numTaishaJi" + i + "\" id=\"numTaishaJi" + i + "\"  value=\"" + taishaJi + "\"  onchange=\"set2ketaFormat('numTaishaJi', " + i + ");setShukkinBo('numTaishaJi', " + i + ");calcJitsudoJikan(" + i + ");\" >" + 
-					"</td>" +
+						"<input type=\"tel\" class=\"kinShukkinBoText kaishishuryoTextBox\"  maxlength=\"2\" name=\"numTaishaJi" + i + "\" id=\"numTaishaJi" + i + "\"  value=\"" + taishaJi + "\"  onchange=\"set2ketaFormat('numTaishaJi', " + i + ");setShukkinBo('numTaishaJi', " + i + ");calcJitsudoJikan(" + i + ");\"" ;
+						if(    kintaiKbn == "03" || kintaiKbn == "04" || kintaiKbn == "06" || kintaiKbn == "07"
+							|| kintaiKbn == "08" || kintaiKbn == "09" || kintaiKbn == "10"){
+								kihonNyuryokuAreaHtml += "disabled";
+						}
+						kihonNyuryokuAreaHtml += " > </td>" +
 					"<td class=\"value center\">" + 
-						"<input type=\"tel\" class=\"kinShukkinBoText kaishishuryoTextBox\"  maxlength=\"2\" name=\"numTaishaFun" + i + "\" id=\"numTaishaFun" + i + "\"  value=\"" + taishaFun + "\"  onchange=\"set2ketaFormat('numTaishaFun', " + i + ");setShukkinBo('numTaishaFun', " + i + ");calcJitsudoJikan(" + i + ");\" >" + 
-					"</td>" +
+						"<input type=\"tel\" class=\"kinShukkinBoText kaishishuryoTextBox\"  maxlength=\"2\" name=\"numTaishaFun" + i + "\" id=\"numTaishaFun" + i + "\"  value=\"" + taishaFun + "\"  onchange=\"set2ketaFormat('numTaishaFun', " + i + ");setShukkinBo('numTaishaFun', " + i + ");calcJitsudoJikan(" + i + ");\"" ; 
+						if(    kintaiKbn == "03" || kintaiKbn == "04" || kintaiKbn == "06" || kintaiKbn == "07"
+							|| kintaiKbn == "08" || kintaiKbn == "09" || kintaiKbn == "10"){
+								kihonNyuryokuAreaHtml += "disabled";
+						}
+						kihonNyuryokuAreaHtml += " > </td>" +
 					"<td class=\"value center\">" + 
 						"<input type=\"tel\" class=\"kinShukkinBoText jikanTextBox\"  maxlength=\"5\" name=\"numJitsudoJikan" + i + "\" id=\"numJitsudoJikan" + i + "\"  value=\"" + jitsudoJikan + "\"  onchange=\"setDecimalPoint2ketaFormat('numJitsudoJikan', " + i + ");setShukkinBo('numJitsudoJikan', " + i + ");\" >" + 
 					"</td>" +
@@ -507,6 +524,10 @@ function onDisplayNyuryokuArea(firstHalfFlg){
 		else{
 			//前一覧表示時、最初の予定をフォーカス
 			$("#selShukkinYoteiKbn0").focus();
+			setTimout(function(){
+				$("#selShukkinYoteiKbn0").select();
+				//20260813-全選択追加
+			});
 		}
 	}
 	else{
@@ -518,9 +539,15 @@ function onDisplayNyuryokuArea(firstHalfFlg){
 		}
 		else{
 			//次一覧表示時、最後の予定をフォーカス
-			$("#selShukkinYoteiKbn" + (kinShukkinBoResultAll.length - 1)).focus();
+			$("#selShukkinYoteiKbn" + (kinShukkinBoResultAll.length - 1)).focus()
+			setTimeout(function(){
+				$("#selShukkinYoteiKbn" + (kinShukkinBoResultAll.length - 1)).select();
+				//20260813-全選択追加
+			});
+
 		}
 	}
+
 
 }
 
@@ -776,6 +803,91 @@ function resetJikan(nowCol,nowRow){
 
 /*
 *
+* 20260815 追加
+* 出勤・退社時間　入力制御
+*
+*/
+function disabledShusshaTaishaJikan(nowRow){
+	let fieldName = "selKintaiKbn";
+	
+	//勤怠区分が03(欠勤),04(有給休暇),06(積立有給),07(特別休暇),08(休日),09(代休),10(振替休日)の時
+	//出社、退社の入力欄を入力不可に変更
+	if(    $("#" + fieldName + nowRow).val() == "03" || $("#" + fieldName + nowRow).val() == "04" 
+		|| $("#" + fieldName + nowRow).val() == "06" || $("#" + fieldName + nowRow).val() == "07"
+		|| $("#" + fieldName + nowRow).val() == "08" || $("#" + fieldName + nowRow).val() == "09"
+		|| $("#" + fieldName + nowRow).val() == "10"){
+		
+		fieldName = "numShusshaJi";
+		$("#" + fieldName + nowRow).prop("disabled", true);
+		fieldName = "numShusshaFun";
+		$("#" + fieldName + nowRow).prop("disabled", true);
+		fieldName = "numTaishaJi";
+		$("#" + fieldName + nowRow).prop("disabled", true);
+		fieldName = "numTaishaFun";
+		$("#" + fieldName + nowRow).prop("disabled", true);
+		
+	}else {
+		//それ以外を選択したときに、入力可能に変更
+		fieldName = "numShusshaJi";
+		$("#" + fieldName + nowRow).prop("disabled", false);
+		fieldName = "numShusshaFun";
+		$("#" + fieldName + nowRow).prop("disabled", false);
+		fieldName = "numTaishaJi";
+		$("#" + fieldName + nowRow).prop("disabled", false);
+		fieldName = "numTaishaFun";
+		$("#" + fieldName + nowRow).prop("disabled", false);
+	}
+}
+
+
+/*
+*
+* 20260819 エンターキー タブ移動制御追加
+*
+*/
+function onShukkinBoEnterKeyEvent($current){
+
+	// フォーカス対象(予定/勤怠区分/button)
+	const selector = `select[id^="selShukkinYoteiKbn"],select[id^="selKintaiKbn"],button`;
+	
+	let $focusables = $(selector)
+
+	// button は特定属性を持つものだけフォーカス
+		.filter(function() {
+
+			if ($(this).is('button')) {
+
+				// buttonAreaがhiddenの場合は、data-focusのon/offに関係なくフォーカスしない
+				const $parentArea = $(this).closest('#buttonArea');
+				if ($parentArea.length && $parentArea.css('visibility') === 'hidden') {
+					return false;
+				}
+
+				// ※data-focus="off" のボタンだけフォーカスしない
+				return !($(this).data('focus') === 'off');
+			}
+			return true;
+
+		});
+	// 現在のインデックス
+	const index = $focusables.index($current);
+
+
+	// 次の要素へフォーカス移動
+	if (index >= 0 && index < $focusables.length - 1) {
+		$focusables.eq(index + 1).focus();
+	} else {
+		// 最初の項目にフォーカス移動
+		if (0 < $focusables.length) {
+			$focusables.eq(0).focus();
+		}
+	}
+	
+}
+
+
+/*
+*
 * 開始時分、終了時分から時間を計算
 *
 */
@@ -982,14 +1094,17 @@ function onUpdate(){
 				}
 				//再検索する
 				//更新処理に備え、検索条件を保持
-				$("#srhTxtTaishoYM").val($("#txtTaishoYM").val());
-				$("#srhTxtShainNO").val($("#txtShainNO").val());
-				onSearchShainName();//社員名再取得
-	
-				//検索結果が0の時のため、画面非表示
-				$("#nyuryokuArea").css("visibility", "hidden");
-				$("#buttonArea").css("visibility", "hidden");
-				onSearchKinShukkinBo();
+//				$("#srhTxtTaishoYM").val($("#txtTaishoYM").val());
+//				$("#srhTxtShainNO").val($("#txtShainNO").val());
+//				onSearchShainName();//社員名再取得
+//	
+//				//検索結果が0の時のため、画面非表示
+//				$("#nyuryokuArea").css("visibility", "hidden");
+//				$("#buttonArea").css("visibility", "hidden");
+//				onSearchKinShukkinBo();
+				
+				//20260815 初期表示に変更
+				movContents('kinShukkinBo');
 			}
 			else{
 				alert("このデータはすでに、別のユーザーに更新されています。\r\nもう一度データを確認してください。");

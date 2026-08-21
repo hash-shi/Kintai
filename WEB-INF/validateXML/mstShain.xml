@@ -131,10 +131,12 @@
 		<variable name="txtYukyuKyukaFuyoNissu" dispName="有給休暇付与日数">
 			<check class="IsHalf" message="!#itemName#!には全角文字は入力できません。" itemName="{dispName}"></check>
 			<check class="IsNumber" message="!#itemName#!には数字を入力してください。形式(XXX.XX)" itemName="{dispName}"></check>
-			<check class="NumberLimit" message="!#itemName#!にはマイナスは設定できません。" itemName="{dispName}">
+			<!-- 
+			 <check class="NumberLimit" message="!#itemName#!にはマイナスは設定できません。" itemName="{dispName}">
 				<param name="length">0</param>
 				<param name="comparisonoperator">&lt;=</param>
 			</check>
+			 -->
 			<check class="MaxNumberLimit" message="!#itemName#!の桁数が不正です。(XXX.X)" itemName="{dispName}">
 				<param name="length">999.9</param>
 			</check>

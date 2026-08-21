@@ -21,6 +21,7 @@ function onSearchKintaiKakutei(){
 		$("#buttonArea").css("visibility", "");
 		$("#srhTxtTaishoYM").focus();
 		
+		
 		let result			= contents["result"];
 		
 		onDisplayNyuryokuArea(result);
@@ -224,7 +225,9 @@ function onKakutei(){
 			} else {
 				alert("このデータはすでに、別のユーザに更新されています。もう一度データを確認してください。");
 			}
-			document.getElementById("txtTaishoYM").focus();
+			//document.getElementById("txtTaishoYM").focus();
+			//20260815 focus位置変更
+			document.getElementById("srhTxtTaishoYM").focus();
 			//画面表示を初期状態に戻す
 			$("#nyuryokuArea").css("visibility", "hidden");
 			$("#buttonArea").css("visibility", "hidden");

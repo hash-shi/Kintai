@@ -26,6 +26,11 @@ function getMstBusho(){
 		// $("#txtBushoName").focus();
 		$("#txtBushoCode").focus();
 		// 20260228-初期フォーカス位置の変更
+		setTimeout(function(){
+			$("#txtBushoCode").select()
+			//20260813-全選択追加
+		});
+
 		
 		// 既に背景色が設定されている場合は一旦削除
 		$("#mainArea").removeClass('ins');
@@ -144,8 +149,11 @@ function onUpdate() {
 				alert("データが正常に更新されました。");
 				// 画面のクリアなど何かしらの処理
 				// 処理した営業所コードで再読込
-				$("#srhTxtBushoCode").val($("#txtBushoCode").val());
-				getMstBusho();
+				//$("#srhTxtBushoCode").val($("#txtBushoCode").val());
+				//getMstBusho();
+				
+				//20260815 初期表示に変更
+				movContents('mstBusho');
 			});
 		});
 	} else {
@@ -162,8 +170,11 @@ function onUpdate() {
 					alert("データが正常に更新されました。");
 					// 画面のクリアなど何かしらの処理
 					// 処理した営業所コードで再読込
-					$("#srhTxtBushoCode").val($("#txtBushoCode").val());
-					getMstBusho();
+					//$("#srhTxtBushoCode").val($("#txtBushoCode").val());
+					//getMstBusho();
+					
+					//20260815 初期表示に変更
+					movContents('mstBusho');
 				});
 			} else {
 				// 画面項目と隠し項目が異なる値 = データコピー(画面で入力した新しい値で登録)
@@ -176,8 +187,11 @@ function onUpdate() {
 					alert("データが正常に更新されました。");
 					// 画面のクリアなど何かしらの処理
 					// 処理した営業所コードで再読込
-					$("#srhTxtBushoCode").val($("#txtBushoCode").val());
-					getMstBusho();
+					//$("#srhTxtBushoCode").val($("#txtBushoCode").val());
+					//getMstBusho();
+					
+					//20260815 初期表示に変更
+					movContents('mstBusho');
 				});
 			}
 		});

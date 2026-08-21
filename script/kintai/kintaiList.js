@@ -36,6 +36,11 @@ function setShoriSentaku(){
 		$("#order").css("display", "table-row");
 		$("#output").css("display", "table-row");
 		$("#srhTxtTaishoNengetsuF").focus();
+		setTimeout(function(){
+			$("#srhTxtTaishoNengetsuF").select();
+			//20260813-全選択追加
+		},0);
+
 	}
 	else if (value == "03") {
 		$("#taishoNengetsu").css("display", "none");
@@ -47,6 +52,10 @@ function setShoriSentaku(){
 		$("#order").css("display", "table-row");
 		$("#output").css("display", "table-row");
 		$("#srhTxtTaishoNendoF").focus();
+		setTimeout(function(){
+			$("#srhTxtTaishoNendoF").select();
+			//20260813-全選択追加
+		},0);
 	}
 	else {
 		$("#taishoNengetsu").css("display", "none");

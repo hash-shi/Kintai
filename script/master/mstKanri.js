@@ -23,6 +23,10 @@ function getMstKanri() {
 		$("#mainArea").css("visibility", "visible");
 		$("#buttonArea").css("visibility", "visible");
 		$("#txtNendoKakuteiStatus").focus();
+		setTimeout(function(){
+			$("#txtNendoKakuteiStatus").select();
+		});
+		//20260813-全選択追加
 
 		// 既に背景色が設定されている場合は一旦削除
 		$("#mainArea").removeClass('ins');
@@ -113,8 +117,11 @@ function onUpdate() {
 			alert("データが正常に更新されました。");
 			// 画面のクリアなど何かしらの処理
 			// 処理した営業所コードで再読込
-			$("#srhTxtKanriCode").val($("#txtKanriCode").val());
-			getMstKanri();
+			//$("#srhTxtKanriCode").val($("#txtKanriCode").val());
+			//getMstKanri();
+			
+			//20260815 初期表示に変更
+			movContents('mstKanri');
 		});
 		
 	});
