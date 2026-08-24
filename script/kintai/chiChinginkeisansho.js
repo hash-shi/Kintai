@@ -271,7 +271,7 @@ function onDisplayNyuryokuArea(firstHalfFlg){
 		
 		//申請区分1のセレクトボックス
 		let sinsei1SelectBox = "";
-		sinsei1SelectBox += 	"<select name=\"selChinginShinseiKbn1" + i + "\" id=\"selChinginShinseiKbn1" + i + "\" value=\"" + chinginShinseiKbn1 + "\"  onchange=\"setShukkinBo('selChinginShinseiKbn1', " + i + ");resetJikan('1', " + i + "); selKyuShutsu(" + i +");\" >" ;
+		sinsei1SelectBox += 	"<select name=\"selChinginShinseiKbn1" + i + "\" id=\"selChinginShinseiKbn1" + i + "\" value=\"" + chinginShinseiKbn1 + "\"  onchange=\"setShukkinBo('selChinginShinseiKbn1', " + i + ");resetJikan('1', " + i + "); selKyuShutsu( '1'," + i +");\" >" ;
 
 		for(let sinseiKubunRecord of sinseiKubunList){
 			sinsei1SelectBox += 		"<option value=\"" + sinseiKubunRecord["Code"] + "\" ";
@@ -283,7 +283,7 @@ function onDisplayNyuryokuArea(firstHalfFlg){
 		
 		//申請区分2のセレクトボックス
 		let sinsei2SelectBox = "";
-		sinsei2SelectBox += 	"<select name=\"selChinginShinseiKbn2" + i + "\" id=\"selChinginShinseiKbn2" + i + "\" value=\"" + chinginShinseiKbn2 + "\"  onchange=\"setShukkinBo('selChinginShinseiKbn2', " + i + ");resetJikan('2', " + i + ");\" >" ;
+		sinsei2SelectBox += 	"<select name=\"selChinginShinseiKbn2" + i + "\" id=\"selChinginShinseiKbn2" + i + "\" value=\"" + chinginShinseiKbn2 + "\"  onchange=\"setShukkinBo('selChinginShinseiKbn2', " + i + ");resetJikan('2', " + i + "); selKyuShutsu( '2'," + i +");\" >" ;
 
 		for(let sinseiKubunRecord of sinseiKubunList){
 			sinsei2SelectBox += 		"<option value=\"" + sinseiKubunRecord["Code"] + "\" ";
@@ -295,7 +295,7 @@ function onDisplayNyuryokuArea(firstHalfFlg){
 		
 		//申請区分3のセレクトボックス
 		let sinsei3SelectBox = "";
-		sinsei3SelectBox += 	"<select name=\"selChinginShinseiKbn3" + i + "\" id=\"selChinginShinseiKbn3" + i + "\" value=\"" + chinginShinseiKbn3 + "\"  onchange=\"setShukkinBo('selChinginShinseiKbn3', " + i + ");resetJikan('3', " + i + ");\" >" ;
+		sinsei3SelectBox += 	"<select name=\"selChinginShinseiKbn3" + i + "\" id=\"selChinginShinseiKbn3" + i + "\" value=\"" + chinginShinseiKbn3 + "\"  onchange=\"setShukkinBo('selChinginShinseiKbn3', " + i + ");resetJikan('3', " + i + "); selKyuShutsu( '3'," + i +");\" >" ;
 
 		for(let sinseiKubunRecord of sinseiKubunList){
 			sinsei3SelectBox += 		"<option value=\"" + sinseiKubunRecord["Code"] + "\" ";
@@ -607,8 +607,8 @@ function calcJitsudoJikan(nowRow){
 *20260818 休出選択時 通常勤務変更
 *
 */
-function selKyuShutsu(nowRow){
-	let fieldName = "selChinginShinseiKbn1";
+function selKyuShutsu(nowCol,nowRow){
+	let fieldName = "selChinginShinseiKbn" + nowCol;
 	
 	// 申請区分が04(休出)か判定
 	if($("#" + fieldName + nowRow).val() == "04"){
@@ -620,8 +620,8 @@ function selKyuShutsu(nowRow){
 			
 			let jikan = $("#" + fieldName + nowRow).val(); 
 			
-			chiChinginkeisanshoResultAll[nowRow]["numChinginShinseiJikan1"] = jikan
-			$("#numChinginShinseiJikan1" + nowRow).val(jikan);
+			chiChinginkeisanshoResultAll[nowRow]["numChinginShinseiJikan"+ nowCol] = jikan
+			$("#numChinginShinseiJikan" + nowCol + nowRow).val(jikan);
 			
 			chiChinginkeisanshoResultAll[nowRow]["numJitsudoJikan"] = "0.00"
 			$("#" + fieldName + nowRow).val("0.00");

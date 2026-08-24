@@ -524,7 +524,7 @@ function onDisplayNyuryokuArea(firstHalfFlg){
 		else{
 			//前一覧表示時、最初の予定をフォーカス
 			$("#selShukkinYoteiKbn0").focus();
-			setTimout(function(){
+			setTimeout(function(){
 				$("#selShukkinYoteiKbn0").select();
 				//20260813-全選択追加
 			});
@@ -733,7 +733,12 @@ function setDefaultJitsudoJikan(nowRow){
 	let fieldName = "selKintaiKbn";
 	
 	//勤怠区分が"00"(-)の場合は出社退社時間をクリアする
-	if(($("#" + fieldName + nowRow).val() == "00")){
+	//20260824 条件追加
+	//03(欠勤),04(有給休暇),06(積立有給),07(特別休暇),08(休日),09(代休),10(振替休日)の時、出社退社時間をクリアする
+	if(   ($("#" + fieldName + nowRow).val() == "00")|| $("#" + fieldName + nowRow).val() == "03" 
+		|| $("#" + fieldName + nowRow).val() == "04" || $("#" + fieldName + nowRow).val() == "06" 
+		|| $("#" + fieldName + nowRow).val() == "07" || $("#" + fieldName + nowRow).val() == "08" 
+		|| $("#" + fieldName + nowRow).val() == "09" || $("#" + fieldName + nowRow).val() == "10"){
 		fieldName = "numShusshaJi";
 		$("#" + fieldName + nowRow).val("");
 		setShukkinBo(fieldName, nowRow);
