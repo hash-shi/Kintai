@@ -70,12 +70,15 @@ public class KinShukkinBoShainTaishokuValidate extends ValidateBase {
 		LocalDate taishoYMLD = LocalDate.parse(taishoYM + "/15", dtf);
 		
 		//退職日が15日以前の場合、その月の15日を取得
-		//退職日が16日以降の場合、その月の末日を取得
+		////退職日が16日以降の場合、その月の末日を取得
+		//退職日が16日以降の場合、翌月月の15日を取得
 		if(taisyokuDateLD.getDayOfMonth() <= 15){
 			taisyokuDateLD = taisyokuDateLD.withDayOfMonth(15);
 		}
 		else{
-			taisyokuDateLD = taisyokuDateLD.withDayOfMonth(taisyokuDateLD.lengthOfMonth());
+			// taisyokuDateLD = taisyokuDateLD.withDayOfMonth(taisyokuDateLD.lengthOfMonth());
+			// 
+			taisyokuDateLD = taisyokuDateLD.plusMonths(1).withDayOfMonth(15);
 		}
 		
 		//対象年月の15日　＞　退職日の場合エラー
