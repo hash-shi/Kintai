@@ -30,6 +30,7 @@
 				<param name="taishoYM">srhTxtTaishoYM</param>
 			</check>
 			<check class="ShainAuthorityValidate" message="ログインした社員Noでは処理できません。">
+				<param name="taishoYM">srhTxtTaishoYM</param>
 				<param name="shainNo">srhTxtShainNO</param>
 			</check>
 		</variable>

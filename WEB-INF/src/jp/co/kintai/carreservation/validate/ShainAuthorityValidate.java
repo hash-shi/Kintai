@@ -54,6 +54,7 @@ public class ShainAuthorityValidate extends ValidateBase {
 		ArrayList<String> shoriKanoEigyoshoCode = userInformation.getShoriKanoEigyoshoCode();
 		
 		// チェック対象の社員NO
+		String _taishoYM = req.getParameter(this.params.get("taishoYM").toString());
 		String _shainNo	= req.getParameter(this.params.get("shainNo").toString());
 		
 		
@@ -62,10 +63,13 @@ public class ShainAuthorityValidate extends ValidateBase {
 		//=====================================================================
 		
 		// 現在日付の取得
-		String nowDate	= PJActionBase.getNowDate();
+		// String nowDate	= PJActionBase.getNowDate();
+		// 対象年月を取得、退職日が対象年月より後の社員は表示できるようにする。
+		_taishoYM = (_taishoYM + "/15");
 		
 		// チェック対象の社員情報の取得
-		ArrayList<HashMap<String, String>> mstShains = PJActionBase.getMstShains(con, _shainNo, null, null, null, null, null, null, nowDate);
+		// ArrayList<HashMap<String, String>> mstShains = PJActionBase.getMstShains(con, _shainNo, null, null, null, null, null, null, nowDate);
+		ArrayList<HashMap<String, String>> mstShains = PJActionBase.getMstShains(con, _shainNo, null, null, null, null, null, null, _taishoYM);
 		
 		if (0 < mstShains.size()) {
 			HashMap<String, String> mstShain = mstShains.get(0);
