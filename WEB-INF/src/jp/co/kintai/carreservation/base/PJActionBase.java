@@ -5,6 +5,8 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.ResultSetMetaData;
 import java.text.SimpleDateFormat;
+import java.time.LocalDate;
+import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.HashMap;
@@ -65,6 +67,38 @@ public abstract class PJActionBase extends ActionBase {
 		Date date = new Date();
 		// フォーマットの形式の文字列にして返却
 		return sdfDate_HHmmss.format(date);
+	}
+	
+	/**
+	 * 対象年月の取得
+	 * 
+	 * @param con
+	 * @return
+	 * @throws Exception
+	 */
+	public static String getTaishoYMDS(String taishoYM) throws Exception {
+		// 対象年月の初日を返却する
+		DateTimeFormatter dtf = DateTimeFormatter.ofPattern("yyyy/MM/dd");
+		LocalDate _taishoYMD = LocalDate.parse(taishoYM + "/15", dtf);
+		// 前月の16日を設定(対象年月の初日)
+		_taishoYMD = _taishoYMD.plusMonths(-1).withDayOfMonth(16);
+		// フォーマットの形式の文字列にして返却
+		return _taishoYMD.format(dtf);
+	}
+	
+	/**
+	 * 対象年月の取得
+	 * 
+	 * @param con
+	 * @return
+	 * @throws Exception
+	 */
+	public static String getTaishoYMDE(String taishoYM) throws Exception {
+		// 対象年月の最終日を返却する
+		DateTimeFormatter dtf = DateTimeFormatter.ofPattern("yyyy/MM/dd");
+		LocalDate _taishoYMD = LocalDate.parse(taishoYM + "/15", dtf);
+		// フォーマットの形式の文字列にして返却
+		return _taishoYMD.format(dtf);
 	}
 	
 	/**

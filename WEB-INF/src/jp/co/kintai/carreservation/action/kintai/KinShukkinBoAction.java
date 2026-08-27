@@ -330,14 +330,15 @@ public class KinShukkinBoAction extends PJActionBase {
 		HashMap<String, String> returnRecord = new HashMap<String, String>();
 		
 		// 検索条件取得
+		String taishoYM			= this.getParameter("srhTxtTaishoYM");
 		String taishoShainNo	= this.getParameter("srhTxtShainNO");
-		// 現在日付の取得
-		String nowDate	= PJActionBase.getNowDate();
+		// // 現在日付の取得
+		// String nowDate	= PJActionBase.getNowDate();
 		// DB接続
 		Connection con		= this.getConnection("kintai", req);
 		
 		// チェック対象の社員情報の取得
-		ArrayList<HashMap<String, String>> mstShains = PJActionBase.getMstShains(con, taishoShainNo, null, null, null, null, null, null, nowDate);
+		ArrayList<HashMap<String, String>> mstShains = PJActionBase.getMstShains(con, taishoShainNo, null, null, null, null, null, null, PJActionBase.getTaishoYMDS(taishoYM));
 
 		if (0 < mstShains.size()) {
 			HashMap<String, String> mstShain = mstShains.get(0);

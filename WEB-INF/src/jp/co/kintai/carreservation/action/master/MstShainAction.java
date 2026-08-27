@@ -116,9 +116,7 @@ public class MstShainAction extends PJActionBase {
 		// 社員情報検索
 		//=====================================================================
 		String isNew = "0";
-		ArrayList<HashMap<String, String>> mstDatas = PJActionBase.getMstShains(
-			con, shainNo, null, null, null, null, null, null, null
-		);
+		ArrayList<HashMap<String, String>> mstDatas = PJActionBase.getMstShains(con, shainNo, null, null, null, null, null, null, null);
 
 		// データが0件の場合は新規モード用に空レコードを作成
 		if (mstDatas.size() == 0) {

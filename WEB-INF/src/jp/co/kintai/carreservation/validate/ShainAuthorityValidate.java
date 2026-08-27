@@ -1,8 +1,6 @@
 package jp.co.kintai.carreservation.validate;
 
 import java.sql.Connection;
-import java.time.LocalDate;
-import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 import java.util.HashMap;
 
@@ -64,17 +62,12 @@ public class ShainAuthorityValidate extends ValidateBase {
 		// 処理
 		//=====================================================================
 		
-		// 現在日付の取得
+		// // 現在日付の取得
 		// String nowDate	= PJActionBase.getNowDate();
-		// 対象年月を取得、退職日が対象年月より後の社員は表示できるようにする。
-		DateTimeFormatter dtf = DateTimeFormatter.ofPattern("yyyy/MM/dd");
-		LocalDate _taishoYMD = LocalDate.parse(_taishoYM + "/15", dtf);
-		// 前月の16日を設定(対象年月の初日)
-		_taishoYM = _taishoYMD.plusMonths(-1).withDayOfMonth(16).format(dtf);
 		
 		// チェック対象の社員情報の取得
 		// ArrayList<HashMap<String, String>> mstShains = PJActionBase.getMstShains(con, _shainNo, null, null, null, null, null, null, nowDate);
-		ArrayList<HashMap<String, String>> mstShains = PJActionBase.getMstShains(con, _shainNo, null, null, null, null, null, null, _taishoYM);
+		ArrayList<HashMap<String, String>> mstShains = PJActionBase.getMstShains(con, _shainNo, null, null, null, null, null, null, PJActionBase.getTaishoYMDS(_taishoYM));
 		
 		if (0 < mstShains.size()) {
 			HashMap<String, String> mstShain = mstShains.get(0);

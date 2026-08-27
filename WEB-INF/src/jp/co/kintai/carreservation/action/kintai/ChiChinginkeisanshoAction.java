@@ -517,11 +517,13 @@ public class ChiChinginkeisanshoAction extends PJActionBase {
 		String kinmuShuryo = "00:00";
 		String jitsudojikan = "";
 		
-		// 現在日付の取得
-		String nowDate	= PJActionBase.getNowDate();
+		// // 現在日付の取得
+		// String nowDate	= PJActionBase.getNowDate();
+		
+		String taishoYM = this.getParameter("srhTxtTaishoYM");
 		
 		// チェック対象の社員情報の取得
-		ArrayList<HashMap<String, String>> mstShains = PJActionBase.getMstShains(con, taishoShainNo, null, null, null, null, null, null, nowDate);
+		ArrayList<HashMap<String, String>> mstShains = PJActionBase.getMstShains(con, taishoShainNo, null, null, null, null, null, null, PJActionBase.getTaishoYMDS(taishoYM));
 
 		if (0 < mstShains.size()) {
 			HashMap<String, String> mstShain = mstShains.get(0);
@@ -740,10 +742,10 @@ public class ChiChinginkeisanshoAction extends PJActionBase {
 		con.setAutoCommit(false);
 
 		//対象社員の営業所・部署コード取得
-		String nowDate	= PJActionBase.getNowDate();
+		// String nowDate	= PJActionBase.getNowDate();
 		String eigyoshoCode		= "";
 		String bushoCode		= "";
-		ArrayList<HashMap<String, String>> mstShains = PJActionBase.getMstShains(con, taishoShainNo, null, null, null, null, null, null, nowDate);
+		ArrayList<HashMap<String, String>> mstShains = PJActionBase.getMstShains(con, taishoShainNo, null, null, null, null, null, null, PJActionBase.getTaishoYMDS(taishoYM));
 		if (0 < mstShains.size()) {
 			HashMap<String, String> mstShain = mstShains.get(0);
 			eigyoshoCode = mstShain.get("EigyoshoCode");
@@ -792,10 +794,12 @@ public class ChiChinginkeisanshoAction extends PJActionBase {
 		con.setAutoCommit(false);
 
 		//対象社員の営業所・部署コード取得
-		String nowDate	= PJActionBase.getNowDate();
+		// String nowDate	= PJActionBase.getNowDate();
 		String eigyoshoCode		= "";
 		String bushoCode		= "";
-		ArrayList<HashMap<String, String>> mstShains = PJActionBase.getMstShains(con, taishoShainNo, null, null, null, null, null, null, nowDate);
+		
+		// ArrayList<HashMap<String, String>> mstShains = PJActionBase.getMstShains(con, taishoShainNo, null, null, null, null, null, null, nowDate);
+		ArrayList<HashMap<String, String>> mstShains = PJActionBase.getMstShains(con, taishoShainNo, null, null, null, null, null, null, PJActionBase.getTaishoYMDS(taishoYM));
 		if (0 < mstShains.size()) {
 			HashMap<String, String> mstShain = mstShains.get(0);
 			eigyoshoCode = mstShain.get("EigyoshoCode");
@@ -1188,8 +1192,8 @@ public class ChiChinginkeisanshoAction extends PJActionBase {
 
 		// チェック対象の社員情報の取得
 		HashMap<String, String> mstShain = new HashMap<>();
-		String nowDate	= PJActionBase.getNowDate();
-		ArrayList<HashMap<String, String>> mstShains = PJActionBase.getMstShains(con, taishoShainNo, null, null, null, null, null, null, nowDate);
+		// String nowDate	= PJActionBase.getNowDate();
+		ArrayList<HashMap<String, String>> mstShains = PJActionBase.getMstShains(con, taishoShainNo, null, null, null, null, null, null, PJActionBase.getTaishoYMDS(taishoYM));
 		if (0 < mstShains.size()) {
 			mstShain = mstShains.get(0);
 		}
@@ -1399,8 +1403,8 @@ public class ChiChinginkeisanshoAction extends PJActionBase {
 
 		// チェック対象の社員情報の取得
 		HashMap<String, String> mstShain = new HashMap<>();
-		String nowDate	= PJActionBase.getNowDate();
-		ArrayList<HashMap<String, String>> mstShains = PJActionBase.getMstShains(con, taishoShainNo, null, null, null, null, null, null, nowDate);
+		// String nowDate	= PJActionBase.getNowDate();
+		ArrayList<HashMap<String, String>> mstShains = PJActionBase.getMstShains(con, taishoShainNo, null, null, null, null, null, null, PJActionBase.getTaishoYMDS(taishoYM));
 		if (0 < mstShains.size()) {
 			mstShain = mstShains.get(0);
 		}
@@ -2299,10 +2303,10 @@ public class ChiChinginkeisanshoAction extends PJActionBase {
 		con.setAutoCommit(false);
 
 		//対象社員の営業所・部署コード取得
-		String nowDate	= PJActionBase.getNowDate();
+		// String nowDate	= PJActionBase.getNowDate();
 		String eigyoshoCode		= "";
 		String bushoCode		= "";
-		ArrayList<HashMap<String, String>> mstShains = PJActionBase.getMstShains(con, taishoShainNo, null, null, null, null, null, null, nowDate);
+		ArrayList<HashMap<String, String>> mstShains = PJActionBase.getMstShains(con, taishoShainNo, null, null, null, null, null, null, PJActionBase.getTaishoYMDS(taishoYM));
 		if (0 < mstShains.size()) {
 			HashMap<String, String> mstShain = mstShains.get(0);
 			eigyoshoCode = mstShain.get("EigyoshoCode");
