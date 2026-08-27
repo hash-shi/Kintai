@@ -662,14 +662,18 @@ function onDelete(){
 					alert("正常に削除しました。");
 					//再検索する
 					//更新処理に備え、検索条件を保持
-					$("#srhTxtTaishoYM").val($("#txtTaishoYM").val());
-					$("#srhTxtShainNO").val($("#txtShainNO").val());
-					onSearchShainName();//社員名再取得
+//					$("#srhTxtTaishoYM").val($("#txtTaishoYM").val());
+//					$("#srhTxtShainNO").val($("#txtShainNO").val());
+//					onSearchShainName();//社員名再取得
+//
+//					//検索結果が0の時のため、画面非表示
+//					$("#nyuryokuArea").css("visibility", "hidden");
+//					$("#buttonArea").css("visibility", "hidden");
+//					onSearchChiChinginkeisansho();
 
-					//検索結果が0の時のため、画面非表示
-					$("#nyuryokuArea").css("visibility", "hidden");
-					$("#buttonArea").css("visibility", "hidden");
-					onSearchChiChinginkeisansho();
+					//20260827 初期表示に変更
+					movContents('chiChinginkeisansho');
+					
 				}
 				else{
 					alert("このデータはすでに、別のユーザーに更新されています。\r\nもう一度データを確認してください。");

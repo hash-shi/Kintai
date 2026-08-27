@@ -116,7 +116,10 @@ function onDelete() {
 			// 完了メッセージ
 			alert("データが正常に更新されました。");
 			// 画面のクリアなど何かしらの処理
-			getMstBusho();
+			//getMstBusho();
+			
+			//20260827 初期表示に変更
+			movContents('mstBusho');
 		});
 		
 	});

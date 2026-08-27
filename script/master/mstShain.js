@@ -391,7 +391,9 @@ function onDelete() {
 			// 完了メッセージ
 			alert("データが正常に更新されました。");
 			// 画面のクリアなど何かしらの処理
-			getMstShain();
+			//getMstShain();
+			//20260815 初期表示に変更
+			movContents('mstShain');
 		});
 	});
 }
