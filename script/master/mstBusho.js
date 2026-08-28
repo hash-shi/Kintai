@@ -119,7 +119,8 @@ function onDelete() {
 			//getMstBusho();
 			
 			//20260827 初期表示に変更
-			movContents('mstBusho');
+			//movContents('mstBusho');
+			onClear();
 		});
 		
 	});
@@ -156,7 +157,8 @@ function onUpdate() {
 				//getMstBusho();
 				
 				//20260815 初期表示に変更
-				movContents('mstBusho');
+				//movContents('mstBusho');
+				onClear();
 			});
 		});
 	} else {
@@ -177,7 +179,8 @@ function onUpdate() {
 					//getMstBusho();
 					
 					//20260815 初期表示に変更
-					movContents('mstBusho');
+					//movContents('mstBusho');
+					onClear();
 				});
 			} else {
 				// 画面項目と隠し項目が異なる値 = データコピー(画面で入力した新しい値で登録)
@@ -194,7 +197,8 @@ function onUpdate() {
 					//getMstBusho();
 					
 					//20260815 初期表示に変更
-					movContents('mstBusho');
+					//movContents('mstBusho');
+					onClear();
 				});
 			}
 		});
@@ -238,4 +242,28 @@ function onKeyEventF02() {
 		// 該当の処理を呼び出す。
 		onDelete();
 	}
+}
+
+//****************************************************************************
+// onClear
+//
+//
+//
+//
+//****************************************************************************
+function onClear() {
+	
+	// 処理した部署コードを格納
+	$("#srhTxtBushoCode").val($("#txtBushoCode").val());
+	
+	// mainAreaを非表示する。
+	$("#mainArea").css("visibility", "hidden");
+	// buttonAreaを非表示する。
+	$("#buttonArea").css("visibility", "hidden");
+	
+	// 初期フォーカス位置の変更
+	$("#srhTxtBushoCode").focus();
+	setTimeout(function(){
+		$("#srhTxtBushoCode").select();
+	})
 }

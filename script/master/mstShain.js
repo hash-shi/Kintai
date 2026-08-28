@@ -393,7 +393,8 @@ function onDelete() {
 			// 画面のクリアなど何かしらの処理
 			//getMstShain();
 			//20260815 初期表示に変更
-			movContents('mstShain');
+			//movContents('mstShain');
+			onClear();
 		});
 	});
 }
@@ -431,7 +432,8 @@ function onUpdate() {
 				//$("#srhTxtShainNO").val($("#txtShainNO").val());
 				//getMstShain();
 				//20260815 初期表示に変更
-				movContents('mstShain');
+				//movContents('mstShain');
+				onClear();
 			});
 		});
 	} else {
@@ -451,7 +453,8 @@ function onUpdate() {
 					//$("#srhTxtShainNO").val($("#txtShainNO").val());
 					//getMstShain();
 					//20260815 初期表示に変更
-					movContents('mstShain');
+					//movContents('mstShain');
+					onClear();
 				});
 			} else {
 				// 画面項目と隠し項目が異なる値 = データコピー(画面で入力した新しい値で登録)
@@ -467,8 +470,8 @@ function onUpdate() {
 					//$("#srhTxtShainNO").val($("#txtShainNO").val());
 					//getMstShain();
 					//20260815 初期表示に変更
-					movContents('mstShain');
-					
+					//movContents('mstShain');
+					onClear();
 				});
 			}
 		});
@@ -556,4 +559,28 @@ function onKeyEventF02() {
 			// 該当の処理を呼び出す。
 			onDelete();
 	}
+}
+
+//****************************************************************************
+// onClear
+//
+//
+//
+//
+//****************************************************************************
+function onClear() {
+	
+	// 処理した社員NOを格納
+	$("#srhTxtShainNO").val($("#txtShainNO").val());
+	
+	// mainAreaを非表示する。
+	$("#mainArea").css("visibility", "hidden");
+	// buttonAreaを非表示する。
+	$("#buttonArea").css("visibility", "hidden");
+	
+	// 初期フォーカス位置の変更
+	$("#srhTxtShainNO").focus();
+	setTimeout(function(){
+		$("#srhTxtShainNO").select();
+	})
 }

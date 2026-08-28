@@ -121,7 +121,8 @@ function onUpdate() {
 			//getMstKanri();
 			
 			//20260815 初期表示に変更
-			movContents('mstKanri');
+			//movContents('mstKanri');
+			onClear();
 		});
 		
 	});
@@ -144,4 +145,28 @@ function onKeyEventF09() {
 			// 該当の処理を呼び出す。
 			onUpdate();
 	}
+}
+
+//****************************************************************************
+// onClear
+//
+//
+//
+//
+//****************************************************************************
+function onClear() {
+	
+	// 処理した管理コードを格納
+	$("#srhTxtKanriCode").val($("#txtKanriCode").val());
+	
+	// mainAreaを非表示する。
+	$("#mainArea").css("visibility", "hidden");
+	// buttonAreaを非表示する。
+	$("#buttonArea").css("visibility", "hidden");
+	
+	// 初期フォーカス位置の変更
+	$("#srhTxtKanriCode").focus();
+	setTimeout(function(){
+		$("#srhTxtKanriCode").select();
+	})
 }

@@ -106,7 +106,8 @@ function onDelete() {
 			//getmstKubun();
 			
 			//20260815 初期表示に変更
-			movContents('mstKubun');
+			//movContents('mstKubun');
+			onClear();
 		});
 		
 	});
@@ -146,7 +147,8 @@ function onUpdate() {
 //				getmstKubun();
 
 				//20260815 初期表示に変更
-				movContents('mstKubun');
+				//movContents('mstKubun');
+				onClear();
 			});
 		});
 	} else {
@@ -168,7 +170,8 @@ function onUpdate() {
 //					getmstKubun();
 
 					//20260815 初期表示に変更
-					movContents('mstKubun');
+					//movContents('mstKubun');
+					onClear();
 				});
 			} else {
 				// 画面項目と隠し項目が異なる値 = データコピー(画面で入力した新しい値で登録)
@@ -186,7 +189,8 @@ function onUpdate() {
 //					getmstKubun();
 					
 					//20260815 初期表示に変更
-					movContents('mstKubun');
+					//movContents('mstKubun');
+					onClear();
 				});
 			}
 		});
@@ -230,4 +234,29 @@ function onKeyEventF02() {
 			// 該当の処理を呼び出す。
 			onDelete();
 	}
+}
+
+//****************************************************************************
+// onClear
+//
+//
+//
+//
+//****************************************************************************
+function onClear() {
+	
+	// 処理した区分コードを格納
+	$("#srhTxtKbnCode").val($("#txtKbnCode").val());
+	$("#srhTxtCode").val($("#txtCode").val());
+	
+	// mainAreaを非表示する。
+	$("#mainArea").css("visibility", "hidden");
+	// buttonAreaを非表示する。
+	$("#buttonArea").css("visibility", "hidden");
+	
+	// 初期フォーカス位置の変更
+	$("#srhTxtKbnCode").focus();
+	setTimeout(function(){
+		$("#srhTxtKbnCode").select();
+	})
 }

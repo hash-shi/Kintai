@@ -672,8 +672,8 @@ function onDelete(){
 //					onSearchChiChinginkeisansho();
 
 					//20260827 初期表示に変更
-					movContents('chiChinginkeisansho');
-					
+					//movContents('chiChinginkeisansho');
+					onClear();
 				}
 				else{
 					alert("このデータはすでに、別のユーザーに更新されています。\r\nもう一度データを確認してください。");
@@ -772,11 +772,37 @@ function onUpdate(){
 //				onSearchChiChinginkeisansho();
 				
 				//20260815 初期表示に変更
-				movContents('chiChinginkeisansho');
+				//movContents('chiChinginkeisansho');
+				onClear();
 			}
 			else{
 				alert("このデータはすでに、別のユーザーに更新されています。\r\nもう一度データを確認してください。");
 			}
 		});
 	});
+}
+
+//****************************************************************************
+// onClear
+//
+//
+//
+//
+//****************************************************************************
+function onClear() {
+	
+	// 処理したコードを格納
+	$("#srhTxtTaishoYM").val($("#txtTaishoYM").val());
+	$("#srhTxtShainNO").val($("#txtShainNO").val());
+	
+	// nyuryokuAreaを非表示する。
+	$("#nyuryokuArea").css("visibility", "hidden");
+	// buttonAreaを非表示する。
+	$("#buttonArea").css("visibility", "hidden");
+	
+	// 初期フォーカス位置の変更
+	$("#srhTxtTaishoYM").focus();
+	setTimeout(function(){
+		$("#srhTxtTaishoYM").select();
+	})
 }
