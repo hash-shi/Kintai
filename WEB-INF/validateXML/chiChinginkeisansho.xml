@@ -71,6 +71,7 @@
 			</check>
 			<check class="ShainAuthorityValidate" message="ログインした社員Noでは処理できません。">
 				<param name="shainNo">txtShainNO</param>
+				<param name="taishoYM">txtTaishoYM</param>
 			</check>
 
 			<check class="ChiChinginkeisanshoExclusiveValidate" message="この賃金計算書明細データはすでに、別のユーザーに更新されています。もう一度データを確認してください。"></check>
@@ -128,6 +129,7 @@
 			</check>
 			<check class="ShainAuthorityValidate" message="ログインした社員Noでは処理できません。">
 				<param name="shainNo">txtShainNO</param>
+				<param name="taishoYM">txtTaishoYM</param>
 			</check>
 
 			<check class="ChiChinginkeisanshoExclusiveValidate" message="この賃金計算書明細データはすでに、別のユーザーに更新されています。もう一度データを確認してください。"></check>
@@ -184,6 +186,7 @@
 			</check>
 			<check class="ShainAuthorityValidate" message="ログインした社員Noでは処理できません。">
 				<param name="shainNo">txtShainNO</param>
+				<param name="taishoYM">txtTaishoYM</param>
 			</check>
 
 			<check class="ChiChinginkeisanshoExclusiveValidate" message="この出勤簿明細データはすでに、別のユーザーに更新されています。もう一度データを確認してください。"></check>

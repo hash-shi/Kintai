@@ -395,7 +395,7 @@ public class ChiChinginkeisanshoValidate extends ValidateBase {
 			
 			//賃金区分が空でない場合のみ、申請パターンのチェックを行う
 			// 賃金申請書入力区分("01"固定)、賃金区分、賃金申請区分1,2,3の組み合わせが、申請パターンマスタ(MST_SHINSEI_PATTERN)に登録されていない場合
-			if(shinseiPatternCheck(con, chinginShinseiKbnList.get(0), chinginShinseiKbnList.get(1), chinginShinseiKbnList.get(2)) == false){
+			if(shinseiPatternCheck(con, chinginShinseiKbnList.get(0), chinginShinseiKbnList.get(1), chinginShinseiKbnList.get(2), jitsudoJikan, dcmJitsudoJikan) == false){
 				this.addValidateMessage(taishoNengappi + "の申請区分の組み合わせが正しくありません。");
 				return false;
 			}
@@ -410,7 +410,7 @@ public class ChiChinginkeisanshoValidate extends ValidateBase {
 	 * 
 	 * 申請パターンマスタ確認
 	 */
-	private boolean shinseiPatternCheck(Connection con, String shinseiKbn1, String shinseiKbn2, String shinseiKbn3) throws Exception {
+	private boolean shinseiPatternCheck(Connection con, String shinseiKbn1, String shinseiKbn2, String shinseiKbn3, String jitsudoJikan, BigDecimal dcmJitsudoJikan) throws Exception {
 
 		// チェック対象の社員NO
 		String shainNo			= this.getParameter("txtShainNO");
@@ -462,7 +462,18 @@ public class ChiChinginkeisanshoValidate extends ValidateBase {
 			// 結果取得
 			if(rset.next()){
 				if(rset.getInt("CNT") > 0) {
-					result = true;
+					// 20260909_hash-shi_特殊処理----------------------------------------------------------------------
+					// result = true;
+					// 通常勤務が0.00の場合は「有休」「特給」を指定可能
+					// 通常勤務が0.00以外の場合は「有休」「特給」を指定不可
+					if ("05".equals(shinseiKbn1) || "11".equals(shinseiKbn1)) {
+						if(("".equals(jitsudoJikan) || dcmJitsudoJikan.compareTo(BigDecimal.ZERO) <= 0) == true) {
+							result = true;
+						}
+					} else {
+						result = true;
+					}
+					// 20260909_hash-shi_特殊処理----------------------------------------------------------------------
 				}
 			}
 		}
